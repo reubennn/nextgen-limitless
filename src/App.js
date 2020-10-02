@@ -1,9 +1,9 @@
+import { hot } from "react-hot-loader";
 import React, { Component } from "react";
 import {
     BrowserRouter as Router,
     Route,
 } from "react-router-dom";
-import { hot } from "react-hot-loader";
 import styled from "styled-components";
 import HomePage from "./pages/HomePage";
 

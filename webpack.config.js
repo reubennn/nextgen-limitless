@@ -13,7 +13,7 @@ module.exports = { // ES5 syntax
                 loader: "babel-loader",
                 options: {
                     presets: ["@babel/env"],
-                }
+                },
             },
             {
                 // Transpile CSS
@@ -21,7 +21,7 @@ module.exports = { // ES5 syntax
                 use: [
                     "style-loader",
                     "css-loader",
-                ]
+                ],
             },
         ],
     },
@@ -29,8 +29,12 @@ module.exports = { // ES5 syntax
         extensions: [
             "*",
             ".js",
-            ".jsx"
+            ".jsx",
         ],
+        // Replace react-dom with @hot-loader/react-dom
+        alias: {
+            "react-dom": "@hot-loader/react-dom",
+        },
     },
     output: {
         path: path.resolve(__dirname, "dist/"),
@@ -45,5 +49,5 @@ module.exports = { // ES5 syntax
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-    ]
-}
+    ],
+};
