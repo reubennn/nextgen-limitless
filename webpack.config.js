@@ -12,7 +12,7 @@ module.exports = { // ES5 syntax
                 exclude: /(node_modules)/,
                 loader: "babel-loader",
                 options: {
-                    presets: ["@babel/env"],
+                    presets: ["@babel/env", "@babel/react"],
                 },
             },
             {
@@ -46,8 +46,11 @@ module.exports = { // ES5 syntax
         port: 3000,
         publicPath: "http://localhost:3000/dist/",
         hotOnly: true,
+        // To allow React Router to work
+        historyApiFallback: true,
     },
     plugins: [
+        // Enable hot loading for react-hot-loader
         new webpack.HotModuleReplacementPlugin(),
     ],
 };
