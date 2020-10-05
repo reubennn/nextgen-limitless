@@ -4,6 +4,8 @@ const webpack = require("webpack");
 module.exports = { // ES5 syntax
     entry: "./src/index.js",
     mode: "development",
+    // Fix DevTools SourceMapping load failures
+    devtool: "eval-source-map",
     module: {
         rules: [
             {
