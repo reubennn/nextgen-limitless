@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export const StyledHeading = styled.h1`
-    &&& {
+export const Header = styled.h1`
+    & {
         color: #fff;
         background-color: #303030;
-        padding: 0.25rem;
+        padding: 0.5rem;
         padding-left: 0.75rem;
         border-radius: 0.2rem;
-        margin-bottom: 1rem;
+        margin: 1rem 0;
     }
 `;

@@ -11,21 +11,22 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ArticlesList from "./pages/ArticlesList";
 import ArticlePage from "./pages/ArticlePage";
-import "./App.css";
+import NavBar from "./components/NavBar";
 
 /**
- * Styled-Component
+ * Styled-Components
  */
-const AppContainer = styled.div.attrs({
+const S = {}; // Differentiate styled-components
+
+S.AppContainer = styled.div.attrs({
     className: "App",
 })`
     margin: 1rem;
-    font-family: Arial, Helvetica, sans-serif;
     color: #222222;
-    width: 100vw;
+    width: auto;
     height: 100vh;
-    max-width: 100%;
-    margin: 1rem 0 0 0;
+    /* max-width: 100%; */
+    margin: 0;
 `;
 
 /**
@@ -37,14 +38,15 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <AppContainer>
+                <S.AppContainer>
+                    <NavBar />
                     <div id="page-body">
                         <Route path="/" component={HomePage} exact />
                         <Route path="/about" component={AboutPage} />
                         <Route path="/articles-list" component={ArticlesList} />
                         <Route path="/article" component={ArticlePage} />
                     </div>
-                </AppContainer >
+                </S.AppContainer >
             </Router>
         );
     }
