@@ -24,6 +24,8 @@ const AppContainer = styled.div.attrs({
     color: #222222;
     width: 100vw;
     height: 100vh;
+    max-width: 100%;
+    margin: 1rem 0 0 0;
 `;
 
 /**
