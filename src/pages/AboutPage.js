@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from "react";
-import { StyledHeading } from "./pageStyling";
+import { StyledHeading } from "../styles/pageStyling";
 
 const AboutPage = () => (
     <>
