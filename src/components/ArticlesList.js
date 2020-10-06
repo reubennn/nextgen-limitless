@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import * as S from "../styles/styled-components";
 
@@ -16,5 +17,9 @@ const ArticlesList = ({ articles }) => (
         ))}
     </>
 );
+
+ArticlesList.propTypes = {
+    articles: PropTypes.array.isRequired,
+};
 
 export default ArticlesList;

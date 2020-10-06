@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import ArticlesList from "../components/ArticlesList";
 import NotFoundPage from "./NotFoundPage";
 import articleContent from "./articleContent";
@@ -16,7 +17,7 @@ const ArticlePage = ({ match }) => {
 
     if (!article) {
         return (
-            <NotFoundPage item="article"/>
+            <NotFoundPage item="article" />
         );
     }
 
@@ -34,6 +35,14 @@ const ArticlePage = ({ match }) => {
             <ArticlesList articles={otherArticles} />
         </>
     );
+};
+
+ArticlePage.propTypes = {
+    match: PropTypes.shape({
+        params: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+        }),
+    }),
 };
 
 export default ArticlePage;
