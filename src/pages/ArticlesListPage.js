@@ -6,7 +6,7 @@ import articleContent from "./articleContent";
 
 import * as S from "../styles/styled-components";
 
-const ArticlesList = () => (
+const ArticlesListPage = () => (
     <>
         <S.Header>Articles</S.Header>
         {articleContent.map((article, key) => (
@@ -22,4 +22,4 @@ const ArticlesList = () => (
     </>
 );
 
-export default ArticlesList;
+export default ArticlesListPage;
