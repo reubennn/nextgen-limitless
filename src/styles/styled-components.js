@@ -8,12 +8,14 @@ export const Header = styled.h1`
         padding-left: 0.75rem;
         border-radius: 0.2rem;
         margin: 1rem 0;
+        font-size: ${(props) => props.small ? "1.5rem" : "2.25rem"};
     }
 `;
 
 Header.defaultProps = {
     theme: {
         colorDark: "#303030",
+        small: false,
     },
 };
 

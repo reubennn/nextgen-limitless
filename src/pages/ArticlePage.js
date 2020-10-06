@@ -1,4 +1,5 @@
 import React from "react";
+import ArticlesList from "../components/ArticlesList";
 import articleContent from "./articleContent";
 import * as S from "../styles/styled-components";
 
@@ -23,12 +24,18 @@ const ArticlePage = ({ match }) => {
         );
     }
 
+    const otherArticles = articleContent.filter((article) =>
+        article.name !== name);
+
     return (
         <>
             <S.Header>{article.title}</S.Header>
             {article.content.map((paragraph, key) => (
                 <p key={key}>{paragraph}</p>
             ))}
+            &nbsp;
+            <S.Header small>Other Articles...</S.Header>
+            <ArticlesList articles={otherArticles} />
         </>
     );
 };
