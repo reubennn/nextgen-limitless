@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from "react";
-import * as S from "../styles/pageStyling";
+import * as S from "../styles/styled-components";
 
 const HomePage = () => (
     <>

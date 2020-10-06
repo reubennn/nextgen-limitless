@@ -1,6 +1,6 @@
 import React from "react";
 import articleContent from "./articleContent";
-import * as S from "../styles/pageStyling";
+import * as S from "../styles/styled-components";
 
 /**
  * Component for displaying an Article page
