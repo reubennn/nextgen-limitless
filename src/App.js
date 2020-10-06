@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import {
     BrowserRouter as Router,
     Route,
+    Switch,
 } from "react-router-dom";
 import styled from "styled-components";
 
@@ -12,6 +13,7 @@ import AboutPage from "./pages/AboutPage";
 import ArticlesListPage from "./pages/ArticlesListPage";
 import ArticlePage from "./pages/ArticlePage";
 import NavBar from "./components/NavBar";
+import NotFoundPage from "./pages/NotFoundPage";
 
 /**
  * Styled-Components
@@ -41,13 +43,21 @@ class App extends Component {
                 <S.AppContainer>
                     <NavBar />
                     <div id="page-body">
-                        <Route path="/" component={HomePage} exact />
-                        <Route path="/about" component={AboutPage} />
-                        <Route
-                            path="/articles-list"
-                            component={ArticlesListPage}
-                        />
-                        <Route path="/article/:name" component={ArticlePage} />
+                        <Switch>
+                            <Route path="/" component={HomePage} exact />
+                            <Route path="/about" component={AboutPage} />
+                            <Route
+                                path="/articles-list"
+                                component={ArticlesListPage}
+                            />
+                            <Route
+                                path="/article/:name"
+                                component={ArticlePage} />
+                            <Route render={(props) => (
+                                <NotFoundPage {...props} item={"page"} />
+                            )}
+                            />
+                        </Switch>
                     </div>
                 </S.AppContainer >
             </Router>

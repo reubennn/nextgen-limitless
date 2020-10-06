@@ -1,5 +1,6 @@
 import React from "react";
 import ArticlesList from "../components/ArticlesList";
+import NotFoundPage from "./NotFoundPage";
 import articleContent from "./articleContent";
 import * as S from "../styles/styled-components";
 
@@ -15,12 +16,7 @@ const ArticlePage = ({ match }) => {
 
     if (!article) {
         return (
-            <>
-                <S.Header>404 Error: Page Not Found</S.Header>
-                <p style={{ textAlign: "center" }}>
-                    Oops.. That article doesn&apos;t seem to exist!
-                </p>
-            </>
+            <NotFoundPage item="article"/>
         );
     }
 
