@@ -65,6 +65,13 @@ module.exports = { // ES5 syntax
         hotOnly: true,
         // To allow React Router to work
         historyApiFallback: true,
+        proxy: {
+            "/api/**": {
+                target: "http://localhost:9000",
+                secure: false,
+                changeOrigin: true,
+            },
+        },
     },
     plugins: [
         // Enable hot loading for react-hot-loader

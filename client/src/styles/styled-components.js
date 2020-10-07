@@ -56,3 +56,11 @@ ArticleSample.defaultProps = {
         colorDark: "#303030",
     },
 };
+
+export const ArticlePage = styled.div`
+    i:last-of-type {
+        display: block;
+        margin: 1rem auto 2rem auto;
+        text-align: right;
+    }
+`;
