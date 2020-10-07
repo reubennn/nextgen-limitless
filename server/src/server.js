@@ -12,12 +12,12 @@ const client = new MongoClient(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-let db;
+// let db;
 
 const connectDB = async () => {
     try {
         await client.connect();
-        db = client.db("my-blog");
+        // db = client.db("my-blog");
     } catch (error) {
         console.error(error);
     }
@@ -25,28 +25,35 @@ const connectDB = async () => {
 
 connectDB().catch(console.error);
 
+const withDB = async (operations, res) => {
+    try {
+        const db = client.db("my-blog");
+        await operations(db);
+    } catch (error) {
+        res.status(500).json({
+            message: "Error fetching/updating data from mongoDB",
+            error,
+        });
+    }
+};
+
 /* Parse JSON object included in the POST request,
  * adding body property to the req parameter to the matching route */
 app.use(bodyParser.json());
 
 app.get("/api/articles/:name", async (req, res) => {
-    try {
+    withDB(async (db) => {
         const articleName = req.params.name;
 
         const articleInfo = await db.collection("articles")
             .findOne({ name: articleName });
 
         res.status(200).json(articleInfo);
-    } catch (error) {
-        res.status(500).json({
-            message: "Error fetching data from mongoDB",
-            error,
-        });
-    }
+    }, res);
 });
 
 app.post("/api/articles/:name/upvote", async (req, res) => {
-    try {
+    withDB(async (db) => {
         const articleName = req.params.name;
 
         const articleInfo = await db.collection("articles")
@@ -60,12 +67,7 @@ app.post("/api/articles/:name/upvote", async (req, res) => {
             );
 
         res.status(200).json(updatedArticleInfo);
-    } catch (error) {
-        res.status(500).json({
-            message: "Error fetching data from mongoDB",
-            error,
-        });
-    }
+    }, res);
 });
 
 /**
