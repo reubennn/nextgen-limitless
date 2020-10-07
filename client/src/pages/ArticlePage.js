@@ -8,7 +8,7 @@ import * as S from "../styles/styled-components";
 /**
  * Component for displaying an Article page
  *
- * @param {String} props.match passed down from :name in URL
+ * @param {Object} props.match Router parameter passed down from :name in URL
  * @return {*} an article page for a given topic
  */
 const ArticlePage = ({ match }) => {
