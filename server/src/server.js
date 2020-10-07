@@ -45,12 +45,27 @@ app.get("/api/articles/:name", async (req, res) => {
     }
 });
 
-app.post("/api/articles/:name/upvote", (req, res) => {
-    const articleName = req.params.name;
-    articlesInfo[articleName].upvotes += 1;
-    res.status(200)
-        .send(`${articleName} now has \
-        ${articlesInfo[articleName].upvotes} upvotes`);
+app.post("/api/articles/:name/upvote", async (req, res) => {
+    try {
+        const articleName = req.params.name;
+
+        const articleInfo = await db.collection("articles")
+            .findOne({ name: articleName });
+
+        const updatedArticleInfo = await db.collection("articles")
+            .findOneAndUpdate(
+                { name: articleName },
+                { "$set": { upvotes: articleInfo.upvotes + 1 } },
+                { returnOriginal: false },
+            );
+
+        res.status(200).json(updatedArticleInfo);
+    } catch (error) {
+        res.status(500).json({
+            message: "Error fetching data from mongoDB",
+            error,
+        });
+    }
 });
 
 /**
