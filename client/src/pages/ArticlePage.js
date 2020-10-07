@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import ArticlesList from "../components/ArticlesList";
 import NotFoundPage from "./NotFoundPage";
+import CommentsList from "../components/CommentsList.js";
 import articleContent from "./articleContent";
 import * as S from "../styles/styled-components";
 
@@ -51,16 +52,27 @@ const ArticlePage = ({ match }) => {
         );
     }
 
+    // Filter out the article on the current page for sample articles
     const otherArticles = articleContent.filter((article) =>
         article.name !== name);
+
+    // Check if the article has any comments
+    let containsComments = false;
+    if (typeof articleInfo.comments !== "undefined" &&
+        articleInfo.comments.length > 0) {
+        containsComments = true;
+    }
 
     return (
         <S.ArticlePage>
             <S.Header>{article.title}</S.Header>
+            <i>This post has been upvoted {articleInfo.upvotes} times</i>
             {article.content.map((paragraph, key) => (
                 <p key={key}>{paragraph}</p>
             ))}
-            <i>This post has been upvoted {articleInfo.upvotes} times</i>
+            {containsComments ?
+                <CommentsList comments={articleInfo.comments} /> :
+                null}
             <S.Header small>Other Articles...</S.Header>
             <ArticlesList articles={otherArticles} />
         </S.ArticlePage>

@@ -7,15 +7,31 @@ export const Header = styled.h1`
         padding: 0.5rem;
         padding-left: 0.75rem;
         border-radius: 0.2rem;
-        margin: 1rem 0;
         font-size: ${(props) => props.small ? "1.5rem" : "2.25rem"};
+        margin: ${(props) => props.small ? "2.5rem 0 1.5rem 0" : "1rem 0"};
     }
 `;
 
 Header.defaultProps = {
     theme: {
         colorDark: "#303030",
-        small: false,
+    },
+};
+
+export const HorizontalRuler = styled.hr`
+    border: 0;
+    height: 0;
+    border-top: ${(props) => props.thin ? "0.05rem" : "0.1rem"}
+                solid
+                ${(props) =>
+        props.light ? props.theme.colorLight : props.theme.colorDark};
+    margin-bottom: 2rem;
+`;
+
+HorizontalRuler.defaultProps = {
+    theme: {
+        colorDark: "#303030",
+        colorLight: "#bdbdbd",
     },
 };
 
@@ -42,13 +58,6 @@ export const ArticleSample = styled.div`
         display: inline-block;
         font-size: 1.3em;
     }
-
-    & hr:nth-child(2) {
-        border: 0;
-        height: 0;
-        border-top: 0.1rem solid ${(props) => props.theme.colorDark};
-        margin-bottom: 2rem;
-    }
 `;
 
 ArticleSample.defaultProps = {
@@ -60,7 +69,25 @@ ArticleSample.defaultProps = {
 export const ArticlePage = styled.div`
     i:last-of-type {
         display: block;
-        margin: 1rem auto 2rem auto;
+        margin: 1rem auto 1.5rem auto;
         text-align: right;
+    }
+`;
+
+export const CommentsList = styled.div`
+    & > *:not(${Header}) {
+        padding-left: 2rem;
+    }
+
+    h4 {
+        color: #7B7B7B;
+        font-size: 0.85rem;
+        font-style: italic;
+        font-weight: normal;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        margin: 0.5rem 0 1rem 0.5rem;
     }
 `;

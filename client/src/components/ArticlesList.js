@@ -12,7 +12,7 @@ const ArticlesList = ({ articles }) => (
                     {/* Get the first 150 characters from the article */}
                     <p>{article.content[0].substring(0, 150)}...</p>
                 </Link>
-                <hr></hr>
+                <S.HorizontalRuler></S.HorizontalRuler>
             </S.ArticleSample>
         ))}
     </>
