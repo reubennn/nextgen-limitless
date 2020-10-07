@@ -1,13 +1,19 @@
 /* eslint-disable valid-jsdoc */
 import styled from "styled-components";
 
+const theme = {
+    colorDark: "#303030",
+    colorLight: "#bdbdbd",
+    colorGrey: "#7b7b7b",
+};
+
 /**
  * Header Component
  */
 export const Header = styled.h1`
     & {
         color: #fff;
-        background-color: ${(props) => props.theme.colorDark};
+        background-color: ${theme.colorDark};
         padding: 0.5rem;
         padding-left: 0.75rem;
         border-radius: 0.2rem;
@@ -15,12 +21,6 @@ export const Header = styled.h1`
         margin: ${(props) => props.small ? "2.5rem 0 1.5rem 0" : "1rem 0"};
     }
 `;
-
-Header.defaultProps = {
-    theme: {
-        colorDark: "#303030",
-    },
-};
 
 /**
  * HorizontalRuler Component
@@ -31,16 +31,10 @@ export const HorizontalRuler = styled.hr`
     border-top: ${(props) => props.thin ? "0.05rem" : "0.1rem"}
                 solid
                 ${(props) =>
-        props.light ? props.theme.colorLight : props.theme.colorDark};
-    margin-bottom: 2rem;
+        props.light ? theme.colorLight : theme.colorDark};
+    margin-bottom: ${(props) => props.smallMargin ? "1rem" : "2rem"};
+    margin-top: ${(props) => props.smallMargin ? "0.8rem" : "inherit"};
 `;
-
-HorizontalRuler.defaultProps = {
-    theme: {
-        colorDark: "#303030",
-        colorLight: "#bdbdbd",
-    },
-};
 
 /**
  * ArticleSample Component
@@ -54,8 +48,8 @@ export const ArticleSample = styled.div`
     }
 
     &:hover {
-        border-left: 0.1rem solid ${(props) => props.theme.colorDark};
-        border-right: 0.1rem solid ${(props) => props.theme.colorDark};
+        border-left: 0.1rem solid ${(props) => theme.colorDark};
+        border-right: 0.1rem solid ${(props) => theme.colorDark};
         padding: 0 0.5rem;
         transition: ease-in-out 0.25s;
     }
@@ -70,23 +64,6 @@ export const ArticleSample = styled.div`
     }
 `;
 
-ArticleSample.defaultProps = {
-    theme: {
-        colorDark: "#303030",
-    },
-};
-
-/**
- * ArticlePage Component
- */
-export const ArticlePage = styled.div`
-    i:last-of-type {
-        display: block;
-        margin: 1rem auto 1.5rem auto;
-        text-align: right;
-    }
-`;
-
 /**
  * CommentsList Component
  */
@@ -96,7 +73,7 @@ export const CommentsList = styled.div`
     }
 
     h4 {
-        color: #7B7B7B;
+        color: ${theme.colorGrey};
         font-size: 0.85rem;
         font-style: italic;
         font-weight: normal;
@@ -106,4 +83,30 @@ export const CommentsList = styled.div`
     p {
         margin: 0.5rem 0 1rem 0.5rem;
     }
+`;
+
+/**
+ * UpvoteSection Component
+ */
+export const UpvoteSection = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-left: 5rem;
+    justify-content: flex-end;
+
+    i:first-of-type {
+        display: block;
+        margin: 0.3rem 0.5rem;
+        text-align: right;
+    }
+`;
+
+/**
+ * Button Component
+ */
+export const Button = styled.button`
+    color: #fff;
+    background-color: ${theme.colorDark};
+    padding: 0 0.8rem;
+    border-radius: 1.5rem;
 `;

@@ -4,6 +4,7 @@ import ArticlesList from "../components/ArticlesList";
 import NotFoundPage from "./NotFoundPage";
 import CommentsList from "../components/CommentsList.js";
 import articleContent from "./articleContent";
+import UpvotesSection from "../components/UpvoteSection";
 import * as S from "../styles/styled-components";
 
 /**
@@ -22,16 +23,18 @@ const ArticlePage = ({ match }) => {
     const name = match.params.name;
     const article = articleContent.find((article) => article.name === name);
 
-    const [articleInfo, setArticleInfo] = useState({
-        upvotes: 0,
-        comments: [],
-    });
     /*
+     *  Use React Hook to access state
+     *
      *  articleInfo => populated by fetching from server
      *  setArticleInfo => function called to change articleInfo
      *  {} argument passed to useState =>
      *        initial value of articleInfo before loading data or changing state
     */
+    const [articleInfo, setArticleInfo] = useState({
+        upvotes: null,
+        comments: [],
+    });
 
     /**
      * React Hook: Sets the article info.
@@ -64,9 +67,12 @@ const ArticlePage = ({ match }) => {
     }
 
     return (
-        <S.ArticlePage>
+        <>
             <S.Header>{article.title}</S.Header>
-            <i>This post has been upvoted {articleInfo.upvotes} times</i>
+            <UpvotesSection
+                articleName={name}
+                upvotes={articleInfo.upvotes}
+                setArticleInfo={setArticleInfo} />
             {article.content.map((paragraph, key) => (
                 <p key={key}>{paragraph}</p>
             ))}
@@ -75,7 +81,7 @@ const ArticlePage = ({ match }) => {
                 null}
             <S.Header small>Other Articles...</S.Header>
             <ArticlesList articles={otherArticles} />
-        </S.ArticlePage>
+        </>
     );
 };
 
