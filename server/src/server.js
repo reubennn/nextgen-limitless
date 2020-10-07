@@ -17,6 +17,21 @@ app.post("/api/articles/:name/upvote", (req, res) => {
         ${articlesInfo[articleName].upvotes} upvotes`);
 });
 
+/**
+ * req.body {
+ *   "username": "me",
+ *   "text": "I love this article!"
+ * }
+ */
+app.post("/api/articles/:name/add-comment", (req, res) => {
+    const { username, text } = req.body;
+    const articleName = req.params.name;
+
+    articlesInfo[articleName].comments.push({ username, text });
+
+    res.status(200).send(articlesInfo[articleName]);
+});
+
 const server = app.listen(PORT, () => {
     console.log(`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
     \nServer running on PORT ${PORT}.\
