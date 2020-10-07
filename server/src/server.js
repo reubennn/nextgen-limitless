@@ -23,19 +23,19 @@ const connectDB = async () => {
     }
 };
 
-connectDB().catch(console.error);
-
 const withDB = async (operations, res) => {
     try {
         const db = client.db("my-blog");
         await operations(db);
     } catch (error) {
         res.status(500).json({
-            message: "Error fetching/updating data from mongoDB",
+            message: "Error fetching / updating data from mongoDB",
             error,
         });
     }
 };
+
+connectDB().catch(console.error);
 
 /* Parse JSON object included in the POST request,
  * adding body property to the req parameter to the matching route */
@@ -80,9 +80,23 @@ app.post("/api/articles/:name/add-comment", (req, res) => {
     const { username, text } = req.body;
     const articleName = req.params.name;
 
-    articlesInfo[articleName].comments.push({ username, text });
+    withDB(async (db) => {
+        const articleInfo = await db.collection("articles")
+            .findOne({ name: articleName });
 
-    res.status(200).send(articlesInfo[articleName]);
+        const updatedArticleInfo = await db.collection("articles")
+            .findOneAndUpdate(
+                { name: articleName },
+                {
+                    "$set": {
+                        comments: articleInfo.comments
+                            .concat({ username, text }),
+                    },
+                },
+                { returnOriginal: false },
+            );
+        res.status(200).json(updatedArticleInfo);
+    }, res);
 });
 
 const server = app.listen(PORT, () => {
