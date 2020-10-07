@@ -1,5 +1,9 @@
+/* eslint-disable valid-jsdoc */
 import styled from "styled-components";
 
+/**
+ * Header Component
+ */
 export const Header = styled.h1`
     & {
         color: #fff;
@@ -18,6 +22,9 @@ Header.defaultProps = {
     },
 };
 
+/**
+ * HorizontalRuler Component
+ */
 export const HorizontalRuler = styled.hr`
     border: 0;
     height: 0;
@@ -35,6 +42,9 @@ HorizontalRuler.defaultProps = {
     },
 };
 
+/**
+ * ArticleSample Component
+ */
 export const ArticleSample = styled.div`
     transition: ease-in-out 0.25s;
 
@@ -66,6 +76,9 @@ ArticleSample.defaultProps = {
     },
 };
 
+/**
+ * ArticlePage Component
+ */
 export const ArticlePage = styled.div`
     i:last-of-type {
         display: block;
@@ -74,6 +87,9 @@ export const ArticlePage = styled.div`
     }
 `;
 
+/**
+ * CommentsList Component
+ */
 export const CommentsList = styled.div`
     & > *:not(${Header}) {
         padding-left: 2rem;
