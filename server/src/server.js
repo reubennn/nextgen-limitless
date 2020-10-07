@@ -34,7 +34,7 @@ app.post("/api/articles/:name/add-comment", (req, res) => {
 
 const server = app.listen(PORT, () => {
     console.log(`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
-    \nServer running on PORT ${PORT}.\
+    \nServer listening on PORT ${PORT}.\
     \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n`);
 });
 
