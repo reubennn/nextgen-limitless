@@ -5,6 +5,25 @@ import articlesInfo from "./fakeData";
 
 const PORT = 9000;
 const app = express();
+const MONGO_URI = "mongodb://localhost:27017";
+
+/* Connects to MongoDB */
+const client = new MongoClient(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+let db;
+
+const connectDB = async () => {
+    try {
+        await client.connect();
+        db = client.db("my-blog");
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+connectDB().catch(console.error);
 
 /* Parse JSON object included in the POST request,
  * adding body property to the req parameter to the matching route */
@@ -14,19 +33,15 @@ app.get("/api/articles/:name", async (req, res) => {
     try {
         const articleName = req.params.name;
 
-        const client = await MongoClient.connect("mongodb://localhost:27017", {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        const db = client.db("my-blog");
-
         const articleInfo = await db.collection("articles")
             .findOne({ name: articleName });
-        res.status(200).json(articleInfo);
 
-        client.close();
+        res.status(200).json(articleInfo);
     } catch (error) {
-        res.stats(500).json({ message: "Error connecting to db", error });
+        res.status(500).json({
+            message: "Error fetching data from mongoDB",
+            error,
+        });
     }
 });
 
@@ -61,5 +76,6 @@ const server = app.listen(PORT, () => {
 
 /* Close the server before Node.js exits */
 process.on("exit", function () {
+    client.close();
     server.close();
 });
