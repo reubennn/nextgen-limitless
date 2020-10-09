@@ -28,6 +28,7 @@ export const Header = styled.h1`
 export const HorizontalRuler = styled.hr`
     border: 0;
     height: 0;
+    width: ${(props) => props.width};
     border-top: ${(props) => props.thin ? "0.05rem" : "0.1rem"}
                 solid
                 ${(props) =>
@@ -35,6 +36,10 @@ export const HorizontalRuler = styled.hr`
     margin-bottom: ${(props) => props.smallMargin ? "1rem" : "2rem"};
     margin-top: ${(props) => props.smallMargin ? "0.8rem" : "inherit"};
 `;
+
+HorizontalRuler.defaultProps = {
+    width: "100%",
+}
 
 /**
  * ArticleSample Component
@@ -72,6 +77,12 @@ export const CommentsList = styled.div`
         padding-left: 2rem;
     }
 
+    & > .no-comments {
+        margin: 0.5rem auto 2rem auto;
+        padding-left: 0rem;
+        text-align: center;
+    }
+
     h4 {
         color: ${theme.colorGrey};
         font-size: 0.85rem;
@@ -91,12 +102,12 @@ export const CommentsList = styled.div`
 export const UpvoteSection = styled.div`
     display: flex;
     flex-direction: row;
-    margin-left: 5rem;
+    margin-left: 2rem;
     justify-content: flex-end;
 
     i:first-of-type {
-        display: block;
-        margin: 0.3rem 0.5rem;
+        /* display: block; */
+        margin: auto 0.6rem;
         text-align: right;
     }
 `;
@@ -107,6 +118,78 @@ export const UpvoteSection = styled.div`
 export const Button = styled.button`
     color: #fff;
     background-color: ${theme.colorDark};
-    padding: 0 0.8rem;
+    padding: 0.6rem 0.8rem;
     border-radius: 1.5rem;
+    transition-duration: 0.4s;
+    width: ${(props) => props.width ? props.width : "inherit"};
+    margin: auto;
+
+    &:hover {
+        background-color: #000;
+    }
+
+    &.upvote-button {
+        margin: 0;
+    }
+`;
+
+/**
+ * AddCommentForm Component
+ */
+export const AddCommentForm = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+`;
+
+/**
+ * Label Component
+ */
+export const Label = styled.label`
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+`;
+
+/**
+ * Input Component
+ */
+export const Input = styled.input`
+    outline: 0;
+    border: 0.05rem solid ${theme.colorDark};
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    transition: box-shadow linear 0.2s;
+
+    &:focus {
+        outline: 0;
+        border: 0.05rem solid #4195fc;
+        box-shadow: 0 0 0.3rem #4195fc;
+        transition: box-shadow linear 0.2s
+    }
+`;
+
+/**
+ * Input Component
+ */
+export const TextArea = styled.textarea`
+    resize: none;
+    outline: 0;
+    border: 0.05rem solid ${theme.colorDark};
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
+    resize: none;
+    overflow: auto;
+	height: auto;
+    line-height: 1.2rem;
+    box-shadow: none;
+    transition: box-shadow linear 0.2s;
+
+    &:focus {
+        outline: 0;
+        border: 0.05rem solid #4195fc;
+        box-shadow: 0 0 0.3rem #4195fc;
+        transition: box-shadow linear 0.2s
+    }
 `;

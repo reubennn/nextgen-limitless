@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+
 import ArticlesList from "../components/ArticlesList";
 import NotFoundPage from "./NotFoundPage";
 import CommentsList from "../components/CommentsList.js";
-import articleContent from "./articleContent";
 import UpvotesSection from "../components/UpvoteSection";
+
+import articleContent from "./articleContent";
 import * as S from "../styles/styled-components";
 
 /**
@@ -76,9 +78,11 @@ const ArticlePage = ({ match }) => {
             {article.content.map((paragraph, key) => (
                 <p key={key}>{paragraph}</p>
             ))}
-            {containsComments ?
-                <CommentsList comments={articleInfo.comments} /> :
-                null}
+            <CommentsList
+                comments={articleInfo.comments}
+                articleName={name}
+                setArticleInfo={setArticleInfo}
+                containsComments={containsComments} />
             <S.Header small>Other Articles...</S.Header>
             <ArticlesList articles={otherArticles} />
         </>

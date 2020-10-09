@@ -17,6 +17,7 @@ module.exports = {
         "google",
         "plugin:react/recommended",
         "eslint:recommended",
+        "plugin:prettier/recommended",
     ],
     rules: {
         // Prettier function formatting

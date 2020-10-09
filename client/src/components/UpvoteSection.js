@@ -14,8 +14,12 @@ const UpvoteSection = ({ articleName, upvotes, setArticleInfo }) => {
     return (
         <>
             <S.UpvoteSection>
-                <i>This post has been upvoted {upvotes} times</i>
-                <S.Button onClick={() => upvoteArticle()}>Add Upvote</S.Button>
+                <i>This post has been upvoted <b>{upvotes}</b> times</i>
+                <S.Button
+                    className="upvote-button"
+                    onClick={() => upvoteArticle()}>
+                    Upvote
+                </S.Button>
             </S.UpvoteSection>
             <S.HorizontalRuler thin smallMargin />
         </>

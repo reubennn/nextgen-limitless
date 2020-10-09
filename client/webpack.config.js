@@ -16,7 +16,11 @@ module.exports = { // ES5 syntax
                 options: {
                     presets: ["@babel/env", "@babel/react"],
                     plugins: [
-                        "babel-plugin-styled-components",
+                        [
+                            "babel-plugin-styled-components",
+                            { displayName: true}
+                        ],
+                        "@babel/plugin-proposal-class-properties"
                     ],
                 },
             },
