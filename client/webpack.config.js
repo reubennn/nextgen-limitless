@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = { // ES5 syntax
     entry: "./src/index.js",
@@ -18,7 +19,7 @@ module.exports = { // ES5 syntax
                     plugins: [
                         [
                             "babel-plugin-styled-components",
-                            { displayName: true}
+                            { displayName: true }
                         ],
                         "@babel/plugin-proposal-class-properties"
                     ],
@@ -80,5 +81,11 @@ module.exports = { // ES5 syntax
     plugins: [
         // Enable hot loading for react-hot-loader
         new webpack.HotModuleReplacementPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [{
+                from: path.join(__dirname, "public/"),
+                to: path.join(__dirname, "dist/")
+            }],
+        }),
     ],
 };

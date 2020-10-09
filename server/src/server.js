@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { MongoClient } from "mongodb";
+import path from "path";
 
 const PORT = 9000;
 const app = express();
@@ -34,6 +35,8 @@ const withDB = async (operations, res) => {
 };
 
 connectDB().catch(console.error);
+
+app.use(express.static(path.join(__dirname, "/dist")));
 
 /* Parse JSON object included in the POST request,
  * adding body property to the req parameter to the matching route */
@@ -95,6 +98,14 @@ app.post("/api/articles/:name/add-comment", (req, res) => {
             );
         res.status(200).json(updatedArticleInfo);
     }, res);
+});
+
+/* All requests which are not caught by the other API routes should be
+ * passed onto the app.
+ * Allows the client side app to navigate between pages and process
+ * URLs correctly */
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/dist/index.html"));
 });
 
 const server = app.listen(PORT, () => {
