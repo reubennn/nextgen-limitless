@@ -2,10 +2,15 @@ import express from "express";
 import bodyParser from "body-parser";
 import { MongoClient } from "mongodb";
 import path from "path";
+import helmet from "helmet";
 
 const PORT = 9000;
-const app = express();
 const MONGO_URI = "mongodb://localhost:27017";
+
+const app = express();
+
+// Helmet helps to secure Express server by setting various HTTP headers.
+app.use(helmet());
 
 /* Connects to MongoDB */
 const client = new MongoClient(MONGO_URI, {
