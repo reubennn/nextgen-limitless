@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "open-cli http://localhost:9000 -- chrome && nodemon --exec babel-node src/server.js"
+    "server": "open-cli http://localhost:9000 -- chrome && nodemon --exec babel-node src/server.js",
+    "db-setup": "babel-node addContentToDB.js"
   },
   "author": "Reuben Smith",
   "license": "ISC",
