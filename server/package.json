@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon --exec babel-node src/server.js"
+    "server": "open-cli http://localhost:9000 -- chrome && nodemon --exec babel-node src/server.js"
   },
   "author": "Reuben Smith",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "@babel/preset-env": "^7.11.5",
     "eslint": "^7.10.0",
     "eslint-config-google": "^0.14.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "open-cli": "^6.0.1"
   }
 }
