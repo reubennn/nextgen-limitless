@@ -33,5 +33,7 @@ module.exports = {
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
         "require-jsdoc": 0,
+        // Stop Express Router cap error
+        "new-cap": 0,
     },
 };
