@@ -1,6 +1,5 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { MongoClient } from "mongodb";
 import path from "path";
 import helmet from "helmet";
 import router from "./api/routes";
@@ -10,7 +9,7 @@ const PORT = 9000;
 const app = express();
 
 // Helmet helps to secure Express server by setting various HTTP headers.
-// app.use(helmet());
+app.use(helmet());
 
 app.use(express.static(path.join(__dirname, "/dist")));
 
