@@ -1,6 +1,5 @@
 import { MongoClient } from "mongodb";
-
-const MONGO_URI = "mongodb://localhost:27017";
+import { MONGO_URI, DB_NAME } from "../../secrets";
 
 /* Connects to MongoDB */
 const client = new MongoClient(MONGO_URI, {
@@ -11,7 +10,7 @@ const client = new MongoClient(MONGO_URI, {
 const connectDB = async () => {
     try {
         await client.connect();
-        console.log(`Successfully connected MongoDB server on ${MONGO_URI}\n`);
+        console.log("Successfully connected to the MongoDB server.\n");
     } catch (error) {
         console.error(error);
     }
@@ -19,7 +18,7 @@ const connectDB = async () => {
 
 const withDB = async (operations, res) => {
     try {
-        const db = client.db("my-blog");
+        const db = client.db(DB_NAME);
         const collection = db.collection("articles");
         await operations(collection);
     } catch (error) {

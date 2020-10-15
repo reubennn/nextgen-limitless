@@ -120,3 +120,6 @@ dist
 
 # Server .gitignore
 server/*.gitignore
+
+# Confidential data
+secrets.js
