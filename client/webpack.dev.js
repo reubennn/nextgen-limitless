@@ -4,6 +4,9 @@ const { merge } = require("webpack-merge");
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, { // ES5 syntax
+    mode: "development",
+    // Fix DevTools SourceMapping load failures
+    devtool: "eval-source-map",
     output: {
         // webpack-dev-server bundles the file in-memory
         path: path.resolve(__dirname, "dist/"),
@@ -25,8 +28,6 @@ module.exports = merge(common, { // ES5 syntax
             },
         },
     },
-    // Fix DevTools SourceMapping load failures
-    devtool: "eval-source-map",
     plugins: [
         // Enable hot loading for react-hot-loader
         new webpack.HotModuleReplacementPlugin(),

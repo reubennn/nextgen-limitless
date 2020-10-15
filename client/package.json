@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --config webpack.dev.js --open chrome",
     "server": "cd ../server && npx nodemon --exec babel-node src/server.js",
-    "build": "webpack --config webpack.prod.js",
+    "build": "webpack --config webpack.prod.js --watch",
     "test": "mocha \"src/**/*.test.js\" --require @babel/register --recursive"
   },
   "repository": {

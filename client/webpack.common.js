@@ -3,7 +3,6 @@ const webpack = require("webpack");
 
 module.exports = { // ES5 syntax
     entry: "./src/index.js",
-    mode: "development",
     module: {
         rules: [
             {
