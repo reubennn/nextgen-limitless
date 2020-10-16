@@ -41,18 +41,19 @@ const ArticlesList = ({ articleToFilter }) => {
         setOtherArticles([]);
     }
 
-    const content = loading ? <p style={{ textAlign: "center" }}>Loading...</p> :
-        otherArticles.map((article, key) => (
-            <S.ArticleSample key={key}>
-                <Link to={`/article/${article.name}`}
-                    onClick={() => linkOnClick(article.name)}>
-                    <h3>{article.title}</h3>
-                    {/* Get the first 150 characters from the article */}
-                    <p>{article.content[0].substring(0, 150)}...</p>
-                </Link>
-                <S.HorizontalRuler></S.HorizontalRuler>
-            </S.ArticleSample>
-        ))
+    const content = loading ? (
+        <p style={{ textAlign: "center" }}>Loading...</p>) : (
+            otherArticles.map((article, key) => (
+                <S.ArticleSample key={key}>
+                    <Link to={`/article/${article.name}`}
+                        onClick={() => linkOnClick(article.name)}>
+                        <h3>{article.title}</h3>
+                        {/* Get the first 150 characters from the article */}
+                        <p>{article.content[0].substring(0, 150)}...</p>
+                    </Link>
+                    <S.HorizontalRuler></S.HorizontalRuler>
+                </S.ArticleSample>
+            )))
     return (
         <>
             {content}

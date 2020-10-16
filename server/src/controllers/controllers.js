@@ -33,9 +33,15 @@ connectDB().catch(console.error);
 
 export const getAllArticles = async (req, res) => {
     withDB(async (collection) => {
-        const articles = await collection.find().toArray();
+        const result = await collection.find().toArray();
 
-        res.status(200).json(articles);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({
+                message: "Could not find the articles.",
+            });
+        }
     }, res);
 };
 
@@ -43,10 +49,16 @@ export const getArticle = async (req, res) => {
     const articleName = req.params.name;
 
     withDB(async (collection) => {
-        const articleInfo = await collection
+        const result = await collection
             .findOne({ name: articleName });
 
-        res.status(200).json(articleInfo);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({
+                message: "Could not find the specified article.",
+            });
+        }
     }, res);
 };
 

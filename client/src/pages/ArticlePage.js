@@ -6,7 +6,6 @@ import NotFoundPage from "./NotFoundPage";
 import CommentsList from "../components/CommentsList.js";
 import UpvotesSection from "../components/UpvoteSection";
 
-import articleContent from "./articleContent";
 import * as S from "../styles/styled-components";
 
 /**
@@ -23,7 +22,10 @@ import * as S from "../styles/styled-components";
  */
 const ArticlePage = ({ match }) => {
     const name = match.params.name;
-    const article = articleContent.find((article) => article.name === name);
+    const loading = true;
+    const [found, setFound] = useState(true);
+    // let notFound = false;
+    // const article = articleContent.find((article) => article.name === name);
 
     /*
      *  Use React Hook to access state
@@ -50,16 +52,14 @@ const ArticlePage = ({ match }) => {
         const fetchData = async () => {
             const result = await fetch(`/api/articles/${name}`);
             const body = await result.json();
-            setArticleInfo(body);
+            if (result.status === 404) {
+                setFound(false);
+            } else {
+                setArticleInfo(body);
+            }
         };
         fetchData();
     }, [name]);
-
-    if (!article) {
-        return (
-            <NotFoundPage item="article" />
-        );
-    }
 
     // Check if the article has any comments
     let containsComments = false;
@@ -68,14 +68,24 @@ const ArticlePage = ({ match }) => {
         containsComments = true;
     }
 
+    if (!found) {
+        return (
+            <NotFoundPage item="article" />
+        );
+    } else if (articleInfo._id === null) {
+        return (
+            <p style={{ textAlign: "center" }}>Loading...</p>
+        )
+    }
+
     return (
         <>
-            <S.Header>{article.title}</S.Header>
+            <S.Header>{articleInfo.title}</S.Header>
             <UpvotesSection
                 articleName={name}
                 upvotes={articleInfo.upvotes}
                 setArticleInfo={setArticleInfo} />
-            {article.content.map((paragraph, key) => (
+            {articleInfo.content.map((paragraph, key) => (
                 <p key={key}>{paragraph}</p>
             ))}
             <CommentsList
@@ -84,7 +94,7 @@ const ArticlePage = ({ match }) => {
                 setArticleInfo={setArticleInfo}
                 containsComments={containsComments} />
             <S.Header small>Other Articles...</S.Header>
-            <ArticlesList articleToFilter={name}/>
+            <ArticlesList articleToFilter={name} />
         </>
     );
 };
