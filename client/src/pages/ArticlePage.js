@@ -34,6 +34,10 @@ const ArticlePage = ({ match }) => {
      *        initial value of articleInfo before loading data or changing state
     */
     const [articleInfo, setArticleInfo] = useState({
+        _id: null,
+        name: name,
+        title: "",
+        content: [],
         upvotes: null,
         comments: [],
     });
@@ -56,10 +60,6 @@ const ArticlePage = ({ match }) => {
             <NotFoundPage item="article" />
         );
     }
-
-    // Filter out the article on the current page for sample articles
-    const otherArticles = articleContent.filter((article) =>
-        article.name !== name);
 
     // Check if the article has any comments
     let containsComments = false;
@@ -84,7 +84,7 @@ const ArticlePage = ({ match }) => {
                 setArticleInfo={setArticleInfo}
                 containsComments={containsComments} />
             <S.Header small>Other Articles...</S.Header>
-            <ArticlesList articles={otherArticles} />
+            <ArticlesList articleToFilter={name}/>
         </>
     );
 };

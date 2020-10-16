@@ -8,7 +8,7 @@ import * as S from "../styles/styled-components";
 const ArticlesListPage = () => (
     <>
         <S.Header>Articles</S.Header>
-        <ArticlesList articles={articleContent}/>
+        <ArticlesList/>
     </>
 );
 
