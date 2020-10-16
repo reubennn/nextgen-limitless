@@ -1,11 +1,15 @@
 import express from "express";
 import {
+    getAllArticles,
     getArticle,
     upvoteArticle,
     addCommentToArticle,
 } from "../controllers/controllers";
 
 const router = express.Router();
+
+router.route("/articles")
+    .get(getAllArticles);
 
 router.route("/articles/:name")
     .get(getArticle);

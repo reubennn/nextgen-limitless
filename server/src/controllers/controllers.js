@@ -31,6 +31,14 @@ const withDB = async (operations, res) => {
 
 connectDB().catch(console.error);
 
+export const getAllArticles = async (req, res) => {
+    withDB(async (collection) => {
+        const articles = await collection.find().toArray();
+
+        res.status(200).json(articles);
+    }, res);
+};
+
 export const getArticle = async (req, res) => {
     const articleName = req.params.name;
 
