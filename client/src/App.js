@@ -14,6 +14,7 @@ import ArticlesListPage from "./pages/ArticlesListPage";
 import ArticlePage from "./pages/ArticlePage";
 import NavBar from "./components/NavBar";
 import NotFoundPage from "./pages/NotFoundPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 /**
  * Styled-Components
@@ -40,26 +41,28 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <S.AppContainer>
-                    <NavBar />
-                    <div id="page-body">
-                        <Switch>
-                            <Route path="/" component={HomePage} exact />
-                            <Route path="/about" component={AboutPage} />
-                            <Route
-                                path="/articles-list"
-                                component={ArticlesListPage}
-                            />
-                            <Route
-                                path="/article/:name"
-                                component={ArticlePage} />
-                            <Route render={(props) => (
-                                <NotFoundPage {...props} item={"page"} />
-                            )}
-                            />
-                        </Switch>
-                    </div>
-                </S.AppContainer >
+                <ScrollToTop>
+                    <S.AppContainer>
+                        <NavBar />
+                        <div id="page-body">
+                            <Switch>
+                                <Route path="/" component={HomePage} exact />
+                                <Route path="/about" component={AboutPage} />
+                                <Route
+                                    path="/articles-list"
+                                    component={ArticlesListPage}
+                                />
+                                <Route
+                                    path="/article/:name"
+                                    component={ArticlePage} />
+                                <Route render={(props) => (
+                                    <NotFoundPage {...props} item={"page"} />
+                                )}
+                                />
+                            </Switch>
+                        </div>
+                    </S.AppContainer >
+                </ScrollToTop>
             </Router>
         );
     }
