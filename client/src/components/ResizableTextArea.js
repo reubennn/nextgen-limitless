@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import * as S from "../styles/styled-components";
 
 const ResizableTextarea = ({ commentText, setCommentText }) => {
@@ -15,10 +16,15 @@ const ResizableTextarea = ({ commentText, setCommentText }) => {
         <S.TextArea
             rows="4"
             value={commentText}
-            placeholder={'Enter your comment here...'}
+            placeholder={"Enter your comment here..."}
             onChange={(event) => handleChange(event)}
         />
     );
-}
+};
+
+ResizableTextarea.propTypes = {
+    commentText: PropTypes.string,
+    setCommentText: PropTypes.func,
+};
 
 export default ResizableTextarea;

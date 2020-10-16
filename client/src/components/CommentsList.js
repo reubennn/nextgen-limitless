@@ -7,14 +7,15 @@ const CommentsList = ({
     comments,
     articleName,
     setArticleInfo,
-    containsComments, }) => (
+    containsComments, }) => {
+    return (
         <S.CommentsList>
             <S.Header small>Comments:</S.Header>
             {(!containsComments) &&
                 <>
                     <p className="no-comments">There are no comments to display.
                     Feel free to comment using the form below!</p>
-                    <S.HorizontalRuler thin light width={"70%"}/>
+                    <S.HorizontalRuler thin light width={"70%"} />
                 </>
             }
             {comments.map((comment, key) => (
@@ -29,6 +30,7 @@ const CommentsList = ({
                 setArticleInfo={setArticleInfo} />
         </S.CommentsList>
     );
+};
 
 CommentsList.propTypes = {
     comments: PropTypes.array,

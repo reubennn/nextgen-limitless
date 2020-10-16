@@ -24,7 +24,7 @@ const ArticlesList = ({ articleToFilter }) => {
 
     // Populate the other articles list without the current article
     if (typeof articles !== "undefined" && articles.length > 0 && loading) {
-        for (let key in articles) {
+        for (const key in articles) {
             if (articles[key].name !== articleToFilter) {
                 setOtherArticles((prevState => [
                     ...prevState,
@@ -39,10 +39,11 @@ const ArticlesList = ({ articleToFilter }) => {
     const linkOnClick = (articleName) => {
         setCurrentArticle(articleName);
         setOtherArticles([]);
-    }
+    };
 
     const content = loading ? (
-        <p style={{ textAlign: "center" }}>Loading...</p>) : (
+        <p style={{ textAlign: "center" }}>Loading...</p>) :
+        (
             otherArticles.map((article, key) => (
                 <S.ArticleSample key={key}>
                     <Link to={`/article/${article.name}`}
@@ -53,12 +54,12 @@ const ArticlesList = ({ articleToFilter }) => {
                     </Link>
                     <S.HorizontalRuler></S.HorizontalRuler>
                 </S.ArticleSample>
-            )))
+            )));
     return (
         <>
             {content}
         </>
-    )
+    );
 };
 
 ArticlesList.propTypes = {

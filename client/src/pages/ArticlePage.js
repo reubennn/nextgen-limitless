@@ -22,7 +22,6 @@ import * as S from "../styles/styled-components";
  */
 const ArticlePage = ({ match }) => {
     const name = match.params.name;
-    const loading = true;
     const [found, setFound] = useState(true);
     // let notFound = false;
     // const article = articleContent.find((article) => article.name === name);
@@ -75,7 +74,7 @@ const ArticlePage = ({ match }) => {
     } else if (articleInfo._id === null) {
         return (
             <p style={{ textAlign: "center" }}>Loading...</p>
-        )
+        );
     }
 
     return (

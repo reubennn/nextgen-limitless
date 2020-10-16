@@ -15,9 +15,10 @@ module.exports = {
     },
     extends: [
         "google",
-        "plugin:react/recommended",
         "eslint:recommended",
-        "plugin:prettier/recommended",
+        "prettier",
+        "prettier/react",
+        "plugin:react/recommended",
     ],
     rules: {
         // Prettier function formatting
