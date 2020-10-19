@@ -5,6 +5,7 @@ import ArticlesList from "../components/ArticlesList";
 import NotFoundPage from "./NotFoundPage";
 import CommentsList from "../components/CommentsList.js";
 import UpvotesSection from "../components/UpvoteSection";
+import LoadingIcon from "../components/LoadingIcon";
 
 import * as S from "../styles/styled-components";
 
@@ -23,6 +24,8 @@ import * as S from "../styles/styled-components";
 const ArticlePage = ({ match }) => {
     const name = match.params.name;
     const [found, setFound] = useState(true);
+    const [loading, setLoading] = useState(true);
+    const inArticlePage = true;
 
     const defaults = {
         _id: null,
@@ -49,19 +52,40 @@ const ArticlePage = ({ match }) => {
      * ie. User has navigated to another article
      */
     useEffect(() => {
-        const fetchData = async () => {
-            // Reset the article state properties with the defaults
-            setArticleInfo(defaults);
+        let isMounted = true; // Flag which denotes mount status
 
+        // Reset the article state properties with the defaults
+        if (isMounted) {
+            setArticleInfo(defaults);
+            setLoading(true);
+        }
+
+        const fetchData = async () => {
             const result = await fetch(`/api/articles/${name}`);
             const body = await result.json();
-            if (result.status === 404) {
-                setFound(false);
-            } else {
-                setArticleInfo(body);
-            }
+            return {
+                result,
+                body,
+            };
         };
-        fetchData();
+        fetchData().then((data) => {
+            if (isMounted) {
+                if (data.result.status === 404) {
+                    setFound(false);
+                } else {
+                    setArticleInfo(data.body);
+                    setLoading(false);
+                }
+            }
+        });
+
+        /**
+         * useEffect clean-up:
+         * if unmounted, set mount status flag to false
+         */
+        return () => {
+            isMounted = false;
+        };
     }, [name]);
 
     // Check if the article has any comments
@@ -75,30 +99,39 @@ const ArticlePage = ({ match }) => {
         return (
             <NotFoundPage item="article" />
         );
-    } else if (articleInfo._id === null) {
-        return (
-            <p style={{ textAlign: "center" }}>Loading...</p>
+    };
+
+    const content = loading ?
+        (
+            <S.CenterInViewport>
+                <LoadingIcon />
+            </S.CenterInViewport>
+        ) :
+        (
+            <>
+                <S.Header>{articleInfo.title}</S.Header>
+                <UpvotesSection
+                    articleName={name}
+                    upvotes={articleInfo.upvotes}
+                    setArticleInfo={setArticleInfo} />
+                {articleInfo.content.map((paragraph, key) => (
+                    <p key={key}>{paragraph}</p>
+                ))}
+                <CommentsList
+                    comments={articleInfo.comments}
+                    articleName={name}
+                    setArticleInfo={setArticleInfo}
+                    containsComments={containsComments} />
+                <S.Header small>Other Articles...</S.Header>
+                <ArticlesList
+                    articleToFilter={name}
+                    inArticlePage={inArticlePage}
+                />
+            </>
         );
-    }
 
     return (
-        <>
-            <S.Header>{articleInfo.title}</S.Header>
-            <UpvotesSection
-                articleName={name}
-                upvotes={articleInfo.upvotes}
-                setArticleInfo={setArticleInfo} />
-            {articleInfo.content.map((paragraph, key) => (
-                <p key={key}>{paragraph}</p>
-            ))}
-            <CommentsList
-                comments={articleInfo.comments}
-                articleName={name}
-                setArticleInfo={setArticleInfo}
-                containsComments={containsComments} />
-            <S.Header small>Other Articles...</S.Header>
-            <ArticlesList articleToFilter={name} />
-        </>
+        content
     );
 };
 

@@ -1,11 +1,25 @@
 /* eslint-disable valid-jsdoc */
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const theme = {
     colorDark: "#303030",
     colorLight: "#bdbdbd",
     colorGrey: "#7b7b7b",
 };
+
+
+/**
+ * Rotation Keyframe
+ */
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
 /**
  * Header Component
@@ -39,7 +53,7 @@ export const HorizontalRuler = styled.hr`
 
 HorizontalRuler.defaultProps = {
     width: "100%",
-}
+};
 
 /**
  * ArticleSample Component
@@ -192,4 +206,49 @@ export const TextArea = styled.textarea`
         box-shadow: 0 0 0.3rem #4195fc;
         transition: box-shadow linear 0.2s
     }
+`;
+
+export const LoadingIcon = styled.nav.attrs({
+    className: "LoadingIcon",
+})`
+    &&& {
+        display: block;
+        position: relative;
+        width: 3rem;
+        height: 3rem;
+        margin: auto;
+    }
+
+    & div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 2rem;
+        height: 2rem;
+        margin: 0.5rem;
+        border: 0.35rem solid ${theme.colorDark};
+        border-radius: 50%;
+        animation: ${rotate} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: ${theme.colorDark} transparent transparent transparent;
+
+        &:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+
+        &:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+
+        &:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+    }
+`;
+
+export const CenterInViewport = styled.div`
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%)
 `;
