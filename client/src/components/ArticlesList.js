@@ -42,7 +42,8 @@ const ArticlesList = ({ articleToFilter }) => {
     };
 
     const content = loading ? (
-        <p style={{ textAlign: "center" }}>Loading...</p>) :
+        <p style={{ textAlign: "center" }}>Loading...</p>
+    ) :
         (
             otherArticles.map((article, key) => (
                 <S.ArticleSample key={key}>
@@ -54,7 +55,9 @@ const ArticlesList = ({ articleToFilter }) => {
                     </Link>
                     <S.HorizontalRuler></S.HorizontalRuler>
                 </S.ArticleSample>
-            )));
+            ))
+        );
+
     return (
         <>
             {content}

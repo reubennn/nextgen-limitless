@@ -23,8 +23,15 @@ import * as S from "../styles/styled-components";
 const ArticlePage = ({ match }) => {
     const name = match.params.name;
     const [found, setFound] = useState(true);
-    // let notFound = false;
-    // const article = articleContent.find((article) => article.name === name);
+
+    const defaults = {
+        _id: null,
+        name: name,
+        title: null,
+        content: [],
+        upvotes: null,
+        comments: [],
+    };
 
     /*
      *  Use React Hook to access state
@@ -34,21 +41,18 @@ const ArticlePage = ({ match }) => {
      *  {} argument passed to useState =>
      *        initial value of articleInfo before loading data or changing state
     */
-    const [articleInfo, setArticleInfo] = useState({
-        _id: null,
-        name: name,
-        title: "",
-        content: [],
-        upvotes: null,
-        comments: [],
-    });
+    const [articleInfo, setArticleInfo] = useState(defaults);
 
     /**
      * React Hook: Sets the article info.
-     * useEffect is called every time name (the URL) is changed
+     * useEffect is called every time name (the URL) is changed.
+     * ie. User has navigated to another article
      */
     useEffect(() => {
         const fetchData = async () => {
+            // Reset the article state properties with the defaults
+            setArticleInfo(defaults);
+
             const result = await fetch(`/api/articles/${name}`);
             const body = await result.json();
             if (result.status === 404) {
