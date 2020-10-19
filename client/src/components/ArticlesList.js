@@ -41,10 +41,10 @@ const ArticlesList = ({ articleToFilter, inArticlePage }) => {
     if (typeof articles !== "undefined" && articles.length > 0 && loading) {
         for (const key in articles) {
             if (articles[key].name !== articleToFilter) {
-                setOtherArticles((prevState => [
+                setOtherArticles((prevState) => [
                     ...prevState,
                     articles[key],
-                ]));
+                ]);
             }
         }
         setLoading(false);

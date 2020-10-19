@@ -195,7 +195,7 @@ export const TextArea = styled.textarea`
     margin-bottom: 1.5rem;
     resize: none;
     overflow: auto;
-	height: auto;
+    height: auto;
     line-height: 1.2rem;
     box-shadow: none;
     transition: box-shadow linear 0.2s;

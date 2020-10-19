@@ -13,7 +13,6 @@ import { withRouter } from "react-router-dom";
  * @return {Component} Wrapper for React Router to push scrollbar to top
  */
 const ScrollToTop = ({ history, children }) => {
-
     // Track any URL change with React Router
     useEffect(() => {
         // Check for changes in the current history location
@@ -38,5 +37,8 @@ ScrollToTop.propTypes = {
     children: PropTypes.object,
 };
 
-// Wrap ScrollToTop in withRouter function to give component access to history prop
+/*
+ * Wrap ScrollToTop in withRouter function
+ * to give component access to history prop
+ */
 export default withRouter(ScrollToTop);

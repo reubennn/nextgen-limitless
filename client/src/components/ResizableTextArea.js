@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import * as S from "../styles/styled-components";
 
 const ResizableTextarea = ({ commentText, setCommentText }) => {
-
     const handleChange = (event) => {
         const textarea = event.target;
         const scrollHeight = textarea.scrollHeight;

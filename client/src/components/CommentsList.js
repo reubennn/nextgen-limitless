@@ -7,7 +7,8 @@ const CommentsList = ({
     comments,
     articleName,
     setArticleInfo,
-    containsComments, }) => {
+    containsComments,
+}) => {
     return (
         <S.CommentsList>
             <S.Header small>Comments:</S.Header>

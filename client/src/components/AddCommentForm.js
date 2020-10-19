@@ -43,7 +43,9 @@ const AddCommentForm = ({ articleName, setArticleInfo }) => {
                 commentText={commentText}
                 setCommentText={setCommentText}
             />
-            <S.Button width="40%" onClick={() => addComment()}>Add comment</S.Button>
+            <S.Button width="40%" onClick={() => addComment()}>
+                Add comment
+            </S.Button>
         </S.AddCommentForm>
     );
 };
