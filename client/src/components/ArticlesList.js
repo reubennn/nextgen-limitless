@@ -10,9 +10,20 @@ const ArticlesList = ({ articleToFilter, inArticlePage }) => {
     const [loading, setLoading] = useState(true);
     const [otherArticles, setOtherArticles] = useState([]);
 
+    /**
+     * useEffect tracking currentArticle
+     * When user navigates to different page, currentArticle updates,
+     * so we need to update the article list
+     */
     useEffect(() => {
         let isMounted = true; // Flag which denotes mount status
 
+        // Reset
+        if (isMounted) {
+            // Reset state values
+            setOtherArticles([]);
+            setLoading(true);
+        }
         // Fetch all article content
         const fetchAllArticles = async () => {
             const result = await fetch("/api/articles");
@@ -24,9 +35,6 @@ const ArticlesList = ({ articleToFilter, inArticlePage }) => {
                 setArticles(fetchedData);
             }
         });
-        if (isMounted) {
-            setLoading(true);
-        }
 
         /**
          * useEffect clean-up:
@@ -52,12 +60,10 @@ const ArticlesList = ({ articleToFilter, inArticlePage }) => {
 
     /*
      * If linked clicked to navigate to another article,
-     * update the state with the clicked on article name,
-     * then reset the other articles.
+     * update the state with the clicked on article name
     */
     const linkClicked = (articleName) => {
         setCurrentArticle(articleName);
-        setOtherArticles([]);
     };
 
     /*
@@ -70,9 +76,13 @@ const ArticlesList = ({ articleToFilter, inArticlePage }) => {
         (
             inArticlePage ?
                 <LoadingIcon /> :
-                <S.CenterInViewport>
-                    <LoadingIcon />
-                </S.CenterInViewport>
+                (
+                    <S.LoadingPlaceholder>
+                        <S.CenterInViewport>
+                            <LoadingIcon />
+                        </S.CenterInViewport>
+                    </S.LoadingPlaceholder>
+                )
         ) :
         (
             otherArticles.map((article, key) => (

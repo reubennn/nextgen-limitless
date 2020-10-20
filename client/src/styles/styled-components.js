@@ -1,12 +1,24 @@
 /* eslint-disable valid-jsdoc */
 import styled, { keyframes } from "styled-components";
+import { Link } from "react-router-dom";
+
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~ Themes ~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
 
 const theme = {
     colorDark: "#303030",
     colorLight: "#bdbdbd",
     colorGrey: "#7b7b7b",
+    textDark: "#222222",
 };
 
+
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~ Keyframes ~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
 
 /**
  * Rotation Keyframe
@@ -20,6 +32,11 @@ const rotate = keyframes`
     transform: rotate(360deg);
   }
 `;
+
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~ styled-components ~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
 
 /**
  * Header Component
@@ -48,7 +65,7 @@ export const HorizontalRuler = styled.hr`
                 ${(props) =>
         props.light ? theme.colorLight : theme.colorDark};
     margin-bottom: ${(props) => props.smallMargin ? "1rem" : "2rem"};
-    margin-top: ${(props) => props.smallMargin ? "0.8rem" : "inherit"};
+    margin-top: ${(props) => props.smallMargin ? "0.8rem" : "1.5rem"};
 `;
 
 HorizontalRuler.defaultProps = {
@@ -208,6 +225,47 @@ export const TextArea = styled.textarea`
     }
 `;
 
+/**
+ * Flex-box Container
+ */
+export const FlexContainer = styled.ul`
+    &&& {
+        display: flex;
+        flex-direction: ${(props) => props.column ? "column" : "row"};
+        justify-content: center;
+        margin: 1rem;
+    }
+    & > li {
+        list-style-type: none;
+    }
+`;
+
+/**
+ * Inherit React Router Link to style it
+ */
+export const RouterLink = styled(Link)`
+    & {
+        color: #fff;
+        font-size: 1.2rem;
+        text-align: center;
+        text-decoration: none;
+        padding: 0.25rem 0.1rem;
+        border-radius: 0.25rem;
+        transition: ease-in-out 0.25s;
+    }
+
+    &:hover {
+        background-color: #fff;
+        color: #303030;
+        padding: 0.25rem 0.75rem;
+        transition: ease-in-out 0.25s;
+    }
+
+`;
+
+/**
+ * LoadingIcon Component
+ */
 export const LoadingIcon = styled.nav.attrs({
     className: "LoadingIcon",
 })`
@@ -245,10 +303,74 @@ export const LoadingIcon = styled.nav.attrs({
     }
 `;
 
+/**
+ * LoadingIcon Component
+ */
 export const CenterInViewport = styled.div`
         position: absolute;
         top: 50%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%)
+`;
+
+/**
+ * Footer Component
+ */
+export const Footer = styled.footer`
+    & {
+        color: #fff;
+        background-color: ${theme.colorDark};
+        font-size: 1.25rem;
+        text-align: center;
+        text-decoration: none;
+        padding: 2rem 0.25rem;
+        margin: 0;
+        margin-top: 4rem;
+        width: 100%;
+    }
+`;
+
+/**
+ * Footer Component
+ */
+export const ListItem = styled.li`
+    & {
+        margin: 0.3rem 0;
+    }
+`;
+
+/**
+ * Inline Anchor Component
+ */
+export const InlineAnchor = styled.a`
+    text-decoration: none;
+    color: ${(props) =>
+        props.darkBackground ? "#fff" : theme.textDark};
+        &:hover {
+            border-bottom: 1px solid
+            ${(props) => props.darkBackground ? "#fff" : theme.textDark};
+        }
+`;
+
+/**
+ * Small Text Component
+ */
+export const TinyText = styled.p`
+    & {
+        color: #fff;
+        font-size: 0.9rem;
+    }
+`;
+
+/**
+ * Loading Placeholder Component to leave blank space
+ * while the page content is loading / fetching from the server.
+ *
+ * Particularly useful to ensure the footer stays off the screen.
+ */
+export const LoadingPlaceholder = styled.div`
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
 `;

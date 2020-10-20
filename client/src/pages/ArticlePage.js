@@ -103,9 +103,11 @@ const ArticlePage = ({ match }) => {
 
     const content = loading ?
         (
-            <S.CenterInViewport>
-                <LoadingIcon />
-            </S.CenterInViewport>
+            <S.LoadingPlaceholder>
+                <S.CenterInViewport>
+                    <LoadingIcon />
+                </S.CenterInViewport>
+            </S.LoadingPlaceholder>
         ) :
         (
             <>

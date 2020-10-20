@@ -13,6 +13,7 @@ import AboutPage from "./pages/AboutPage";
 import ArticlesListPage from "./pages/ArticlesListPage";
 import ArticlePage from "./pages/ArticlePage";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 import NotFoundPage from "./pages/NotFoundPage";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -28,8 +29,12 @@ S.AppContainer = styled.div.attrs({
     color: #222222;
     width: auto;
     height: 100vh;
-    /* max-width: 100%; */
+    min-height: 100vh;
     margin: 0;
+
+    /* Ensures the Footer does not go above the bottom of the screen */
+    display: flex;
+    flex-direction: column;
 `;
 
 /**
@@ -61,6 +66,7 @@ class App extends Component {
                                 />
                             </Switch>
                         </div>
+                        <Footer />
                     </S.AppContainer >
                 </ScrollToTop>
             </Router>
