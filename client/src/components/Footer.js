@@ -22,25 +22,27 @@ const Footer = () => (
             All Rights Reserved.
         </S.TinyText>
         <S.TinyText superTiny>
-            Special thanks to&nbsp;
+            Special thanks to
             <S.InlineAnchor
                 color="light"
+                bgColor="dark"
                 href="https://www.linkedin.com/learning/"
                 target="_blank"
                 rel="noreferrer"
             >
                 LinkedIn Learning
             </S.InlineAnchor>
-            &nbsp;and&nbsp;
+            and
             <S.InlineAnchor
                 color="light"
+                bgColor="dark"
                 href="https://www.linkedin.com/in/shaun-wassell/"
                 target="_blank"
                 rel="noreferrer"
             >
                 Shaun Wassell
             </S.InlineAnchor>
-            &nbsp;for initial content and ideas.
+            for initial content and ideas.
         </S.TinyText>
     </S.Footer>
 );

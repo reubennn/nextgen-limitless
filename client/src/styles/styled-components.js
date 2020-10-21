@@ -424,15 +424,30 @@ export const ListItem = styled.li`
 export const InlineAnchor = styled.a`
     text-decoration: none;
     color: ${(props) => handleColor(props.color)};
-        &:hover {
-            border-bottom: 1px solid ${(props) => handleColor(props.color)};
-        }
-        &::before {
-            content: "|\00a0\00a0";
-        }
-        &::after {
-            content: "|\00a0\00a0";
-        }
+    transition: ease-in-out 0.75s;
+
+    &:hover {
+        border-bottom: 1px solid ${(props) => handleColor(props.color)};
+        transition: ease-in-out 0.25s;
+    }
+
+    &::before {
+        content: " ";
+    }
+
+    &:hover::before {
+        text-decoration: none;
+        border-bottom: 1px solid ${(props) => handleColor(props.bgColor)}
+    }
+
+    &::after {
+        content: " ";
+    }
+
+    &:hover::after {
+        border-bottom: none;
+        border-bottom: 1px solid ${(props) => handleColor(props.bgColor)}
+    }
 `;
 
 /**
