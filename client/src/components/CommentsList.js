@@ -16,14 +16,14 @@ const CommentsList = ({
                 <>
                     <p className="no-comments">There are no comments to display.
                     Feel free to comment using the form below!</p>
-                    <S.HorizontalRuler thin light width={"70%"} />
+                    <S.HorizontalRuler thin color="lighter" width={"70%"} />
                 </>
             }
             {comments.map((comment, key) => (
                 <div key={key}>
                     <h4>- {comment.username} - </h4>
                     <p>{comment.text}</p>
-                    <S.HorizontalRuler thin light />
+                    <S.HorizontalRuler thin color="lighter" />
                 </div>
             ))}
             <AddCommentForm

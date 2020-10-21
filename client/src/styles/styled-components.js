@@ -8,12 +8,40 @@ import { Link } from "react-router-dom";
  */
 
 const theme = {
-    colorDark: "#303030",
-    colorLight: "#bdbdbd",
     colorGrey: "#7b7b7b",
-    textDark: "#222222",
+    colorLight: "#a6a6a6",
+    colorLighter: "#bdbdbd",
+    colorDark: "#303030",
+    colorDarker: "#222",
 };
 
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~ Handlers ~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
+/**
+ * Function to handle which color the property should be.
+ * Created as some Components may need different color depending on background
+ */
+const handleColor = (color) => {
+    switch (color) {
+        case ("white"):
+            return "#fff";
+        case ("grey"):
+            return theme.colorGrey;
+        case ("light"):
+            return theme.colorLight;
+        case ("lighter"):
+            return theme.colorLighter;
+        case ("dark"):
+            return theme.colorDark;
+        case ("darker"):
+            return theme.colorDarker;
+        default:
+            return theme.colorDark;
+    }
+};
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~ Keyframes ~~~~~~~~~~~~~~
@@ -62,8 +90,7 @@ export const HorizontalRuler = styled.hr`
     width: ${(props) => props.width};
     border-top: ${(props) => props.thin ? "0.05rem" : "0.1rem"}
                 solid
-                ${(props) =>
-        props.light ? theme.colorLight : theme.colorDark};
+                ${(props) => handleColor(props.color)};
     margin-bottom: ${(props) => props.smallMargin ? "1rem" : "2rem"};
     margin-top: ${(props) => props.smallMargin ? "0.8rem" : "1.5rem"};
 `;
@@ -141,6 +168,13 @@ export const UpvoteSection = styled.div`
         margin: auto 0.6rem;
         text-align: right;
     }
+`;
+
+/**
+ * UpvoteSection Component
+ */
+export const NotFoundPage = styled.div`
+    padding-bottom: calc(100vh - 38rem);
 `;
 
 /**
@@ -226,17 +260,15 @@ export const TextArea = styled.textarea`
 `;
 
 /**
- * Flex-box Container
+ * Small Text Component
  */
-export const FlexContainer = styled.ul`
-    &&& {
-        display: flex;
-        flex-direction: ${(props) => props.column ? "column" : "row"};
-        justify-content: center;
-        margin: 1rem;
+export const TinyText = styled.p`
+    & {
+        color: ${theme.colorGrey};
+        font-size: ${(props) => props.superTiny ? "0.75rem" : "0.85rem"};
     }
-    & > li {
-        list-style-type: none;
+    & > span {
+        color: ${theme.colorLight};
     }
 `;
 
@@ -245,7 +277,7 @@ export const FlexContainer = styled.ul`
  */
 export const RouterLink = styled(Link)`
     & {
-        color: #fff;
+        color: ${(props) => handleColor(props.color)};
         font-size: 1.2rem;
         text-align: center;
         text-decoration: none;
@@ -255,12 +287,57 @@ export const RouterLink = styled(Link)`
     }
 
     &:hover {
-        background-color: #fff;
+        background-color: ${(props) => handleColor(props.color)};
         color: #303030;
         padding: 0.25rem 0.75rem;
         transition: ease-in-out 0.25s;
     }
+`;
 
+/**
+ * Inherit React Router Link to style it
+ */
+export const TinyRouterLink = styled(Link)`
+    & {
+        color: ${(props) => handleColor(props.color)};
+        font-size: 0.75rem;
+        margin: 0 0.85rem;
+        text-align: center;
+        text-decoration: none;
+        padding: 0.25rem 0.1rem;
+        border-radius: 0.25rem;
+        transition: ease-in-out 0.25s;
+    }
+
+    &:hover {
+        background-color: ${(props) => handleColor(props.color)};
+        color: #303030;
+        padding: 0.25rem 0.75rem;
+        margin: 0 0.2rem;
+        transition: ease-in-out 0.25s;
+    }
+`;
+
+/**
+ * Flex-box Container
+ */
+export const FlexContainer = styled.ul`
+    color: inherit;
+    display: flex;
+    flex-direction: ${(props) => props.column ? "column" : "row"};
+    justify-content: center;
+    margin: 1rem;
+    & > li {
+        list-style-type: none;
+    }
+
+    & .footer-nav {
+        margin: 1rem 3rem;
+    }
+
+    & ~ ${TinyRouterLink} {
+        margin-top: 0;
+    }
 `;
 
 /**
@@ -319,12 +396,12 @@ export const CenterInViewport = styled.div`
  */
 export const Footer = styled.footer`
     & {
-        color: #fff;
+        color: ${theme.textGrey};
         background-color: ${theme.colorDark};
         font-size: 1.25rem;
         text-align: center;
         text-decoration: none;
-        padding: 2rem 0.25rem;
+        padding: 2rem 0.25rem 0.5rem;
         margin: 0;
         margin-top: 4rem;
         width: 100%;
@@ -336,6 +413,7 @@ export const Footer = styled.footer`
  */
 export const ListItem = styled.li`
     & {
+        color: inherit;
         margin: 0.3rem 0;
     }
 `;
@@ -345,22 +423,16 @@ export const ListItem = styled.li`
  */
 export const InlineAnchor = styled.a`
     text-decoration: none;
-    color: ${(props) =>
-        props.darkBackground ? "#fff" : theme.textDark};
+    color: ${(props) => handleColor(props.color)};
         &:hover {
-            border-bottom: 1px solid
-            ${(props) => props.darkBackground ? "#fff" : theme.textDark};
+            border-bottom: 1px solid ${(props) => handleColor(props.color)};
         }
-`;
-
-/**
- * Small Text Component
- */
-export const TinyText = styled.p`
-    & {
-        color: #fff;
-        font-size: 0.9rem;
-    }
+        &::before {
+            content: "|\00a0\00a0";
+        }
+        &::after {
+            content: "|\00a0\00a0";
+        }
 `;
 
 /**
