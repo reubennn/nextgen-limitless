@@ -11,14 +11,20 @@ const UpvoteSection = ({ articleName, upvotes, setArticleInfo }) => {
         setArticleInfo(body.value);
     };
 
+    let upvotesIsOne = false;
+    if (upvotes === 1) {
+        upvotesIsOne = true;
+    }
+
     return (
         <>
             <S.UpvoteSection>
-                <i>This post has been upvoted <b>{upvotes}</b> times</i>
+                <i>This post has been upvoted <b>{upvotes}</b> time
+                    {upvotesIsOne ? null : "s"}</i>
                 <S.Button
-                    className="upvote-button"
+                    upvote
                     onClick={() => upvoteArticle()}>
-                    Upvote
+                    +1
                 </S.Button>
             </S.UpvoteSection>
             <S.HorizontalRuler thin smallMargin />

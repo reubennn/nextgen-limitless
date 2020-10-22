@@ -184,20 +184,15 @@ export const NotFoundPage = styled.div`
 export const Button = styled.button`
     color: #fff;
     background-color: ${theme.colorDark};
-    padding: 0.6rem 1.2rem;
-    border-radius: 1.5rem;
+    padding: ${(props) => props.upvote ? "0.35rem" : "0.6rem 1.2rem"};
+    padding-top: ${(props) => props.upvote ? "0.25rem" : "0.6rem"};
+    margin: ${(props) => props.upvote ? "0" : "auto"};
+    border-radius: ${(props) => props.upvote ? "0.6rem" : "1.5rem"};
     transition-duration: 0.4s;
-    height: 2.5rem;
     display: block;
-    /* width: ${(props) => props.width ? props.width : "inherit"}; */
-    margin: auto;
 
     &:hover {
         background-color: #000;
-    }
-
-    &.upvote-button {
-        margin: 0;
     }
 `;
 
@@ -327,7 +322,7 @@ export const TinyRouterLink = styled(Link)`
 export const FlexContainer = styled.ul`
     color: inherit;
     display: flex;
-    flex-wrap: ${(props) => props.wrap ? "wrap" : "nowrap"};
+    flex-wrap: ${(props) => props.wrapContent ? "wrap" : "nowrap"};
     flex-direction: ${(props) => props.column ? "column" : "row"};
     justify-content: center;
     margin: ${(props) => props.smallMargin ? "0.25rem" : "1rem"};
