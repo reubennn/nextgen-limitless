@@ -162,6 +162,7 @@ export const UpvoteSection = styled.div`
     flex-direction: row;
     margin-left: 2rem;
     justify-content: flex-end;
+    flex-wrap: wrap;
 
     i:first-of-type {
         /* display: block; */
@@ -183,10 +184,12 @@ export const NotFoundPage = styled.div`
 export const Button = styled.button`
     color: #fff;
     background-color: ${theme.colorDark};
-    padding: 0.6rem 0.8rem;
+    padding: 0.6rem 1.2rem;
     border-radius: 1.5rem;
     transition-duration: 0.4s;
-    width: ${(props) => props.width ? props.width : "inherit"};
+    height: 2.5rem;
+    display: block;
+    /* width: ${(props) => props.width ? props.width : "inherit"}; */
     margin: auto;
 
     &:hover {
@@ -263,10 +266,10 @@ export const TextArea = styled.textarea`
  * Small Text Component
  */
 export const TinyText = styled.p`
-    & {
-        color: ${theme.colorGrey};
-        font-size: ${(props) => props.superTiny ? "0.75rem" : "0.85rem"};
-    }
+    margin: ${(props) => props.margin ? props.margin : "1rem"} 0;
+    color: ${(props) => props.light ? theme.colorLight : theme.colorGrey};
+    font-size: ${(props) => props.superTiny ? "0.75rem" : "0.85rem"};
+
     & > span {
         color: ${theme.colorLight};
     }
@@ -324,9 +327,11 @@ export const TinyRouterLink = styled(Link)`
 export const FlexContainer = styled.ul`
     color: inherit;
     display: flex;
+    flex-wrap: ${(props) => props.wrap ? "wrap" : "nowrap"};
     flex-direction: ${(props) => props.column ? "column" : "row"};
     justify-content: center;
-    margin: 1rem;
+    margin: ${(props) => props.smallMargin ? "0.25rem" : "1rem"};
+
     & > li {
         list-style-type: none;
     }
@@ -388,7 +393,7 @@ export const CenterInViewport = styled.div`
         top: 50%;
         left: 50%;
         margin-right: -50%;
-        transform: translate(-50%, -50%)
+        transform: translate(-50%, -50%);
 `;
 
 /**
@@ -419,9 +424,9 @@ export const ListItem = styled.li`
 `;
 
 /**
- * Inline Anchor Component
+ * Anchor Component
  */
-export const InlineAnchor = styled.a`
+export const Anchor = styled.a`
     text-decoration: none;
     color: ${(props) => handleColor(props.color)};
     transition: ease-in-out 0.75s;
@@ -430,7 +435,12 @@ export const InlineAnchor = styled.a`
         border-bottom: 1px solid ${(props) => handleColor(props.color)};
         transition: ease-in-out 0.25s;
     }
+`;
 
+/**
+ * Inline Anchor Component
+ */
+export const InlineAnchor = styled(Anchor)`
     &::before {
         content: " ";
     }
@@ -460,4 +470,22 @@ export const LoadingPlaceholder = styled.div`
     height: auto;
     min-height: 100vh;
     width: 100%;
+`;
+
+/**
+ * Social Media Button Link Component
+ */
+export const SocialMediaButton = styled.a`
+    text-decoration: none;
+    margin: 0 0.5rem;
+
+    & > svg {
+        fill: ${(props) => handleColor(props.color)};
+        transition: ease-in-out 0.4s;
+    }
+
+    & > svg:hover {
+        fill: #fff;
+        transition: ease-in-out 0.4s;
+    }
 `;
