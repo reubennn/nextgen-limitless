@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import * as S from "../styles/styled-components";
 
 // Use Fandom.com icons
-const SocialMediaButton = ({ icon, className }) => {
+const SocialMediaButton = ({ icon, className, color = "grey" }) => {
     return (
         <S.SocialMediaButton
             className={className}
-            color="grey"
+            color={color}
             href={icon.href}
             target="_blank"
             rel="noreferrer">
@@ -34,6 +34,7 @@ const SocialMediaButton = ({ icon, className }) => {
 SocialMediaButton.propTypes = {
     icon: PropTypes.object.isRequired,
     className: PropTypes.string,
+    color: PropTypes.string,
 };
 
 export default SocialMediaButton;

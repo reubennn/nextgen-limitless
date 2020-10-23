@@ -48,7 +48,12 @@ const Footer = () => {
                 <RouterLink url="/contact" label="Contact" />
             </S.FlexContainer>
             <S.HorizontalRuler thin smallMargin color="grey" width={"50%"} />
-            <S.TinyText margin="0.6rem" light>Connect with us:</S.TinyText>
+            <S.TinyText
+                margin="0.6rem"
+                color="light"
+            >
+                Connect with us:
+            </S.TinyText>
             <S.FlexContainer smallMargin wrapContent>
                 {minWidthDetected ?
                     null :

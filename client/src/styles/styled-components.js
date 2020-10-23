@@ -280,9 +280,11 @@ export const TextArea = styled.textarea`
 /**
  * Small Text Component
  */
-export const TinyText = styled.p`
+export const TinyText = styled.p.attrs((props) => ({
+    color: props.color || theme.colorGrey,
+}))`
     margin: ${(props) => props.margin ? props.margin : "1rem"} 0;
-    color: ${(props) => props.light ? theme.colorLight : theme.colorGrey};
+    color: ${(props) => props.color};
     font-size: ${(props) => props.superTiny ? "0.75rem" : "0.85rem"};
 
     & > span {

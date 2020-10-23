@@ -127,13 +127,14 @@ const ArticlePage = ({ match }) => {
                     smallMargin
                     wrapContent
                     justifyContent="flex-end">
-                    <S.TinyText margin="0.25rem">
+                    <S.TinyText color="darkerGrey" margin="0.25rem">
                         <i>Share this article:</i>
                     </S.TinyText>
                     {socialMediaIcons.map((icon, key) => (
                         <SocialMediaButton
                             key={key}
-                            icon={icon} />
+                            icon={icon}
+                            color="darkerGrey" />
                     ))}
                 </S.FlexContainer>
                 <CommentsList
