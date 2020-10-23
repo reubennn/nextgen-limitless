@@ -22,12 +22,12 @@ const UpvoteSection = ({ articleName, upvotes, setArticleInfo }) => {
                 <i>This post has been upvoted <b>{upvotes}</b> time
                     {upvotesIsOne ? null : "s"}</i>
                 <S.Button
-                    upvote
+                    className="upvote-button"
                     onClick={() => upvoteArticle()}>
                     +1
                 </S.Button>
             </S.UpvoteSection>
-            <S.HorizontalRuler thin smallMargin />
+            <S.HorizontalRuler thin smallMargin color="light"/>
         </>
     );
 };

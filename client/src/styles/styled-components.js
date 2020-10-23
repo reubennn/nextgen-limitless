@@ -9,8 +9,9 @@ import { Link } from "react-router-dom";
 
 const theme = {
     colorGrey: "#7b7b7b",
-    colorLight: "#a6a6a6",
+    colorDarkerGrey: "#515151",
     colorLighter: "#bdbdbd",
+    colorLight: "#a6a6a6",
     colorDark: "#303030",
     colorDarker: "#222",
 };
@@ -30,10 +31,12 @@ const handleColor = (color) => {
             return "#fff";
         case ("grey"):
             return theme.colorGrey;
-        case ("light"):
-            return theme.colorLight;
+        case ("darkerGrey"):
+            return theme.colorDarkerGrey;
         case ("lighter"):
             return theme.colorLighter;
+        case ("light"):
+            return theme.colorLight;
         case ("dark"):
             return theme.colorDark;
         case ("darker"):
@@ -69,10 +72,13 @@ const rotate = keyframes`
 /**
  * Header Component
  */
-export const Header = styled.h1`
+export const Header = styled.h1.attrs((props) => ({
+    color: props.color || "#fff",
+    bgColor: props.bgColor || theme.colorDark,
+}))`
     & {
-        color: #fff;
-        background-color: ${theme.colorDark};
+        color: ${(props) => props.color};
+        background-color: ${(props) => props.bgColor};
         padding: 0.5rem;
         padding-left: 0.75rem;
         border-radius: 0.2rem;
@@ -93,6 +99,12 @@ export const HorizontalRuler = styled.hr`
                 ${(props) => handleColor(props.color)};
     margin-bottom: ${(props) => props.smallMargin ? "1rem" : "2rem"};
     margin-top: ${(props) => props.smallMargin ? "0.8rem" : "1.5rem"};
+
+    &.footer-hr {
+        border-top: 0.05rem solid ${theme.colorGrey};
+        margin-top: 0.8rem;
+        margin-bottom: 1rem;
+    }
 `;
 
 HorizontalRuler.defaultProps = {
@@ -158,6 +170,7 @@ export const CommentsList = styled.div`
  * UpvoteSection Component
  */
 export const UpvoteSection = styled.div`
+    color: ${theme.colorDarkerGrey};
     display: flex;
     flex-direction: row;
     margin-left: 2rem;
@@ -184,15 +197,22 @@ export const NotFoundPage = styled.div`
 export const Button = styled.button`
     color: #fff;
     background-color: ${theme.colorDark};
-    padding: ${(props) => props.upvote ? "0.35rem" : "0.6rem 1.2rem"};
-    padding-top: ${(props) => props.upvote ? "0.25rem" : "0.6rem"};
-    margin: ${(props) => props.upvote ? "0" : "auto"};
-    border-radius: ${(props) => props.upvote ? "0.6rem" : "1.5rem"};
+    padding: 0.6rem 1.2rem;
+    padding-top: 0.6rem;
+    margin: auto;
+    border-radius: 1.5rem;
     transition-duration: 0.4s;
     display: block;
 
     &:hover {
         background-color: #000;
+    }
+
+    &.upvote-button {
+        padding: 0.35rem;
+        padding-top: 0.25rem;
+        margin: 0;
+        border-radius: 0.6rem;
     }
 `;
 
@@ -319,12 +339,14 @@ export const TinyRouterLink = styled(Link)`
 /**
  * Flex-box Container
  */
-export const FlexContainer = styled.ul`
+export const FlexContainer = styled.ul.attrs((props) => ({
+    justifyContent: props.justifyContent || "center",
+}))`
     color: inherit;
     display: flex;
     flex-wrap: ${(props) => props.wrapContent ? "wrap" : "nowrap"};
     flex-direction: ${(props) => props.column ? "column" : "row"};
-    justify-content: center;
+    justify-content: ${(props) => props.justifyContent};
     margin: ${(props) => props.smallMargin ? "0.25rem" : "1rem"};
 
     & > li {
@@ -381,7 +403,9 @@ export const LoadingIcon = styled.nav.attrs({
 `;
 
 /**
- * LoadingIcon Component
+ * CenterInViewport Component
+ *
+ * For positioning the element in the center of the viewport
  */
 export const CenterInViewport = styled.div`
         position: absolute;
@@ -476,11 +500,15 @@ export const SocialMediaButton = styled.a`
 
     & > svg {
         fill: ${(props) => handleColor(props.color)};
-        transition: ease-in-out 0.4s;
+        transition: ease-in-out 0.3s;
     }
 
     & > svg:hover {
-        fill: #fff;
+        fill: #000;
         transition: ease-in-out 0.4s;
+        }
+
+    &.footer-icon > svg:hover {
+        fill: #fff;
     }
 `;

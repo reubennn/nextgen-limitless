@@ -6,6 +6,9 @@ import NotFoundPage from "./NotFoundPage";
 import CommentsList from "../components/CommentsList.js";
 import UpvotesSection from "../components/UpvoteSection";
 import LoadingIcon from "../components/LoadingIcon";
+import SocialMediaButton from "../components/SocialMediaButton";
+
+import socialMediaIcons from "../data/socialMediaIcons";
 
 import * as S from "../styles/styled-components";
 
@@ -119,6 +122,20 @@ const ArticlePage = ({ match }) => {
                 {articleInfo.content.map((paragraph, key) => (
                     <p key={key}>{paragraph}</p>
                 ))}
+                <S.HorizontalRuler thin smallMargin color="light" />
+                <S.FlexContainer
+                    smallMargin
+                    wrapContent
+                    justifyContent="flex-end">
+                    <S.TinyText margin="0.25rem">
+                        <i>Share this article:</i>
+                    </S.TinyText>
+                    {socialMediaIcons.map((icon, key) => (
+                        <SocialMediaButton
+                            key={key}
+                            icon={icon} />
+                    ))}
+                </S.FlexContainer>
                 <CommentsList
                     comments={articleInfo.comments}
                     articleName={name}

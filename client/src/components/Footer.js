@@ -53,31 +53,26 @@ const Footer = () => {
                 {minWidthDetected ?
                     null :
                     <S.HorizontalRuler
-                        thin
-                        smallMargin
-                        color="grey"
-                        width={"25%"} />
+                        className="footer-hr"
+                        width="25%" />
                 }
                 {socialMediaIcons.map((icon, key) => (
                     <SocialMediaButton
+                        className="footer-icon"
                         key={key}
                         icon={icon} />
                 ))}
                 {minWidthDetected ?
                     null :
                     <S.HorizontalRuler
-                        thin
-                        smallMargin
-                        color="grey"
-                        width={"25%"} />
+                        className="footer-hr"
+                        width="25%" />
                 }
             </S.FlexContainer>
             {minWidthDetected ?
                 <S.HorizontalRuler
-                    thin
-                    smallMargin
-                    color="grey"
-                    width={"50%"} /> :
+                    className="footer-hr"
+                    width="50%" /> :
                 null
             }
             <S.TinyText>
