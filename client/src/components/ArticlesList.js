@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+import {
+    getArticlesList,
+    getLoadingFailedState,
+    getLoadingState,
+} from "../selectors/articleSelectors";
+import {
+    fetchAllArticles,
+} from "../thunks/articleThunks";
+import {
+    setLoading,
+} from "../actions/articleActions";
+
 import * as S from "../styles/styled-components";
 import LoadingIcon from "./LoadingIcon";
 
-const ArticlesList = ({ articleToFilter, inArticlePage }) => {
+const ArticlesList = ({
+    articleToFilter,
+    inArticlePage,
+    // Redux
+    loading,
+    loadingFailed,
+    articles,
+    setLoading,
+    fetchAllArticles,
+}) => {
     const [currentArticle, setCurrentArticle] = useState(articleToFilter);
-    const [articles, setArticles] = useState([]);
-    const [loading, setLoading] = useState(true);
+    // const [articles, setArticles] = useState([]);
+    // const [loading, setLoading] = useState(true);
     const [otherArticles, setOtherArticles] = useState([]);
 
     /**
@@ -25,16 +48,7 @@ const ArticlesList = ({ articleToFilter, inArticlePage }) => {
             setLoading(true);
         }
         // Fetch all article content
-        const fetchAllArticles = async () => {
-            const result = await fetch("/api/articles");
-            return await result.json();
-        };
-
-        fetchAllArticles().then((fetchedData) => {
-            if (isMounted) {
-                setArticles(fetchedData);
-            }
-        });
+        fetchAllArticles();
 
         /**
          * useEffect clean-up:
@@ -45,18 +59,21 @@ const ArticlesList = ({ articleToFilter, inArticlePage }) => {
         };
     }, [currentArticle]);
 
-    // Populate the other articles list without the current article
-    if (typeof articles !== "undefined" && articles.length > 0 && loading) {
-        articles.map((article, key) => {
-            if (article.name !== articleToFilter) {
-                setOtherArticles((prevState) => [
-                    ...prevState,
-                    article,
-                ]);
-            }
-        });
-        setLoading(false);
-    }
+    useEffect(() => {
+        // Populate the other articles list without the current article
+        if (typeof articles !== "undefined" &&
+            articles.length > 0) {
+            articles.map((article, key) => {
+                if (article.name !== articleToFilter) {
+                    setOtherArticles((prevState) => [
+                        ...prevState,
+                        article,
+                    ]);
+                }
+            });
+            setLoading(false);
+        }
+    }, []);
 
     /*
      * If linked clicked to navigate to another article,
@@ -108,6 +125,24 @@ const ArticlesList = ({ articleToFilter, inArticlePage }) => {
 ArticlesList.propTypes = {
     articleToFilter: PropTypes.string,
     inArticlePage: PropTypes.bool,
+    articles: PropTypes.array,
+    loading: PropTypes.bool,
+    loadingFailed: PropTypes.bool,
+    fetchAllArticles: PropTypes.func,
+    setLoading: PropTypes.func,
 };
 
-export default ArticlesList;
+const mapStateToProps = (state) => ({
+    // Use Redux selectors
+    loading: getLoadingState(state),
+    loadingFailed: getLoadingFailedState(state),
+    articles: getArticlesList(state),
+});
+
+// Dispatch Actions to the Redux Store
+const mapDispatchToProps = (dispatch) => ({
+    fetchAllArticles: () => dispatch(fetchAllArticles()),
+    setLoading: (loading) => dispatch(setLoading(loading)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticlesList);
