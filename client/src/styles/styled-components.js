@@ -24,23 +24,41 @@ const theme = {
 /**
  * Function to handle which color the property should be.
  * Created as some Components may need different color depending on background
+ *
+ * Two instances for each color have been created:
+ *      1. For theme found in this file
+ *      2. For color word simplicity in React Component render
  */
 const handleColor = (color) => {
     switch (color) {
         case ("white"):
             return "#fff";
+        case ("#fff"):
+            return color;
         case ("grey"):
             return theme.colorGrey;
+        case (theme.colorGrey):
+            return color;
         case ("darkerGrey"):
             return theme.colorDarkerGrey;
+        case (theme.colorDarkerGrey):
+            return color;
         case ("lighter"):
             return theme.colorLighter;
+        case (theme.colorLighter):
+            return color;
         case ("light"):
             return theme.colorLight;
+        case (theme.colorLight):
+            return color;
         case ("dark"):
             return theme.colorDark;
+        case (theme.colorDark):
+            return color;
         case ("darker"):
             return theme.colorDarker;
+        case (theme.colorDarker):
+            return color;
         default:
             return theme.colorDark;
     }
@@ -77,8 +95,8 @@ export const Header = styled.h1.attrs((props) => ({
     bgColor: props.bgColor || theme.colorDark,
 }))`
     & {
-        color: ${(props) => props.color};
-        background-color: ${(props) => props.bgColor};
+        color: ${(props) => handleColor(props.color)};
+        background-color: ${(props) => handleColor(props.bgColor)};
         padding: 0.5rem;
         padding-left: 0.75rem;
         border-radius: 0.2rem;
@@ -284,7 +302,7 @@ export const TinyText = styled.p.attrs((props) => ({
     color: props.color || theme.colorGrey,
 }))`
     margin: ${(props) => props.margin ? props.margin : "1rem"} 0;
-    color: ${(props) => props.color};
+    color: ${(props) => handleColor(props.color)};
     font-size: ${(props) => props.superTiny ? "0.75rem" : "0.85rem"};
 
     & > span {

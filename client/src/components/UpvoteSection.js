@@ -20,7 +20,7 @@ const UpvoteSection = ({ articleName, upvotes, setArticleInfo }) => {
         <>
             <S.UpvoteSection>
                 <i>This post has been upvoted <b>{upvotes}</b> time
-                    {upvotesIsOne ? null : "s"}</i>
+                    {!upvotesIsOne && "s"}</i>
                 <S.Button
                     className="upvote-button"
                     onClick={() => upvoteArticle()}>

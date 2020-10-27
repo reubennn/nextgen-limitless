@@ -55,8 +55,7 @@ const Footer = () => {
                 Connect with us:
             </S.TinyText>
             <S.FlexContainer smallMargin wrapContent>
-                {minWidthDetected ?
-                    null :
+                {!minWidthDetected &&
                     <S.HorizontalRuler
                         className="footer-hr"
                         width="25%" />
@@ -67,18 +66,16 @@ const Footer = () => {
                         key={key}
                         icon={icon} />
                 ))}
-                {minWidthDetected ?
-                    null :
+                {!minWidthDetected &&
                     <S.HorizontalRuler
                         className="footer-hr"
                         width="25%" />
                 }
             </S.FlexContainer>
-            {minWidthDetected ?
+            {minWidthDetected &&
                 <S.HorizontalRuler
                     className="footer-hr"
-                    width="50%" /> :
-                null
+                    width="50%" />
             }
             <S.TinyText>
                 <span>© 2020 Reuben Smith.&nbsp;</span>
