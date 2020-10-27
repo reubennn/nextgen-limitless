@@ -6,7 +6,7 @@ import LoadingIcon from "./LoadingIcon";
 
 const ArticlesList = ({ articleToFilter, inArticlePage }) => {
     const [currentArticle, setCurrentArticle] = useState(articleToFilter);
-    const [articles, setArticles] = useState({});
+    const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [otherArticles, setOtherArticles] = useState([]);
 
@@ -47,14 +47,14 @@ const ArticlesList = ({ articleToFilter, inArticlePage }) => {
 
     // Populate the other articles list without the current article
     if (typeof articles !== "undefined" && articles.length > 0 && loading) {
-        for (const key in articles) {
-            if (articles[key].name !== articleToFilter) {
+        articles.map((article, key) => {
+            if (article.name !== articleToFilter) {
                 setOtherArticles((prevState) => [
                     ...prevState,
-                    articles[key],
+                    article,
                 ]);
             }
-        }
+        });
         setLoading(false);
     }
 
