@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import {
     getArticlesList,
-    getLoadingFailedState,
+    getloadStatusState,
     getLoadingState,
 } from "../selectors/articleSelectors";
 import {
@@ -13,19 +13,22 @@ import {
 } from "../thunks/articleThunks";
 import {
     setLoading,
+    resetLoading,
 } from "../actions/articleActions";
 
 import * as S from "../styles/styled-components";
 import LoadingIcon from "./LoadingIcon";
+import ServerErrorPage from "../pages/ServerErrorPage";
 
 const ArticlesList = ({
     articleToFilter,
     inArticlePage,
     // Redux
     loading,
-    loadingFailed,
+    loadStatus,
     articles,
     setLoading,
+    resetLoading,
     fetchAllArticles,
 }) => {
     const [currentArticle, setCurrentArticle] = useState(articleToFilter);
@@ -60,6 +63,7 @@ const ArticlesList = ({
     }, [currentArticle]);
 
     useEffect(() => {
+        resetLoading();
         // Populate the other articles list without the current article
         if (typeof articles !== "undefined" &&
             articles.length > 0) {
@@ -102,17 +106,21 @@ const ArticlesList = ({
                 )
         ) :
         (
-            otherArticles.map((article, key) => (
-                <S.ArticleSample key={key}>
-                    <Link to={`/article/${article.name}`}
-                        onClick={() => linkClicked(article.name)}>
-                        <h3>{article.title}</h3>
-                        {/* Get the first 150 characters from the article */}
-                        <p>{article.content[0].substring(0, 150)}...</p>
-                    </Link>
-                    <S.HorizontalRuler></S.HorizontalRuler>
-                </S.ArticleSample>
-            ))
+            loadStatus.failed ?
+                <ServerErrorPage errorCode={loadStatus.code} /> :
+                (
+                    otherArticles.map((article, key) => (
+                        <S.ArticleSample key={key}>
+                            <Link to={`/article/${article.name}`}
+                                onClick={() => linkClicked(article.name)}>
+                                <h3>{article.title}</h3>
+                                {/* Get first 150 characters from article */}
+                                <p>{article.content[0].substring(0, 150)}...</p>
+                            </Link>
+                            <S.HorizontalRuler></S.HorizontalRuler>
+                        </S.ArticleSample>
+                    ))
+                )
         );
 
     return (
@@ -127,15 +135,16 @@ ArticlesList.propTypes = {
     inArticlePage: PropTypes.bool,
     articles: PropTypes.array,
     loading: PropTypes.bool,
-    loadingFailed: PropTypes.bool,
+    loadStatus: PropTypes.object,
     fetchAllArticles: PropTypes.func,
     setLoading: PropTypes.func,
+    resetLoading: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
     // Use Redux selectors
     loading: getLoadingState(state),
-    loadingFailed: getLoadingFailedState(state),
+    loadStatus: getloadStatusState(state),
     articles: getArticlesList(state),
 });
 
@@ -143,6 +152,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     fetchAllArticles: () => dispatch(fetchAllArticles()),
     setLoading: (loading) => dispatch(setLoading(loading)),
+    resetLoading: () => dispatch(resetLoading()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticlesList);

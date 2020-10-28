@@ -1,6 +1,7 @@
 import {
     // ADD_COMMENT,
     SET_LOADING,
+    RESET_LOADING,
     LOAD_ARTICLES_IN_PROGRESS,
     LOAD_ARTICLES_SUCCESS,
     LOAD_ARTICLES_FAILURE,
@@ -8,7 +9,10 @@ import {
 
 const initialState = {
     loading: true,
-    loadingFailed: false,
+    loadStatus: {
+        failed: false,
+        code: null,
+    },
     list: [], // Articles list
 };
 
@@ -46,6 +50,16 @@ export const articles = (state = initialState, action) => {
                 loading,
             };
         }
+        case (RESET_LOADING): {
+            return {
+                ...state,
+                loading: true,
+                loadStatus: {
+                    failed: false,
+                    code: null,
+                },
+            };
+        }
         case (LOAD_ARTICLES_SUCCESS): {
             const { articles } = payload;
             return {
@@ -61,10 +75,20 @@ export const articles = (state = initialState, action) => {
             };
         }
         case (LOAD_ARTICLES_FAILURE): {
+            const { code } = payload;
+            const codeProvided = (() => {
+                if (code === undefined) {
+                    return false;
+                }
+                return true;
+            })();
             return {
                 ...state,
                 loading: false,
-                loadingFailed: true,
+                loadStatus: {
+                    failed: true,
+                    code: codeProvided ? code : null,
+                },
             };
         }
         default: {

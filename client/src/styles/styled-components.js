@@ -93,6 +93,7 @@ const rotate = keyframes`
 export const Header = styled.h1.attrs((props) => ({
     color: props.color || "#fff",
     bgColor: props.bgColor || theme.colorDark,
+    textAlign: props.textAlign || "left",
 }))`
     & {
         color: ${(props) => handleColor(props.color)};
@@ -102,6 +103,35 @@ export const Header = styled.h1.attrs((props) => ({
         border-radius: 0.2rem;
         font-size: ${(props) => props.small ? "1.5rem" : "2.25rem"};
         margin: ${(props) => props.small ? "2.5rem 0 1.5rem 0" : "1rem 0"};
+        text-align: ${(props) => props.textAlign}
+    }
+
+    &.no-background {
+        color: ${theme.colorDark};
+        background-color: transparent;
+        padding: 0;
+    }
+`;
+
+export const HeaderSecondary = styled(Header).attrs((props) => ({
+    color: props.color || "#fff",
+    bgColor: props.bgColor || theme.colorDark,
+    textAlign: props.textAlign || "left",
+}))`
+    & {
+        color: ${(props) => handleColor(props.color)};
+        background-color: ${(props) => handleColor(props.bgColor)};
+        padding: 0.5rem;
+        padding-left: 0.75rem;
+        border-radius: 0.2rem;
+        font-size: ${(props) => props.small ? "1.5rem" : "2.25rem"};
+        margin: ${(props) => props.small ? "2.5rem 0 1.5rem 0" : "1rem 0"};
+        text-align: ${(props) => props.textAlign}
+    }
+
+    &.no-background {
+        color: ${theme.colorDark};
+        background-color: transparent;
     }
 `;
 
@@ -205,7 +235,7 @@ export const UpvoteSection = styled.div`
 /**
  * UpvoteSection Component
  */
-export const NotFoundPage = styled.div`
+export const FooterPaddingPlaceholder = styled.div`
     padding-bottom: calc(100vh - 38rem);
 `;
 

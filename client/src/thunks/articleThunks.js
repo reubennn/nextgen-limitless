@@ -12,15 +12,21 @@ export const fetchAllArticles = () => async (dispatch, getState) => {
     try {
         dispatch(loadArticlesInProgress()); // Update Loading state
         const response = await fetch("/api/articles");
-        const articles = await response.json();
+        // const articles = await response.json();
 
-        dispatch(fetchArticlesSuccess(articles)); // Update the articles list
+        if (response.status === 200) {
+            const articles = await response.json();
+            // Update the articles list
+            dispatch(fetchArticlesSuccess(articles));
+        } else {
+            dispatch(fetchArticlesFailure(response.status));
+        }
     } catch (e) {
         dispatch(fetchArticlesFailure());
-        dispatch(displayAlert(e));
+        dispatch(clog(e));
     }
 };
 
-export const displayAlert = (text) => () => {
+export const clog = (text) => () => {
     console.log(text);
 };

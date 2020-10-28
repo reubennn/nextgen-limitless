@@ -1,14 +1,33 @@
 /* eslint-disable max-len */
 import React from "react";
-import ArticlesList from "../components/ArticlesList";
+import PropTypes from "prop-types";
 
+/** ~~~~ Redux ~~~~ **/
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import {
+    getloadStatusState,
+} from "../selectors/articleSelectors";
+
+/** ~~~~ styled-components ~~~~ **/
 import * as S from "../styles/styled-components";
 
-const ArticlesListPage = () => (
+/** ~~~~ React Components ~~~~ **/
+import ArticlesList from "../components/ArticlesList";
+
+const ArticlesListPage = ({ loadStatus }) => (
     <>
-        <S.Header>Articles</S.Header>
-        <ArticlesList/>
+        {!loadStatus.failed && <S.Header>Articles</S.Header>}
+        <ArticlesList />
     </>
 );
 
-export default ArticlesListPage;
+ArticlesListPage.propTypes = {
+    loadStatus: PropTypes.object,
+};
+
+const mapStateToProps = (state) => ({
+    loadStatus: getloadStatusState(state),
+});
+
+export default connect(mapStateToProps)(ArticlesListPage);

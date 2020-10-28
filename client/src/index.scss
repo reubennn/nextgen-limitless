@@ -32,3 +32,11 @@ h1 {
 	width: 60vw;
 	margin: auto;
 }
+
+/** styled-components take precedence over global classes,
+ *  as they inject styles during runtime at the end of <head> by default.
+ *  So we need to increase specificity of our selectors.
+ */
+.center-text.center-text {
+    text-align: center;
+}

@@ -12,6 +12,12 @@ export const setLoading = (loading) => ({
 });
 
 // Thunk Actions
+export const RESET_LOADING = "RESET_LOADING";
+export const resetLoading = () => ({
+    type: RESET_LOADING,
+});
+
+// Thunk Actions
 export const LOAD_ARTICLES_IN_PROGRESS = "LOAD_ARTICLES_IN_PROGRESS";
 export const loadArticlesInProgress = () => ({
     type: LOAD_ARTICLES_IN_PROGRESS,
@@ -24,6 +30,7 @@ export const fetchArticlesSuccess = (articles) => ({
 });
 
 export const LOAD_ARTICLES_FAILURE = "LOAD_ARTICLES_FAILURE";
-export const fetchArticlesFailure = () => ({
+export const fetchArticlesFailure = (code) => ({
     type: LOAD_ARTICLES_FAILURE,
+    payload: { code },
 });
