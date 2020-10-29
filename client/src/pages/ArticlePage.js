@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 
 import ArticlesList from "../components/ArticlesList";
 import NotFoundPage from "./NotFoundPage";
@@ -104,6 +105,15 @@ const ArticlePage = ({ match }) => {
         );
     };
 
+    /** Set Moment.js locale to Australian format */
+    moment.locale("en-au");
+    const dateString = () => {
+        if (articleInfo.pubDate !== undefined && articleInfo.pubDate !== null) {
+            const date = moment(articleInfo.pubDate);
+            return date.format("D MMMM, YYYY");
+        }
+    };
+
     const content = loading ?
         (
             <S.LoadingPlaceholder>
@@ -115,13 +125,36 @@ const ArticlePage = ({ match }) => {
         (
             <>
                 <S.Header>{articleInfo.title}</S.Header>
+                <S.Image
+                    src={articleInfo.featureImg.src}
+                    alt={articleInfo.featureImg.alt} />
+                <S.FlexContainer smallMargin justifyContent="left">
+                    <S.Paragraph className="author-date">
+                        By <i>{articleInfo.author}</i>
+                    </S.Paragraph>
+                    <S.Paragraph color="grey" className="author-date">
+                        &nbsp;|&nbsp;
+                    </S.Paragraph>
+                    <S.Paragraph color="grey" className="author-date">
+                        {dateString()}
+                    </S.Paragraph>
+                </S.FlexContainer>
                 <UpvotesSection
                     articleName={name}
                     upvotes={articleInfo.upvotes}
                     setArticleInfo={setArticleInfo} />
-                {articleInfo.content.map((paragraph, key) => (
-                    <p key={key}>{paragraph}</p>
-                ))}
+                {articleInfo.content.map((paragraph, key) => {
+                    if (typeof paragraph === "object" && paragraph !== null) {
+                        return <S.Image
+                            key={key}
+                            src={paragraph.src}
+                            alt={paragraph.alt} />;
+                    } else {
+                        return (
+                            <p key={key}>{paragraph}</p>
+                        );
+                    }
+                })}
                 <S.HorizontalRuler thin smallMargin color="light" />
                 <S.FlexContainer
                     smallMargin

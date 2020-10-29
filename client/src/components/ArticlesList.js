@@ -113,9 +113,21 @@ const ArticlesList = ({
                         <S.ArticleSample key={key}>
                             <Link to={`/article/${article.name}`}
                                 onClick={() => linkClicked(article.name)}>
-                                <h3>{article.title}</h3>
-                                {/* Get first 150 characters from article */}
-                                <p>{article.content[0].substring(0, 150)}...</p>
+                                <S.FlexContainer row>
+                                    <S.Image
+                                        src={article.featureImg.src}
+                                        alt={article.featureImg.alt} 
+                                        height="auto"
+                                        width="65%">
+                                    </S.Image>
+                                    <S.FlexContainer column>
+                                        <h3>{article.title}</h3>
+                                        <p>
+                                            {article.content[0]
+                                                .substring(0, 150)}...
+                                        </p>
+                                    </S.FlexContainer>
+                                </S.FlexContainer>
                             </Link>
                             <S.HorizontalRuler></S.HorizontalRuler>
                         </S.ArticleSample>

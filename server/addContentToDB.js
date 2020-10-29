@@ -1,7 +1,8 @@
 import { MongoClient } from "mongodb";
 import documents from "./articleContent";
+import { MONGO_URI, DB_NAME, ARTICLES } from "./secrets";
 
-const MONGO_URI = "mongodb+srv://admin:<password>@fullstack-react.dle6p.mongodb.net/<dbname>?retryWrites=true&w=majority";
+// const MONGO_URI = "mongodb+srv://admin:<password>@fullstack-react.dle6p.mongodb.net/<dbname>?retryWrites=true&w=majority";
 
 /* Connects to MongoDB */
 const client = new MongoClient(MONGO_URI, {
@@ -12,8 +13,8 @@ const client = new MongoClient(MONGO_URI, {
 const run = async () => {
     try {
         await client.connect();
-        const db = client.db("fullstack-react");
-        const collection = db.collection("articles");
+        const db = client.db(DB_NAME);
+        const collection = db.collection(ARTICLES);
         console.log(`Successfully connected MongoDB server on ${MONGO_URI}\n`);
 
         /* This option prevents additional documents from being

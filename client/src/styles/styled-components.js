@@ -224,6 +224,7 @@ export const UpvoteSection = styled.div`
     margin-left: 2rem;
     justify-content: flex-end;
     flex-wrap: wrap;
+    margin-top: 0.5rem;
 
     i:first-of-type {
         /* display: block; */
@@ -237,6 +238,13 @@ export const UpvoteSection = styled.div`
  */
 export const FooterPaddingPlaceholder = styled.div`
     padding-bottom: calc(100vh - 38rem);
+`;
+
+/**
+ * UpvoteSection Component
+ */
+export const NotFoundPage = styled(FooterPaddingPlaceholder)`
+    background-color: #f1f1f1;
 `;
 
 /**
@@ -495,7 +503,9 @@ export const ListItem = styled.li`
 /**
  * Anchor Component
  */
-export const Anchor = styled.a`
+export const Anchor = styled.a.attrs((props) => ({
+    color: props.color || theme.colorDark,
+}))`
     text-decoration: none;
     color: ${(props) => handleColor(props.color)};
     transition: ease-in-out 0.75s;
@@ -561,4 +571,30 @@ export const SocialMediaButton = styled.a`
     &.footer-icon > svg:hover {
         fill: #fff;
     }
+`;
+
+/**
+ * Paragraph Component
+ */
+export const Paragraph = styled.p.attrs((props) => ({
+    color: props.color || theme.colorDark,
+}))`
+    color: ${(props) => handleColor(props.color)};
+
+    &.author-date {
+        margin: 0 0.15rem;
+    }
+`;
+
+/**
+ * Image Component
+ */
+export const Image = styled.img.attrs((props) => ({
+    height: props.height || "auto",
+    width: props.width || "100%",
+}))`
+    display: block;
+    margin: auto;
+    height: ${(props) => props.height};
+    width: ${(props) => props.width};
 `;
