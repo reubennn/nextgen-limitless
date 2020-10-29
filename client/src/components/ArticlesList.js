@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import {
     getArticlesList,
-    getloadStatusState,
+    getLoadStatusState,
     getLoadingState,
 } from "../selectors/articleSelectors";
 import {
@@ -67,17 +67,21 @@ const ArticlesList = ({
         // Populate the other articles list without the current article
         if (typeof articles !== "undefined" &&
             articles.length > 0) {
-            articles.map((article, key) => {
-                if (article.name !== articleToFilter) {
-                    setOtherArticles((prevState) => [
-                        ...prevState,
-                        article,
-                    ]);
-                }
-            });
+            articleToFilter === "undefined" ?
+                setOtherArticles(articles) :
+                (
+                    articles.map((article, key) => {
+                        if (article.name !== articleToFilter) {
+                            setOtherArticles((prevState) => [
+                                ...prevState,
+                                article,
+                            ]);
+                        }
+                    })
+                );
             setLoading(false);
         }
-    }, []);
+    }, [currentArticle, loading]);
 
     /*
      * If linked clicked to navigate to another article,
@@ -113,10 +117,10 @@ const ArticlesList = ({
                         <S.ArticleSample key={key}>
                             <Link to={`/article/${article.name}`}
                                 onClick={() => linkClicked(article.name)}>
-                                <S.FlexContainer row>
+                                <S.FlexContainer row className="no-margin">
                                     <S.Image
                                         src={article.featureImg.src}
-                                        alt={article.featureImg.alt} 
+                                        alt={article.featureImg.alt}
                                         height="auto"
                                         width="65%">
                                     </S.Image>
@@ -156,7 +160,7 @@ ArticlesList.propTypes = {
 const mapStateToProps = (state) => ({
     // Use Redux selectors
     loading: getLoadingState(state),
-    loadStatus: getloadStatusState(state),
+    loadStatus: getLoadStatusState(state),
     articles: getArticlesList(state),
 });
 

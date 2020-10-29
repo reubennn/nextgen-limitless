@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
-    getloadStatusState,
+    getLoadStatusState,
 } from "../selectors/articleSelectors";
 
 /** ~~~~ styled-components ~~~~ **/
@@ -27,7 +27,7 @@ ArticlesListPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    loadStatus: getloadStatusState(state),
+    loadStatus: getLoadStatusState(state),
 });
 
 export default connect(mapStateToProps)(ArticlesListPage);
