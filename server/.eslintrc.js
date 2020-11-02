@@ -14,11 +14,13 @@ module.exports = {
         sourceType: "module",
     },
     extends: [
-        "google",
+        /** Note: order is important; last taking precedence */
         "eslint:recommended",
+        "prettier",
+        "google",
     ],
     rules: {
-        // Prettier function formatting
+        /** Prettier function formatting */
         "space-before-function-paren": ["off"],
         "object-curly-spacing": [2, "always"],
         "indent": [
@@ -32,8 +34,7 @@ module.exports = {
         "linebreak-style": 0,
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
-        "require-jsdoc": 0,
-        // Stop Express Router cap error
+        /** Stop Express Router cap error */
         "new-cap": 0,
     },
 };
