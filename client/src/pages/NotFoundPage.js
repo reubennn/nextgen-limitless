@@ -2,14 +2,26 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import * as S from "../styles/styled-components";
 
+/**
+ * React Component for a not found page.
+ *
+ * When the content is unable to be displayed, cannot be found (e.g. wrong URL),
+ * or when the server API is unable to find the resource.
+ *
+ * @return {Component} not found page
+ */
 const NotFoundPage = ({ item }) => {
-    /* useEffect function to modify the background color of the DOM body object
-     * to match the 404 not found image background
-     * */
+    /*
+     * useEffect function to modify the background color of the DOM body object
+     * to match the 404 not found image background.
+     *
+     */
     useEffect(() => {
         document.body.style.backgroundColor = "#f1f1f1";
 
-        // Clean-up to return the body background color back to white
+        /**
+         * useEffect clean-up: Return the body background color back to white.
+         */
         return () => {
             document.body.style.backgroundColor = "#fff";
         };
@@ -27,13 +39,17 @@ const NotFoundPage = ({ item }) => {
                 We couldn&apos;t seem to find that {item}!
             </p>
             <S.Image
-                src="https://media.istockphoto.com/photos/oops-404-error-page-not-found-futuristic-robot-concept-with-wire-picture-id642741626?b=1&k=6&m=642741626&s=170667a&w=0&h=X86PhDZkjhn_1Z5aEhd2rtBawIOoi3G6Bn7cEK7kGK4="
-                alt="Error 404 Not Found"/>
+                src="https://res.cloudinary.com/reuben/image/upload/v1604039753/fullstack-react/assets/istockphoto-robot-404-not-found_l5gqt7.jpg"
+                alt="Error 404 Not Found Robot"/>
         </S.NotFoundPage>
     );
 };
 
 NotFoundPage.propTypes = {
+    /**
+     * Resource not able to be found.
+     * - e.g. a page or an article.
+     */
     item: PropTypes.string,
 };
 

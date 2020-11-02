@@ -1,4 +1,14 @@
 /* eslint-disable max-len */
+/**
+ * Social media icon data
+ *
+ * To render correctly, each social media icon must be an
+ * object with the following properties:
+ *     - @param {String} name social media name
+ *     - @param {String} href href url for the social media website,
+ *     - @param {Array} dVals d values as a {String}
+ *                            One index for each d value
+ */
 const socialMediaIcons = [
     {
         name: "Facebook",

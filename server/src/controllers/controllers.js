@@ -1,12 +1,17 @@
 import { MongoClient } from "mongodb";
+/** Retrieve secret data not stored in Git */
 import { MONGO_URI, DB_NAME } from "../../secrets";
 
-/* Connects to MongoDB */
+/* Connect client to MongoDB */
 const client = new MongoClient(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
 
+/**
+ * Async function used to connect to MongoDB.
+ * - Keeps the connection open to reduce overhead.
+ */
 const connectDB = async () => {
     try {
         await client.connect();
@@ -16,24 +21,38 @@ const connectDB = async () => {
     }
 };
 
-const withDB = async (operations, res) => {
+/** Immediately call db connect function */
+connectDB().catch(console.error);
+
+/**
+ * Generic function to query the database with specified operations.
+ *
+ * @param {String} collectionName name of the collection to query
+ * @param {Object} res HTTP response object
+ * @param {Function} operations to be performed
+ */
+const queryDB = async (collectionName, res, operations) => {
     try {
         const db = client.db(DB_NAME);
-        const collection = db.collection("articles");
+        const collection = db.collection(collectionName);
         await operations(collection);
     } catch (error) {
         res.status(500).json({
-            message: "Error fetching / updating data from mongoDB",
+            message: "Error fetching / updating data from MongoDB",
             error,
         });
     }
 };
 
-connectDB().catch(console.error);
-
+/**
+ * Fetches all articles from the database.
+ *
+ * @param {Object} req HTTP request object
+ * @param {Object} res HTTP response object
+ */
 export const getAllArticles = async (req, res) => {
-    withDB(async (collection) => {
-        const result = await collection.find().toArray();
+    queryDB("articles", res, async (collection) => {
+        const result = await collection.find({}).toArray();
 
         if (result) {
             res.status(200).json(result);
@@ -42,13 +61,19 @@ export const getAllArticles = async (req, res) => {
                 message: "Could not find the articles.",
             });
         }
-    }, res);
+    });
 };
 
+/**
+ * Fetches a single article from database matching a name from the request.
+ *
+ * @param {Object} req HTTP request object
+ * @param {Object} res HTTP response object
+ */
 export const getArticle = async (req, res) => {
     const articleName = req.params.name;
 
-    withDB(async (collection) => {
+    queryDB("articles", res, async (collection) => {
         const result = await collection
             .findOne({ name: articleName });
 
@@ -59,13 +84,19 @@ export const getArticle = async (req, res) => {
                 message: "Could not find the specified article.",
             });
         }
-    }, res);
+    });
 };
 
+/**
+ * Updates the article upvote +1 in the database.
+ *
+ * @param {Object} req HTTP request object
+ * @param {Object} res HTTP response object
+ */
 export const upvoteArticle = async (req, res) => {
     const articleName = req.params.name;
 
-    withDB(async (collection) => {
+    queryDB("articles", res, async (collection) => {
         const articleInfo = await collection
             .findOne({ name: articleName });
 
@@ -77,14 +108,30 @@ export const upvoteArticle = async (req, res) => {
             );
 
         res.status(200).json(updatedArticleInfo);
-    }, res);
+    });
 };
 
+/**
+ * Adds a comment to the database based on the request.
+ * - Stores username and text as an Object from req.body.
+ * - Concatenates to end of comments array.
+ *
+ * @example
+ * // Adds comment to article with req :name in database with username and text.
+ * endpoint: ".../articles/:name/add-comment"
+ * req.body {
+ *   "username": "me",
+ *   "text": "I love this article!"
+ * }
+ *
+ * @param {Object} req HTTP request object
+ * @param {Object} res HTTP response object
+ */
 export const addCommentToArticle = async (req, res) => {
     const { username, text } = req.body;
     const articleName = req.params.name;
 
-    withDB(async (collection) => {
+    queryDB("articles", res, async (collection) => {
         const articleInfo = await collection
             .findOne({ name: articleName });
 
@@ -100,10 +147,10 @@ export const addCommentToArticle = async (req, res) => {
                 { returnOriginal: false },
             );
         res.status(200).json(updatedArticleInfo);
-    }, res);
+    });
 };
 
-/* Close the MongoDB client before Node.js exits */
+/** Close the MongoDB client before Node.js exits */
 process.on("exit", function () {
     client.close();
 });

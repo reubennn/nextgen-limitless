@@ -1,20 +1,19 @@
 /* eslint-disable max-len */
 import React from "react";
 import PropTypes from "prop-types";
-
-/** ~~~~ Redux ~~~~ **/
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-    getLoadStatusState,
-} from "../selectors/articleSelectors";
 
-/** ~~~~ styled-components ~~~~ **/
-import * as S from "../styles/styled-components";
+import { getLoadStatusState } from "../selectors/articleSelectors";
 
-/** ~~~~ React Components ~~~~ **/
 import ArticlesList from "../components/ArticlesList";
 
+import * as S from "../styles/styled-components";
+
+/**
+ * A React Component page that displays a list of the articles
+ *
+ * @return {Component} a page full of article lists
+ */
 const ArticlesListPage = ({ loadStatus }) => (
     <>
         {!loadStatus.failed && <S.Header>Articles</S.Header>}
@@ -23,9 +22,18 @@ const ArticlesListPage = ({ loadStatus }) => (
 );
 
 ArticlesListPage.propTypes = {
+    /**
+     * Load status of fetching the data
+     */
     loadStatus: PropTypes.object,
 };
 
+/**
+ * Assign props as Redux Selectors to connect the Component to the Redux store
+ *
+ * @param {*} state the Redux store state
+ * @return {*} props mapped to the Component
+ */
 const mapStateToProps = (state) => ({
     loadStatus: getLoadStatusState(state),
 });

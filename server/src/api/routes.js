@@ -6,8 +6,12 @@ import {
     addCommentToArticle,
 } from "../controllers/controllers";
 
+/** Set up the Express server router */
 const router = express.Router();
 
+/**
+ * /articles endpoint routes.
+ */
 router.route("/articles")
     .get(getAllArticles);
 
@@ -17,12 +21,6 @@ router.route("/articles/:name")
 router.route("/articles/:name/upvote")
     .post(upvoteArticle);
 
-/**
- * req.body {
- *   "username": "me",
- *   "text": "I love this article!"
- * }
- */
 router.route("/articles/:name/add-comment")
     .post(addCommentToArticle);
 

@@ -1,21 +1,35 @@
 import React, { useState, useEffect } from "react";
 import RouterLink from "./RouterLink";
 import { debounce } from "lodash";
-import * as S from "../styles/styled-components";
+
 import SocialMediaButton from "./SocialMediaButton";
 import socialMediaIcons from "../data/socialMediaIcons";
 
+import * as S from "../styles/styled-components";
+
+/**
+ * React Component which renders the website footer
+ *
+ * @return {Component} the website footer
+ */
 const Footer = () => {
-    /** Initialize state with undefined width/height,
+    /**
+     * Initialize state with undefined width/height,
      *  so server and client renders match.
-     *  Important when implementing server-side rendering */
+     *  Important when implementing server-side rendering.
+     */
     const [viewport, setViewport] = useState({
         width: undefined,
         height: undefined,
     });
 
+    /**
+     * useEffect used to add an event listener to handle window resizing event.
+     */
     useEffect(() => {
-        /* Handler function called during window viewport resize */
+        /**
+         * Handler function called during window viewport resize.
+         */
         function handleResize() {
             setViewport({
                 width: window.innerWidth,
@@ -23,17 +37,31 @@ const Footer = () => {
             });
         }
 
-        /* Add the event listener and attach lodash debounce delay */
+        /**
+         * Add the event listener and attach lodash debounce delay,
+         * so that the function is not continuously called during
+         * a window resize.
+         */
         window.addEventListener("resize", debounce(handleResize, 200));
 
-        /* Call Handler immediately to update the initial window size
-         * in state */
+        /**
+         * Call Handler immediately to update the initial window size
+         * in state.
+         */
         handleResize();
 
-        /* Clean-up to remove the event listener */
-        return () => window.removeEventListener("resize", handleResize);
+        /**
+         * Clean-up to remove the event listener.
+         */
+        return () => {
+            window.removeEventListener("resize", debounce(handleResize, 200));
+        };
     }, []);
 
+    /**
+     * Set flag to allow for conditional rendering
+     * based on the size of the viewport.
+     */
     let minWidthDetected = false;
     if (viewport.width < 540) {
         minWidthDetected = true;

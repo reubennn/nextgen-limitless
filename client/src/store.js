@@ -10,6 +10,7 @@ const reducers = {
     articles,
 };
 
+/** Set up Redux persist configuration */
 const persistConfig = {
     key: "root",
     storage, // Defaults to local storage on the web
@@ -20,7 +21,7 @@ const persistConfig = {
     */
 };
 
-// Put Reducers into a form which we can pass to the createStore function
+/** Put Reducers into a form which we can pass to the createStore function */
 const rootReducer = combineReducers(reducers);
 
 /**
@@ -32,7 +33,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const configureStore = () =>
     createStore(
         persistedReducer,
-        // Connect App to Redux Chrome Extension
+        /** Connect App to Redux Chrome Extension */
         composeWithDevTools(
             applyMiddleware(thunk),
         ),

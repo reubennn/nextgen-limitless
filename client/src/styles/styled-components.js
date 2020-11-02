@@ -1,6 +1,6 @@
 /* eslint-disable valid-jsdoc */
 import styled, { keyframes } from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~~ Themes ~~~~~~~~~~~~~~~~
@@ -158,34 +158,6 @@ export const HorizontalRuler = styled.hr`
 HorizontalRuler.defaultProps = {
     width: "100%",
 };
-
-/**
- * ArticleSample Component
- */
-export const ArticleSample = styled.div`
-    transition: ease-in-out 0.25s;
-
-    p {
-        /* Stop word-wrap when hovering */
-        max-width: 520px;
-    }
-
-    &:hover {
-        border-left: 0.1rem solid ${(props) => theme.colorDark};
-        border-right: 0.1rem solid ${(props) => theme.colorDark};
-        padding: 0 0.5rem;
-        transition: ease-in-out 0.25s;
-    }
-
-    & > h3 {
-        margin-bottom: 0.5rem;
-        font-family: inherit;
-        font-weight: 500;
-        line-height: 1.2;
-        display: inline-block;
-        font-size: 1.3em;
-    }
-`;
 
 /**
  * CommentsList Component
@@ -407,16 +379,67 @@ export const FlexContainer = styled.ul.attrs((props) => ({
     justify-content: ${(props) => props.justifyContent};
     margin: ${(props) => props.smallMargin ? "0.25rem" : "1rem"};
 
-    & > li {
-        list-style-type: none;
-    }
-
     & .footer-nav {
         margin: 1rem 3rem;
     }
 
     & ~ ${TinyRouterLink} {
         margin-top: 0;
+    }
+`;
+
+/**
+ * Image Component
+ */
+export const Image = styled.img.attrs((props) => ({
+    height: props.height || "auto",
+    width: props.width || "100%",
+}))`
+    display: block;
+    margin: auto;
+    height: ${(props) => props.height};
+    width: ${(props) => props.width};
+`;
+
+/**
+ * ArticleSample Component
+ */
+export const ArticleSample = styled.div`
+    margin: auto 0.1rem;
+    padding: 0 0.5rem;
+    transition: ease-in-out 0.25s;
+
+    p {
+        /* Stop word-wrap when hovering */
+        /* max-width: 520px; */
+    }
+
+    /* &:hover {
+        border-left: 0.1rem solid ${(props) => theme.colorDark};
+        border-right: 0.1rem solid ${(props) => theme.colorDark};
+        margin: auto 0.1rem; 
+        transition: ease-in-out 0.25s;
+    } */
+
+    /* &:hover > a > ${FlexContainer} > ${Image} {
+        transition: ease-in-out 0.25s;
+    }
+
+    & > a > ${FlexContainer} {
+        width: calc(100% - 0.8rem);
+        margin: auto 0.4rem;
+        padding: auto 0;
+        transition: ease-in-out 0.25s;
+    } */
+
+    & > h3 {
+        margin-bottom: 0.5rem;
+        font-family: inherit;
+        font-weight: 500;
+        line-height: 1.2;
+        display: inline-block;
+        font-size: 1.3em;
+        transition: ease-in-out 0.25s;
     }
 `;
 
@@ -494,10 +517,8 @@ export const Footer = styled.footer`
  * Footer Component
  */
 export const ListItem = styled.li`
-    & {
-        color: inherit;
-        margin: 0.3rem 0;
-    }
+    color: inherit;
+    margin: 0.3rem 0;
 `;
 
 /**
@@ -586,15 +607,50 @@ export const Paragraph = styled.p.attrs((props) => ({
     }
 `;
 
+export const Navbar = styled.nav.attrs({
+    className: "Navbar",
+})`
+    &&& {
+        background-color: #303030;
+        margin: 0;
+        padding: 0.3rem;
+    }
+`;
+
+const activeClassName = "active";
 /**
- * Image Component
+ * Inherit React Router Link to style it
  */
-export const Image = styled.img.attrs((props) => ({
-    height: props.height || "auto",
-    width: props.width || "100%",
-}))`
-    display: block;
-    margin: auto;
-    height: ${(props) => props.height};
-    width: ${(props) => props.width};
+export const NavbarLink = styled(NavLink).attrs({
+    activeClassName,
+})`
+    & {
+        color: #fff;
+        font-size: 1.25rem;
+        text-align: center;
+        text-decoration: none;
+        padding: 0.25rem 0.25rem;
+        border-radius: 0.25rem;
+        margin: 0 0.3rem;
+    }
+
+    &:hover {
+        background-color: #fff;
+        color: #303030;
+        transition: ease-in-out 0.25s;
+    }
+
+    &.${activeClassName} {
+        background-color: #ee6868;
+        color: white;
+        border-radius: 0;
+        padding: 0.42rem 0.25rem;
+        transition-delay: 0.25s;
+        transition: ease-in-out 0.25s;
+
+        &:hover {
+            border-radius: 0.25rem;
+            transition: ease-in-out 0.25s;
+        }
+    }
 `;

@@ -1,5 +1,9 @@
 /* eslint-disable quotes */
 /* eslint-disable max-len */
+
+/**
+ * Initial article content to upload to MongoDB.
+ */
 const articles = [
     {
         name: "complete-guide-to-animals",

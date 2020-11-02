@@ -14,16 +14,15 @@ import socialMediaIcons from "../data/socialMediaIcons";
 import * as S from "../styles/styled-components";
 
 /**
- * Component for displaying an Article page
+ * Component for displaying an Article page.
  *
  * React Hooks allows us to access state and other React features,
- * without using the class notation
+ * without using the class notation.
  *  - e.g. functions that can be called to abstract away state management
- *  for the component
- *  - These can be used without extending React's Component class
+ *  for the component.
+ *  - These can be used without extending React's Component class.
  *
- * @param {Object} props.match Router parameter passed down from :name in URL
- * @return {*} an article page for a given topic
+ * @return {Component} an article page for a given topic
  */
 const ArticlePage = ({ match }) => {
     const name = match.params.name;
@@ -31,13 +30,24 @@ const ArticlePage = ({ match }) => {
     const [loading, setLoading] = useState(true);
     const inArticlePage = true;
 
+    /** Set Moment.js locale to Australian format */
+    moment.locale("en-au");
+    const DATE_FORMAT = "D MMMM, YYYY";
+
+    /**
+     * Default article properties used to reset the state
+     */
     const defaults = {
         _id: null,
         name: name,
         title: null,
+        author: null,
+        pubDate: null,
+        featureImg: null,
         content: [],
         upvotes: null,
         comments: [],
+        categories: [],
     };
 
     /*
@@ -105,14 +115,16 @@ const ArticlePage = ({ match }) => {
         );
     };
 
-    /** Set Moment.js locale to Australian format */
-    moment.locale("en-au");
-    const dateString = () => {
+    /**
+     * Function to determine the date as a string
+     * - Immediately invoked to assign the value to dateString constant
+    */
+    const dateString = (() => {
         if (articleInfo.pubDate !== undefined && articleInfo.pubDate !== null) {
             const date = moment(articleInfo.pubDate);
-            return date.format("D MMMM, YYYY");
+            return date.format(DATE_FORMAT);
         }
-    };
+    })();
 
     const content = loading ?
         (
@@ -136,7 +148,7 @@ const ArticlePage = ({ match }) => {
                         &nbsp;|&nbsp;
                     </S.Paragraph>
                     <S.Paragraph color="grey" className="author-date">
-                        {dateString()}
+                        {dateString}
                     </S.Paragraph>
                 </S.FlexContainer>
                 <UpvotesSection
@@ -189,6 +201,10 @@ const ArticlePage = ({ match }) => {
 };
 
 ArticlePage.propTypes = {
+    /**
+     * Router parameter passed down from :name in URL.
+     * - We can use shape as we know the object properties beforehand.
+     */
     match: PropTypes.shape({
         params: PropTypes.shape({
             name: PropTypes.string.isRequired,

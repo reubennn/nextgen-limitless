@@ -1,11 +1,13 @@
 import React from "react";
+
 import * as S from "../styles/styled-components";
 
 /**
- * A Component which displays an animated loading icon
+ * React Component which displays an animated loading icon.
  *
  * From loading.io/css
- * @return {Component} Animated loading icon Component
+ *
+ * @return {Component} animated loading icon
  */
 const LoadingIcon = () => (
     <S.LoadingIcon>

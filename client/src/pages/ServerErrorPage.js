@@ -2,6 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as S from "../styles/styled-components";
 
+/**
+ * React Component for a server error page
+ *
+ * Internal server error may occur when a client is unable to
+ * connect to the server API. Or the server API is unable to
+ * fetch resources from the database.
+ *
+ * @return {Component} internal server error page
+ */
 const ServerErrorPage = ({ errorCode }) => (
     <S.FooterPaddingPlaceholder>
         <S.Header>500 Internal Server Error</S.Header>
@@ -28,6 +37,9 @@ const ServerErrorPage = ({ errorCode }) => (
 );
 
 ServerErrorPage.propTypes = {
+    /**
+     * Error code returned from the server if supplied.
+     */
     errorCode: PropTypes.number,
 };
 

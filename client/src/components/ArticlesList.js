@@ -16,10 +16,18 @@ import {
     resetLoading,
 } from "../actions/articleActions";
 
-import * as S from "../styles/styled-components";
 import LoadingIcon from "./LoadingIcon";
 import ServerErrorPage from "../pages/ServerErrorPage";
 
+import * as S from "../styles/styled-components";
+
+/**
+ * React Component which displays a list of articles.
+ *
+ * If in an article page, this article will be filtered out from the list.
+ *
+ * @return {Component} list of articles
+ */
 const ArticlesList = ({
     articleToFilter,
     inArticlePage,
@@ -37,14 +45,13 @@ const ArticlesList = ({
     const [otherArticles, setOtherArticles] = useState([]);
 
     /**
-     * useEffect tracking currentArticle
-     * When user navigates to different page, currentArticle updates,
-     * so we need to update the article list
+     * useEffect tracking currentArticle.
+     * - When user navigates to different page, currentArticle updates,
+     * so we need to update the article list.
      */
     useEffect(() => {
         let isMounted = true; // Flag which denotes mount status
 
-        // Reset
         if (isMounted) {
             // Reset state values
             setOtherArticles([]);
@@ -55,7 +62,7 @@ const ArticlesList = ({
 
         /**
          * useEffect clean-up:
-         * if unmounted, set mount status flag to false
+         * If unmounted, set mount status flag to false
          */
         return () => {
             isMounted = false;
@@ -85,7 +92,7 @@ const ArticlesList = ({
 
     /*
      * If linked clicked to navigate to another article,
-     * update the state with the clicked on article name
+     * update the state with the clicked on article name.
     */
     const linkClicked = (articleName) => {
         setCurrentArticle(articleName);
@@ -95,7 +102,9 @@ const ArticlesList = ({
      * Ternary operators to determine the content to render.
      *
      * If article list is within an article page, we don't want
-     * to display the loading spinner in the center of the viewport
+     * to display the loading spinner in the center of the viewport.
+     *
+     * If unable to fetch data from server API, display server error page.
     */
     const content = loading ?
         (
@@ -122,7 +131,7 @@ const ArticlesList = ({
                                         src={article.featureImg.src}
                                         alt={article.featureImg.alt}
                                         height="auto"
-                                        width="65%">
+                                        width="60%">
                                     </S.Image>
                                     <S.FlexContainer column>
                                         <h3>{article.title}</h3>
@@ -147,24 +156,60 @@ const ArticlesList = ({
 };
 
 ArticlesList.propTypes = {
+    /**
+     * The article to filter from the list.
+     */
     articleToFilter: PropTypes.string,
+    /**
+     * True if this Component is within an article page.
+     * - Used to determine conditional rendering.
+     */
     inArticlePage: PropTypes.bool,
+    /**
+     * The articles stored as an array.
+     */
     articles: PropTypes.array,
+    /**
+     * Loading state for fetching the data from the server API.
+     */
     loading: PropTypes.bool,
+    /**
+     * The loading status for fetching data from server API.
+     */
     loadStatus: PropTypes.object,
+    /**
+     * Function to fetch all articles from the server API.
+     */
     fetchAllArticles: PropTypes.func,
+    /**
+     * Function to set the loading state.
+     */
     setLoading: PropTypes.func,
+    /**
+     * Function to reset the loading state.
+     */
     resetLoading: PropTypes.func,
 };
 
+/**
+ * Assign props using Redux selectors
+ * to connect the Component to the Redux store.
+ *
+ * @param {*} state the Redux store state
+ * @return {*} props mapped to the Component
+ */
 const mapStateToProps = (state) => ({
-    // Use Redux selectors
     loading: getLoadingState(state),
     loadStatus: getLoadStatusState(state),
     articles: getArticlesList(state),
 });
 
-// Dispatch Actions to the Redux Store
+/**
+ * Assign props to dispatch actions to the Redux Store.
+ *
+ * @param {*} dispatch action to dispatch
+ * @return {Function} functions mapped to the Component as props
+ */
 const mapDispatchToProps = (dispatch) => ({
     fetchAllArticles: () => dispatch(fetchAllArticles()),
     setLoading: (loading) => dispatch(setLoading(loading)),

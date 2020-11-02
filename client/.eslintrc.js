@@ -14,6 +14,7 @@ module.exports = {
         sourceType: "module",
     },
     extends: [
+        /** Note: order is important; last taking precedence */
         "eslint:recommended",
         "prettier",
         "google",
@@ -26,7 +27,7 @@ module.exports = {
         },
     },
     rules: {
-        // Prettier function formatting
+        /** Prettier function formatting */
         "space-before-function-paren": ["off"],
         "object-curly-spacing": [2, "always"],
         "indent": [
@@ -40,6 +41,5 @@ module.exports = {
         "linebreak-style": 0,
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
-        "require-jsdoc": 0,
     },
 };
