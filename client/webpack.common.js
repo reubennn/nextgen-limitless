@@ -7,7 +7,7 @@ module.exports = {
         rules: [
             {
                 /** Load & Transpile ES6 syntax for .js and .jsx files */
-                test: /\.(js|jsx)$/, // Regular expression
+                test: /\.(js|jsx)$/i, // Regular expression
                 exclude: /(node_modules)/,
                 loader: "babel-loader",
                 options: {
@@ -35,11 +35,20 @@ module.exports = {
             },
             {
                 /** Load & Transpile CSS */
-                test: /\.css$/,
+                test: /\.css$/i,
                 use: [
                     "style-loader",
                     "css-loader",
                 ],
+            },
+            {
+                /** Load Files */
+                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2|json|xml|ico)$/i,
+                loader: "file-loader",
+                options: {
+                    name: "[path][name].[ext]",
+                    publicPath: "/",
+                },
             },
         ],
     },
@@ -52,6 +61,8 @@ module.exports = {
         /** Replace react-dom with @hot-loader/react-dom */
         alias: {
             "react-dom": "@hot-loader/react-dom",
+            /** Directory alias to shorten import directories */
+            ".../assets": path.resolve(__dirname, "./public/assets"),
         },
     },
 };

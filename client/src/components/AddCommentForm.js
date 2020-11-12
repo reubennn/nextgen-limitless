@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import ResizableTextarea from "./ResizableTextArea";
 
-import * as S from "../styles/styled-components";
+import * as S from "../styles/styled-components/styled";
 
 /**
  * React Component for an add comment form.

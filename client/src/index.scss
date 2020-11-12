@@ -1,42 +1,85 @@
 /**
+ * Font Faces
+ */
+@font-face {
+	font-family: "Quicksand";
+	font-weight: 500;
+	font-style: normal;
+	src: url(".../assets/fonts/Quicksand-Medium.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Quicksand";
+	font-weight: 600;
+	font-style: normal;
+	src: url(".../assets/fonts/Quicksand-SemiBold.ttf") format("truetype");
+}
+
+/**
+ * SASS/SCSS Variables
+ */
+$colorGrey: #6e6e6e;
+$colorDark: #303030;
+
+/**
  * General Styling
  */
 * {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-		"Helvetica Neue", Arial, Helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-		"Segoe UI Symbol";
+		"Helvetica Neue", Arial, Helvetica, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 body {
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    height: 100%;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	height: 100%;
 }
 
 p {
-    margin: 1rem 0;
+	margin: 1rem 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    margin-bottom: .5rem;
-    font-family: inherit;
-    font-weight: 500;
-    line-height: 1.2;
-    color: inherit;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin-bottom: 0.5rem;
+	font-family: inherit;
+	font-weight: 500;
+	line-height: 1.2;
+	color: inherit;
 }
 
 h1 {
-    font-size: 2.25rem;
+	font-size: 2.25rem;
 }
 
 /**
- * ID Attribute Styling
+ * Scrollbar Styling
  */
-#page-body {
-	text-align: left;
-	width: 60vw;
-	margin: auto;
+
+/* Firefox only */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: $colorGrey $colorDark;
+}
+
+/* Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+	width: 0.6rem;
+}
+
+*::-webkit-scrollbar-track {
+	background: $colorDark;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: $colorGrey;
+	border: 0.075rem solid $colorDark;
 }
 
 /**
@@ -44,12 +87,27 @@ h1 {
  *
  * styled-components take precedence over global classes,
  * as they inject styles during runtime at the end of <head> by default.
- * So we need to increase specificity of our selectors.
+ *
+ * Therefore, we need to increase specificity of our selectors below
+ * by writing them twice.
  */
 .center-text.center-text {
-    text-align: center;
+	text-align: center;
 }
 
 .no-margin.no-margin {
-    margin: 0;
+	margin: 0;
+}
+
+.align-left.align-left {
+	margin-right: auto;
+}
+
+.align-right.align-right {
+	margin-left: auto;
+}
+
+.align-center.align-center {
+	margin-left: auto;
+	margin-right: auto;
 }

@@ -3,15 +3,16 @@ import PropTypes from "prop-types";
 import moment from "moment";
 
 import ArticlesList from "../components/ArticlesList";
-import NotFoundPage from "./NotFoundPage";
+import NotFound from "./NotFound";
 import CommentsList from "../components/CommentsList.js";
 import UpvotesSection from "../components/UpvoteSection";
 import LoadingIcon from "../components/LoadingIcon";
 import SocialMediaButton from "../components/SocialMediaButton";
+import Navbar from "../components/Navbar";
 
 import socialMediaIcons from "../data/socialMediaIcons";
 
-import * as S from "../styles/styled-components";
+import * as S from "../styles/styled-components/styled";
 
 /**
  * Component for displaying an Article page.
@@ -24,7 +25,7 @@ import * as S from "../styles/styled-components";
  *
  * @return {Component} an article page for a given topic
  */
-const ArticlePage = ({ match }) => {
+const Article = ({ match }) => {
     const name = match.params.name;
     const [found, setFound] = useState(true);
     const [loading, setLoading] = useState(true);
@@ -111,7 +112,7 @@ const ArticlePage = ({ match }) => {
 
     if (!found) {
         return (
-            <NotFoundPage item="article" />
+            <NotFound item="article" />
         );
     };
 
@@ -136,62 +137,66 @@ const ArticlePage = ({ match }) => {
         ) :
         (
             <>
-                <S.Header>{articleInfo.title}</S.Header>
-                <S.Image
-                    src={articleInfo.featureImg.src}
-                    alt={articleInfo.featureImg.alt} />
-                <S.FlexContainer smallMargin justifyContent="left">
-                    <S.Paragraph className="author-date">
-                        By <i>{articleInfo.author}</i>
-                    </S.Paragraph>
-                    <S.Paragraph color="grey" className="author-date">
-                        &nbsp;|&nbsp;
-                    </S.Paragraph>
-                    <S.Paragraph color="grey" className="author-date">
-                        {dateString}
-                    </S.Paragraph>
-                </S.FlexContainer>
-                <UpvotesSection
-                    articleName={name}
-                    upvotes={articleInfo.upvotes}
-                    setArticleInfo={setArticleInfo} />
-                {articleInfo.content.map((paragraph, key) => {
-                    if (typeof paragraph === "object" && paragraph !== null) {
-                        return <S.Image
-                            key={key}
-                            src={paragraph.src}
-                            alt={paragraph.alt} />;
-                    } else {
-                        return (
-                            <p key={key}>{paragraph}</p>
-                        );
-                    }
-                })}
-                <S.HorizontalRuler thin smallMargin color="light" />
-                <S.FlexContainer
-                    smallMargin
-                    wrapContent
-                    justifyContent="flex-end">
-                    <S.TinyText color="darkerGrey" margin="0.25rem">
-                        <i>Share this article:</i>
-                    </S.TinyText>
-                    {socialMediaIcons.map((icon, key) => (
-                        <SocialMediaButton
-                            key={key}
-                            icon={icon}
-                            color="darkerGrey" />
-                    ))}
-                </S.FlexContainer>
-                <CommentsList
-                    comments={articleInfo.comments}
-                    articleName={name}
-                    setArticleInfo={setArticleInfo}
-                    containsComments={containsComments} />
-                <S.Header small>Other Articles...</S.Header>
-                <ArticlesList
-                    articleToFilter={name}
-                    inArticlePage={inArticlePage}
-                />
+                <Navbar />
+                <S.MainPageBody>
+                    <S.Header>{articleInfo.title}</S.Header>
+                    <S.Image
+                        src={articleInfo.featureImg.src}
+                        alt={articleInfo.featureImg.alt} />
+                    <S.FlexContainer smallMargin justifyContent="left">
+                        <S.Paragraph className="author-date">
+                            By <i>{articleInfo.author}</i>
+                        </S.Paragraph>
+                        <S.Paragraph color="grey" className="author-date">
+                            &nbsp;|&nbsp;
+                        </S.Paragraph>
+                        <S.Paragraph color="grey" className="author-date">
+                            {dateString}
+                        </S.Paragraph>
+                    </S.FlexContainer>
+                    <UpvotesSection
+                        articleName={name}
+                        upvotes={articleInfo.upvotes}
+                        setArticleInfo={setArticleInfo} />
+                    {articleInfo.content.map((paragraph, key) => {
+                        if (typeof paragraph === "object" &&
+                            paragraph !== null) {
+                            return <S.Image
+                                key={key}
+                                src={paragraph.src}
+                                alt={paragraph.alt} />;
+                        } else {
+                            return (
+                                <p key={key}>{paragraph}</p>
+                            );
+                        }
+                    })}
+                    <S.HorizontalRuler thin smallMargin color="light" />
+                    <S.FlexContainer
+                        smallMargin
+                        wrapContent
+                        justifyContent="flex-end">
+                        <S.TinyText color="darkerGrey" margin="0.25rem">
+                            <i>Share this article:</i>
+                        </S.TinyText>
+                        {socialMediaIcons.map((icon, key) => (
+                            <SocialMediaButton
+                                key={key}
+                                icon={icon}
+                                color="darkerGrey" />
+                        ))}
+                    </S.FlexContainer>
+                    <CommentsList
+                        comments={articleInfo.comments}
+                        articleName={name}
+                        setArticleInfo={setArticleInfo}
+                        containsComments={containsComments} />
+                    <S.Header small>Other Articles...</S.Header>
+                    <ArticlesList
+                        articleToFilter={name}
+                        inArticlePage={inArticlePage}
+                    />
+                </S.MainPageBody>
             </>
         );
 
@@ -200,7 +205,7 @@ const ArticlePage = ({ match }) => {
     );
 };
 
-ArticlePage.propTypes = {
+Article.propTypes = {
     /**
      * Router parameter passed down from :name in URL.
      * - We can use shape as we know the object properties beforehand.
@@ -212,4 +217,4 @@ ArticlePage.propTypes = {
     }),
 };
 
-export default ArticlePage;
+export default Article;

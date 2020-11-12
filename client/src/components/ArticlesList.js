@@ -5,8 +5,7 @@ import { connect } from "react-redux";
 
 import {
     getArticlesList,
-    getLoadStatusState,
-    getLoadingState,
+    getLoadStatus,
 } from "../selectors/articleSelectors";
 import {
     fetchAllArticles,
@@ -17,9 +16,9 @@ import {
 } from "../actions/articleActions";
 
 import LoadingIcon from "./LoadingIcon";
-import ServerErrorPage from "../pages/ServerErrorPage";
+import ServerError from "../pages/ServerError";
 
-import * as S from "../styles/styled-components";
+import * as S from "../styles/styled-components/styled";
 
 /**
  * React Component which displays a list of articles.
@@ -31,8 +30,7 @@ import * as S from "../styles/styled-components";
 const ArticlesList = ({
     articleToFilter,
     inArticlePage,
-    // Redux
-    loading,
+    /** Redux */
     loadStatus,
     articles,
     setLoading,
@@ -70,7 +68,6 @@ const ArticlesList = ({
     }, [currentArticle]);
 
     useEffect(() => {
-        resetLoading();
         // Populate the other articles list without the current article
         if (typeof articles !== "undefined" &&
             articles.length > 0) {
@@ -88,7 +85,7 @@ const ArticlesList = ({
                 );
             setLoading(false);
         }
-    }, [currentArticle, loading]);
+    }, [currentArticle]);
 
     /*
      * If linked clicked to navigate to another article,
@@ -106,7 +103,7 @@ const ArticlesList = ({
      *
      * If unable to fetch data from server API, display server error page.
     */
-    const content = loading ?
+    const content = loadStatus.loading ?
         (
             inArticlePage ?
                 <LoadingIcon /> :
@@ -120,7 +117,7 @@ const ArticlesList = ({
         ) :
         (
             loadStatus.failed ?
-                <ServerErrorPage errorCode={loadStatus.code} /> :
+                <ServerError errorCode={loadStatus.code} /> :
                 (
                     otherArticles.map((article, key) => (
                         <S.ArticleSample key={key}>
@@ -131,8 +128,7 @@ const ArticlesList = ({
                                         src={article.featureImg.src}
                                         alt={article.featureImg.alt}
                                         height="auto"
-                                        width="60%">
-                                    </S.Image>
+                                        width="60%" />
                                     <S.FlexContainer column>
                                         <h3>{article.title}</h3>
                                         <p>
@@ -170,10 +166,6 @@ ArticlesList.propTypes = {
      */
     articles: PropTypes.array,
     /**
-     * Loading state for fetching the data from the server API.
-     */
-    loading: PropTypes.bool,
-    /**
      * The loading status for fetching data from server API.
      */
     loadStatus: PropTypes.object,
@@ -199,8 +191,7 @@ ArticlesList.propTypes = {
  * @return {*} props mapped to the Component
  */
 const mapStateToProps = (state) => ({
-    loading: getLoadingState(state),
-    loadStatus: getLoadStatusState(state),
+    loadStatus: getLoadStatus(state),
     articles: getArticlesList(state),
 });
 

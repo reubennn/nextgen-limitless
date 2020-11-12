@@ -14,28 +14,30 @@ import {
 
 const initialState = {
     /**
-     * Loading status if data needs to be loaded from the server API.
-     */
-    loading: true,
-    /**
-     * Load status to notify if fetching data from the server API has failed,
-     * and if so, populating the code if an error code has been provided.
+     * Load status of the content to be fetched from database.
+     *
+     * @property {Boolean} loading loading status for fetching data
+     *                               from the server API.
+     * @property {Boolean} failed flag indicating if fetching data from the
+     *                              server API has failed.
+     * @property {Number} code if loading failed, the error code if provided.
      */
     loadStatus: {
+        loading: true,
         failed: false,
         code: null,
     },
     /**
      * The articles list.
      * Note: an article has the following properties:
-     *      @param {ObjectId} _id MongoDB ObjectId
-     *      @param {String} name article name
-     *      @param {String} title article title
-     *      @param {String} author article author
-     *      @param {Array} main main content, each index is a paragraph or image
-     *      @param {Number} upvotes article votes
-     *      @param {Array} comments article comments
-     *      @param {Array} categories categories article content addresses
+     * @property {ObjectId} _id MongoDB ObjectId
+     * @property {String} name article name
+     * @property {String} title article title
+     * @property {String} author article author
+     * @property {Array} main main content, each index is a paragraph or image
+     * @property {Number} upvotes article votes
+     * @property {Array} comments article comments
+     * @property {Array} categories categories article content addresses
      */
     list: [],
 };
@@ -71,7 +73,9 @@ export const articles = (state = initialState, action) => {
             const { loading } = payload;
             return {
                 ...state,
-                loading,
+                loadStatus: {
+                    loading,
+                },
             };
         }
         /**
@@ -81,7 +85,6 @@ export const articles = (state = initialState, action) => {
         case (RESET_LOADING): {
             return {
                 ...state,
-                loading: true,
                 loadStatus: {
                     failed: false,
                     code: null,
@@ -97,7 +100,9 @@ export const articles = (state = initialState, action) => {
             const { articles } = payload;
             return {
                 ...state,
-                loading: false,
+                loadStatus: {
+                    loading: false,
+                },
                 list: articles,
             };
         }
@@ -108,7 +113,9 @@ export const articles = (state = initialState, action) => {
         case (LOAD_ARTICLES_IN_PROGRESS): {
             return {
                 ...state,
-                loading: true,
+                loadStatus: {
+                    loading: true,
+                },
             };
         }
         /**
@@ -119,6 +126,10 @@ export const articles = (state = initialState, action) => {
          */
         case (FETCH_ARTICLES_FAILURE): {
             const { code } = payload;
+            /**
+             * Checks if a code was provided in the payload.
+             * - Immediately invokes the function to set the codeProvided const.
+             */
             const codeProvided = (() => {
                 if (code === undefined) {
                     return false;
@@ -127,8 +138,8 @@ export const articles = (state = initialState, action) => {
             })();
             return {
                 ...state,
-                loading: false,
                 loadStatus: {
+                    loading: false,
                     failed: true,
                     code: codeProvided ? code : null,
                 },

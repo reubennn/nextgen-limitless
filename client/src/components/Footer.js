@@ -1,78 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import RouterLink from "./RouterLink";
-import { debounce } from "lodash";
+import { connect } from "react-redux";
+
+import {
+    getViewportDimensions,
+    getViewportSize,
+    getViewportType,
+} from "../selectors/viewportSelectors";
 
 import SocialMediaButton from "./SocialMediaButton";
 import socialMediaIcons from "../data/socialMediaIcons";
 
-import * as S from "../styles/styled-components";
+import * as S from "../styles/styled-components/styled";
 
 /**
- * React Component which renders the website footer
+ * React Component which renders the website footer.
  *
  * @return {Component} the website footer
  */
-const Footer = () => {
-    /**
-     * Initialize state with undefined width/height,
-     *  so server and client renders match.
-     *  Important when implementing server-side rendering.
-     */
-    const [viewport, setViewport] = useState({
-        width: undefined,
-        height: undefined,
-    });
-
-    /**
-     * useEffect used to add an event listener to handle window resizing event.
-     */
-    useEffect(() => {
-        /**
-         * Handler function called during window viewport resize.
-         */
-        function handleResize() {
-            setViewport({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        }
-
-        /**
-         * Add the event listener and attach lodash debounce delay,
-         * so that the function is not continuously called during
-         * a window resize.
-         */
-        window.addEventListener("resize", debounce(handleResize, 200));
-
-        /**
-         * Call Handler immediately to update the initial window size
-         * in state.
-         */
-        handleResize();
-
-        /**
-         * Clean-up to remove the event listener.
-         */
-        return () => {
-            window.removeEventListener("resize", debounce(handleResize, 200));
-        };
-    }, []);
-
-    /**
-     * Set flag to allow for conditional rendering
-     * based on the size of the viewport.
-     */
-    let minWidthDetected = false;
-    if (viewport.width < 540) {
-        minWidthDetected = true;
-    };
-
+const Footer = ({ viewport }) => {
     return (
         <S.Footer>
             <S.FlexContainer column className="footer-nav">
                 <RouterLink url="/" label="Home" />
-                <RouterLink url="/articles-list" label="Articles" />
                 <RouterLink url="/about" label="About" />
+                <RouterLink url="/blog" label="Blog" />
                 <RouterLink url="/contact" label="Contact" />
             </S.FlexContainer>
             <S.HorizontalRuler thin smallMargin color="grey" width={"50%"} />
@@ -83,10 +36,15 @@ const Footer = () => {
                 Connect with us:
             </S.TinyText>
             <S.FlexContainer smallMargin wrapContent>
-                {!minWidthDetected &&
+                {viewport.size.is.small &&
                     <S.HorizontalRuler
                         className="footer-hr"
-                        width="25%" />
+                        width="20%" />
+                }
+                {viewport.size.is.medium &&
+                    <S.HorizontalRuler
+                        className="footer-hr"
+                        width="40%" />
                 }
                 {socialMediaIcons.map((icon, key) => (
                     <SocialMediaButton
@@ -94,13 +52,18 @@ const Footer = () => {
                         key={key}
                         icon={icon} />
                 ))}
-                {!minWidthDetected &&
+                {viewport.size.is.small &&
                     <S.HorizontalRuler
                         className="footer-hr"
-                        width="25%" />
+                        width="20%" />
+                }
+                {viewport.size.is.medium &&
+                    <S.HorizontalRuler
+                        className="footer-hr"
+                        width="40%" />
                 }
             </S.FlexContainer>
-            {minWidthDetected &&
+            {viewport.size.is.small &&
                 <S.HorizontalRuler
                     className="footer-hr"
                     width="50%" />
@@ -141,4 +104,27 @@ const Footer = () => {
     );
 };
 
-export default Footer;
+Footer.propTypes = {
+    /**
+     * Viewport Redux state.
+     * - Contains information about the viewport.
+     */
+    viewport: PropTypes.object,
+};
+
+/**
+ * Assign props using Redux selectors
+ * to connect the Component to the Redux store.
+ *
+ * @param {*} state the Redux store state
+ * @return {*} props mapped to the Component
+ */
+const mapStateToProps = (state) => ({
+    viewport: {
+        dimensions: getViewportDimensions(state),
+        size: getViewportSize(state),
+        type: getViewportType(state),
+    },
+});
+
+export default connect(mapStateToProps)(Footer);

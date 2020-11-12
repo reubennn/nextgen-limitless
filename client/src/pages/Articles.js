@@ -3,25 +3,29 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { getLoadStatusState } from "../selectors/articleSelectors";
+import { getLoadStatus } from "../selectors/articleSelectors";
 
 import ArticlesList from "../components/ArticlesList";
+import Navbar from "../components/Navbar";
 
-import * as S from "../styles/styled-components";
+import * as S from "../styles/styled-components/styled";
 
 /**
  * A React Component page that displays a list of the articles
  *
  * @return {Component} a page full of article lists
  */
-const ArticlesListPage = ({ loadStatus }) => (
+const Articles = ({ loadStatus }) => (
     <>
-        {!loadStatus.failed && <S.Header>Articles</S.Header>}
-        <ArticlesList />
+        <Navbar />
+        <S.MainPageBody>
+            {!loadStatus.failed && <S.Header>Articles</S.Header>}
+            <ArticlesList />
+        </S.MainPageBody>
     </>
 );
 
-ArticlesListPage.propTypes = {
+Articles.propTypes = {
     /**
      * Load status of fetching the data
      */
@@ -35,7 +39,7 @@ ArticlesListPage.propTypes = {
  * @return {*} props mapped to the Component
  */
 const mapStateToProps = (state) => ({
-    loadStatus: getLoadStatusState(state),
+    loadStatus: getLoadStatus(state),
 });
 
-export default connect(mapStateToProps)(ArticlesListPage);
+export default connect(mapStateToProps)(Articles);

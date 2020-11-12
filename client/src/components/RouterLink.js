@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import * as S from "../styles/styled-components";
+import * as S from "../styles/styled-components/styled";
 
 /**
  * React Component which implements a styled React Router Link button
@@ -11,31 +11,50 @@ import * as S from "../styles/styled-components";
  *
  * @return {Component} React Router button link
  */
-const RouterLink = ({ label, url, tiny }) => {
-    const content = tiny ?
+const RouterLink = ({
+    className,
+    label,
+    url,
+    tiny = false,
+    isImage = false,
+    children,
+}) => {
+    const content = isImage ?
         (
-            <S.TinyRouterLink
-                to={url}
-                color="lighter">
-                { label}
-            </S.TinyRouterLink >
+            <S.RouterLink to={url}>
+                {children}
+            </S.RouterLink>
         ) :
-        (
-            <S.RouterLink
-                to={url}
-                color="lighter">
-                { label}
-            </S.RouterLink >
-        );
+        (tiny ?
+            (
+                <S.TinyRouterLink
+                    to={url}
+                    color="lighter">
+                    { label}
+                </S.TinyRouterLink >
+            ) :
+            (
+                <S.RouterLinkButton
+                    to={url}
+                    color="lighter">
+                    { label}
+                </S.RouterLinkButton >
+            ));
 
     return (
-        <S.ListItem>
+        <S.ListItem className={className}>
             {content}
         </S.ListItem>
     );
 };
 
 RouterLink.propTypes = {
+    /**
+     * The class name to be passed onto styled-components ListItem.
+     * - As the RouterLink React Component is called, the class name
+     * needs to be passed down for it to be inherited.
+     */
+    className: PropTypes.string,
     /**
      * Button label.
      */
@@ -50,6 +69,14 @@ RouterLink.propTypes = {
      * - For elements like footnote buttons in footer.
      */
     tiny: PropTypes.bool,
+    /**
+     * Flag to indicate if Router Link is an image/svg
+     */
+    isImage: PropTypes.bool,
+    /**
+     * The children of the Component.
+     */
+    children: PropTypes.object,
 };
 
 export default RouterLink;

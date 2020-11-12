@@ -1,6 +1,6 @@
 import React from "react";
 
-import * as S from "../styles/styled-components";
+import * as S from "../styles/styled-components/styled";
 
 /**
  * React Component which displays an animated loading icon.

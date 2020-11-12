@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import AddCommentForm from "./AddCommentForm";
 
-import * as S from "../styles/styled-components";
+import * as S from "../styles/styled-components/styled";
 
 /**
  * React Component which displays a list of the articles comments.

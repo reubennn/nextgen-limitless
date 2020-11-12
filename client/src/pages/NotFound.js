@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import * as S from "../styles/styled-components";
+
+import Navbar from "../components/Navbar";
+
+import * as S from "../styles/styled-components/styled";
 
 /**
  * React Component for a not found page.
@@ -10,7 +13,7 @@ import * as S from "../styles/styled-components";
  *
  * @return {Component} not found page
  */
-const NotFoundPage = ({ item }) => {
+const NotFound = ({ item }) => {
     /*
      * useEffect function to modify the background color of the DOM body object
      * to match the 404 not found image background.
@@ -28,24 +31,28 @@ const NotFoundPage = ({ item }) => {
     }, []);
 
     return (
-        <S.NotFoundPage>
-            <S.Header
-                className="no-background center-text"
-                small
-            >
-                Oops...
-            </S.Header>
-            <p style={{ textAlign: "center" }}>
-                We couldn&apos;t seem to find that {item}!
-            </p>
-            <S.Image
-                src="https://res.cloudinary.com/reuben/image/upload/v1604039753/fullstack-react/assets/istockphoto-robot-404-not-found_l5gqt7.jpg"
-                alt="Error 404 Not Found Robot"/>
-        </S.NotFoundPage>
+        <S.NotFound>
+            <Navbar />
+            <S.MainPageBody>
+                <S.Header
+                    className="no-background center-text"
+                    small
+                >
+                    Oops...
+                </S.Header>
+                <p style={{ textAlign: "center" }}>
+                    We couldn&apos;t seem to find that {item}!
+                </p>
+                <S.Image
+                    src="https://res.cloudinary.com/reuben/image/upload/v1604039753/fullstack-react/assets/istockphoto-robot-404-not-found_l5gqt7.jpg"
+                    alt="Error 404 Not Found Robot"
+                    width="509" />
+            </S.MainPageBody>
+        </S.NotFound>
     );
 };
 
-NotFoundPage.propTypes = {
+NotFound.propTypes = {
     /**
      * Resource not able to be found.
      * - e.g. a page or an article.
@@ -53,4 +60,4 @@ NotFoundPage.propTypes = {
     item: PropTypes.string,
 };
 
-export default NotFoundPage;
+export default NotFound;

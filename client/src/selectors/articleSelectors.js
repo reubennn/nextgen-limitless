@@ -11,18 +11,10 @@
 export const getArticlesList = (store) => store.articles.list;
 
 /**
- * Gets the loading state
- *
- * @param {*} store Redux store reference
- * @return {Boolean} the loading state
- */
-export const getLoadingState = (store) => store.articles.loading;
-
-/**
  * Gets the load status.
- * Is populated after an API server request
+ * Is populated before and after an API server request is initiated
  *
  * @param {*} store Redux store reference
- * @return {Object} the loadStatus of an API server request
+ * @return {Object} the loadStatus for fetching data using API server request
  */
-export const getLoadStatusState = (store) => store.articles.loadStatus;
+export const getLoadStatus = (store) => store.articles.loadStatus;
