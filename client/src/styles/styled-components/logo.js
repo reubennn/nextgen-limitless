@@ -4,8 +4,15 @@ import styled from "styled-components";
 import {
     theme,
     fontFamily,
-    handleColor,
 } from "./config";
+
+import {
+    handleLogoContainerPadding,
+    handleLogoContainerMargin,
+    handleLogoIconWidthHeight,
+    handleLogoTextLineHeight,
+    handleLogoTextFontSize,
+} from "./responsive";
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~ Website Logo ~~~~~~~~~~~~
@@ -36,22 +43,8 @@ export const LogoContainer = styled.div.attrs((props) => ({
         margin: 5rem auto;
 
         /** Responsive Design Styling */
-        padding: ${(props) => {
-        switch (props.viewport.type) {
-            case ("super-small"):
-                return "0.1rem 0.8rem 0.4rem";
-            default:
-                return "0.1rem 1rem 0.4rem";
-        }
-    }};
-        margin: ${(props) => {
-        switch (props.viewport.type) {
-            case ("super-small"):
-                return "3rem auto";
-            default:
-                return "5rem auto";
-        }
-    }};
+        padding: ${(props) => handleLogoContainerPadding(props.viewport.type)};
+        margin: ${(props) => handleLogoContainerMargin(props.viewport.type)};
     }
 `;
 
@@ -82,22 +75,8 @@ export const LogoIconContainer = styled.span.attrs((props) => ({
         margin: 0;
 
         /** Responsive Design Styling */
-        width: ${(props) => {
-        switch (props.viewport.type) {
-            case ("super-small"):
-                return "5rem";
-            default:
-                return "7rem";
-        }
-    }};
-        height: ${(props) => {
-        switch (props.viewport.type) {
-            case ("super-small"):
-                return "5rem";
-            default:
-                return "7rem";
-        }
-    }};
+        width: ${(props) => handleLogoIconWidthHeight(props.viewport.type)};
+        height: ${(props) => handleLogoIconWidthHeight(props.viewport.type)};
     }
 `;
 
@@ -128,39 +107,21 @@ export const LogoText = styled.span.attrs((props) => ({
         margin: 0;
 
         /** Responsive Design Styling */
-        line-height: ${(props) => {
-        switch (props.viewport.type) {
-            case ("super-small"):
-                return "2.5rem";
-            default:
-                return "2.9rem";
-        }
-    }};
+        line-height: ${(props) =>
+        handleLogoTextLineHeight(props.viewport.type)};
 
         &.first-line {
             /** Responsive Design Styling */
-            font-size: ${(props) => {
-        switch (props.viewport.type) {
-            case ("super-small"):
-                return "2.9rem";
-            default:
-                return "3.5rem";
-        }
-    }};
+            font-size:
+            ${(props) => handleLogoTextFontSize("first", props.viewport.type)};
         }
 
         &.second-line {
             font-weight: 600;
 
             /** Responsive Design Styling */
-            font-size: ${(props) => {
-        switch (props.viewport.type) {
-            case ("super-small"):
-                return "2.6rem";
-            default:
-                return "3.1rem";
-        }
-    }};
+            font-size:
+            ${(props) => handleLogoTextFontSize("second", props.viewport.type)};
         }
     }
 `;

@@ -39,7 +39,7 @@ const Home = ({ viewport }) => (
                 bgColor="dark"
                 height="15vh">
                 <S.FeatureText type={viewport.type}>
-                    Embrace the power of true innovation.
+                    Are you ready to embrace the power of true innovation?
                 </S.FeatureText>
             </S.Section>
             <S.Section

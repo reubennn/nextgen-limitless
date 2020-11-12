@@ -9,6 +9,11 @@ import {
     rotate,
 } from "./config";
 
+import {
+    handleNavbarPadding,
+    handleFeatureTextFontSize,
+} from "./responsive";
+
 import { Header, FlexContainer } from "./general";
 
 import northBeachImage from ".../assets/images/north-head-manly-australia.jpg";
@@ -35,16 +40,7 @@ export const Navbar = styled.nav.attrs((props) => ({
     width: 100%;
 
     /** Responsive Design Styling */
-    padding: ${(props) => {
-        switch (props.viewport.type) {
-            case ("super-small"):
-                return "0.8rem 1.2rem";
-            case ("extra-small"):
-                return "0.8rem 1.6rem";
-            default:
-                return "0.8rem 1.8rem";
-        }
-    }};
+    padding: ${(props) => handleNavbarPadding(props.viewport.type)};
 
     /** Styling on homepage */
     &.home {
@@ -165,16 +161,7 @@ export const FeatureText = styled.p.attrs((props) => ({
     text-align: center;
 
     /** Responsive Design Styling */
-    font-size: ${(props) => {
-        switch (props.viewport.type) {
-            case ("super-small"):
-                return "1.1rem";
-            case ("extra-small"):
-                return "1.2rem";
-            default:
-                return "1.5rem";
-        }
-    }};
+    font-size: ${(props) => handleFeatureTextFontSize(props.viewport.type)};
 
     &.header-home {
         margin: auto 2.5rem;
