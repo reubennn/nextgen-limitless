@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/reubennn/fullstack-react#readme",
   "dependencies": {
-    "@hot-loader/react-dom": "^17.0.0-rc.2",
+    "@hot-loader/react-dom": "^17.0.0",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
