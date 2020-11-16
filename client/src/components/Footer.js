@@ -20,6 +20,7 @@ import * as S from "../styles/styled-components/styled";
  * @return {Component} the website footer
  */
 const Footer = ({ viewport }) => {
+    const viewportWidth = viewport.dimensions.width;
     return (
         <S.Footer>
             <S.FlexContainer column className="footer-nav">
@@ -28,10 +29,14 @@ const Footer = ({ viewport }) => {
                 <RouterLink url="/blog" label="Blog" />
                 <RouterLink url="/contact" label="Contact" />
             </S.FlexContainer>
-            <S.HorizontalRuler thin smallMargin color="grey" width={"50%"} />
+            <S.HorizontalRuler
+                thin
+                smallMargin
+                color="grey-shade-light"
+                width={"50%"} />
             <S.TinyText
                 margin="0.6rem"
-                color="light"
+                color="grey-tint-light"
             >
                 Connect with us:
             </S.TinyText>
@@ -75,8 +80,8 @@ const Footer = ({ viewport }) => {
             <S.TinyText superTiny>
                 Special thanks to
                 <S.InlineAnchor
-                    color="light"
-                    bgColor="dark"
+                    color="grey-tint-light"
+                    bgColor="grey-shade-dark"
                     href="https://www.linkedin.com/learning/"
                     target="_blank"
                     rel="noreferrer"
@@ -85,8 +90,8 @@ const Footer = ({ viewport }) => {
                 </S.InlineAnchor>
                 and
                 <S.InlineAnchor
-                    color="light"
-                    bgColor="dark"
+                    color="grey-tint-light"
+                    bgColor="grey-shade-dark"
                     href="https://www.linkedin.com/in/shaun-wassell/"
                     target="_blank"
                     rel="noreferrer"

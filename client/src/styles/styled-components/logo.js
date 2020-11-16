@@ -2,9 +2,12 @@
 import styled from "styled-components";
 
 import {
-    theme,
     fontFamily,
 } from "./config";
+
+import {
+    color,
+} from "./colors";
 
 import {
     handleLogoContainerPadding,
@@ -19,8 +22,15 @@ import {
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
+/**
+ * Logo Container Component.
+ *
+ * Container for the entire logo.
+ *
+ * @param {Object} viewport viewport object used for responsive design
+ *      - @property {String} type type classification
+ */
 export const LogoContainer = styled.div.attrs((props) => ({
-    /** Viewport type used for responsive design */
     viewport: {
         type: props.type || "default",
     },
@@ -32,13 +42,13 @@ export const LogoContainer = styled.div.attrs((props) => ({
 
     &.small {
     padding: 0.1rem 0.25rem;
-    background-color: ${theme.color.dark};
+    background-color: ${color.grey.shade.dark};
     border-radius: 0.4rem;
     }
 
     &.large {
         flex-direction: column;
-        background-color: ${theme.color.dark};
+        background-color: ${color.grey.shade.dark};
         border-radius: 0.4rem;
         margin: 5rem auto;
 
@@ -48,6 +58,11 @@ export const LogoContainer = styled.div.attrs((props) => ({
     }
 `;
 
+/**
+ * Logo Text Container.
+ *
+ * Container for the logo text.
+ */
 export const LogoTextContainer = styled(LogoContainer)`
     flex-direction: column;
     padding: 0;
@@ -59,8 +74,15 @@ export const LogoTextContainer = styled(LogoContainer)`
     }
 `;
 
+/**
+ * Logo Icon Container.
+ *
+ * Container for the logo icon.
+ *
+ * @param {Object} viewport viewport object used for responsive design
+ *      - @property {String} type type classification
+ */
 export const LogoIconContainer = styled.span.attrs((props) => ({
-    /** Viewport type used for responsive design */
     viewport: {
         type: props.type || "default",
     },
@@ -80,8 +102,13 @@ export const LogoIconContainer = styled.span.attrs((props) => ({
     }
 `;
 
+/**
+ * Logo Text Component.
+ *
+ * @param {Object} viewport viewport object used for responsive design
+ *      - @property {String} type type classification
+ */
 export const LogoText = styled.span.attrs((props) => ({
-    /** Viewport type used for responsive design */
     viewport: {
         type: props.type || "default",
     },

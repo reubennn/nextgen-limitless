@@ -10,17 +10,20 @@
 * Redux Actions and Action Creators
 * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-
+/**
+* Sets the sidebar nav status.
+*/
+export const SET_SIDEBAR_NAV_STATUS = "SET_SIDEBAR_NAV_STATUS";
+export const setSidebarNavStatus = (status) => ({
+    type: SET_SIDEBAR_NAV_STATUS,
+    payload: { status },
+});
 
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~ Thunk Actions ~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
-/**
-* Sets the viewport window using the payload.
-*/
-
 /**
 * Sets the viewport dimensions using the payload.
 */

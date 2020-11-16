@@ -2,9 +2,9 @@
 import styled from "styled-components";
 
 import {
-    theme,
+    color,
     handleColor,
-} from "./config";
+} from "./colors";
 
 import { TinyRouterLink } from "./pages";
 
@@ -16,10 +16,10 @@ import { TinyRouterLink } from "./pages";
 /**
 * Paragraph Component
 *
-* @param {String} props.color text color
+* @param {String} color text color
 */
 export const Paragraph = styled.p.attrs((props) => ({
-    color: props.color || theme.color.dark,
+    color: props.color || color.grey.shade.dark,
 }))`
     color: ${(props) => handleColor(props.color)};
 
@@ -31,27 +31,30 @@ export const Paragraph = styled.p.attrs((props) => ({
 /**
  * Small Text Component
  *
- * @param {String} props.color text color
+ * @param {String} color text color
+ * @param {String} margin the top and bottom margin
+ * @param {Boolean} superTiny flag to make text very small
  */
 export const TinyText = styled.p.attrs((props) => ({
-    color: props.color || theme.color.grey,
+    color: props.color || color.grey.tint.darkest,
+    margin: props.margin || "1rem",
 }))`
-    margin: ${(props) => props.margin ? props.margin : "1rem"} 0;
+    margin: ${(props) => props.margin} 0;
     color: ${(props) => handleColor(props.color)};
     font-size: ${(props) => props.superTiny ? "0.75rem" : "0.85rem"};
 
     & > span {
-        color: ${theme.color.light};
+        color: ${color.grey.tint.neutral};
     }
 `;
 
 /**
  * Anchor Component
  *
- * @param {String} props.color text color
+ * @param {String} color text color
  */
 export const Anchor = styled.a.attrs((props) => ({
-    color: props.color || theme.color.dark,
+    color: props.color || color.grey.shade.dark,
 }))`
     text-decoration: none;
     color: ${(props) => handleColor(props.color)};
@@ -65,15 +68,25 @@ export const Anchor = styled.a.attrs((props) => ({
 
 /**
  * Inline Anchor Component
+ *
+ * @param {String} bgColor background color
  */
 export const InlineAnchor = styled(Anchor)`
+    transition: none;
+    -webkit-transition: none;
+
+    &:hover {
+        transition: none;
+        -webkit-transition: none;
+    }
+
     &::before {
         content: " ";
     }
 
     &:hover::before {
         text-decoration: none;
-        border-bottom: 1px solid ${(props) => handleColor(props.bgColor)}
+        border-bottom: 1px solid ${(props) => handleColor(props.bgColor)};
     }
 
     &::after {
@@ -82,35 +95,33 @@ export const InlineAnchor = styled(Anchor)`
 
     &:hover::after {
         border-bottom: none;
-        border-bottom: 1px solid ${(props) => handleColor(props.bgColor)}
+        border-bottom: 1px solid ${(props) => handleColor(props.bgColor)};
     }
 `;
 
 /**
  * Header Component
  *
- * @param {String} props.color text color
- * @param {String} props.bgColor background color for background-color
- * @param {String} props.textAlign text align style for text-align
+ * @param {String} color text color
+ * @param {String} bgColor background color
+ * @param {String} textAlign text align style
  */
 export const Header = styled.h1.attrs((props) => ({
     color: props.color || "#fff",
-    bgColor: props.bgColor || theme.color.dark,
+    bgColor: props.bgColor || color.grey.shade.dark,
     textAlign: props.textAlign || "left",
 }))`
-    & {
-        color: ${(props) => handleColor(props.color)};
-        background-color: ${(props) => handleColor(props.bgColor)};
-        padding: 0.5rem;
-        padding-left: 0.75rem;
-        border-radius: 0.2rem;
-        font-size: ${(props) => props.small ? "1.5rem" : "2.25rem"};
-        margin: ${(props) => props.small ? "2.5rem 0 1.5rem 0" : "1rem 0"};
-        text-align: ${(props) => props.textAlign}
-    }
+    color: ${(props) => handleColor(props.color)};
+    background-color: ${(props) => handleColor(props.bgColor)};
+    padding: 0.5rem;
+    padding-left: 0.75rem;
+    border-radius: 0.2rem;
+    font-size: ${(props) => props.small ? "1.5rem" : "2.25rem"};
+    margin: ${(props) => props.small ? "2.5rem 0 1.5rem 0" : "1rem 0"};
+    text-align: ${(props) => props.textAlign};
 
     &.no-background {
-        color: ${theme.color.dark};
+        color: ${color.grey.shade.dark};
         background-color: transparent;
         padding: 0;
     }
@@ -119,34 +130,32 @@ export const Header = styled.h1.attrs((props) => ({
 /**
  * Secondary Header Component
  *
- * @param {String} props.color text color
- * @param {String} props.bgColor background color for background-color
- * @param {String} props.textAlign text align style for text-align
+ * @param {String} color text color
+ * @param {String} bgColor background color
+ * @param {String} textAlign text align style
  */
 export const HeaderSecondary = styled(Header).attrs((props) => ({
     color: props.color || "#fff",
-    bgColor: props.bgColor || theme.color.dark,
+    bgColor: props.bgColor || color.grey.shade.dark,
     textAlign: props.textAlign || "left",
 }))`
-    & {
-        color: ${(props) => handleColor(props.color)};
-        background-color: ${(props) => handleColor(props.bgColor)};
-        padding: 0.5rem;
-        padding-left: 0.75rem;
-        border-radius: 0.2rem;
-        font-size: ${(props) => props.small ? "1.5rem" : "2.25rem"};
-        margin: ${(props) => props.small ? "2.5rem 0 1.5rem 0" : "1rem 0"};
-        text-align: ${(props) => props.textAlign}
-    }
+    color: ${(props) => handleColor(props.color)};
+    background-color: ${(props) => handleColor(props.bgColor)};
+    padding: 0.5rem;
+    padding-left: 0.75rem;
+    border-radius: 0.2rem;
+    font-size: ${(props) => props.small ? "1.5rem" : "2.25rem"};
+    margin: ${(props) => props.small ? "2.5rem 0 1.5rem 0" : "1rem 0"};
+    text-align: ${(props) => props.textAlign};
 
     &.no-background {
-        color: ${theme.color.dark};
+        color: ${color.grey.shade.dark};
         background-color: transparent;
     }
 `;
 
 /**
- * Footer Component
+ * List Item Component
  */
 export const ListItem = styled.li`
     color: inherit;
@@ -154,6 +163,10 @@ export const ListItem = styled.li`
 
     &.nav-item {
         margin: auto 0.3rem;
+    }
+
+    &.sidebar-nav {
+        margin: 5vh auto;
     }
 
     &.align-left {
@@ -164,8 +177,8 @@ export const ListItem = styled.li`
 /**
  * Image Component
  *
- * @param {String} props.height height of the image
- * @param {String} props.width width of the image
+ * @param {String} height height of the image
+ * @param {String} width width of the image
  */
 export const Image = styled.img.attrs((props) => ({
     height: props.height || "auto",
@@ -178,14 +191,18 @@ export const Image = styled.img.attrs((props) => ({
 `;
 
 /**
- * Social Media Button Link Component
+ * Icon Component displayed from a SVG image file.
+ *
+ * @param {Number} height the height of the icon
+ * @param {Number} width the width of the icon
+ * @param {Number} fill the fill color
  */
 export const Icon = styled.svg.attrs((props) => ({
     height: props.height || "3.5rem",
     width: props.width || "3.5rem",
-    fill: props.fill || theme.color.whiteGrey,
+    fill: props.fill || color.grey.tint.lighter,
 }))`
-    fill: ${(props) => handleColor(props.color)};
+    fill: ${(props) => handleColor(props.fill)};
     text-decoration: none;
     margin: auto;
 
@@ -209,7 +226,7 @@ export const Icon = styled.svg.attrs((props) => ({
     }
 
     &.home {
-        fill: ${theme.color.dark};
+        fill: ${color.grey.shade.dark};
 
         &:hover {
         fill: #000;
@@ -217,7 +234,7 @@ export const Icon = styled.svg.attrs((props) => ({
     }
 
     &.footer-icon {
-        fill: ${theme.color.grey};
+        fill: ${color.grey};
         transition: ease-in-out 0.4s;
     }
 
@@ -244,7 +261,7 @@ export const Icon = styled.svg.attrs((props) => ({
  */
 export const Button = styled.button`
     color: #fff;
-    background-color: ${theme.color.dark};
+    background-color: ${color.grey.shade.dark};
     padding: 0.6rem 1.2rem;
     padding-top: 0.6rem;
     margin: auto;
@@ -265,46 +282,46 @@ export const Button = styled.button`
 `;
 
 /**
- * HorizontalRuler Component
+ * Horizontal Ruler Component
+ *
+ * @param {String} width width of the horizontal ruler
+ * @param {String} color color of the horizontal ruler
+ * @param {Boolean} thin flag indicating horizontal ruler is thin
+ * @param {Boolean} smallMargin flag indicating component has small margin
  */
-export const HorizontalRuler = styled.hr`
+export const HorizontalRuler = styled.hr.attrs((props) => ({
+    width: props.width || "100%",
+    color: props.color || color.grey.shade.dark,
+}))`
     border: 0;
     height: 0;
     width: ${(props) => props.width};
+    background-color: transparent;
+    margin-bottom: ${(props) => props.smallMargin ? "1rem" : "2rem"};
+    margin-top: ${(props) => props.smallMargin ? "0.8rem" : "1.5rem"};
     border-top: ${(props) => props.thin ? "0.05rem" : "0.1rem"}
                 solid
                 ${(props) => handleColor(props.color)};
-    margin-bottom: ${(props) => props.smallMargin ? "1rem" : "2rem"};
-    margin-top: ${(props) => props.smallMargin ? "0.8rem" : "1.5rem"};
 
     &.footer-hr {
-        border-top: 0.05rem solid ${theme.color.grey};
+        border-top: 0.05rem solid ${color.grey.shade.light};
         margin-top: 0.8rem;
         margin-bottom: 1rem;
+    }
+
+    &.sidebar-nav {
+        border-top: 0.05rem solid ${color.grey.shade.light};
+        margin: 0;
     }
 `;
 
 /**
- * Define HorizontalRuler Component default props
- *
- * A method for defining default props.
- *
- * Alternative approach:
- *  ... = styled.hr.attrs((props) => ({
- *   width: props.width || "100%",
- *  }))
- */
-HorizontalRuler.defaultProps = {
-    width: "100%",
-};
-
-/**
  * Flex-box Container
  *
- * @param {String} props.justifyContent justify-content styling
- * @param {Boolean} props.wrapContent
- * @param {Boolean} props.column
- * @param {Boolean} props.smallMargin
+ * @param {String} justifyContent justify-content styling
+ * @param {Boolean} wrapContent flex-wrap direction
+ * @param {Boolean} column flag to indicate flex-box direction
+ * @param {Boolean} smallMargin flag indicating component has small margin
  */
 export const FlexContainer = styled.ul.attrs((props) => ({
     justifyContent: props.justifyContent || "center",
@@ -338,7 +355,7 @@ export const Label = styled.label`
  */
 export const Input = styled.input`
     outline: 0;
-    border: 0.05rem solid ${theme.color.dark};
+    border: 0.05rem solid ${color.grey.shade.dark};
     padding: 0.5rem 0.7rem;
     border-radius: 0.25rem;
     box-shadow: none;
@@ -353,12 +370,12 @@ export const Input = styled.input`
 `;
 
 /**
- * Input Component
+ * Text Area Component
  */
 export const TextArea = styled.textarea`
     resize: none;
     outline: 0;
-    border: 0.05rem solid ${theme.color.dark};
+    border: 0.05rem solid ${color.grey.shade.dark};
     padding: 0.5rem 0.7rem;
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;

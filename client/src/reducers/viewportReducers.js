@@ -11,6 +11,7 @@ import {
     SET_VIEWPORT_DIMENSIONS,
     SET_VIEWPORT_SIZE,
     SET_VIEWPORT_TYPE,
+    SET_SIDEBAR_NAV_STATUS,
 } from "../actions/viewportActions";
 
 const initialState = {
@@ -69,6 +70,15 @@ const initialState = {
      *
      */
     type: "extra-small",
+    /**
+     * Flag to indicate if the sidebar is active (displayed).
+     *
+     * @property {Object} sidebarNav sidebar nav object
+     * @property {Boolean} isActive flag indicating sidebar nav status
+     */
+    sidebarNav: {
+        isActive: false,
+    },
 };
 
 /**
@@ -91,21 +101,30 @@ export const viewport = (state = initialState, action) => {
                 ...state,
                 dimensions,
             };
-        }
+        };
         case (SET_VIEWPORT_SIZE): {
             const { size } = payload;
             return {
                 ...state,
                 size,
             };
-        }
+        };
         case (SET_VIEWPORT_TYPE): {
             const { type } = payload;
             return {
                 ...state,
                 type,
             };
-        }
+        };
+        case (SET_SIDEBAR_NAV_STATUS): {
+            const { status } = payload;
+            return {
+                ...state,
+                sidebarNav: {
+                    isActive: status,
+                },
+            };
+        };
         default: {
             /**
              * Reducer gets called when any Action is triggered in the App
@@ -114,6 +133,6 @@ export const viewport = (state = initialState, action) => {
              * state as it is
              */
             return state;
-        }
-    }
+        };
+    };
 };

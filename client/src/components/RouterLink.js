@@ -29,14 +29,14 @@ const RouterLink = ({
             (
                 <S.TinyRouterLink
                     to={url}
-                    color="lighter">
+                    color="grey-tint-neutral">
                     { label}
                 </S.TinyRouterLink >
             ) :
             (
                 <S.RouterLinkButton
                     to={url}
-                    color="lighter">
+                    color="grey-tint-neutral">
                     { label}
                 </S.RouterLinkButton >
             ));

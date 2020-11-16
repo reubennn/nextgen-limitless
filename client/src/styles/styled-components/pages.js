@@ -3,11 +3,14 @@ import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 
 import {
-    theme,
     fontFamily,
-    handleColor,
     rotate,
 } from "./config";
+
+import {
+    color,
+    handleColor,
+} from "./colors";
 
 import {
     handleNavbarPadding,
@@ -25,16 +28,18 @@ import subtlePrismSVG from ".../assets/images/subtle-prism.svg";
  */
 
 /**
- * Navbar Component
+ * Navigation bar Component.
+ *
+ * @param {Object} viewport viewport object used for responsive design
+ *      - @property {String} type type classification
  */
 export const Navbar = styled.nav.attrs((props) => ({
-    /** Viewport type used for responsive design */
     viewport: {
         type: props.type || "default",
     },
 }))`
     color: #fff;
-    background-color: ${theme.color.dark};
+    background-color: ${color.grey.shade.dark};
     margin: 0;
     display: inline-block;
     width: 100%;
@@ -44,35 +49,43 @@ export const Navbar = styled.nav.attrs((props) => ({
 
     /** Styling on homepage */
     &.home {
-        color: ${theme.color.dark};
+        color: ${color.grey.shade.dark};
         background-color: transparent;
         position: fixed;
         top: 0;
     }
+
+    &.sidebar-nav {
+        height: 100%;
+        z-index: 1; /* Stay on top */
+        position: fixed; /* Stay in place */
+        overflow-x: hidden; /* Disable horizontal scroll */
+        transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+        top: 0; /* Stay at the top */
+        left: 0;
+    }
 `;
 
 /**
- * Navbar Link Component
+ * Navbar Link Component.
  */
 /** Assign React Router activeClassName */
 const activeClassName = "active";
 
 /** Inherit React Router Link to style it */
 export const NavbarLink = styled(NavLink)`
-    & {
-        font-family: ${fontFamily.secondary};
-        color:${theme.color.lighter};
-        font-size: 1.25rem;
-        text-align: center;
-        text-decoration: none;
-        padding: 0.25rem 0;
-        margin: 0 0.75rem;
-        border-radius: 0.25rem;
-        transition: ease-in-out 0.25s;
-    }
+    font-family: ${fontFamily.secondary};
+    color:${color.grey.tint.neutral};
+    font-size: 1.25rem;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.25rem 0;
+    margin: 0 0.75rem;
+    border-radius: 0.25rem;
+    transition: ease-in-out 0.25s;
 
     &:hover {
-        background-color: ${theme.color.lighter};
+        background-color: ${color.grey.tint.neutral};
         color: #fff;
         color: #303030;
         padding: 0.25rem 0.75rem;
@@ -81,10 +94,10 @@ export const NavbarLink = styled(NavLink)`
 
     &.active {
         opacity: 0.85;
-        color: ${theme.color.dark};
+        color: ${color.grey.shade.dark};
         padding: 0.25rem 0.4rem;
         margin: 0 0.35rem;
-        background-color: ${theme.color.lighter};
+        background-color: ${color.grey.tint.neutral};
 
         &:hover {
             opacity: 1;
@@ -96,26 +109,26 @@ export const NavbarLink = styled(NavLink)`
 
     /** Styling on homepage */
     &.home {
-        color: ${theme.color.dark};
+        color: ${color.grey.shade.dark};
 
         &:hover {
-            background-color: ${theme.color.dark};
+            background-color: ${color.grey.shade.dark};
             color: #fff;
         }
     }
 
     &.home.${activeClassName} {
         color: #fff;
-        background-color: ${theme.color.dark};
+        background-color: ${color.grey.shade.dark};
 
         &:hover {
-            background-color: ${theme.color.dark};
+            background-color: ${color.grey.shade.dark};
         }
     }
 `;
 
 /**
- * Main page body
+ * Main page body.
  */
 export const MainPageBody = styled.main.attrs({
     id: "MainPageBody",
@@ -126,7 +139,7 @@ export const MainPageBody = styled.main.attrs({
 `;
 
 /**
- * Homepage Header
+ * Homepage Header.
  */
 export const HomepageHeader = styled.header`
     height: 85vh;
@@ -144,11 +157,14 @@ export const HomepageHeader = styled.header`
 
 
 /**
- * Feature Text Component
+ * Feature Text Component.
+ *
+ * @param {String} color the color of the text
+ * @param {Object} viewport viewport object used for responsive design
+ *      - @property {String} type type classification
  */
 export const FeatureText = styled.p.attrs((props) => ({
     color: props.color || "inherit",
-    /** Viewport type used for responsive design */
     viewport: {
         type: props.type || "default",
     },
@@ -172,12 +188,16 @@ export const FeatureText = styled.p.attrs((props) => ({
 // background: linear-gradient(to bottom, #e66465, #9198e5);
 
 /**
- * Homepage Header
+ * Page Section Component.
+ *
+ * @param {String} height height of the section
+ * @param {String} color color of the text
+ * @param {String} bgColor background color of the section
  */
 export const Section = styled.section.attrs((props) => ({
     height: props.height || "40vh",
     color: props.color || "#fff",
-    bgColor: props.bgColor || theme.color.dark,
+    bgColor: props.bgColor || color.grey.shade.dark,
 }))`
     color: ${(props) => handleColor(props.color)};
     background-color: ${(props) => handleColor(props.bgColor)};
@@ -199,7 +219,7 @@ export const Section = styled.section.attrs((props) => ({
 `;
 
 /**
- * CommentsList Component
+ * Comments List Component.
  */
 export const CommentsList = styled.div`
     & > *:not(${Header}) {
@@ -213,7 +233,7 @@ export const CommentsList = styled.div`
     }
 
     h4 {
-        color: ${theme.color.grey};
+        color: ${color.grey.tint.neutral};
         font-size: 0.85rem;
         font-style: italic;
         font-weight: normal;
@@ -226,10 +246,10 @@ export const CommentsList = styled.div`
 `;
 
 /**
- * UpvoteSection Component
+ * Upvote Section Component.
  */
 export const UpvoteSection = styled.div`
-    color: ${theme.color.greyDarker};
+    color: ${color.grey.shade.light};
     display: flex;
     flex-direction: row;
     margin-left: 2rem;
@@ -245,21 +265,27 @@ export const UpvoteSection = styled.div`
 `;
 
 /**
- * UpvoteSection Component
+ * Footer Padding Placeholder.
+ *
+ * Used as a placeholder so that the footer is always
+ * positioned towards the bottom of the page if the page
+ * does not have much content in it.
  */
 export const FooterPaddingPlaceholder = styled.div`
     padding-bottom: calc(100vh - 38rem);
 `;
 
 /**
- * UpvoteSection Component
+ * Not found page component.
+ *
+ * Match the background color to the background color of the image.
  */
 export const NotFound = styled(FooterPaddingPlaceholder)`
     background-color: #f1f1f1;
 `;
 
 /**
- * AddCommentForm Component
+ * Add Comment Form Component.
  */
 export const AddCommentForm = styled.div`
     display: flex;
@@ -268,7 +294,10 @@ export const AddCommentForm = styled.div`
 `;
 
 /**
- * Inherit React Router Link to style it
+ * Router Link Component.
+ *
+ * Inherits React Router Link functionality.
+ * Allows the use of styled-components to style it.
  */
 export const RouterLink = styled(Link)`
     & {
@@ -278,12 +307,14 @@ export const RouterLink = styled(Link)`
     }
 
     &:hover {
-        color: ${theme.color.dark};
+        color: ${color.grey.shade.dark};
     }
 `;
 
 /**
- * Inherit React Router Link to style it
+ * Router Link Button  Component.
+ *
+ * Inherits Router Link Component so it has React Router Link functionality.
  */
 export const RouterLinkButton = styled(RouterLink)`
     & {
@@ -301,7 +332,12 @@ export const RouterLinkButton = styled(RouterLink)`
 `;
 
 /**
- * Inherit React Router Link to style it
+ * Tiny Router Link Component.
+ *
+ * Like the RouterLink component, but small.
+ *
+ * Inherits React Router Link functionality.
+ * Allows the use of styled-components to style it.
  */
 export const TinyRouterLink = styled(Link)`
     & {
@@ -324,7 +360,10 @@ export const TinyRouterLink = styled(Link)`
 `;
 
 /**
- * ArticleSample Component
+ * Article Sample Component.
+ *
+ * For styling the small article sample previews,
+ * like inside the articles list.
  */
 export const ArticleSample = styled.div`
     margin: auto 0.1rem;
@@ -337,8 +376,8 @@ export const ArticleSample = styled.div`
     }
 
     /* &:hover {
-        border-left: 0.1rem solid ${(props) => theme.color.dark};
-        border-right: 0.1rem solid ${(props) => theme.color.dark};
+        border-left: 0.1rem solid ${(props) => color.grey.shade.dark};
+        border-right: 0.1rem solid ${(props) => color.grey.shade.dark};
         margin: auto 0.1rem; 
         transition: ease-in-out 0.25s;
     } */
@@ -366,18 +405,16 @@ export const ArticleSample = styled.div`
 `;
 
 /**
- * LoadingIcon Component
+ * Loading Icon Component.
+ *
+ * - Displayed when data is loading from the server API.
  */
-export const LoadingIcon = styled.nav.attrs({
-    className: "LoadingIcon",
-})`
-    & {
-        display: block;
-        position: relative;
-        width: 3rem;
-        height: 3rem;
-        margin: auto;
-    }
+export const LoadingIcon = styled.nav`
+    display: block;
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+    margin: auto;
 
     & div {
         box-sizing: border-box;
@@ -386,10 +423,10 @@ export const LoadingIcon = styled.nav.attrs({
         width: 2rem;
         height: 2rem;
         margin: 0.5rem;
-        border: 0.35rem solid ${theme.color.dark};
+        border: 0.35rem solid ${color.grey.shade.dark};
         border-radius: 50%;
         animation: ${rotate} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: ${theme.color.dark} transparent transparent transparent;
+        border-color: ${color.grey.shade.dark} transparent transparent transparent;
 
         &:nth-child(1) {
             animation-delay: -0.45s;
@@ -406,9 +443,9 @@ export const LoadingIcon = styled.nav.attrs({
 `;
 
 /**
- * CenterInViewport Component
+ * Center In Viewport Component.
  *
- * For positioning the element in the center of the viewport
+ * For positioning an element in the center of the viewport.
  */
 export const CenterInViewport = styled.div`
     position: absolute;
@@ -423,8 +460,8 @@ export const CenterInViewport = styled.div`
  */
 export const Footer = styled.footer`
     & {
-        color: ${theme.textGrey};
-        background-color: ${theme.color.dark};
+        color: ${color.grey.tint.neutral};
+        background-color: ${color.grey.shade.dark};
         font-size: 1.25rem;
         text-align: center;
         text-decoration: none;
@@ -436,10 +473,12 @@ export const Footer = styled.footer`
 `;
 
 /**
- * Loading Placeholder Component to leave blank space
- * while the page content is loading / fetching from the server.
+ * Loading Placeholder Component.
  *
- * Particularly useful to ensure the footer stays off the screen.
+ * To leave blank space while the page content is
+ * loading / fetching from the server.
+ *
+ * - Particularly useful to ensure the footer stays off the screen.
  */
 export const LoadingPlaceholder = styled.div`
     height: auto;
@@ -448,7 +487,9 @@ export const LoadingPlaceholder = styled.div`
 `;
 
 /**
- * Social Media Button Link Component
+ * Social Media Button Link Component.
+ *
+ * @param {String} color the fill color of the icon
  */
 export const SocialMediaButton = styled.a`
     text-decoration: none;

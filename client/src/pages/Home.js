@@ -35,15 +35,15 @@ const Home = ({ viewport }) => (
         </S.HomepageHeader>
         <S.FlexContainer className="no-margin" column>
             <S.Section
-                color="whiteGrey"
-                bgColor="dark"
+                color="grey-tint-lighter"
+                bgColor="grey-shade-dark"
                 height="15vh">
                 <S.FeatureText type={viewport.type}>
                     Are you ready to embrace the power of true innovation?
                 </S.FeatureText>
             </S.Section>
             <S.Section
-                color="dark"
+                color="grey-shade-dark"
                 bgColor="white"
                 height="50vh">
                 <p>

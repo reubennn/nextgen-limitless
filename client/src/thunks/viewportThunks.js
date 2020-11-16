@@ -17,10 +17,17 @@ import {
     setViewportSize,
     setViewportDimensions,
     setViewportType,
+    setSidebarNavStatus,
 } from "../actions/viewportActions";
 
 import media from "../data/media";
 
+/**
+ * Function which handles any viewport resizing.
+ *
+ * @param {Object} viewport the viewport dimensions
+ * @return {Function} async function with dispatch as the argument
+ */
 export const handleViewportChange = (viewport) => (
     async (dispatch, getState) => {
         /**
@@ -43,8 +50,13 @@ export const handleViewportChange = (viewport) => (
             superLarge: false,
         };
 
+        /**
+         * Only reset the sidebar nav status if viewport size is greater
+         * than medium breakpoint.
+         */
         if (viewportWidth >= media.breakpoints.superLarge) {
             console.log("Super Large viewport 1920px (horizontal) or greater");
+            dispatch(setSidebarNavStatus(false));
             dispatch(setViewportSize({
                 ...defaults,
                 is: {
@@ -54,6 +66,7 @@ export const handleViewportChange = (viewport) => (
             dispatch(setViewportType("super-large"));
         } else if (viewportWidth >= media.breakpoints.extraLarge) {
             console.log("Extra Large viewport 1366px (horizontal) or greater");
+            dispatch(setSidebarNavStatus(false));
             dispatch(setViewportSize({
                 is: {
                     ...defaults,
@@ -63,6 +76,7 @@ export const handleViewportChange = (viewport) => (
             dispatch(setViewportType("extra-large"));
         } else if (viewportWidth >= media.breakpoints.large) {
             console.log("Large viewport 1024px (horizontal) or greater");
+            dispatch(setSidebarNavStatus(false));
             dispatch(setViewportSize({
                 is: {
                     ...defaults,
@@ -72,6 +86,7 @@ export const handleViewportChange = (viewport) => (
             dispatch(setViewportType("large"));
         } else if (viewportWidth >= media.breakpoints.medium) {
             console.log("Medium viewport 768px (horizontal) or greater");
+            dispatch(setSidebarNavStatus(false));
             dispatch(setViewportSize({
                 is: {
                     ...defaults,

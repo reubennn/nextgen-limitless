@@ -6,7 +6,10 @@ import {
     getViewportDimensions,
     getViewportSize,
     getViewportType,
+    getSidebarNavState,
 } from "../selectors/viewportSelectors";
+
+import { setSidebarNavStatus } from "../actions/viewportActions";
 
 import media from "../data/media";
 
@@ -24,7 +27,7 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} navbar for navigating through website
  */
-const Navbar = ({ className, viewport }) => {
+const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
     const content = viewport.dimensions.width >= media.breakpoints.medium ?
         (
             <>
@@ -71,12 +74,16 @@ const Navbar = ({ className, viewport }) => {
         ) :
         (
             <>
-                <Icon
-                    xlinkHref={menuIcon}
-                    id="hamburger-menu-icon"
-                    width="36"
-                    height="36"
-                    className={`align-left nav-item ${className}`} />
+                <button
+                    className="align-left"
+                    onClick={() => setSidebarNavStatus(true)}>
+                    <Icon
+                        xlinkHref={menuIcon}
+                        id="hamburger-menu-icon"
+                        width="36"
+                        height="36"
+                        className={`align-left nav-item ${className}`} />
+                </button>
                 <RouterLink
                     url="/"
                     className="nav-item align-center"
@@ -93,6 +100,7 @@ const Navbar = ({ className, viewport }) => {
             </>
         );
     return (
+        !sidebarNav.isActive &&
         <S.Navbar className={className} type={viewport.type}>
             <S.FlexContainer className="no-margin" justifyContent="flex-end">
                 {content}
@@ -113,6 +121,15 @@ Navbar.propTypes = {
      * - Contains information about the viewport.
      */
     viewport: PropTypes.object,
+    /**
+     * The sidebarNav object which contains flag to indicate
+     * if the sidebar nav is active.
+     */
+    sidebarNav: PropTypes.object,
+    /**
+     * Function to dispatch Redux Action to set sidebar nav status.
+     */
+    setSidebarNavStatus: PropTypes.func,
 };
 
 /**
@@ -128,6 +145,17 @@ const mapStateToProps = (state) => ({
         size: getViewportSize(state),
         type: getViewportType(state),
     },
+    sidebarNav: getSidebarNavState(state),
 });
 
-export default connect(mapStateToProps)(Navbar);
+/**
+ * Assign props to dispatch actions to the Redux Store.
+ *
+ * @param {*} dispatch action to dispatch
+ * @return {Function} functions mapped to the Component as props
+ */
+const mapDispatchToProps = (dispatch) => ({
+    setSidebarNavStatus: (status) => dispatch(setSidebarNavStatus(status)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

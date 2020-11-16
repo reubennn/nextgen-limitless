@@ -23,6 +23,7 @@ import Article from "./pages/Article";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
+import SidebarNav from "./components/SidebarNav";
 
 import * as S from "./styles/styled-components/styled";
 
@@ -79,7 +80,7 @@ const App = ({ handleViewportChange }) => {
         <Router>
             <ScrollToTop>
                 <S.Container>
-                    {/* <Navbar /> */}
+                    <SidebarNav />
                     <Switch>
                         <Route path="/" component={Home} exact />
                         <Route path="/about" component={About} />

@@ -42,7 +42,7 @@ const UpvoteSection = ({ articleName, upvotes, setArticleInfo }) => {
                     +1
                 </S.Button>
             </S.UpvoteSection>
-            <S.HorizontalRuler thin smallMargin color="light" />
+            <S.HorizontalRuler thin smallMargin color="grey-tint-neutral" />
         </>
     );
 };

@@ -138,7 +138,7 @@ const ArticlesList = ({
                                     </S.FlexContainer>
                                 </S.FlexContainer>
                             </Link>
-                            <S.HorizontalRuler></S.HorizontalRuler>
+                            <S.HorizontalRuler />
                         </S.ArticleSample>
                     ))
                 )

@@ -12,7 +12,7 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} wrapper for React Router to push scrollbar to top
  */
-const SocialMediaButton = ({ icon, className, color = "grey" }) => {
+const SocialMediaButton = ({ icon, className, color = "grey-tint-darker" }) => {
     return (
         <S.SocialMediaButton
             className={className}

@@ -27,3 +27,11 @@ export const getViewportDimensions = (store) => store.viewport.dimensions;
  * @return {Object} the viewport dimensions
  */
 export const getViewportType = (store) => store.viewport.type;
+
+/**
+ * Gets the sidebar navigation status.
+ *
+ * @param {*} store Redux store reference
+ * @return {Object} the sidebar nav status
+ */
+export const getSidebarNavState = (store) => store.viewport.sidebarNav;

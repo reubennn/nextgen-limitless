@@ -147,10 +147,14 @@ const Article = ({ match }) => {
                         <S.Paragraph className="author-date">
                             By <i>{articleInfo.author}</i>
                         </S.Paragraph>
-                        <S.Paragraph color="grey" className="author-date">
+                        <S.Paragraph
+                            color="grey-tint-neutral"
+                            className="author-date">
                             &nbsp;|&nbsp;
                         </S.Paragraph>
-                        <S.Paragraph color="grey" className="author-date">
+                        <S.Paragraph
+                            color="grey-tint-neutral"
+                            className="author-date">
                             {dateString}
                         </S.Paragraph>
                     </S.FlexContainer>
@@ -171,19 +175,22 @@ const Article = ({ match }) => {
                             );
                         }
                     })}
-                    <S.HorizontalRuler thin smallMargin color="light" />
+                    <S.HorizontalRuler
+                        thin
+                        smallMargin
+                        color="grey-tint-neutral" />
                     <S.FlexContainer
                         smallMargin
                         wrapContent
                         justifyContent="flex-end">
-                        <S.TinyText color="darkerGrey" margin="0.25rem">
+                        <S.TinyText color="grey-shade-light" margin="0.25rem">
                             <i>Share this article:</i>
                         </S.TinyText>
                         {socialMediaIcons.map((icon, key) => (
                             <SocialMediaButton
                                 key={key}
                                 icon={icon}
-                                color="darkerGrey" />
+                                color="grey-shade-light" />
                         ))}
                     </S.FlexContainer>
                     <CommentsList
