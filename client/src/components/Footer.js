@@ -20,7 +20,6 @@ import * as S from "../styles/styled-components/styled";
  * @return {Component} the website footer
  */
 const Footer = ({ viewport }) => {
-    const viewportWidth = viewport.dimensions.width;
     return (
         <S.Footer>
             <S.FlexContainer column className="footer-nav">
@@ -41,15 +40,10 @@ const Footer = ({ viewport }) => {
                 Connect with us:
             </S.TinyText>
             <S.FlexContainer smallMargin wrapContent>
-                {viewport.size.is.small &&
+                {viewport.size.is.greaterThan.extraSmall &&
                     <S.HorizontalRuler
                         className="footer-hr"
-                        width="20%" />
-                }
-                {viewport.size.is.medium &&
-                    <S.HorizontalRuler
-                        className="footer-hr"
-                        width="40%" />
+                        width="22%" />
                 }
                 {socialMediaIcons.map((icon, key) => (
                     <SocialMediaButton
@@ -57,18 +51,13 @@ const Footer = ({ viewport }) => {
                         key={key}
                         icon={icon} />
                 ))}
-                {viewport.size.is.small &&
+                {viewport.size.is.greaterThan.extraSmall &&
                     <S.HorizontalRuler
                         className="footer-hr"
-                        width="20%" />
-                }
-                {viewport.size.is.medium &&
-                    <S.HorizontalRuler
-                        className="footer-hr"
-                        width="40%" />
+                        width="22%" />
                 }
             </S.FlexContainer>
-            {viewport.size.is.small &&
+            {viewport.size.is.lessThan.small &&
                 <S.HorizontalRuler
                     className="footer-hr"
                     width="50%" />

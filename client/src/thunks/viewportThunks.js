@@ -37,10 +37,19 @@ export const handleViewportChange = (viewport) => (
 
         const viewportWidth = viewport.dimensions.width;
         /**
-         * Create default size Object with all sizes false.
+         * Create default object with all size classifications true or false.
          * - Used to reset all size state values
          */
-        const defaults = {
+        const trueDefaults = {
+            superSmall: true,
+            extraSmall: true,
+            small: true,
+            medium: true,
+            large: true,
+            extraLarge: true,
+            superLarge: true,
+        };
+        const falseDefaults = {
             superSmall: false,
             extraSmall: false,
             small: false,
@@ -57,69 +66,135 @@ export const handleViewportChange = (viewport) => (
         if (viewportWidth >= media.breakpoints.superLarge) {
             console.log("Super Large viewport 1920px (horizontal) or greater");
             dispatch(setSidebarNavStatus(false));
+            dispatch(setViewportType("super-large"));
             dispatch(setViewportSize({
-                ...defaults,
                 is: {
+                    ...falseDefaults,
                     superLarge: true,
+                    greaterThan: {
+                        ...trueDefaults,
+                        superLarge: false,
+                    },
+                    lessThan: {
+                        ...falseDefaults,
+                    },
                 },
             }));
-            dispatch(setViewportType("super-large"));
         } else if (viewportWidth >= media.breakpoints.extraLarge) {
             console.log("Extra Large viewport 1366px (horizontal) or greater");
             dispatch(setSidebarNavStatus(false));
+            dispatch(setViewportType("extra-large"));
             dispatch(setViewportSize({
                 is: {
-                    ...defaults,
+                    ...falseDefaults,
                     extraLarge: true,
+                    greaterThan: {
+                        ...trueDefaults,
+                        extraLarge: false,
+                        superLarge: false,
+                    },
+                    lessThan: {
+                        ...falseDefaults,
+                        superLarge: true,
+                    },
                 },
             }));
-            dispatch(setViewportType("extra-large"));
         } else if (viewportWidth >= media.breakpoints.large) {
             console.log("Large viewport 1024px (horizontal) or greater");
             dispatch(setSidebarNavStatus(false));
+            dispatch(setViewportType("large"));
             dispatch(setViewportSize({
                 is: {
-                    ...defaults,
+                    ...falseDefaults,
                     large: true,
+                    greaterThan: {
+                        ...trueDefaults,
+                        large: false,
+                        extraLarge: false,
+                        superLarge: false,
+                    },
+                    lessThan: {
+                        ...falseDefaults,
+                        extraLarge: true,
+                        superLarge: true,
+                    },
                 },
             }));
-            dispatch(setViewportType("large"));
         } else if (viewportWidth >= media.breakpoints.medium) {
             console.log("Medium viewport 768px (horizontal) or greater");
             dispatch(setSidebarNavStatus(false));
+            dispatch(setViewportType("medium"));
             dispatch(setViewportSize({
                 is: {
-                    ...defaults,
+                    ...falseDefaults,
                     medium: true,
+                    greaterThan: {
+                        ...falseDefaults,
+                        superSmall: true,
+                        extraSmall: true,
+                        small: true,
+                    },
+                    lessThan: {
+                        ...falseDefaults,
+                        large: true,
+                        extraLarge: true,
+                        superLarge: true,
+                    },
                 },
             }));
-            dispatch(setViewportType("medium"));
         } else if (viewportWidth >= media.breakpoints.small) {
             console.log("Small viewport 480px (horizontal) or greater");
+            dispatch(setViewportType("small"));
             dispatch(setViewportSize({
                 is: {
-                    ...defaults,
+                    ...falseDefaults,
                     small: true,
+                    greaterThan: {
+                        ...falseDefaults,
+                        superSmall: true,
+                        extraSmall: true,
+                    },
+                    lessThan: {
+                        ...trueDefaults,
+                        superSmall: false,
+                        extraSmall: false,
+                        small: false,
+                    },
                 },
             }));
-            dispatch(setViewportType("small"));
         } else if (viewportWidth >= media.breakpoints.extraSmall) {
             console.log("Extra Small viewport 360px (horizontal) or greater");
+            dispatch(setViewportType("extra-small"));
             dispatch(setViewportSize({
                 is: {
-                    ...defaults,
+                    ...falseDefaults,
                     extraSmall: true,
+                    greaterThan: {
+                        ...falseDefaults,
+                        superSmall: true,
+                    },
+                    lessThan: {
+                        ...trueDefaults,
+                        superSmall: false,
+                        extraSmall: false,
+                    },
                 },
             }));
-            dispatch(setViewportType("extra-small"));
         } else {
             console.log("Super Small viewport less than 360px (horizontal)");
+            dispatch(setViewportType("super-small"));
             dispatch(setViewportSize({
                 is: {
-                    ...defaults,
+                    ...falseDefaults,
                     superSmall: true,
+                    greaterThan: {
+                        ...falseDefaults,
+                    },
+                    lessThan: {
+                        ...trueDefaults,
+                        superSmall: false,
+                    },
                 },
             }));
-            dispatch(setViewportType("super-small"));
         };
     });

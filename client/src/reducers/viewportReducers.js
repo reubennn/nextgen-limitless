@@ -22,12 +22,15 @@ const initialState = {
      * which is the media breakpoint for older and mid-range phones.
      *
      * @property {Object} is makes property calls simpler to understand
-     * @property {Boolean} superSmall super small
-     * @property {Boolean} extraSmall extra small
-     * @property {Boolean} small small
-     * @property {Boolean} medium medium
-     * @property {Boolean} large large
-     * @property {Boolean} extraLarge extra large
+     *      - @property {Boolean} superSmall super small classification
+     *      - @property {Boolean} extraSmall extra small classification
+     *      - @property {Boolean} small small classification
+     *      - @property {Boolean} medium medium classification
+     *      - @property {Boolean} large large classification
+     *      - @property {Boolean} extraLarge extra large classification
+     *
+     * @property {Object} greaterThan flags indicate viewport is greater than
+     * @property {Object} lessThan flags indicate viewport is less than
      */
     size: {
         is: {
@@ -38,6 +41,26 @@ const initialState = {
             large: false,
             extraLarge: false,
             superLarge: false,
+
+            greaterThan: {
+                superSmall: false,
+                extraSmall: false,
+                small: true,
+                medium: true,
+                large: true,
+                extraLarge: true,
+                superLarge: true,
+            },
+
+            lessThan: {
+                superSmall: true,
+                extraSmall: false,
+                small: false,
+                medium: false,
+                large: false,
+                extraLarge: false,
+                superLarge: false,
+            },
         },
     },
     /**
@@ -73,7 +96,6 @@ const initialState = {
     /**
      * Flag to indicate if the sidebar is active (displayed).
      *
-     * @property {Object} sidebarNav sidebar nav object
      * @property {Boolean} isActive flag indicating sidebar nav status
      */
     sidebarNav: {
