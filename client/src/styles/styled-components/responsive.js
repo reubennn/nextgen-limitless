@@ -36,11 +36,11 @@ export const handleNavbarPadding = (viewportType) => {
 export const handleFeatureTextFontSize = (viewportType) => {
     switch (viewportType) {
         case ("super-small"):
-            return "1.1rem";
+            return "1.4rem";
         case ("extra-small"):
-            return "1.2rem";
+            return "1.8rem";
         default:
-            return "1.5rem";
+            return "2rem";
     };
 };
 
@@ -119,14 +119,14 @@ export const handleLogoTextFontSize = (line, viewportType) => {
     if (line === "first") {
         switch (viewportType) {
             case ("super-small"):
-                return "2.9rem";
+                return "2.7rem";
             default:
                 return "3.5rem";
         }
     } else {
         switch (viewportType) {
             case ("super-small"):
-                return "2.6rem";
+                return "2.4rem";
             default:
                 return "3.1rem";
         }

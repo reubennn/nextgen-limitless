@@ -1,10 +1,13 @@
 /* eslint-disable valid-jsdoc */
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import {
     color,
+    transparency,
     handleColor,
 } from "./colors";
+
+import { gradientTransition } from "./mixins";
 
 import { TinyRouterLink } from "./pages";
 
@@ -201,6 +204,7 @@ export const Icon = styled.svg.attrs((props) => ({
     height: props.height || "3.5rem",
     width: props.width || "3.5rem",
     fill: props.fill || color.grey.tint.lighter,
+    bgColor: props.bgColor || color.grey.shade.dark,
 }))`
     fill: ${(props) => handleColor(props.fill)};
     text-decoration: none;
@@ -211,6 +215,11 @@ export const Icon = styled.svg.attrs((props) => ({
     max-width: ${(props) => props.width};
 
     transition: ease-in-out 0.3s;
+
+    /* Make inner elements inverted */
+    & > use {
+    color: ${(props) => handleColor(props.bgColor)};
+    }
 
     & > use > svg {
         /* Component inline props override */
@@ -254,23 +263,66 @@ export const Icon = styled.svg.attrs((props) => ({
     &.align-right {
         margin-left: auto;
     }
+
+    &.logo-slider {
+        margin: auto 1.5rem;
+    }
 `;
 
 /**
  * Button Component
  */
-export const Button = styled.button`
-    color: #fff;
-    background-color: ${color.grey.shade.dark};
-    padding: 0.6rem 1.2rem;
-    padding-top: 0.6rem;
-    margin: auto;
+const pseudoButtonProperties = css`
     border-radius: 1.5rem;
-    transition-duration: 0.4s;
+`;
+
+export const Button = styled.button`
+    color: ${color.white};
+    background-color: ${color.grey.shade.dark};
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-shadow: 0.03rem 0.03rem
+    ${color.grey.shade.darkest + transparency.x25};
+    box-shadow: 0.1rem 0.15rem
+    ${color.grey.shade.darker + transparency.x50};
+    border-radius: 1.5rem;
+    padding: 0.6rem 1.7rem;
     display: block;
+    margin: 0 auto;
 
     &:hover {
+        color: ${color.grey.tint.lighter};
+    }
+
+    &.secondary {
+        padding: 0.6rem 1.2rem;
+        padding-top: 0.6rem;
+        border-radius: 1.2rem;
+        transition: cubic-bezier(0.9, 0.75, 1, 1) 0.3s;
+
+        &:hover {
         background-color: #000;
+        }
+    }
+
+    &.gradient {
+        background: ${`linear-gradient(
+        245deg,
+        ${color.blue.neutral} -90%,
+        ${color.purple.dark} 120%)`};
+        color: ${color.grey.tint.lightest};
+
+        ${() => { // Use function to avoid Prettier ugly formatting.
+        return gradientTransition(
+            color.blue.darker,
+            color.purple.darker,
+            pseudoButtonProperties,
+        );
+    }}
+    }
+
+    &.home {
+        margin-top: 4rem;
     }
 
     &.upvote-button {
@@ -333,12 +385,18 @@ export const FlexContainer = styled.ul.attrs((props) => ({
     justify-content: ${(props) => props.justifyContent};
     margin: ${(props) => props.smallMargin ? "0.25rem" : "1rem"};
 
-    & .footer-nav {
+    &.footer-nav {
         margin: 1rem 3rem;
     }
 
     & ~ ${TinyRouterLink} {
         margin-top: 0;
+    }
+
+    &.items-margin {
+        & > * {
+            margin: 0.8rem auto;
+        }
     }
 `;
 

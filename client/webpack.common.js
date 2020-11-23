@@ -63,6 +63,9 @@ module.exports = {
             "react-dom": "@hot-loader/react-dom",
             /** Directory alias to shorten import directories */
             ".../assets": path.resolve(__dirname, "./public/assets"),
+            ".../logos": path.resolve(__dirname, "./public/assets/logos"),
+            ".../images": path.resolve(__dirname, "./public/assets/images"),
+            ".../icons": path.resolve(__dirname, "./public/assets/icons"),
         },
     },
 };

@@ -139,70 +139,72 @@ const Article = ({ match }) => {
             <>
                 <Navbar />
                 <S.MainPageBody>
-                    <S.Header>{articleInfo.title}</S.Header>
-                    <S.Image
-                        src={articleInfo.featureImg.src}
-                        alt={articleInfo.featureImg.alt} />
-                    <S.FlexContainer smallMargin justifyContent="left">
-                        <S.Paragraph className="author-date">
-                            By <i>{articleInfo.author}</i>
+                    <S.Section>
+                        <S.Header>{articleInfo.title}</S.Header>
+                        <S.Image
+                            src={articleInfo.featureImg.src}
+                            alt={articleInfo.featureImg.alt} />
+                        <S.FlexContainer smallMargin justifyContent="left">
+                            <S.Paragraph className="author-date">
+                                By <i>{articleInfo.author}</i>
+                            </S.Paragraph>
+                            <S.Paragraph
+                                color="grey-tint-neutral"
+                                className="author-date">
+                                &nbsp;|&nbsp;
                         </S.Paragraph>
-                        <S.Paragraph
-                            color="grey-tint-neutral"
-                            className="author-date">
-                            &nbsp;|&nbsp;
-                        </S.Paragraph>
-                        <S.Paragraph
-                            color="grey-tint-neutral"
-                            className="author-date">
-                            {dateString}
-                        </S.Paragraph>
-                    </S.FlexContainer>
-                    <UpvotesSection
-                        articleName={name}
-                        upvotes={articleInfo.upvotes}
-                        setArticleInfo={setArticleInfo} />
-                    {articleInfo.content.map((paragraph, key) => {
-                        if (typeof paragraph === "object" &&
-                            paragraph !== null) {
-                            return <S.Image
-                                key={key}
-                                src={paragraph.src}
-                                alt={paragraph.alt} />;
-                        } else {
-                            return (
-                                <p key={key}>{paragraph}</p>
-                            );
-                        }
-                    })}
-                    <S.HorizontalRuler
-                        thin
-                        smallMargin
-                        color="grey-tint-neutral" />
-                    <S.FlexContainer
-                        smallMargin
-                        wrapContent
-                        justifyContent="flex-end">
-                        <S.TinyText color="grey-shade-light" margin="0.25rem">
-                            <i>Share this article:</i>
-                        </S.TinyText>
-                        {socialMediaIcons.map((icon, key) => (
-                            <SocialMediaButton
-                                key={key}
-                                icon={icon}
-                                color="grey-shade-light" />
-                        ))}
-                    </S.FlexContainer>
-                    <CommentsList
-                        comments={articleInfo.comments}
-                        articleName={name}
-                        setArticleInfo={setArticleInfo}
-                        containsComments={containsComments} />
-                    <S.Header small>Other Articles...</S.Header>
-                    <ArticlesList
-                        articleToFilter={name}
-                        inArticlePage={inArticlePage}
-                    />
+                            <S.Paragraph
+                                color="grey-tint-neutral"
+                                className="author-date">
+                                {dateString}
+                            </S.Paragraph>
+                        </S.FlexContainer>
+                        <UpvotesSection
+                            articleName={name}
+                            upvotes={articleInfo.upvotes}
+                            setArticleInfo={setArticleInfo} />
+                        {articleInfo.content.map((paragraph, key) => {
+                            if (typeof paragraph === "object" &&
+                                paragraph !== null) {
+                                return <S.Image
+                                    key={key}
+                                    src={paragraph.src}
+                                    alt={paragraph.alt} />;
+                            } else {
+                                return (
+                                    <p key={key}>{paragraph}</p>
+                                );
+                            }
+                        })}
+                        <S.HorizontalRuler
+                            thin
+                            smallMargin
+                            color="grey-tint-neutral" />
+                        <S.FlexContainer
+                            smallMargin
+                            wrapContent
+                            justifyContent="flex-end">
+                            <S.TinyText color="grey-shade-light" margin="0.25rem">
+                                <i>Share this article:</i>
+                            </S.TinyText>
+                            {socialMediaIcons.map((icon, key) => (
+                                <SocialMediaButton
+                                    key={key}
+                                    icon={icon}
+                                    color="grey-shade-light" />
+                            ))}
+                        </S.FlexContainer>
+                        <CommentsList
+                            comments={articleInfo.comments}
+                            articleName={name}
+                            setArticleInfo={setArticleInfo}
+                            containsComments={containsComments} />
+                        <S.Header small>Other Articles...</S.Header>
+                        <ArticlesList
+                            articleToFilter={name}
+                            inArticlePage={inArticlePage}
+                        />
+                    </S.Section>
                 </S.MainPageBody>
             </>
         );

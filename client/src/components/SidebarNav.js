@@ -12,8 +12,8 @@ import Icon from "./Icon";
 import Logo from "./Logo";
 import RouterLink from "./RouterLink";
 
-import closeIcon from ".../assets/icons/close-icon.svg";
-import searchIcon from ".../assets/icons/magnifying-glass.svg";
+import closeIcon from ".../icons/close-icon.svg";
+import searchIcon from ".../icons/magnifying-glass.svg";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -60,9 +60,9 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => (
                     <S.NavbarLink
                         to="/"
                         activeClassName="active"
-                        className={className}
+                        className={className + " uppercase"}
                         exact >
-                        HOME
+                        Home
                     </S.NavbarLink>
                 </button>
             </S.ListItem>
@@ -72,8 +72,8 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => (
                     <S.NavbarLink
                         to="/about"
                         activeClassName="active"
-                        className={className} >
-                        ABOUT
+                        className={className + " uppercase"} >
+                        About
                     </S.NavbarLink>
                 </button>
             </S.ListItem>
@@ -83,8 +83,19 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => (
                     <S.NavbarLink
                         to="/blog"
                         activeClassName="active"
-                        className={className} >
-                        BLOG
+                        className={className + " uppercase"} >
+                        Blog
+                    </S.NavbarLink>
+                </button>
+            </S.ListItem>
+            <S.HorizontalRuler className="sidebar-nav" />
+            <S.ListItem className="nav-item sidebar-nav">
+                <button onClick={() => setSidebarNavStatus(false)}>
+                    <S.NavbarLink
+                        to="/Store"
+                        activeClassName="active"
+                        className={className + " uppercase"} >
+                        Store
                     </S.NavbarLink>
                 </button>
             </S.ListItem>
@@ -94,8 +105,8 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => (
                     <S.NavbarLink
                         to="/contact"
                         activeClassName="active"
-                        className={className} >
-                        CONTACT
+                        className={className + " uppercase"} >
+                        Contact
                     </S.NavbarLink>
                 </button>
             </S.ListItem>

@@ -56,7 +56,7 @@ const AddCommentForm = ({ articleName, setArticleInfo }) => {
                 commentText={commentText}
                 setCommentText={setCommentText}
             />
-            <S.Button onClick={() => addComment()}>
+            <S.Button className="secondary" onClick={() => addComment()}>
                 Add comment
             </S.Button>
         </S.AddCommentForm>

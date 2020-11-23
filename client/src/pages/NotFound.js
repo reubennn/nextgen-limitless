@@ -34,19 +34,21 @@ const NotFound = ({ item }) => {
         <S.NotFound>
             <Navbar />
             <S.MainPageBody>
-                <S.Header
-                    className="no-background center-text"
-                    small
-                >
-                    Oops...
-                </S.Header>
-                <p style={{ textAlign: "center" }}>
-                    We couldn&apos;t seem to find that {item}!
-                </p>
-                <S.Image
-                    src="https://res.cloudinary.com/reuben/image/upload/v1604039753/fullstack-react/assets/istockphoto-robot-404-not-found_l5gqt7.jpg"
-                    alt="Error 404 Not Found Robot"
-                    width="509" />
+                <S.Section>
+                    <S.Header
+                        className="no-background center-text"
+                        small
+                    >
+                        Oops...
+                    </S.Header>
+                    <p style={{ textAlign: "center" }}>
+                        We couldn&apos;t seem to find that {item}!
+                    </p>
+                    <S.Image
+                        src="https://res.cloudinary.com/reuben/image/upload/v1604039753/fullstack-react/assets/istockphoto-robot-404-not-found_l5gqt7.jpg"
+                        alt="Error 404 Not Found Robot"
+                        width="509" />
+                </S.Section>
             </S.MainPageBody>
         </S.NotFound>
     );

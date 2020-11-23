@@ -19,8 +19,10 @@ const Articles = ({ loadStatus }) => (
     <>
         <Navbar />
         <S.MainPageBody>
-            {!loadStatus.failed && <S.Header>Articles</S.Header>}
-            <ArticlesList />
+            <S.Section>
+                {!loadStatus.failed && <S.Header>Articles</S.Header>}
+                <ArticlesList />
+            </S.Section>
         </S.MainPageBody>
     </>
 );

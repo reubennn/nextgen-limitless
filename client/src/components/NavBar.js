@@ -13,8 +13,8 @@ import { setSidebarNavStatus } from "../actions/viewportActions";
 
 import media from "../data/media";
 
-import menuIcon from ".../assets/icons/menu-icon.svg";
-import searchIcon from ".../assets/icons/magnifying-glass.svg";
+import menuIcon from ".../icons/menu-icon.svg";
+import searchIcon from ".../icons/magnifying-glass.svg";
 
 import RouterLink from "./RouterLink";
 import Logo from "./Logo";
@@ -39,35 +39,34 @@ const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
                 </RouterLink>
                 <S.ListItem className="nav-item">
                     <S.NavbarLink
-                        to="/"
-                        activeClassName="active"
-                        className={className}
-                        exact >
-                        HOME
-                    </S.NavbarLink>
-                </S.ListItem>
-                <S.ListItem className="nav-item">
-                    <S.NavbarLink
                         to="/about"
                         activeClassName="active"
-                        className={className} >
-                        ABOUT
+                        className={className + " uppercase"} >
+                        About
                     </S.NavbarLink>
                 </S.ListItem>
                 <S.ListItem className="nav-item">
                     <S.NavbarLink
                         to="/blog"
                         activeClassName="active"
-                        className={className} >
-                        BLOG
+                        className={className + " uppercase"} >
+                        Blog
+                    </S.NavbarLink>
+                </S.ListItem>
+                <S.ListItem className="nav-item">
+                    <S.NavbarLink
+                        to="/store"
+                        activeClassName="active"
+                        className={className + " uppercase"} >
+                        Store
                     </S.NavbarLink>
                 </S.ListItem>
                 <S.ListItem className="nav-item">
                     <S.NavbarLink
                         to="/contact"
                         activeClassName="active"
-                        className={className} >
-                        CONTACT
+                        className={className + " uppercase"} >
+                        Contact
                     </S.NavbarLink>
                 </S.ListItem>
             </>

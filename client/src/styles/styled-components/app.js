@@ -1,9 +1,7 @@
 /* eslint-disable valid-jsdoc */
 import styled from "styled-components";
 
-import {
-    color,
-} from "./colors";
+import { color } from "./colors";
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~ App Container ~~~~~~~~~~~

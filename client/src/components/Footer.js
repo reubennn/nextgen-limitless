@@ -26,6 +26,7 @@ const Footer = ({ viewport }) => {
                 <RouterLink url="/" label="Home" />
                 <RouterLink url="/about" label="About" />
                 <RouterLink url="/blog" label="Blog" />
+                <RouterLink url="/store" label="Store" />
                 <RouterLink url="/contact" label="Contact" />
             </S.FlexContainer>
             <S.HorizontalRuler
@@ -63,7 +64,7 @@ const Footer = ({ viewport }) => {
                     width="50%" />
             }
             <S.TinyText>
-                <span>© 2020 Reuben Smith.&nbsp;</span>
+                <span>© 2020 Next Gen LIMITLESS.&nbsp;</span>
             All Rights Reserved.
             </S.TinyText>
             <S.TinyText superTiny>

@@ -2,13 +2,12 @@
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 
-import {
-    fontFamily,
-    rotate,
-} from "./config";
-
+import { fontFamily } from "./fonts";
+import { rotate } from "./keyframes";
+import { sliderAnimation } from "./mixins";
 import {
     color,
+    transparency,
     handleColor,
 } from "./colors";
 
@@ -19,8 +18,7 @@ import {
 
 import { Header, FlexContainer } from "./general";
 
-import northBeachImage from ".../assets/images/north-head-manly-australia.jpg";
-import subtlePrismSVG from ".../assets/images/subtle-prism.svg";
+import homepageImg from ".../images/abstract-scenery.jpg";
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~ Page Components ~~~~~~~~~~~
@@ -43,6 +41,7 @@ export const Navbar = styled.nav.attrs((props) => ({
     margin: 0;
     display: inline-block;
     width: 100%;
+    z-index: 100;
 
     /** Responsive Design Styling */
     padding: ${(props) => handleNavbarPadding(props.viewport.type)};
@@ -57,7 +56,7 @@ export const Navbar = styled.nav.attrs((props) => ({
 
     &.sidebar-nav {
         height: 100%;
-        z-index: 1; /* Stay on top */
+        z-index: 100; /* Stay on top */
         position: fixed; /* Stay in place */
         overflow-x: hidden; /* Disable horizontal scroll */
         transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -134,7 +133,8 @@ export const MainPageBody = styled.main.attrs({
     id: "MainPageBody",
 })`
     text-align: left;
-    width: 79vw; /* equivalent to Section padding: 11%; */
+    /* equivalent to Section padding: 11%; */
+    /* width: 79vw; */
     margin: auto;
 `;
 
@@ -142,14 +142,20 @@ export const MainPageBody = styled.main.attrs({
  * Homepage Header.
  */
 export const HomepageHeader = styled.header`
-    height: 85vh;
-    min-height: 85vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url(${subtlePrismSVG});
-    background-color: #ffe2ad;
+    /* background-image: url(${homepageImg}); */
+    background: ${`linear-gradient(
+            to top,
+            ${color.grey.shade.dark},
+            ${color.grey.shade.dark + transparency.x75},
+            #e66465${transparency.x30},
+            #9198e5${transparency.x40}),
+            url(${homepageImg})`};
+    background-color:   ${"#9198e5" + transparency.x40};
     background-attachment: fixed;
     background-size: cover;
     background-position: 50%;
@@ -165,14 +171,14 @@ export const HomepageHeader = styled.header`
  */
 export const FeatureText = styled.p.attrs((props) => ({
     color: props.color || "inherit",
+    fontWeight: props.fontWeight || "500",
     viewport: {
         type: props.type || "default",
     },
 }))`
     color: ${(props) => handleColor(props.color)};
     font-family: ${fontFamily.secondary};
-    /* font-size: 1.5rem; */
-    font-weight: 500;
+    font-weight: ${(props) => props.fontWeight};
     margin: auto;
     text-align: center;
 
@@ -196,8 +202,8 @@ export const FeatureText = styled.p.attrs((props) => ({
  */
 export const Section = styled.section.attrs((props) => ({
     height: props.height || "40vh",
-    color: props.color || "#fff",
-    bgColor: props.bgColor || color.grey.shade.dark,
+    color: props.color || color.grey.shade.dark,
+    bgColor: props.bgColor || color.white,
 }))`
     color: ${(props) => handleColor(props.color)};
     background-color: ${(props) => handleColor(props.bgColor)};
@@ -206,15 +212,41 @@ export const Section = styled.section.attrs((props) => ({
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     padding: 0 11%;
+`;
 
-    &.banner {
-        /* background-image: url(${northBeachImage}); */
-        background: linear-gradient(to bottom, #303030,rgb(48, 48, 48, 0.5), rgb(230, 100, 101, 0.6), rgb(145, 152, 229, 0.25)), url(${northBeachImage});
-        background-attachment: fixed;
-        background-size: 100% auto;
-        background-position: 0 55%;
+/**
+ * Page Section Component.
+ *
+ * @param {String} height height of the section
+ * @param {String} color color of the text
+ * @param {String} bgColor background color of the section
+ * @param {String} url background image url
+ * @param {String} pos background position
+ */
+export const SectionWithBackground = styled(Section).attrs((props) => ({
+    url: props.url,
+    pos: props.pos || "center",
+    attachment: props.attachment || "fixed",
+}))`
+    background-image: url(${(props) => props.url});
+    background-size: cover;
+    background-position: ${(props) => props.pos};
+    background-attachment: ${(props) => props.attachment};
+
+    &.linear-gradient {
+        background: ${(props) => `linear-gradient(
+            to bottom,
+            #303030,
+            ${color.grey.shade.dark + transparency.x50},
+            #e66465${transparency.x30},
+            #9198e5${transparency.x25}),
+            url(${props.url})`};
+        background-repeat:no-repeat;
+        background-size: cover;
+        background-attachment: ${(props) => props.attachment};
+        background-position: ${(props) => props.pos};
     }
 `;
 
@@ -426,7 +458,7 @@ export const LoadingIcon = styled.nav`
         border: 0.35rem solid ${color.grey.shade.dark};
         border-radius: 50%;
         animation: ${rotate} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: ${color.grey.shade.dark} transparent transparent transparent;
+        border-color: ${color.grey.shade.dark} transparent;
 
         &:nth-child(1) {
             animation-delay: -0.45s;
@@ -467,7 +499,6 @@ export const Footer = styled.footer`
         text-decoration: none;
         padding: 2rem 0.25rem 0.5rem;
         margin: 0;
-        margin-top: 4rem;
         width: 100%;
     }
 `;
@@ -508,4 +539,61 @@ export const SocialMediaButton = styled.a`
     &.footer-icon > svg:hover {
         fill: #fff;
     }
+`;
+
+/**
+ * Sliders parent container so they stack and overlay on top of each other.
+ *
+ * This is required to create an infinite linear translation
+ * animation so it appears as though the logos list never ends.
+ *
+ * - Sure don't mind a good ol' Zinger Stacker!
+ *
+ */
+export const ZingerStackerSliders = styled.div`
+    height: 7rem;
+    margin: 0.75rem 0;
+    overflow: hidden;
+
+    /* Span the slider over the entire screen */
+    position: relative;
+    width: 100vw;
+    left: calc(-50vw + 50%);
+`;
+
+const sliderAnimationTime = 20;
+
+/**
+ * Logo Slider which displays company logos across the screen.
+ *
+ * - To create the infinite linear translation, we need to use five
+ * elements, which each display the animation at different points in time
+ * for a seamless never-ending loop.
+ *
+ * @param {Boolean} reverse flag to indicate slider to move in reverse direction
+ * @param {String} element order of display
+ * @param {Object} viewport viewport object used for responsive design
+ *      - @property {String} type type classification
+ */
+export const LogoSlider = styled.div.attrs((props) => ({
+    element: props.element || "first",
+    viewport: {
+        type: props.type || "default",
+    },
+}))`
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    height: 7rem;
+    ${(props) => {
+        return sliderAnimation(
+            sliderAnimationTime * 5,
+            props.reverse,
+            props.element,
+            props.viewport.type,
+        );
+    }}
 `;

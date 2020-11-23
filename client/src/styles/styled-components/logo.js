@@ -1,13 +1,9 @@
 /* eslint-disable valid-jsdoc */
 import styled from "styled-components";
 
-import {
-    fontFamily,
-} from "./config";
+import { fontFamily } from "./fonts";
 
-import {
-    color,
-} from "./colors";
+import { color } from "./colors";
 
 import {
     handleLogoContainerPadding,

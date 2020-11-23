@@ -8,7 +8,7 @@ import {
     getViewportType,
 } from "../selectors/viewportSelectors";
 
-import unpluggedIcon from ".../assets/icons/unplugged.png";
+import unpluggedIcon from ".../icons/unplugged.png";
 
 import * as S from "../styles/styled-components/styled";
 

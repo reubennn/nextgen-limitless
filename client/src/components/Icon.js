@@ -13,16 +13,27 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} a stylable svg icon
  */
-const Icon = ({ xlinkHref, id, width, height, alt, className }) => (
-    <S.Icon
-        width={width}
-        height={height}
-        viewbox={`0 0 ${width} ${height}`}
-        alt={alt}
-        className={className}>
-        <use xlinkHref={`${xlinkHref}#${id}`} width={width} height={height}/>
-    </S.Icon>
-);
+const Icon = ({
+    xlinkHref,
+    id, width,
+    height,
+    alt,
+    bgColor = "grey-shade-dark",
+    className }) =>
+    (
+        <S.Icon
+            width={width}
+            height={height}
+            viewbox={`0 0 ${width} ${height}`}
+            alt={alt}
+            bgColor={bgColor}
+            className={className}>
+            <use
+                xlinkHref={`${xlinkHref}#${id}`}
+                width={width}
+                height={height} />
+        </S.Icon>
+    );
 
 Icon.propTypes = {
     /**
@@ -46,6 +57,14 @@ Icon.propTypes = {
      * The SVG alt if it cannot be displayed.
      */
     alt: PropTypes.string,
+    /**
+     * The background color, so that inner parts of the SVG
+     * can be inverted and visible.
+     *
+     * - The inverted elements in the SVG file need to have property:
+     * fill="currentColor".
+     */
+    bgColor: PropTypes.string,
     /**
      * The class name to be passed onto styled-components Icon.
      * - As the Icon React Component is called, the class name

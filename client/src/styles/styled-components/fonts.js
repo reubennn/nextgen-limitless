@@ -1,10 +1,3 @@
-import { keyframes } from "styled-components";
-
-/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * ~~~~~~~~~~~~~~~ Fonts ~~~~~~~~~~~~~~~~~
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- */
-
 export const fontFamily = {
     main: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, Helvetica, sans-serif, "Apple Color Emoji",
@@ -15,21 +8,3 @@ export const fontFamily = {
     Roboto, "Helvetica Neue", Arial, Helvetica, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
 };
-
-/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * ~~~~~~~~~~~~~~ Keyframes ~~~~~~~~~~~~~~
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- */
-
-/**
- * Rotation Keyframe
- */
-export const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-`;
