@@ -218,7 +218,12 @@ export const Icon = styled.svg.attrs((props) => ({
 
     /* Make inner elements inverted */
     & > use {
-    color: ${(props) => handleColor(props.bgColor)};
+        color: ${(props) => handleColor(props.bgColor)};
+    }
+
+    /* Close icon uses stroke for lines, not fill */
+    &.close-icon > use {
+        stroke: ${(props) => handleColor(props.fill)};
     }
 
     & > use > svg {

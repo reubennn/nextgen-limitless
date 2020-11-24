@@ -35,7 +35,7 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => (
                     width="36"
                     height="36"
                     fill="red"
-                    className={`align-left nav-item ${className}`} />
+                    className={`align-left nav-item close-icon ${className}`} />
             </button>
             <RouterLink
                 url="/"
