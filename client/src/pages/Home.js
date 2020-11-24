@@ -86,7 +86,7 @@ const Home = ({ viewport }) => (
                     color="grey-tint-light"
                     bgColor="grey-shade-dark"
                     height="50vh">
-                    <S.FlexContainer column className="no-margin">
+                    <S.FlexContainer column>
                         <h3 className="center-text">
                             Some of our past &amp; present partners...*
                         </h3>
@@ -94,7 +94,7 @@ const Home = ({ viewport }) => (
                         <LogoSlider logos={logos.primary} duration={15} bgColor="grey-shade-dark" />
                         <LogoSlider logos={logos.secondary} duration={20} reverse bgColor="grey-shade-dark" />
                         <br />
-                        <S.TinyText className="align-center" superTiny color="grey-shade-lightest">*These companies may or may not have actually partnered with us.</S.TinyText>
+                        <S.TinyText className="center-text" superTiny color="grey-shade-lightest">*These companies may or may not have actually partnered with us.</S.TinyText>
                     </S.FlexContainer>
                 </S.Section>
                 <S.Section>

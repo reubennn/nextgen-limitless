@@ -214,6 +214,8 @@ export const Section = styled.section.attrs((props) => ({
     justify-content: center;
     align-items: stretch;
     padding: 0 11%;
+    width: 100vw;
+    overflow-x: hidden;
 `;
 
 /**
