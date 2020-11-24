@@ -32,7 +32,6 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => (
                 onClick={() => setSidebarNavStatus(false)}>
                 <Icon
                     xlinkHref={closeIcon}
-                    id="close-icon"
                     width="36"
                     height="36"
                     fill="red"
@@ -47,7 +46,6 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => (
             </RouterLink>
             <Icon
                 xlinkHref={searchIcon}
-                id="magnifying-glass"
                 width="28"
                 height="28"
                 className={`align-right nav-item ${className}`} />

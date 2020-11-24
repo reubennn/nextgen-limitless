@@ -15,7 +15,7 @@ import * as S from "../styles/styled-components/styled";
  */
 const Icon = ({
     xlinkHref,
-    id,
+    id = "main",
     width,
     height,
     alt,
@@ -45,7 +45,7 @@ Icon.propTypes = {
      * The id attribute for the SVG.
      * - the SVG file must have an id attribute to reference.
      */
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     /**
      * The width of the SVG icon.
      */

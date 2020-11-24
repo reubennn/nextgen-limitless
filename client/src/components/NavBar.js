@@ -78,7 +78,6 @@ const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
                         xlinkHref={menuIcon}
-                        id="hamburger-menu-icon"
                         width="36"
                         height="36"
                         className={`align-left nav-item ${className}`} />
@@ -92,7 +91,6 @@ const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
                 </RouterLink>
                 <Icon
                     xlinkHref={searchIcon}
-                    id="magnifying-glass"
                     width="28"
                     height="28"
                     className={`align-right nav-item ${className}`} />
