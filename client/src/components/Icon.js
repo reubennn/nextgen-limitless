@@ -15,7 +15,8 @@ import * as S from "../styles/styled-components/styled";
  */
 const Icon = ({
     xlinkHref,
-    id, width,
+    id,
+    width,
     height,
     alt,
     bgColor = "grey-shade-dark",

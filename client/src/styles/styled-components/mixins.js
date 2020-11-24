@@ -46,37 +46,19 @@ export const gradientTransition = (start, end, properties) => css`
  *
  * - The elements will translate across the screen.
  *
- * @param {Number} duration animation duration
+ * @param {Number} duration the duration to span the logos across the screen
+ * @param {Number} offset position of the slider (-1, 0 or 1)
  * @param {Boolean} reverse flag to indicate slider to move in reverse direction
- * @param {String} element order of display
  * @return {String} CSS for a slider animation
  */
-export const sliderAnimation = (
-    duration,
-    reverse,
-    element,
-    viewportType,
-) => css`
+export const sliderAnimation = (duration, offset, reverse) => css`
     animation:
     ${duration}s /* duration */
     linear /* timing-function */
-    ${() => {
-        switch (element) {
-            case ("first"):
-                return 0;
-            case ("second"):
-                return -4 * (duration / 5);
-            case ("third"):
-                return -3 * (duration / 5);
-            case ("fourth"):
-                return -2 * (duration / 5);
-            case ("fifth"):
-                return -1 * (duration / 5);
-        }
-    }}s /* delay */
+    0s /* delay */
     infinite /* iteration-count */
     ${reverse ? "reverse" : "normal"} /* direction */
     both /* fill-mode */
     running /* play-state */
-    ${infiniteLinearTranslate(viewportType)}; /* animation-name */
+    ${infiniteLinearTranslate(offset)}; /* animation-name */
 `;

@@ -91,8 +91,8 @@ const Home = ({ viewport }) => (
                             Some of our past &amp; present partners...*
                         </h3>
                         <br />
-                        <LogoSlider logos={logos.primary} type={viewport.dimensions} bgColor="grey-shade-dark" />
-                        <LogoSlider logos={logos.secondary} type={viewport.dimensions} reverse bgColor="grey-shade-dark" />
+                        <LogoSlider logos={logos.primary} duration={15} bgColor="grey-shade-dark" />
+                        <LogoSlider logos={logos.secondary} duration={20} reverse bgColor="grey-shade-dark" />
                         <br />
                         <S.TinyText className="align-center" superTiny color="grey-shade-lightest">*These companies may or may not have actually partnered with us.</S.TinyText>
                     </S.FlexContainer>

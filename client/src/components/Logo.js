@@ -12,6 +12,13 @@ import unpluggedIcon from ".../icons/unplugged.png";
 
 import * as S from "../styles/styled-components/styled";
 
+/**
+ * React Component for the website logo.
+ *
+ * Displays the website logo created using various CSS elements.
+ *
+ * @return {Component} website logo
+ */
 const Logo = ({ className, viewport }) => (
     <S.LogoContainer
         className={className}

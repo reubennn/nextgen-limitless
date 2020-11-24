@@ -561,25 +561,23 @@ export const ZingerStackerSliders = styled.div`
     left: calc(-50vw + 50%);
 `;
 
-const sliderAnimationTime = 20;
-
 /**
  * Logo Slider which displays company logos across the screen.
  *
- * - To create the infinite linear translation, we need to use five
- * elements, which each display the animation at different points in time
- * for a seamless never-ending loop.
+ * - To create the infinite linear translation, we need to use three
+ * sliders containing the logos, which each have a different offset positions.
+ * The different offsets make it appear as though the logos translate
+ * seamlessly and infinitely.
+ * - We need the three sliders to have an offset value of either -1, 0 and 1,
+ * respectively.
  *
+ * @param {Number} duration the duration to span the logos across the screen
+ * @param {Number} offset position of the slider (-1, 0 or 1)
  * @param {Boolean} reverse flag to indicate slider to move in reverse direction
- * @param {String} element order of display
- * @param {Object} viewport viewport object used for responsive design
- *      - @property {String} type type classification
  */
 export const LogoSlider = styled.div.attrs((props) => ({
-    element: props.element || "first",
-    viewport: {
-        type: props.type || "default",
-    },
+    offset: props.offset || 0,
+    duration: props.duration || 10,
 }))`
     display: inline-block;
     white-space: nowrap;
@@ -590,10 +588,9 @@ export const LogoSlider = styled.div.attrs((props) => ({
     height: 7rem;
     ${(props) => {
         return sliderAnimation(
-            sliderAnimationTime * 5,
+            props.duration * 3,
+            props.offset,
             props.reverse,
-            props.element,
-            props.viewport.type,
         );
     }}
 `;

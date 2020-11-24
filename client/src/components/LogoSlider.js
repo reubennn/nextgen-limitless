@@ -5,16 +5,23 @@ import Icon from "./Icon";
 
 import * as S from "../styles/styled-components/styled";
 
-const LogoSlider = ({ logos, reverse, bgColor = "grey-shade-dark", type }) => {
-    const values = ["first", "second", "third", "fourth", "fifth"];
+/**
+ * React Component for an animated logo slider.
+ *
+ * Displays a list of logos which translate across the screen
+ * in an infinite loop animation.
+ *
+ * @return {Component} logo slider
+ */
+const LogoSlider = ({ logos, reverse, bgColor = "grey-shade-dark" }) => {
+    const offset = [-1, 0, 1];
     const logoSliders = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {
         logoSliders.push(
             <S.LogoSlider
                 key={i}
-                element={values[i]}
-                reverse={reverse}
-                type={type}>
+                offset={offset[i]}
+                reverse={reverse}>
                 {logos.map((logo, key) =>
                     <Icon
                         key={key}
@@ -33,13 +40,6 @@ const LogoSlider = ({ logos, reverse, bgColor = "grey-shade-dark", type }) => {
             <S.ZingerStackerSliders>
                 {logoSliders}
             </S.ZingerStackerSliders>
-            {/* <Icon
-            xlinkHref={tesla}
-            height="100%"
-            width="150px"
-            id="main"
-            className="logo-slider"
-            bgColor={bgColor} /> */}
         </>
     );
 };
@@ -60,10 +60,6 @@ LogoSlider.propTypes = {
      * can be inverted and visible.
      */
     bgColor: PropTypes.string,
-    /**
-     * REDUX
-     */
-    type: PropTypes.object,
 };
 
 export default LogoSlider;
