@@ -43,7 +43,7 @@ module.exports = {
             },
             {
                 /** Load Files */
-                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2|json|xml|ico)$/i,
+                test: /\.(png|jpg|jfif|gif|svg|eot|ttf|woff|woff2|json|xml|ico)$/i,
                 loader: "file-loader",
                 options: {
                     name: "[path][name].[ext]",
