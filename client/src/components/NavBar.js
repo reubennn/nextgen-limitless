@@ -13,7 +13,7 @@ import { setSidebarNavStatus } from "../actions/viewportActions";
 
 import media from "../data/media";
 
-import menuIcon from ".../icons/menu-icon.svg";
+import menuIcon from ".../icons/menu.svg";
 import searchIcon from ".../icons/magnifying-glass.svg";
 
 import RouterLink from "./RouterLink";

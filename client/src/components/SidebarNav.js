@@ -12,7 +12,7 @@ import Icon from "./Icon";
 import Logo from "./Logo";
 import RouterLink from "./RouterLink";
 
-import closeIcon from ".../icons/close-icon.svg";
+import closeIcon from ".../icons/close.svg";
 import searchIcon from ".../icons/magnifying-glass.svg";
 
 import * as S from "../styles/styled-components/styled";
@@ -34,7 +34,6 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => (
                     xlinkHref={closeIcon}
                     width="36"
                     height="36"
-                    fill="red"
                     className={`align-left nav-item close-icon ${className}`} />
             </button>
             <RouterLink
