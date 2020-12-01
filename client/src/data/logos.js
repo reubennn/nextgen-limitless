@@ -14,6 +14,9 @@ import tesla from ".../logos/tesla.svg";
 import woolworths from ".../logos/woolworths.svg";
 import yourLogoHere from ".../logos/your-logo-here.svg";
 
+/**
+ * Contains the url path to the logos for the logo slider on the homepage.
+ */
 export const logos = {
     primary: [
         aDayOnTheGreen,
@@ -58,12 +61,5 @@ export const logos = {
         tesla,
         woolworths,
         yourLogoHere,
-    ],
-    test: [
-        aDayOnTheGreen,
-        aruza,
-        carmelsBarAndGrill,
-        dassaultSystemes,
-        facebook,
     ],
 };
