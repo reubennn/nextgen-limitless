@@ -19,6 +19,7 @@ const Icon = ({
     width,
     height,
     alt,
+    fill,
     bgColor = "grey-shade-dark",
     className }) =>
     (
@@ -27,6 +28,7 @@ const Icon = ({
             height={height}
             viewbox={`0 0 ${width} ${height}`}
             alt={alt}
+            fill={fill}
             bgColor={bgColor}
             className={className}>
             <use
@@ -58,6 +60,10 @@ Icon.propTypes = {
      * The SVG alt if it cannot be displayed.
      */
     alt: PropTypes.string,
+    /**
+     * The fill of the SVG icon.
+     */
+    fill: PropTypes.string,
     /**
      * The background color, so that inner parts of the SVG
      * can be inverted and visible.
