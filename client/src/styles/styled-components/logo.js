@@ -110,7 +110,7 @@ export const LogoText = styled.span.attrs((props) => ({
     },
 }))`
     font-family: ${fontFamily.logo};
-    color: #fff;
+    color: ${color.white};
     white-space: nowrap;
 
     &.small {

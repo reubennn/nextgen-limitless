@@ -29,6 +29,10 @@ export const Paragraph = styled.p.attrs((props) => ({
     &.author-date {
         margin: 0 0.15rem;
     }
+
+    &.description {
+        padding: 1rem 2rem;
+    }
 `;
 
 /**
@@ -110,7 +114,7 @@ export const InlineAnchor = styled(Anchor)`
  * @param {String} textAlign text align style
  */
 export const Header = styled.h1.attrs((props) => ({
-    color: props.color || "#fff",
+    color: props.color || "${color.white}",
     bgColor: props.bgColor || color.grey.shade.dark,
     textAlign: props.textAlign || "left",
 }))`
@@ -136,9 +140,10 @@ export const Header = styled.h1.attrs((props) => ({
  * @param {String} color text color
  * @param {String} bgColor background color
  * @param {String} textAlign text align style
+ * @param {Boolean} small flag to indicate slightly smaller text
  */
 export const HeaderSecondary = styled(Header).attrs((props) => ({
-    color: props.color || "#fff",
+    color: props.color || "${color.white}",
     bgColor: props.bgColor || color.grey.shade.dark,
     textAlign: props.textAlign || "left",
 }))`
@@ -152,9 +157,39 @@ export const HeaderSecondary = styled(Header).attrs((props) => ({
     text-align: ${(props) => props.textAlign};
 
     &.no-background {
-        color: ${color.grey.shade.dark};
+        color: ${(props) => handleColor(props.color)};
         background-color: transparent;
     }
+`;
+
+/**
+ * Simple Header Component with minimal styling.
+ *
+ * @param {String} color text color
+ * @param {String} bgColor background color
+ * @param {String} textAlign text align style
+ * @param {String} type type of header to select, h1, h2 etc.
+ */
+export const HeaderSimple = styled.h1.attrs((props) => ({
+    color: props.color || "inherit",
+    bgColor: props.bgColor || "transparent",
+    textAlign: props.textAlign || "center",
+    type: props.type || "h1",
+}))`
+    color: ${(props) => handleColor(props.color)};
+    background-color: ${(props) => handleColor(props.color)};
+    text-align: ${(props) => props.textAlign};
+    margin: 2rem auto;
+    font-size: ${(props) => {
+        switch (props.type) {
+            case ("h1"): return "2.25rem";
+            case ("h2"): return "1.8rem";
+            case ("h3"): return "1.5rem";
+            case ("h4"): return "1.2rem";
+            case ("h5"): return "1rem";
+            default: return "2.25rem";
+        }
+    }}
 `;
 
 /**
@@ -235,7 +270,7 @@ export const Icon = styled.svg.attrs((props) => ({
     }
 
     &:hover {
-        fill: #fff;
+        fill: ${color.white};
         transition: ease-in-out 0.4s;
     }
 
@@ -243,8 +278,13 @@ export const Icon = styled.svg.attrs((props) => ({
         fill: ${color.grey.shade.dark};
 
         &:hover {
-        fill: #000;
+        fill: ${color.black};
         }
+    }
+
+    &.shrink-image {
+        display: block;
+        max-width: 65%;
     }
 
     &.footer-icon {
@@ -253,7 +293,7 @@ export const Icon = styled.svg.attrs((props) => ({
     }
 
     &.footer-icon:hover {
-        fill: #fff;
+        fill: ${color.white};
         transition: ease-in-out 0.4s;
     }
 
@@ -306,7 +346,7 @@ export const Button = styled.button`
         transition: cubic-bezier(0.9, 0.75, 1, 1) 0.3s;
 
         &:hover {
-        background-color: #000;
+        background-color: ${color.black};
         }
     }
 
@@ -370,6 +410,14 @@ export const HorizontalRuler = styled.hr.attrs((props) => ({
         border-top: 0.05rem solid ${color.grey.shade.light};
         margin: 0;
     }
+
+    &.description-box {
+        margin: auto;
+        border-top: ${(props) =>
+        props.last ?
+            "none" :
+            `0.05rem solid ${color.pink.darker + transparency.x18}`};
+    }
 `;
 
 /**
@@ -380,7 +428,7 @@ export const HorizontalRuler = styled.hr.attrs((props) => ({
  * @param {Boolean} column flag to indicate flex-box direction
  * @param {Boolean} smallMargin flag indicating component has small margin
  */
-export const FlexContainer = styled.ul.attrs((props) => ({
+export const FlexContainer = styled.div.attrs((props) => ({
     justifyContent: props.justifyContent || "center",
 }))`
     color: inherit;
@@ -398,10 +446,8 @@ export const FlexContainer = styled.ul.attrs((props) => ({
         margin-top: 0;
     }
 
-    &.items-margin {
-        & > * {
-            margin: 0.8rem auto;
-        }
+    &.items-margin > * {
+        margin: 0.8rem auto;
     }
 `;
 
@@ -426,8 +472,8 @@ export const Input = styled.input`
 
     &:focus {
         outline: 0;
-        border: 0.05rem solid #4195fc;
-        box-shadow: 0 0 0.3rem #4195fc;
+        border: 0.05rem solid ${color.blue.neutral};
+        box-shadow: 0 0 0.3rem ${color.blue.neutral};
         transition: box-shadow linear 0.2s
     }
 `;
@@ -451,8 +497,8 @@ export const TextArea = styled.textarea`
 
     &:focus {
         outline: 0;
-        border: 0.05rem solid #4195fc;
-        box-shadow: 0 0 0.3rem #4195fc;
+        border: 0.05rem solid ${color.blue.neutral};
+        box-shadow: 0 0 0.3rem ${color.blue.neutral};
         transition: box-shadow linear 0.2s
     }
 `;

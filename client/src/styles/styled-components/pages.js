@@ -1,10 +1,13 @@
 /* eslint-disable valid-jsdoc */
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 
 import { fontFamily } from "./fonts";
 import { rotate } from "./keyframes";
-import { sliderAnimation } from "./mixins";
+import {
+    sliderAnimation,
+    linearGradientBackground,
+} from "./mixins";
 import {
     color,
     transparency,
@@ -17,8 +20,6 @@ import {
 } from "./responsive";
 
 import { Header, FlexContainer } from "./general";
-
-import homepageImg from ".../images/abstract-scenery.jpg";
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~ Page Components ~~~~~~~~~~~
@@ -36,7 +37,7 @@ export const Navbar = styled.nav.attrs((props) => ({
         type: props.type || "default",
     },
 }))`
-    color: #fff;
+    color: ${color.white};
     background-color: ${color.grey.shade.dark};
     margin: 0;
     display: inline-block;
@@ -57,10 +58,10 @@ export const Navbar = styled.nav.attrs((props) => ({
     &.sidebar-nav {
         height: 100%;
         z-index: 100; /* Stay on top */
-        position: fixed; /* Stay in place */
+        position: fixed;
         overflow-x: hidden; /* Disable horizontal scroll */
-        transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-        top: 0; /* Stay at the top */
+        transition: 0.5s;
+        top: 0;
         left: 0;
     }
 `;
@@ -85,7 +86,7 @@ export const NavbarLink = styled(NavLink)`
 
     &:hover {
         background-color: ${color.grey.tint.neutral};
-        color: #fff;
+        color: ${color.white};
         color: #303030;
         padding: 0.25rem 0.75rem;
         margin: 0;
@@ -112,12 +113,12 @@ export const NavbarLink = styled(NavLink)`
 
         &:hover {
             background-color: ${color.grey.shade.dark};
-            color: #fff;
+            color: ${color.white};
         }
     }
 
     &.home.${activeClassName} {
-        color: #fff;
+        color: ${color.white};
         background-color: ${color.grey.shade.dark};
 
         &:hover {
@@ -133,6 +134,7 @@ export const MainPageBody = styled.main.attrs({
     id: "MainPageBody",
 })`
     text-align: left;
+    width: 100%;
     /* equivalent to Section padding: 11%; */
     /* width: 79vw; */
     margin: auto;
@@ -141,24 +143,30 @@ export const MainPageBody = styled.main.attrs({
 /**
  * Homepage Header.
  */
-export const HomepageHeader = styled.header`
+export const HomepageHeader = styled.header.attrs((props) => ({
+    url: props.url,
+    pos: props.pos || "center",
+    attachment: props.attachment || "fixed",
+}))`
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background-image: url(${homepageImg}); */
-    background: ${`linear-gradient(
-            to top,
-            ${color.grey.shade.dark},
-            ${color.grey.shade.dark + transparency.x75},
-            #e66465${transparency.x30},
-            #9198e5${transparency.x40}),
-            url(${homepageImg})`};
-    background-color:   ${"#9198e5" + transparency.x40};
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: 50%;
+    ${(props) => {
+        return linearGradientBackground(
+            css`to top`,
+            [
+                color.grey.shade.dark,
+                color.grey.shade.dark + transparency.x75,
+                color.red.light + transparency.x30,
+                color.blue.darkest + transparency.x30,
+            ],
+            props.url,
+            props.attachment,
+            props.pos,
+        );
+    }}
 `;
 
 
@@ -181,6 +189,7 @@ export const FeatureText = styled.p.attrs((props) => ({
     font-weight: ${(props) => props.fontWeight};
     margin: auto;
     text-align: center;
+    text-shadow: 0.05rem 0.05rem 0.25rem ${color.grey.shade.light};
 
     /** Responsive Design Styling */
     font-size: ${(props) => handleFeatureTextFontSize(props.viewport.type)};
@@ -189,9 +198,6 @@ export const FeatureText = styled.p.attrs((props) => ({
         margin: auto 2.5rem;
     }
 `;
-
-// Nice gradient to use somewhere:
-// background: linear-gradient(to bottom, #e66465, #9198e5);
 
 /**
  * Page Section Component.
@@ -213,8 +219,8 @@ export const Section = styled.section.attrs((props) => ({
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    padding: 0 11%;
-    width: 100vw;
+    padding: 3rem 11%;
+    width: 100%;
     overflow-x: hidden;
 `;
 
@@ -226,6 +232,7 @@ export const Section = styled.section.attrs((props) => ({
  * @param {String} bgColor background color of the section
  * @param {String} url background image url
  * @param {String} pos background position
+ * @param {String} attachment background image attachment
  */
 export const SectionWithBackground = styled(Section).attrs((props) => ({
     url: props.url,
@@ -237,18 +244,38 @@ export const SectionWithBackground = styled(Section).attrs((props) => ({
     background-position: ${(props) => props.pos};
     background-attachment: ${(props) => props.attachment};
 
-    &.linear-gradient {
-        background: ${(props) => `linear-gradient(
-            to bottom,
-            #303030,
-            ${color.grey.shade.dark + transparency.x50},
-            #e66465${transparency.x30},
-            #9198e5${transparency.x25}),
-            url(${props.url})`};
-        background-repeat:no-repeat;
-        background-size: cover;
-        background-attachment: ${(props) => props.attachment};
-        background-position: ${(props) => props.pos};
+    &.primary-gradient {
+        ${(props) => {
+        return linearGradientBackground(
+            css`to bottom`,
+            [
+                color.grey.shade.dark,
+                color.red.neutral + transparency.x25,
+                color.grey.shade.dark + transparency.x70,
+                color.grey.shade.dark + transparency.x80,
+            ],
+            props.url,
+            props.attachment,
+            props.pos,
+        );
+    }}
+    }
+
+    &.secondary-gradient {
+        ${(props) => {
+        return linearGradientBackground(
+            css`to bottom`,
+            [
+                color.grey.shade.dark,
+                color.orange.darkest + transparency.x40,
+                color.grey.shade.dark + transparency.x80,
+                color.orange.dark + transparency.x25,
+            ],
+            props.url,
+            props.attachment,
+            props.pos,
+        );
+    }}
     }
 `;
 
@@ -493,16 +520,14 @@ export const CenterInViewport = styled.div`
  * Footer Component
  */
 export const Footer = styled.footer`
-    & {
-        color: ${color.grey.tint.neutral};
-        background-color: ${color.grey.shade.dark};
-        font-size: 1.25rem;
-        text-align: center;
-        text-decoration: none;
-        padding: 2rem 0.25rem 0.5rem;
-        margin: 0;
-        width: 100%;
-    }
+    color: ${color.grey.tint.neutral};
+    background-color: ${color.grey.shade.dark};
+    font-size: 1.25rem;
+    text-align: center;
+    text-decoration: none;
+    padding: 2rem 0.25rem 0.5rem;
+    margin: 0;
+    width: 100%;
 `;
 
 /**
@@ -534,12 +559,12 @@ export const SocialMediaButton = styled.a`
     }
 
     & > svg:hover {
-        fill: #000;
+        fill: ${color.black};
         transition: ease-in-out 0.4s;
         }
 
     &.footer-icon > svg:hover {
-        fill: #fff;
+        fill: ${color.white};
     }
 `;
 
@@ -595,4 +620,223 @@ export const LogoSlider = styled.div.attrs((props) => ({
             props.reverse,
         );
     }}
+`;
+
+/**
+ * Textbox container for the feature Description Box
+ * header and text description.
+ */
+export const DescriptionBoxTextbox = styled.div`
+    flex: 0 0 55%;
+    min-height: 15rem;
+`;
+
+/**
+ * The Description Box flex container for all feature description elements.
+ *
+ * @param {Boolean} column flag to indicate flex-box direction is column
+ * @param {Boolean} reverse indicates if the contents should be reversed
+ * @param {Boolean} last indicates it is the last element in the section
+ */
+export const DescriptionBox = styled(FlexContainer)`
+    align-items: center;
+    padding-top: 5rem;
+    padding-bottom: 4rem;
+    margin: 0;
+    flex-basis: 50%;
+
+    &.secondary {
+        padding-top: 0;
+        padding-bottom: 0;
+        margin: 0 5vw;
+    }
+
+    /* Do not display the separator border if it is the last element */
+    ${(props) => {
+        if (props.reverse && props.column) {
+            return "flex-direction: column-reverse;";
+        } else if (props.reverse) {
+            return "flex-direction: row-reverse;";
+        }
+    }}
+
+    /* Additional properties for Description Box displayed as row */
+    ${(props) => {
+        return !props.column &&
+            css`
+            padding-top: 2rem;
+            padding-bottom: 1rem;
+
+            & > ${DescriptionBoxTextbox} {
+                margin: 0 5rem;
+                ${(props) => css` /* eslint indent enforce workaround */
+                    margin: ${props.reverse ? "0 5rem 0 0;" : "0 0 0 5rem;"}
+                `}
+                flex: 0 0 50vw;
+            }
+
+            & ${DescriptionBoxImage} {
+                height: 20vw;
+                flex: 0 0 20vw;
+                margin: 7vw auto;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+        }`;
+    }}
+`;
+
+/**
+ * Container for the Description Box Image.
+ *
+ * Contains the image, and a span element for a gradient background.
+ */
+export const DescriptionBoxImage = styled.div`
+    margin: 6vw auto 1vw auto;
+    position: relative;
+    height: 15rem;
+    width: 15rem;
+    overflow: hidden;
+    background: ${color.grey.tint.lightest};
+    border-radius: 50% 50%;
+    box-shadow: 0 0 5rem 0 ${color.black + transparency.x50};
+    flex: 0 0 15rem;
+    transition: ease-in-out 0.25s;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &.secondary {
+        height: 11rem;
+        width: 11rem;
+        flex: 0 0 11rem;
+    }
+
+    &.min-shadow {
+        box-shadow: 0 0 3rem 0 ${color.black + transparency.x20};
+    }
+
+    /** Gradient overlay */
+    & span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: ${css`
+            linear-gradient(
+            to bottom,
+            ${color.pink.darkest} 0%,
+            ${color.orange.neutral} 100%)`};
+        width: 100%;
+        height: 100%;
+        opacity: 0.25;
+    }
+
+    &.grey-orange span {
+        position: absolute;
+        background: ${css`
+            linear-gradient(
+            to bottom,
+            ${color.grey.tint.darkest} 0%,
+            ${color.orange.darker} 100%)`};
+        width: 100%;
+        height: 100%;
+        opacity: 0.2;
+    }
+
+    &.orange-purple span {
+        position: absolute;
+        background: ${css`
+            linear-gradient(
+            to bottom,
+            ${color.orange.dark} 0%,
+            ${color.purple.darker} 100%)`};
+        width: 100%;
+        height: 100%;
+        opacity: 0.22;
+    }
+
+    &.orange-grey span {
+        position: absolute;
+        background: ${css`
+            linear-gradient(
+            to top,
+            ${color.grey.tint.dark} 0%,
+            ${color.orange.light} 100%)`};
+        width: 100%;
+        height: 100%;
+        opacity: 0.2;
+    }
+`;
+
+/**
+ * Description Title Component for the Description Box
+ *
+ * @param {String} color text color
+ */
+export const DescriptionTitle = styled.h3.attrs((props) => ({
+    color: props.color || "inherit",
+}))`
+    color: ${(props) => handleColor(props.color)};
+    background-color: transparent;
+    padding: 0.5rem;
+    padding-left: 0.75rem;
+    border-radius: 0.2rem;
+    font-size: 1.9rem;
+    margin: 2.5rem 0 1.5rem 0;
+    text-align: center;
+    transition: ease-in-out 0.25s;
+    position: relative;
+    z-index: 1; /* So we can still highlight / select the text on hover */
+
+    &:hover {
+        letter-spacing: 0.1rem;
+        color: ${(props) => handleColor(props.color + "-x95")};
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* So we can still highlight / select the text on hover */
+        border-top: 0.08rem solid
+        ${(props) => handleColor(props.color + "-x15")};
+        border-bottom: 0.08rem solid
+        ${(props) => handleColor(props.color + "-x15")};
+        opacity: 0;
+        transform: scale(0.1, 1);
+        transition: ease-in-out 0.3s;
+    }
+
+    &:hover::after {
+        opacity: 1;
+        transform: scale(1, 1);
+    }
+`;
+
+/**
+ * Text for the feature Description Textbox.
+ *
+ * @param {String} color text color
+ */
+export const DescriptionBoxText = styled.div.attrs((props) => ({
+    color: props.color || "inherit",
+}))`
+    min-height: 10rem;
+
+    & p {
+        color: ${(props) => handleColor(props.color)};
+        text-align: center;
+        margin: 2rem 0;
+        font-family: ${fontFamily.description};
+        transition: ease-in-out 0.25s;
+
+        &:hover {
+            color: ${(props) => handleColor(props.color + "-x90")}
+        }
+    }
 `;

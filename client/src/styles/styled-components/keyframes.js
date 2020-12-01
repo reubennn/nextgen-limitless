@@ -1,5 +1,4 @@
-import { keyframes, css } from "styled-components";
-import media from "../../data/media";
+import { keyframes } from "styled-components";
 
 /**
  * Rotation Keyframe.
