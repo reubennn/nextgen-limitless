@@ -114,7 +114,7 @@ export const InlineAnchor = styled(Anchor)`
  * @param {String} textAlign text align style
  */
 export const Header = styled.h1.attrs((props) => ({
-    color: props.color || "${color.white}",
+    color: props.color || color.white,
     bgColor: props.bgColor || color.grey.shade.dark,
     textAlign: props.textAlign || "left",
 }))`
@@ -143,7 +143,7 @@ export const Header = styled.h1.attrs((props) => ({
  * @param {Boolean} small flag to indicate slightly smaller text
  */
 export const HeaderSecondary = styled(Header).attrs((props) => ({
-    color: props.color || "${color.white}",
+    color: props.color || color.white,
     bgColor: props.bgColor || color.grey.shade.dark,
     textAlign: props.textAlign || "left",
 }))`
