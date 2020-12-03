@@ -16,10 +16,11 @@ import media from "../data/media";
 
 import menuIcon from ".../icons/menu.svg";
 import searchIcon from ".../icons/magnifying-glass.svg";
+import logoSmall from ".../images/logo-small.svg";
 
 import RouterLink from "./RouterLink";
-import Logo from "./Logo";
 import Icon from "./Icon";
+
 import * as S from "../styles/styled-components/styled";
 
 /**
@@ -103,7 +104,12 @@ const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
                     url="/"
                     className="align-left nav-item"
                     isImage={true} >
-                    <Logo className="small" />
+                    <S.LogoImage
+                        className="small"
+                        src={logoSmall}
+                        type={viewport.type}
+                        height="3rem"
+                        alt="Spaceship Logo Nav Home Icon" />
                 </RouterLink>
                 <S.ListItem className="nav-item">
                     <S.NavbarLink
@@ -155,13 +161,22 @@ const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
                     className="nav-item align-center"
                     isImage={true}
                 >
-                    <Logo className="small" />
+                    <S.LogoImage
+                        className="small"
+                        src={logoSmall}
+                        type={viewport.type}
+                        height="3rem"
+                        alt="Spaceship Logo Nav Home Icon" />
                 </RouterLink>
+                <button
+                    className="align-right"
+                    onClick={() => setSidebarNavStatus(true)}>
                     <Icon
                         xlinkHref={searchIcon}
                         width="28"
                         height="28"
-                    className={`align-right nav-item ${className}`} />
+                        className={`nav-item ${className} ${iconClass}`} />
+                </button>
             </>
         );
     return (

@@ -10,13 +10,13 @@ import {
 } from "../selectors/viewportSelectors";
 
 import Navbar from "../components/Navbar";
-import Logo from "../components/Logo";
 import LogoSlider from "../components/LogoSlider";
 import DescriptionBox from "../components/DescriptionBox";
 
 import { logos } from "../data/logos";
 import { featureDescriptions, otherDescriptions } from "../data/descriptions";
 
+import logoLarge from ".../images/logo-large.svg";
 import abstractScenery from ".../images/abstract-scenery.jpg";
 import abstractMountains from ".../images/abstract-mountains.jpg";
 import subtlePrismSVG from ".../images/subtle-prism.svg";
@@ -37,13 +37,28 @@ const Home = ({ viewport }) => {
                 <Navbar className="home" />
                 <S.FlexContainer column className="no-margin">
                     {/* <S.Header>Zero Gravity</S.Header> */}
-                    <Logo className="large" />
+                    <S.LogoImage
+                        className="large header-home"
+                        src={logoLarge}
+                        type={viewport.type}
+                        alt="Spaceship Logo Icon" />
                     <S.FeatureText
                         className="header-home"
                         color="grey-tint-lightest"
                         type={viewport.type}>
-                        Unplugged potential at your fingertips.
+                        Launch into next generation technology today.
                     </S.FeatureText>
+                    <S.HorizontalRuler
+                        className="header-home"
+                        thin
+                        color="grey-tint-neutral"
+                        width={"50%"} />
+                    <S.HeaderSimple
+                        className="feature-text header-home"
+                        color="grey-tint-lightest"
+                        as="h4">
+                        It&apos;s time to take off during these unprecedented times.
+                    </S.HeaderSimple>
                     <S.Button className="home gradient uppercase">Learn More</S.Button>
                 </S.FlexContainer>
             </S.HomepageHeader>

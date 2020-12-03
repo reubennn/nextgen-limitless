@@ -71,15 +71,18 @@ h1 {
 /* Chrome/Edge/Safari */
 *::-webkit-scrollbar {
 	width: 0.6rem;
+	z-index: 101; /* Keep scrollbar on top*/
 }
 
 *::-webkit-scrollbar-track {
 	background: $colorDark;
+	z-index: 101; /* Keep scrollbar on top*/
 }
 
 *::-webkit-scrollbar-thumb {
 	background-color: $colorGrey;
 	border: 0.075rem solid $colorDark;
+	z-index: 101; /* Keep scrollbar on top*/
 }
 
 /**

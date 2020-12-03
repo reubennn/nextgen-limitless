@@ -1,3 +1,5 @@
+import { css } from "styled-components";
+
 /**
  * Responsive Design Handler Functions
  */
@@ -48,6 +50,71 @@ export const handleFeatureTextFontSize = (viewportType) => {
  * ~~~~~~~~~~~~~~~~~ Logo ~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
+
+/**
+* Handles the large logo margin for the homepage header.
+*
+* @param {String} viewportType the viewport type classification
+* @return {String} the CSS for margin properties
+*/
+export const handleLargeLogoMargin = (viewportType) => {
+    switch (viewportType) {
+        case ("super-small"):
+            return css`
+                margin-top: 20vh;
+            `;
+        case ("extra-small"):
+            return css`
+                margin-top: 20vh;
+            `;
+        case ("super-large"):
+            return css`
+                margin-top: 20vh;
+                margin-bottom: 7vh;
+            `;
+        default:
+            return css`
+                margin-top: 15vh;
+            `;
+    };
+};
+
+/**
+* Handles the large logo size for the homepage header.
+*
+* @param {String} viewportType the viewport type classification
+* @return {String} the CSS for the logo height
+*/
+export const handleLargeLogoSize = (viewportType) => {
+    switch (viewportType) {
+        case ("super-small"):
+            return css`
+                height: 60vw;
+            `;
+        case ("extra-small"):
+            return css`
+                height: 55vw;
+            `;
+        case ("small"):
+            return css`
+                height: 55vw;
+            `;
+        case ("medium"):
+            return css`
+                height: 35vw;
+            `;
+        default:
+            return css`
+                height: 35vh;
+            `;
+    };
+};
+
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~ Legacy Logo ~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
 /**
  * Handles the padding of the Logo Container Component.
  *

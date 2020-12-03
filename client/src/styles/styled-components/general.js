@@ -390,6 +390,7 @@ export const Button = styled.button`
 
     &.home {
         margin-top: 4rem;
+        margin-bottom: 4rem;
     }
 
     &.upvote-button {
@@ -439,6 +440,11 @@ export const HorizontalRuler = styled.hr.attrs((props) => ({
         props.last ?
             "none" :
             `0.05rem solid ${color.pink.darker + transparency.x18}`};
+    }
+
+    &.header-home {
+        margin: 1.2rem auto 2rem auto;
+        box-shadow: 0.01rem 0.01rem 0.04rem ${color.grey.shade.light};
     }
 `;
 

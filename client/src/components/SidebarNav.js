@@ -9,11 +9,11 @@ import {
 import { setSidebarNavStatus } from "../actions/viewportActions";
 
 import Icon from "./Icon";
-import Logo from "./Logo";
 import RouterLink from "./RouterLink";
 
 import closeIcon from ".../icons/close.svg";
 import searchIcon from ".../icons/magnifying-glass.svg";
+import logoSmall from ".../images/logo-small.svg";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -67,13 +67,21 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => {
                     className="nav-item align-center"
                     isImage={true}
                 >
-                <Logo className="small" />
+                    <S.LogoImage
+                        className="small"
+                        src={logoSmall}
+                        height="3rem"
+                        alt="Spaceship Logo Nav Home Icon" />
                 </RouterLink>
+                <button
+                    className="align-right"
+                    onClick={() => setSidebarNavStatus(true)}>
                     <Icon
                         xlinkHref={searchIcon}
                         width="28"
                         height="28"
-                className={`align-right nav-item ${className}`} />
+                        className={`nav-item ${className}`} />
+                </button>
             </S.FlexContainer>
             <br></br>
             <S.FlexContainer

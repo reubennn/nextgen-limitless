@@ -15,7 +15,6 @@ export const Container = styled.div`
     margin: 1rem;
     color: ${color.grey.shade.dark};
     width: auto;
-    height: 100vh;
     min-height: 100vh;
     margin: 0;
 

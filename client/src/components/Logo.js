@@ -8,7 +8,7 @@ import {
     getViewportType,
 } from "../selectors/viewportSelectors";
 
-import unpluggedIcon from ".../icons/unplugged.png";
+import spaceshipIcon from ".../icons/spaceship.svg";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -27,8 +27,8 @@ const Logo = ({ className, viewport }) => (
             className={className}
             type={viewport.type}>
             <S.Image
-                src={unpluggedIcon}
-                alt="Unplugged Logo Icon" />
+                src={spaceshipIcon}
+                alt="Spaceship Logo Icon" />
         </S.LogoIconContainer>
         <S.LogoTextContainer
             className={className}
