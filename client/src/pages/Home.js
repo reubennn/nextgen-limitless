@@ -82,7 +82,7 @@ const Home = ({ viewport }) => {
                         bgColor="grey-shade-dark"
                         height="50vh">
                         <S.FlexContainer column>
-                            <S.HeaderSimple type="h4">
+                            <S.HeaderSimple as="h4">
                                 Some of our past &amp; present partners...*
                             </S.HeaderSimple>
                             <br />
@@ -104,7 +104,7 @@ const Home = ({ viewport }) => {
                         color="grey-shade-dark"
                         bgColor="white"
                         height="100vh">
-                        <S.HeaderSimple type="h3">
+                        <S.HeaderSimple as="h3">
                             ...or are you looking for something else?
                         </S.HeaderSimple>
                         <S.FlexContainer column={displayAsColumn} className="center-text items-margin">
@@ -123,8 +123,8 @@ const Home = ({ viewport }) => {
                     </S.Section>
                     <S.SectionWithBackground color="grey-shade-dark" height="35vh" url={subtlePrismSVG}>
                         <S.FlexContainer column className="center-text items-margin">
-                            <S.HeaderSimple type="h1">What are you waiting for?</S.HeaderSimple>
-                            <S.HeaderSimple type="h3">Get started today.**</S.HeaderSimple>
+                            <S.HeaderSimple as="h1">What are you waiting for?</S.HeaderSimple>
+                            <S.HeaderSimple as="h3">Get started today.**</S.HeaderSimple>
                             <S.Button className="gradient uppercase">Unlock the key</S.Button>
                             <S.TinyText superTiny color="grey-shade-dark">**Maybe not today - today, but you know what we mean.</S.TinyText>
                         </S.FlexContainer>

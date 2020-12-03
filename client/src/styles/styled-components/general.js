@@ -165,23 +165,29 @@ export const HeaderSecondary = styled(Header).attrs((props) => ({
 /**
  * Simple Header Component with minimal styling.
  *
+ * Setting props.as will convert the html tag to the appropriate
+ * header type (h1, h2, h3.. etc.)
+ *
+ * @param {String} as sets the html tag, h1, h2 etc.
  * @param {String} color text color
  * @param {String} bgColor background color
  * @param {String} textAlign text align style
- * @param {String} type type of header to select, h1, h2 etc.
  */
 export const HeaderSimple = styled.h1.attrs((props) => ({
+    as: props.as || "h1",
     color: props.color || "inherit",
     bgColor: props.bgColor || "transparent",
     textAlign: props.textAlign || "center",
-    type: props.type || "h1",
 }))`
     color: ${(props) => handleColor(props.color)};
-    background-color: ${(props) => handleColor(props.color)};
+    background-color: ${(props) => handleColor(props.bgColor)};
     text-align: ${(props) => props.textAlign};
     margin: 2rem auto;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
     font-size: ${(props) => {
-        switch (props.type) {
+        switch (props.as) {
             case ("h1"): return "2.25rem";
             case ("h2"): return "1.8rem";
             case ("h3"): return "1.5rem";
@@ -189,7 +195,15 @@ export const HeaderSimple = styled.h1.attrs((props) => ({
             case ("h5"): return "1rem";
             default: return "2.25rem";
         }
-    }}
+    }};
+
+    &.feature-text {
+        text-shadow: 0.05rem 0.05rem 0.25rem ${color.grey.shade.light};
+    }
+
+    &.header-home {
+        margin:  0rem 11%;
+    }
 `;
 
 /**
@@ -275,12 +289,12 @@ export const Icon = styled.svg.attrs((props) => ({
     }
 
     &.home {
-        fill: ${color.grey.shade.dark};
+            fill: ${color.grey.shade.dark};
 
-        &:hover {
-        fill: ${color.black};
+            &:hover {
+                fill: ${color.black};
+                }
         }
-    }
 
     &.shrink-image {
         display: block;
