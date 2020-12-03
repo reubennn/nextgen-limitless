@@ -289,12 +289,20 @@ export const Icon = styled.svg.attrs((props) => ({
     }
 
     &.home {
+        fill: ${color.grey.tint.light};
+
+        &:hover {
+            fill: ${color.white};
+        }
+
+        &.at-top {
             fill: ${color.grey.shade.dark};
 
             &:hover {
                 fill: ${color.black};
                 }
         }
+    }
 
     &.shrink-image {
         display: block;

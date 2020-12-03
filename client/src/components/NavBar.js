@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { debounce } from "lodash";
 
 import {
     getViewportDimensions,
@@ -25,9 +26,76 @@ import * as S from "../styles/styled-components/styled";
  * React Component which displays the navigation bar to access
  * links to different pages on the website.
  *
+ * - When the user scrolls down, the navigation bar is hidden.
+ * - When the user scrolls up or the window scroll is at the top of the page,
+ * the navigation bar is shown.
+ *
  * @return {Component} navbar for navigating through website
  */
 const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
+    const [scrolledUp, setScrolledUp] = useState(true);
+    const [atTop, setAtTop] = useState(true);
+    const [scrollPos, setScrollPos] = useState(window.pageYOffset);
+    const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+
+    /**
+     * useEffect used to add an event listener to handle window scroll
+     * and update the Component state.
+     */
+    useEffect(() => {
+        /**
+         * Handler function called during window scrolling.
+         */
+        const handleNav = () => {
+            setScrollPos(window.pageYOffset);
+        };
+
+        /**
+         * Add the event listener and attach lodash debounce delay,
+         * so that the function is not continuously called during
+         * window scrolling.
+         */
+        window.addEventListener("scroll", debounce(handleNav, 150));
+
+        /**
+         * Clean-up to remove the event listener.
+         */
+        return () => {
+            window.removeEventListener("scroll", debounce(handleNav, 150));
+        };
+    }, []);
+
+    /**
+     * useEffect to hide or show the navigation bar depending on
+     * window scrolling.
+     *
+     * - Called when the scroll position state is updated to check the
+     * current scroll position relative to the previous position.
+     *
+     * - Separate useEffect used as useState updates the value asynchronously.
+     */
+    useEffect(() => {
+        let isMounted = true; // Flag which denotes mount status
+        if (isMounted) {
+            prevScrollPos >= scrollPos ?
+                setScrolledUp(true) : setScrolledUp(false);
+
+            setPrevScrollPos(scrollPos);
+
+            scrollPos > 0 ?
+                setAtTop(false) : setAtTop(true);
+        }
+        /**
+         * useEffect clean-up:
+         * If unmounted, set mount status flag to false
+         */
+        return () => {
+            isMounted = false;
+        };
+    }, [scrollPos]);
+
+    const iconClass = atTop ? "at-top" : "";
+
     const content = viewport.dimensions.width >= media.breakpoints.medium ?
         (
             <>
@@ -80,7 +148,7 @@ const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
                         xlinkHref={menuIcon}
                         width="36"
                         height="36"
-                        className={`align-left nav-item ${className}`} />
+                        className={`nav-item ${className} ${iconClass}`} />
                 </button>
                 <RouterLink
                     url="/"
@@ -89,16 +157,20 @@ const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
                 >
                     <Logo className="small" />
                 </RouterLink>
-                <Icon
-                    xlinkHref={searchIcon}
-                    width="28"
-                    height="28"
+                    <Icon
+                        xlinkHref={searchIcon}
+                        width="28"
+                        height="28"
                     className={`align-right nav-item ${className}`} />
             </>
         );
     return (
         !sidebarNav.isActive &&
-        <S.Navbar className={className} type={viewport.type}>
+        <S.Navbar
+            className={className}
+            scrolledUp={scrolledUp}
+            atTop={atTop}
+            type={viewport.type}>
             <S.FlexContainer className="no-margin" justifyContent="flex-end">
                 {content}
             </S.FlexContainer>

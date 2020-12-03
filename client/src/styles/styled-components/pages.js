@@ -27,48 +27,8 @@ import { Header, FlexContainer } from "./general";
  */
 
 /**
- * Navigation bar Component.
- *
- * @param {Object} viewport viewport object used for responsive design
- *      - @property {String} type type classification
- */
-export const Navbar = styled.nav.attrs((props) => ({
-    viewport: {
-        type: props.type || "default",
-    },
-}))`
-    color: ${color.white};
-    background-color: ${color.grey.shade.dark};
-    margin: 0;
-    display: inline-block;
-    width: 100%;
-    z-index: 100;
-
-    /** Responsive Design Styling */
-    padding: ${(props) => handleNavbarPadding(props.viewport.type)};
-
-    /** Styling on homepage */
-    &.home {
-        color: ${color.grey.shade.dark};
-        background-color: transparent;
-        position: fixed;
-        top: 0;
-    }
-
-    &.sidebar-nav {
-        height: 100%;
-        z-index: 100; /* Stay on top */
-        position: fixed;
-        overflow-x: hidden; /* Disable horizontal scroll */
-        transition: 0.5s;
-        top: 0;
-        left: 0;
-    }
-`;
-
-/**
- * Navbar Link Component.
- */
+* Navbar Link Component.
+*/
 /** Assign React Router activeClassName */
 const activeClassName = "active";
 
@@ -109,7 +69,7 @@ export const NavbarLink = styled(NavLink)`
 
     /** Styling on homepage */
     &.home {
-        color: ${color.grey.shade.dark};
+        color: inherit;
 
         &:hover {
             background-color: ${color.grey.shade.dark};
@@ -124,6 +84,68 @@ export const NavbarLink = styled(NavLink)`
         &:hover {
             background-color: ${color.grey.shade.dark};
         }
+    }
+`;
+
+/**
+ * Navigation bar Component.
+ *
+ * @param {Object} viewport viewport object used for responsive design
+ *      - @property {String} type type classification
+ */
+export const Navbar = styled.nav.attrs((props) => ({
+    scrolledUp: props.scrolledUp,
+    atTop: props.atTop,
+    viewport: {
+        type: props.type || "default",
+    },
+}))`
+    color: ${color.white};
+    background-color: ${color.grey.shade.dark};
+    margin: 0;
+    display: inline-block;
+    width: 100%;
+    z-index: 100;
+    top: ${(props) => props.scrolledUp ? 0 : "-5rem"};
+    transition: top 0.3s ease-in-out 0.3s;
+
+    /** Responsive Design Styling */
+    padding: ${(props) => handleNavbarPadding(props.viewport.type)};
+
+    /** Styling on homepage */
+    &.home {
+        color: ${(props) =>
+        props.atTop ? color.grey.shade.dark : color.grey.tint.light};
+        background-color: ${(props) =>
+        props.atTop ? "transparent" : color.grey.shade.dark};
+        position: fixed;
+        /** Create dynamic transitioning */
+        ${(props) => props.atTop ?
+        css`
+            transition: top 0.3s ease-in-out 0.3s,
+                        background-color 0.3s ease-in-out 0s;
+        ` :
+        css`
+            transition: top 0.3s ease-in-out 0s,
+                        background-color 0.3s ease-in-out 0.3s;
+        `}
+
+        & ${NavbarLink}:hover {
+            background-color: ${(props) =>
+        props.atTop ? color.grey.shade.dark : color.grey.tint.light};
+            color: ${(props) =>
+        props.atTop ? color.white : color.grey.shade.dark};
+        }
+    }
+
+    &.sidebar-nav {
+        height: 100%;
+        z-index: 100; /* Stay on top */
+        position: fixed;
+        overflow: hidden; /* Disable scroll */
+        transition: 0.5s;
+        top: 0;
+        left: 0;
     }
 `;
 
@@ -361,11 +383,9 @@ export const AddCommentForm = styled.div`
  * Allows the use of styled-components to style it.
  */
 export const RouterLink = styled(Link)`
-    & {
-        color: ${(props) => handleColor(props.color)};
-        margin: auto;
-        transition: ease-in-out 0.25s;
-    }
+    color: ${(props) => handleColor(props.color)};
+    margin: auto;
+    transition: ease-in-out 0.25s;
 
     &:hover {
         color: ${color.grey.shade.dark};
