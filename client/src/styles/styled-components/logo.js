@@ -155,7 +155,7 @@ export const LogoText = styled.span.attrs((props) => ({
     white-space: nowrap;
 
     &.small {
-        line-height: 1.2rem;
+        line-height: 1.2;
 
         &.first-line {
             font-size: 1.2rem;
