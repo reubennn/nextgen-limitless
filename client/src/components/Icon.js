@@ -21,7 +21,8 @@ const Icon = ({
     alt,
     fill,
     bgColor = "grey-shade-dark",
-    className }) =>
+    className = "",
+}) =>
     (
         <S.Icon
             width={width}

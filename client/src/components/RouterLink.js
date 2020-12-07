@@ -12,7 +12,7 @@ import * as S from "../styles/styled-components/styled";
  * @return {Component} React Router button link
  */
 const RouterLink = ({
-    className,
+    className = "",
     label,
     url,
     tiny = false,

@@ -19,7 +19,7 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} website logo
  */
-const Logo = ({ className, viewport }) => (
+const Logo = ({ className = "", viewport }) => (
     <S.LogoContainer
         className={className}
         type={viewport.type}>

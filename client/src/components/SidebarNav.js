@@ -23,7 +23,7 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} navbar for navigating through website
  */
-const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => {
+const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
     /**
      * useEffect to hide or show the navigation bar depending on
      * window scrolling.
@@ -57,8 +57,8 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => {
                     onClick={() => setSidebarNavStatus(false)}>
                     <Icon
                         xlinkHref={closeIcon}
-                        width="36"
-                        height="36"
+                        width="36px"
+                        height="36px"
                         className={"align-left nav-item close-icon " +
                             className} />
                 </button>
@@ -78,8 +78,8 @@ const SidebarNav = ({ className, sidebarNav, setSidebarNavStatus }) => {
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
                         xlinkHref={searchIcon}
-                        width="28"
-                        height="28"
+                        width="28px"
+                        height="28px"
                         className={`nav-item ${className}`} />
                 </button>
             </S.FlexContainer>

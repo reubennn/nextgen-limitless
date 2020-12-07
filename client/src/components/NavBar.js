@@ -33,7 +33,12 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} navbar for navigating through website
  */
-const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
+const Navbar = ({
+    className = "",
+    viewport,
+    sidebarNav,
+    setSidebarNavStatus,
+}) => {
     const [scrolledUp, setScrolledUp] = useState(true);
     const [atTop, setAtTop] = useState(true);
     const [scrollPos, setScrollPos] = useState(window.pageYOffset);
@@ -48,7 +53,7 @@ const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
          * Handler function called during window scrolling.
          */
         const handleNav = () => {
-            setScrollPos(window.pageYOffset);
+                setScrollPos(window.pageYOffset);
         };
 
         /**
