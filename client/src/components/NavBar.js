@@ -49,11 +49,14 @@ const Navbar = ({
      * and update the Component state.
      */
     useEffect(() => {
+        let isMounted = true; // Flag which denotes mount status
         /**
          * Handler function called during window scrolling.
          */
         const handleNav = () => {
+            if (isMounted) {
                 setScrollPos(window.pageYOffset);
+            }
         };
 
         /**
@@ -68,6 +71,7 @@ const Navbar = ({
          */
         return () => {
             window.removeEventListener("scroll", debounce(handleNav, 150));
+            isMounted = false;
         };
     }, []);
 
