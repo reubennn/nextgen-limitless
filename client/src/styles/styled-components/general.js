@@ -196,6 +196,8 @@ export const HeaderSimple = styled.h1.attrs((props) => ({
             default: return "2.25rem";
         }
     }};
+    padding: ${(props) => props.bgColor !== "transparent" ? "0.25rem 25vw" : "0 auto"};
+    border-radius: ${(props) => props.bgColor !== "transparent" ? "3rem" : " 0"};
 
     &.feature-text {
         text-shadow: 0.05rem 0.05rem 0.25rem ${color.grey.shade.light};
@@ -204,6 +206,47 @@ export const HeaderSimple = styled.h1.attrs((props) => ({
     &.header-home {
         margin:  0rem 11%;
     }
+
+    &.page-header {
+        position: absolute;
+        bottom: -3.8rem;
+        text-transform: uppercase;
+    }
+
+    &.section-top {
+        margin-top: 0;
+    }
+
+    /* & > span {
+        font-size: 125%;
+        vertical-align: middle;
+    } */
+`;
+
+/**
+ * Simple Text Component used for multi-size text in the same
+ * line.
+ *
+ * - Ensures the smaller and larger text vertically align in the middle.
+ *
+ */
+export const Text = styled.span`
+    vertical-align: middle;
+`;
+
+/**
+ * Larger Text Component used for multi-size text in the same
+ * line.
+ *
+ * - Ensures the smaller and larger text vertically align in the middle.
+ *
+ * @param {String} fontSize the size of the font
+ *
+ */
+export const TextSized = styled(Text).attrs((props) => ({
+    fontSize: props.fontSize || "120%",
+}))`
+    font-size: ${(props) => props.fontSize};
 `;
 
 /**
@@ -286,22 +329,6 @@ export const Icon = styled.svg.attrs((props) => ({
     &:hover {
         fill: ${color.white};
         transition: ease-in-out 0.4s;
-    }
-
-    &.home {
-        fill: ${color.grey.tint.light};
-
-        &:hover {
-            fill: ${color.white};
-        }
-
-        &.at-top {
-            fill: ${color.grey.shade.dark};
-
-            &:hover {
-                fill: ${color.black};
-                }
-        }
     }
 
     &.shrink-image {

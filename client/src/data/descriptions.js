@@ -92,3 +92,49 @@ export const otherDescriptions = [
         url: "/blog",
     },
 ];
+
+/**
+ * About page feature descriptions to provide information
+ * on the Next Gen LIMITLESS company (less description than home page).
+ *
+ * @property {String} title description title
+ * @property {Array} text JSX HTML elements (needs key prop) to display
+ * @property {String} image image asset path url
+ * @property {Bool} shrinkImage flag to shrink the image to fit
+ * @property {String} gradient gradient class name used for CSS styling
+ */
+export const aboutFeatureDescriptions = [
+    {
+        title: "Disruptive Innovation",
+        text: [
+            <p key="disruptive-innovation">
+                Partnering with <strong>Next Gen LIMITLESS</strong> will provide you with the means to disrupt the market using undeniable value. Leave your competitors in the dust by implementing our <em>next generation technology</em> today.
+            </p>,
+        ],
+        image: graphImg,
+        shrinkImage: true,
+        gradient: "grey-orange",
+    },
+    {
+        title: "Your Mind At Ease",
+        text: [
+            <p key="relax">
+                Our broad range of services will cover just about anything you require. When you choose us, you&apos;ll be able to put your mind at ease. So sit back, relax and enjoy the scenery - you are in good hands.
+            </p>,
+        ],
+        image: oceanViewImg,
+        shrinkImage: false,
+        gradient: "",
+    },
+    {
+        title: "Satisfaction Guaranteed",
+        text: [
+            <p key="satisfaction-guaranteed">
+                We have become very good in what we do. But if for any reason you are not satisfied with our services, we will do everything in our power to make it right.
+            </p>,
+        ],
+        image: satisfactionImg,
+        shrinkImage: true,
+        gradient: "orange-purple",
+    },
+];

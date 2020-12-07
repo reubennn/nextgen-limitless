@@ -124,7 +124,8 @@ const Navbar = ({
                     <S.NavbarLink
                         to="/about"
                         activeClassName="active"
-                        className={className + " uppercase"} >
+                        className={className + " uppercase nav-item"}
+                        atTop={atTop} >
                         About
                     </S.NavbarLink>
                 </S.ListItem>
@@ -132,7 +133,8 @@ const Navbar = ({
                     <S.NavbarLink
                         to="/blog"
                         activeClassName="active"
-                        className={className + " uppercase"} >
+                        className={className + " uppercase nav-item"}
+                        atTop={atTop} >
                         Blog
                     </S.NavbarLink>
                 </S.ListItem>
@@ -140,7 +142,8 @@ const Navbar = ({
                     <S.NavbarLink
                         to="/store"
                         activeClassName="active"
-                        className={className + " uppercase"} >
+                        className={className + " uppercase nav-item"}
+                        atTop={atTop} >
                         Store
                     </S.NavbarLink>
                 </S.ListItem>
@@ -148,7 +151,8 @@ const Navbar = ({
                     <S.NavbarLink
                         to="/contact"
                         activeClassName="active"
-                        className={className + " uppercase"} >
+                        className={className + " uppercase nav-item"}
+                        atTop={atTop} >
                         Contact
                     </S.NavbarLink>
                 </S.ListItem>

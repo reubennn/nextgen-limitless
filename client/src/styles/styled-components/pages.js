@@ -28,68 +28,96 @@ import { Header, FlexContainer } from "./general";
 
 /**
 * Navbar Link Component.
+*
+* - Inherit React Router Link to style it.
+* - Defaults to color contrast with a light background color.
+*
+* @param {Boolean} atTop indicates if browser is at the top of the page
 */
-/** Assign React Router activeClassName */
-const activeClassName = "active";
-
-/** Inherit React Router Link to style it */
 export const NavbarLink = styled(NavLink)`
     font-family: ${fontFamily.secondary};
-    color:${color.grey.tint.neutral};
+    color: ${(props) =>
+        props.atTop ? color.grey.shade.dark : color.grey.tint.light};
     font-size: 1.25rem;
     text-align: center;
     text-decoration: none;
     padding: 0.25rem 0;
     margin: 0 0.75rem;
     border-radius: 0.25rem;
-    transition: ease-in-out 0.25s;
+    transition: ease-in-out 0.3s;
 
     &:hover {
-        background-color: ${color.grey.tint.neutral};
-        color: ${color.white};
-        color: #303030;
+        ${(props) => css` /* eslint indent enforce workaround */
+            background-color:
+            ${props.atTop ? color.grey.shade.dark : color.grey.tint.light};
+            color:
+            ${props.atTop ? color.white : color.grey.shade.dark};
+        `}
         padding: 0.25rem 0.75rem;
         margin: 0;
     }
 
     &.active {
+        background-color: ${(props) =>
+        props.atTop ? color.grey.shade.dark : color.grey.tint.light};
+        color: ${(props) =>
+        props.atTop ? color.white : color.grey.shade.dark};
         opacity: 0.85;
-        color: ${color.grey.shade.dark};
         padding: 0.25rem 0.4rem;
         margin: 0 0.35rem;
-        background-color: ${color.grey.tint.neutral};
+
+        /** Dynamic transitioning */
+        ${(props) => props.atTop ?
+        css`
+            transition: background-color 0.3s ease-in-out 0s,
+                        color 0.3s ease-in-out 0s,
+                        padding 0.3s ease-in-out 0s,
+                        margin 0.3s ease-in-out 0s,
+                        opacity 0.3s ease-in-out 0s;
+        ` :
+        css`
+            transition: background-color 0.3s ease-in-out 0.3s,
+                        color 0.3s ease-in-out 0.3s,
+                        padding 0.3s ease-in-out 0s,
+                        margin 0.3s ease-in-out 0s,
+                        opacity 0.3s ease-in-out 0s;
+        `}
 
         &:hover {
             opacity: 1;
             padding: 0.25rem 0.75rem;
             margin: 0;
             border-radius: 0.25rem;
+            transition: ease-in-out 0.25s;
         }
     }
 
-    /** Styling on homepage */
-    &.home {
-        color: inherit;
+    &.dark-background {
+        color: ${color.grey.tint.light};
 
         &:hover {
-            background-color: ${color.grey.shade.dark};
-            color: ${color.white};
+            ${(props) => css` /* eslint indent enforce workaround */
+                background-color:
+                ${props.atTop ? color.grey.shade.dark : color.grey.tint.light};
+                color:
+                ${props.atTop ? color.white : color.grey.shade.dark};
+            `}
         }
     }
 
-    &.home.${activeClassName} {
-        color: ${color.white};
-        background-color: ${color.grey.shade.dark};
-
-        &:hover {
-            background-color: ${color.grey.shade.dark};
-        }
+    &.dark-background.active {
+        background-color: ${(props) =>
+        props.atTop ? color.grey.shade.dark : color.grey.tint.light};
+        color: ${(props) =>
+        props.atTop ? color.white : color.grey.shade.dark};
     }
 `;
 
 /**
  * Navigation bar Component.
  *
+ * @param {Boolean} scrolledUp indicates if user scrolled up or not
+ * @param {Boolean} atTop indicates if browser is at the top of the page
  * @param {Object} viewport viewport object used for responsive design
  *      - @property {String} type type classification
  */
@@ -100,43 +128,34 @@ export const Navbar = styled.nav.attrs((props) => ({
         type: props.type || "default",
     },
 }))`
-    color: ${color.white};
-    background-color: ${color.grey.shade.dark};
     margin: 0;
     display: inline-block;
     width: 100%;
     z-index: 100;
-    top: ${(props) => props.scrolledUp ? 0 : "-5rem"};
+    top: ${(props) => props.scrolledUp ? 0 : "-6rem"};
     transition: top 0.3s ease-in-out 0.3s;
 
     /** Responsive Design Styling */
     padding: ${(props) => handleNavbarPadding(props.viewport.type)};
 
-    /** Styling on homepage */
-    &.home {
-        color: ${(props) =>
+    color: ${(props) =>
         props.atTop ? color.grey.shade.dark : color.grey.tint.light};
-        background-color: ${(props) =>
+    background-color: ${(props) =>
         props.atTop ? "transparent" : color.grey.shade.dark};
-        position: fixed;
-        /** Create dynamic transitioning */
-        ${(props) => props.atTop ?
-        css`
-            transition: top 0.3s ease-in-out 0.3s,
-                        background-color 0.3s ease-in-out 0s;
-        ` :
-        css`
-            transition: top 0.3s ease-in-out 0s,
-                        background-color 0.3s ease-in-out 0.3s;
-        `}
+    position: fixed;
 
-        & ${NavbarLink}:hover {
-            background-color: ${(props) =>
-        props.atTop ? color.grey.shade.dark : color.grey.tint.light};
-            color: ${(props) =>
-        props.atTop ? color.white : color.grey.shade.dark};
-        }
-    }
+    /** Dynamic transitioning */
+    ${(props) => props.atTop ?
+        css`
+        transition: top 0.3s ease-in-out 0.3s,
+                    background-color 0.3s ease-in-out 0s,
+                    color 0.3s ease-in-out 0s;
+    ` :
+        css`
+        transition: top 0.3s ease-in-out 0s,
+                    background-color 0.3s ease-in-out 0.3s,
+                    color 0.3s ease-in-out 0.3s;
+    `}
 
     &.sidebar-nav {
         height: 100%;
@@ -146,6 +165,14 @@ export const Navbar = styled.nav.attrs((props) => ({
         transition: 0.5s;
         top: 0;
         left: 0;
+    }
+
+    &.dark-background {
+        color: ${(props) =>
+        props.atTop ? color.grey.tint.neutral : color.grey.tint.light};
+        background-color: ${(props) =>
+        props.atTop ? "transparent" : color.grey.shade.dark};
+        position: fixed;
     }
 `;
 
@@ -159,23 +186,48 @@ export const MainPageBody = styled.main.attrs({
     width: 100%;
     /* equivalent to Section padding: 11%; */
     /* width: 79vw; */
-    margin: auto;
-`;
-
-/**
- * Homepage Header.
- */
-export const HomepageHeader = styled.header.attrs((props) => ({
-    url: props.url,
-    pos: props.pos || "center",
-    attachment: props.attachment || "fixed",
-}))`
-    min-height: 100vh;
+    margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* position: relative; */
+`;
+
+/**
+ * Homepage Header.
+ *
+ * @param
+ */
+export const TopHeader = styled.header.attrs((props) => ({
+    url: props.url,
+    pos: props.pos || "center",
+    attachment: props.attachment || "fixed",
+    height: props.height || "40vh",
+}))`
+    min-height: ${(props) => props.height};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     ${(props) => {
+        return linearGradientBackground(
+            css`to top`,
+            [
+                color.grey.shade.dark + transparency.x35,
+                color.grey.shade.dark + transparency.x45,
+            ],
+            props.url,
+            props.attachment,
+            props.pos,
+        );
+    }}
+
+
+    &.home {
+        min-height: 100vh;
+        ${(props) => {
         return linearGradientBackground(
             css`to top`,
             [
@@ -189,6 +241,26 @@ export const HomepageHeader = styled.header.attrs((props) => ({
             props.pos,
         );
     }}
+    }
+
+    &.about {
+        ${(props) => {
+        return linearGradientBackground(
+            css`to bottom`,
+            [
+                color.grey.shade.dark + transparency.x75,
+                color.grey.shade.dark + transparency.x40,
+                color.red.neutral + transparency.x15,
+                color.grey.shade.dark + transparency.x60,
+                color.grey.shade.dark + transparency.x70,
+                color.grey.shade.dark + transparency.x80,
+            ],
+            props.url,
+            props.attachment,
+            props.pos,
+        );
+    }}
+    }
 `;
 
 
@@ -664,6 +736,7 @@ export const DescriptionBox = styled(FlexContainer)`
     padding-bottom: 4rem;
     margin: 0;
     flex-basis: 50%;
+    min-width: 20vw;
 
     &.secondary {
         padding-top: 0;
@@ -813,6 +886,8 @@ export const DescriptionTitle = styled.h3.attrs((props) => ({
     &:hover {
         letter-spacing: 0.1rem;
         color: ${(props) => handleColor(props.color + "-x95")};
+        padding-right: 0;
+        padding-left: 0;
     }
 
     &::after {
@@ -859,4 +934,47 @@ export const DescriptionBoxText = styled.div.attrs((props) => ({
             color: ${(props) => handleColor(props.color + "-x90")}
         }
     }
+`;
+
+/**
+ * To DO
+ *
+ */
+export const TestimonialStacker = styled.div`
+    height: auto;
+    margin: 0.75rem 0;
+    overflow: hidden;
+`;
+
+/**
+ * To DO
+ *
+ * @param {Number} duration the duration to span the logos across the screen
+ * @param {Number} offset position of the slider (-1, 0 or 1)
+ * @param {Boolean} reverse flag to indicate slider to move in reverse direction
+ */
+export const TestimonialSlider = styled.div.attrs((props) => ({
+    offset: props.offset || 0,
+    duration: props.duration || 10,
+}))`
+    display: inline-block;
+    overflow: hidden;
+    /* position: absolute; */
+    display: flex;
+    flex-direction: row;
+`;
+
+/**
+ * To DO
+ *
+ * @param {Number} duration the duration to span the logos across the screen
+ * @param {Number} offset position of the slider (-1, 0 or 1)
+ * @param {Boolean} reverse flag to indicate slider to move in reverse direction
+ */
+export const TestimonialBlock = styled.div.attrs((props) => ({
+    offset: props.offset || 0,
+    duration: props.duration || 10,
+}))`
+    display: flex;
+    flex-direction: column;
 `;

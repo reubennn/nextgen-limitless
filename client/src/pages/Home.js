@@ -33,8 +33,8 @@ const Home = ({ viewport }) => {
     const displayAsColumn = viewport.size.is.lessThan.large;
     return (
         <>
-            <S.HomepageHeader url={abstractScenery}>
-                <Navbar className="home" />
+            <S.TopHeader className="home" url={abstractScenery}>
+                <Navbar />
                 <S.FlexContainer column className="no-margin">
                     {/* <S.Header>Zero Gravity</S.Header> */}
                     <S.LogoImage
@@ -61,9 +61,8 @@ const Home = ({ viewport }) => {
                     </S.HeaderSimple>
                     <S.Button className="home gradient uppercase">Learn More</S.Button>
                 </S.FlexContainer>
-            </S.HomepageHeader>
+            </S.TopHeader>
             <S.MainPageBody>
-                <S.FlexContainer className="no-margin" column>
                 <S.Section
                     color="grey-tint-lighter"
                     bgColor="grey-shade-dark"
@@ -152,7 +151,6 @@ const Home = ({ viewport }) => {
                         <S.TinyText superTiny color="grey-shade-dark">**Maybe not today - today, but you know what we mean.</S.TinyText>
                     </S.FlexContainer>
                 </S.SectionWithBackground>
-                </S.FlexContainer>
             </S.MainPageBody>
         </>
     );
