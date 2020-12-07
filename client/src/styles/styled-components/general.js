@@ -250,8 +250,8 @@ export const Image = styled.img.attrs((props) => ({
  * @param {Number} fill the fill color
  */
 export const Icon = styled.svg.attrs((props) => ({
-    height: props.height || "3.5rem",
-    width: props.width || "3.5rem",
+    height: props.height || "50px",
+    width: props.width || "50px",
     fill: props.fill || color.grey.tint.lighter,
     bgColor: props.bgColor || color.grey.shade.dark,
 }))`
@@ -320,7 +320,20 @@ export const Icon = styled.svg.attrs((props) => ({
     }
 
     &.nav-item {
+        fill: ${color.grey.tint.light};
         margin: auto 0;
+
+        &:hover {
+            fill: ${color.white};
+        }
+
+        &.at-top {
+            fill: ${color.grey.shade.dark};
+
+            &:hover {
+                fill: ${color.black};
+            }
+        }
     }
 
     &.align-left {

@@ -26,7 +26,7 @@ const LogoSlider = ({ logos, reverse, bgColor = "grey-shade-dark" }) => {
                     <Icon
                         key={key}
                         xlinkHref={logo}
-                        height="7rem"
+                        height="100px"
                         width="150px"
                         id="main"
                         className="logo-slider"

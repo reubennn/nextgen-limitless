@@ -157,8 +157,8 @@ const Navbar = ({
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
                         xlinkHref={menuIcon}
-                        width="36"
-                        height="36"
+                        width="36px"
+                        height="36px"
                         className={`nav-item ${className} ${iconClass}`} />
                 </button>
                 <RouterLink
@@ -178,8 +178,8 @@ const Navbar = ({
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
                         xlinkHref={searchIcon}
-                        width="28"
-                        height="28"
+                        width="28px"
+                        height="28px"
                         className={`nav-item ${className} ${iconClass}`} />
                 </button>
             </>
