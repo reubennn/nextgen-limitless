@@ -18,11 +18,11 @@ import * as S from "../styles/styled-components/styled";
  */
 const DescriptionBox = ({
     description,
-    last = false,
+    separator = false,
     column = false,
     reverse = false,
     textColor = "grey-tint-lighter",
-    className,
+    className = "",
 }) => {
     /** Check if we need to shrink the image to fit the container */
     const shrinkImage = description.shrinkImage ? "shrink-image" : "";
@@ -54,6 +54,10 @@ const DescriptionBox = ({
 
     return (
         <>
+            {separator && column && reverse &&
+                <S.HorizontalRuler className="description-box full-width" />}
+            {separator && !column && reverse &&
+                <S.HorizontalRuler className="description-box" />}
             <S.DescriptionBox
                 column={column}
                 reverse={reverse}
@@ -80,9 +84,9 @@ const DescriptionBox = ({
                     </S.DescriptionBoxText>
                 </S.DescriptionBoxTextbox>
             </S.DescriptionBox>
-            {!last && column &&
+            {separator && column &&
                 <S.HorizontalRuler className="description-box full-width" />}
-            {!last && !column &&
+            {separator && !column &&
                 <S.HorizontalRuler className="description-box" />}
         </>
     );
@@ -101,10 +105,10 @@ DescriptionBox.propTypes = {
      */
     description: PropTypes.object,
     /**
-     * Flag indicating it is the last element in the section.
-     * - so no horizontal ruler is added at the end.
+     * Flag indicating the horizontal ruler should be included
+     * if required.
      */
-    last: PropTypes.bool,
+    separator: PropTypes.bool,
     /**
      * Flag indicating if the content should be displayed as
      * a column or as a row.
