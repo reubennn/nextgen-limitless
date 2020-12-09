@@ -47,6 +47,64 @@ export const handleFeatureTextFontSize = (viewportType) => {
 };
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~ Sample Article ~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+/**
+ * Handles the article sample textbox height for ArticleSampleText.
+ *
+ * - Ensures the textbox is the same height no matter the text content.
+ *
+ * @param {String} viewportType the viewport type classification
+ * @return {String} the font-size value
+ */
+export const handleTextSampleHeight = (viewportType) => {
+    switch (viewportType) {
+        case ("super-small"):
+            return "16rem";
+        case ("extra-small"):
+            return "13rem";
+        case ("small"):
+            return "10rem";
+        case ("medium"):
+            return "15rem";
+        case ("large"):
+            return "16rem";
+        case ("extra-large"):
+            return "17rem";
+        case ("super-large"):
+            return "14rem";
+        default: return "17rem";
+    };
+};
+
+/**
+ * Handles the article sample flex basis.
+ *
+ * - On larger viewports, a list of article samples will display
+ * in a row so we need to adjust the flex-basis to display them correctly.
+ * - On smaller viewports, the article list displays as a single column,
+ * so the flex-basis is not relevant.
+ *
+ * @param {String} viewportType the viewport type classification
+ * @return {String} the font-size value
+ */
+export const handleFlexBasis = (viewportType) => {
+    switch (viewportType) {
+        case ("medium"):
+            return "40%";
+        case ("large"):
+            return "28%";
+        case ("extra-large"):
+            return "20%";
+        case ("super-large"):
+            return "17%";
+        default: return "100%";
+    };
+};
+
+
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~ Logo ~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */

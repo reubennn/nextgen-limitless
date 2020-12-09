@@ -222,6 +222,8 @@ export const handleColor = (input) => {
     /** Check if the color should inherit */
     } else if (input === "inherit") {
         return input;
+    } else if (input === "transparent") {
+        return input;
     } else if (typeof input === "string") {
         /** Extract the transparency value if it exists */
         const res = input.split("-x");

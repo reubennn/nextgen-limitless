@@ -18,7 +18,7 @@ import {
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Articles from "./pages/Articles";
+import Blog from "./pages/Blog";
 import Article from "./pages/Article";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
@@ -87,7 +87,7 @@ const App = ({ handleViewportChange }) => {
                         <Route path="/contact" component={Contact} />
                         <Route
                             path="/blog"
-                            component={Articles}
+                            component={Blog}
                         />
                         <Route
                             path="/article/:name"

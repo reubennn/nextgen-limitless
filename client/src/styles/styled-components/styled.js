@@ -7,9 +7,20 @@
  * - This structure allows React Components to import all
  * styled-components {*} as S to allow differentiation between
  * React components and styled-components (which are called using <S.___>).
+ *
+ * @example
+ * // Adds Feature Text styled-component to JSX in React App
+ * import * as S from "../styles/styled-components/styled";
+ * <S.FeatureText >Hello, World!</S.FeatureText>
  */
 
 export * from "./app";
 export * from "./pages";
 export * from "./general";
 export * from "./logo";
+export * from "./links";
+export * from "./articles";
+export * from "./comments";
+export * from "./description-box";
+export * from "./navbar";
+export * from "./sliders";

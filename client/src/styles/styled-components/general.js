@@ -1,23 +1,18 @@
 /* eslint-disable valid-jsdoc */
 import styled, { css } from "styled-components";
 
+import { TinyRouterLink } from "./links";
+import { fontFamily } from "./fonts";
+import { gradientTransition } from "./mixins";
+import { handleFeatureTextFontSize } from "./responsive";
 import {
     color,
     transparency,
     handleColor,
 } from "./colors";
 
-import { gradientTransition } from "./mixins";
-
-import { TinyRouterLink } from "./pages";
-
-/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * ~~~~~~~~~~ General Components ~~~~~~~~~
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- */
-
 /**
-* Paragraph Component
+* Paragraph Component.
 *
 * @param {String} color text color
 */
@@ -36,7 +31,7 @@ export const Paragraph = styled.p.attrs((props) => ({
 `;
 
 /**
- * Small Text Component
+ * Small Text Component.
  *
  * @param {String} color text color
  * @param {String} margin the top and bottom margin
@@ -56,7 +51,37 @@ export const TinyText = styled.p.attrs((props) => ({
 `;
 
 /**
- * Anchor Component
+ * Feature Text Component.
+ *
+ * @param {String} color the color of the text
+ * @param {Number} fontWeight thickness weight of the font
+ * @param {Object} viewport viewport object used for responsive design
+ *      - @property {String} type type classification
+ */
+export const FeatureText = styled.p.attrs((props) => ({
+    color: props.color || "inherit",
+    fontWeight: props.fontWeight || 500,
+    viewport: {
+        type: props.type || "default",
+    },
+}))`
+    color: ${(props) => handleColor(props.color)};
+    font-family: ${fontFamily.secondary};
+    font-weight: ${(props) => props.fontWeight};
+    margin: auto;
+    text-align: center;
+    text-shadow: 0.05rem 0.05rem 0.25rem ${color.grey.shade.light};
+
+    /** Responsive Design Styling */
+    font-size: ${(props) => handleFeatureTextFontSize(props.viewport.type)};
+
+    &.header-home {
+        margin: auto 2.5rem;
+    }
+`;
+
+/**
+ * Anchor Component.
  *
  * @param {String} color text color
  */
@@ -74,40 +99,44 @@ export const Anchor = styled.a.attrs((props) => ({
 `;
 
 /**
- * Inline Anchor Component
+ * Inline Anchor Component.
  *
- * @param {String} bgColor background color
+ * @param {String} thickUnderline flag indicating thicker underline on hover
  */
 export const InlineAnchor = styled(Anchor)`
-    transition: none;
-    -webkit-transition: none;
+    position: relative;
+    text-decoration: none;
+    transition: ease-in-out 0.25s;
+    padding-right: 0.25rem;
+    padding-left: 0.25rem;
 
     &:hover {
-        transition: none;
-        -webkit-transition: none;
-    }
-
-    &::before {
-        content: " ";
-    }
-
-    &:hover::before {
-        text-decoration: none;
-        border-bottom: 1px solid ${(props) => handleColor(props.bgColor)};
+        border-bottom: none;
     }
 
     &::after {
         content: " ";
+        display: block;
+        position: absolute;
+        bottom: -0.15rem;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        width: 0%;
+        border-bottom: ${(props) => props.thickUnderline ?
+        `0.1rem solid ${handleColor(props.color)}` :
+        `0.05rem solid ${handleColor(props.color)}`};
+        transition: ease-in-out 0.25s;
     }
 
     &:hover::after {
-        border-bottom: none;
-        border-bottom: 1px solid ${(props) => handleColor(props.bgColor)};
+        width: 94%;
     }
 `;
 
 /**
- * Header Component
+ * Header Component.
  *
  * @param {String} color text color
  * @param {String} bgColor background color
@@ -135,7 +164,7 @@ export const Header = styled.h1.attrs((props) => ({
 `;
 
 /**
- * Secondary Header Component
+ * Secondary Header Component.
  *
  * @param {String} color text color
  * @param {String} bgColor background color
@@ -182,7 +211,7 @@ export const HeaderSimple = styled.h1.attrs((props) => ({
     color: ${(props) => handleColor(props.color)};
     background-color: ${(props) => handleColor(props.bgColor)};
     text-align: ${(props) => props.textAlign};
-    margin: 2rem auto;
+    margin: 2rem 3rem;
     font-family: inherit;
     font-weight: 500;
     line-height: 1.2;
@@ -196,8 +225,10 @@ export const HeaderSimple = styled.h1.attrs((props) => ({
             default: return "2.25rem";
         }
     }};
-    padding: ${(props) => props.bgColor !== "transparent" ? "0.25rem 25vw" : "0 auto"};
-    border-radius: ${(props) => props.bgColor !== "transparent" ? "3rem" : " 0"};
+    padding: ${(props) =>
+        props.bgColor !== "transparent" ? "0.25rem 25vw" : "0"};
+    border-radius: ${(props) =>
+        props.bgColor !== "transparent" ? "3rem" : " 0"};
 
     &.feature-text {
         text-shadow: 0.05rem 0.05rem 0.25rem ${color.grey.shade.light};
@@ -207,20 +238,14 @@ export const HeaderSimple = styled.h1.attrs((props) => ({
         margin:  0rem 11%;
     }
 
-    &.page-header {
-        position: absolute;
-        bottom: -3.8rem;
-        text-transform: uppercase;
+    &.header-secondary {
+        margin-top: 0;
+        margin-bottom: 0;
     }
 
     &.section-top {
         margin-top: 0;
     }
-
-    /* & > span {
-        font-size: 125%;
-        vertical-align: middle;
-    } */
 `;
 
 /**
@@ -250,7 +275,7 @@ export const TextSized = styled(Text).attrs((props) => ({
 `;
 
 /**
- * List Item Component
+ * List Item Component.
  */
 export const ListItem = styled.li`
     color: inherit;
@@ -270,7 +295,7 @@ export const ListItem = styled.li`
 `;
 
 /**
- * Image Component
+ * Image Component.
  *
  * @param {String} height height of the image
  * @param {String} width width of the image
@@ -288,9 +313,10 @@ export const Image = styled.img.attrs((props) => ({
 /**
  * Icon Component displayed from a SVG image file.
  *
- * @param {Number} height the height of the icon
- * @param {Number} width the width of the icon
+ * @param {String} height the height of the icon
+ * @param {String} width the width of the icon
  * @param {Number} fill the fill color
+ * @param {String} bgColor the background color for color invert
  */
 export const Icon = styled.svg.attrs((props) => ({
     height: props.height || "50px",
@@ -363,26 +389,19 @@ export const Icon = styled.svg.attrs((props) => ({
         }
     }
 
-    &.align-left {
-        margin-right: auto;
-    }
-
-    &.align-right {
-        margin-left: auto;
-    }
-
     &.logo-slider {
         margin: auto 1.5rem;
     }
 `;
 
-/**
- * Button Component
- */
+/** Pseudo button properties required for gradient transition */
 const pseudoButtonProperties = css`
     border-radius: 1.5rem;
 `;
 
+/**
+ * Button Component.
+ */
 export const Button = styled.button`
     color: ${color.white};
     background-color: ${color.grey.shade.dark};
@@ -428,6 +447,22 @@ export const Button = styled.button`
     }}
     }
 
+    &.gradient-light {
+        background: ${`linear-gradient(
+        245deg,
+        ${color.blue.neutral + transparency.x70} -90%,
+        ${color.pink.dark + transparency.x70} 120%)`};
+        color: ${color.white};
+
+        ${() => { // Use function to avoid Prettier ugly formatting.
+        return gradientTransition(
+            color.blue.darker + transparency.x70,
+            color.purple.darker + transparency.x70,
+            pseudoButtonProperties,
+        );
+    }}
+    }
+
     &.home {
         margin-top: 4rem;
         margin-bottom: 4rem;
@@ -442,7 +477,7 @@ export const Button = styled.button`
 `;
 
 /**
- * Horizontal Ruler Component
+ * Horizontal Ruler Component.
  *
  * @param {String} width width of the horizontal ruler
  * @param {String} color color of the horizontal ruler
@@ -489,7 +524,7 @@ export const HorizontalRuler = styled.hr.attrs((props) => ({
 `;
 
 /**
- * Flex-box Container
+ * Flex-box Container.
  *
  * @param {String} justifyContent justify-content styling
  * @param {Boolean} wrapContent flex-wrap direction
@@ -520,7 +555,7 @@ export const FlexContainer = styled.div.attrs((props) => ({
 `;
 
 /**
- * Label Component
+ * Label Component.
  */
 export const Label = styled.label`
     margin-top: 0.5rem;
@@ -528,7 +563,7 @@ export const Label = styled.label`
 `;
 
 /**
- * Input Component
+ * Input Component.
  */
 export const Input = styled.input`
     outline: 0;
@@ -547,7 +582,7 @@ export const Input = styled.input`
 `;
 
 /**
- * Text Area Component
+ * Text Area Component.
  */
 export const TextArea = styled.textarea`
     resize: none;
