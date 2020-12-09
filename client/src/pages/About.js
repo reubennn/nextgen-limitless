@@ -29,26 +29,32 @@ import * as S from "../styles/styled-components/styled";
  */
 const About = ({ viewport }) => {
     const displayAsColumn = viewport.size.is.lessThan.large;
+    const isSmallerViewport = viewport.size.is.lessThan.medium;
+    const topHeaderHeight = viewport.size.is.superSmall ? "100vh" : "60vh";
     return (
         <>
             <S.TopHeader
                 className="about"
                 url={rockMountainNight}
-                height="60vh">
-                <Navbar className="dark-background"/>
+                height={topHeaderHeight}>
+                <Navbar className="dark-background" />
                 <S.HeaderSimple
                     as="h1"
                     className="feature-text uppercase"
                     color="grey-tint-lightest" >
                     <S.Text >The </S.Text>
+                    {isSmallerViewport && <br />}
                     <S.TextSized><b>Next Gen</b></S.TextSized>
+                    {isSmallerViewport && <br />}
                     <S.Text > Story.</S.Text>
                 </S.HeaderSimple>
                 <S.HeaderSimple
                     as="h4"
-                    className="feature-text no-margin"
+                    className="feature-text header-secondary"
                     color="grey-tint-lightest" >
-                    We are <em>transparent</em>. We are <em>without limits</em>.
+                    We are <em>transparent</em>.
+                    {isSmallerViewport && <br />}
+                    We are <em>without limits</em>.
                 </S.HeaderSimple>
             </S.TopHeader>
             <S.MainPageBody>
@@ -62,6 +68,7 @@ const About = ({ viewport }) => {
                         className="uppercase section-top"
                         color="grey-tint-lightest" >
                         <S.Text >We are </S.Text>
+                        {isSmallerViewport && <br />}
                         <S.TextSized><b>Next Gen LIMITLESS</b></S.TextSized>
                         <S.Text >.</S.Text>
                     </S.HeaderSimple>
