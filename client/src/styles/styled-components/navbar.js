@@ -16,14 +16,19 @@ import {
 * - Inherit React Router Link to style it.
 * - Defaults to color contrast with a light background color.
 *
-* @param {Boolean} top indicates if browser is at the top of the page
+* -> props.$atTop must be a transient prop (using $ prefix),
+* to avoid passing it to the underlying React node or rendering
+* it to the DOM element.
+*   - Required to remove not recognized warning/error.
+*
+* @param {Boolean} $atTop indicates if browser is at the top of the page
 */
 export const NavbarLink = styled(NavLink).attrs((props) => ({
-    top: props.top || true,
+    $atTop: props.$atTop,
 }))`
     font-family: ${fontFamily.secondary};
     color: ${(props) =>
-        props.top ? color.grey.shade.dark : color.grey.tint.light};
+        props.$atTop ? color.grey.shade.dark : color.grey.tint.light};
     font-size: 1.25rem;
     text-align: center;
     text-decoration: none;
@@ -35,9 +40,9 @@ export const NavbarLink = styled(NavLink).attrs((props) => ({
     &:hover {
         ${(props) => css` /* eslint indent enforce workaround */
             background-color:
-            ${props.top ? color.grey.shade.dark : color.grey.tint.light};
+            ${props.$atTop ? color.grey.shade.dark : color.grey.tint.light};
             color:
-            ${props.top ? color.white : color.grey.shade.dark};
+            ${props.$atTop ? color.white : color.grey.shade.dark};
         `}
         padding: 0.25rem 0.75rem;
         margin: 0;
@@ -45,15 +50,15 @@ export const NavbarLink = styled(NavLink).attrs((props) => ({
 
     &.active {
         background-color: ${(props) =>
-        props.top ? color.grey.shade.dark : color.grey.tint.light};
+        props.$atTop ? color.grey.shade.dark : color.grey.tint.light};
         color: ${(props) =>
-        props.top ? color.white : color.grey.shade.dark};
+        props.$atTop ? color.white : color.grey.shade.dark};
         opacity: 0.85;
         padding: 0.25rem 0.4rem;
         margin: 0 0.35rem;
 
         /** Dynamic transitioning */
-        ${(props) => props.top ?
+        ${(props) => props.$atTop ?
         css`
             transition: background-color 0.3s ease-in-out 0s,
                         color 0.3s ease-in-out 0s,
@@ -84,32 +89,37 @@ export const NavbarLink = styled(NavLink).attrs((props) => ({
         &:hover {
             ${(props) => css` /* eslint indent enforce workaround */
                 background-color:
-                ${props.top ? color.grey.shade.dark : color.grey.tint.light};
+                ${props.$atTop ? color.grey.shade.dark : color.grey.tint.light};
                 color:
-                ${props.top ? color.white : color.grey.shade.dark};
+                ${props.$atTop ? color.white : color.grey.shade.dark};
             `}
         }
     }
 
     &.dark-background.active {
         background-color: ${(props) =>
-        props.top ? color.grey.shade.dark : color.grey.tint.light};
+        props.$atTop ? color.grey.shade.dark : color.grey.tint.light};
         color: ${(props) =>
-        props.top ? color.white : color.grey.shade.dark};
+        props.$atTop ? color.white : color.grey.shade.dark};
     }
 `;
 
 /**
  * Navigation bar Component.
  *
+ * -> props.$atTop must be a transient prop (using $ prefix),
+* to avoid passing it to the underlying React node or rendering
+* it to the DOM element.
+*   - Required to remove not recognized warning/error.
+ *
  * @param {Boolean} scrolledUp indicates if user scrolled up or not
- * @param {Boolean} top indicates if browser is at the top of the page
+ * @param {Boolean} $atTop indicates if browser is at the top of the page
  * @param {Object} viewport viewport object used for responsive design
  *      - @property {String} type type classification
  */
 export const Navbar = styled.nav.attrs((props) => ({
     scrolledUp: props.scrolledUp,
-    top: props.top || true,
+    $atTop: props.$atTop,
     viewport: {
         type: props.type || "default",
     },
@@ -125,13 +135,13 @@ export const Navbar = styled.nav.attrs((props) => ({
     padding: ${(props) => handleNavbarPadding(props.viewport.type)};
 
     color: ${(props) =>
-        props.top ? color.grey.shade.dark : color.grey.tint.light};
+        props.$atTop ? color.grey.shade.dark : color.grey.tint.light};
     background-color: ${(props) =>
-        props.top ? "transparent" : color.grey.shade.dark};
+        props.$atTop ? "transparent" : color.grey.shade.dark};
     position: fixed;
 
     /** Dynamic transitioning */
-    ${(props) => props.top ?
+    ${(props) => props.$atTop ?
         css`
         transition: top 0.3s ease-in-out 0.3s,
                     background-color 0.3s ease-in-out 0s,
@@ -151,13 +161,15 @@ export const Navbar = styled.nav.attrs((props) => ({
         transition: 0.5s;
         top: 0;
         left: 0;
+        /* color: ${color.grey.tint.light};
+        background-color: ${color.grey.shade.dark}; */
     }
 
     &.dark-background {
         color: ${(props) =>
-        props.top ? color.grey.tint.neutral : color.grey.tint.light};
+        props.$atTop ? color.grey.tint.neutral : color.grey.tint.light};
         background-color: ${(props) =>
-        props.top ? "transparent" : color.grey.shade.dark};
+        props.$atTop ? "transparent" : color.grey.shade.dark};
         position: fixed;
     }
 `;

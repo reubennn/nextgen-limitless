@@ -89,11 +89,9 @@ const Navbar = ({
         if (isMounted) {
             prevScrollPos >= scrollPos ?
                 setScrolledUp(true) : setScrolledUp(false);
-
-            setPrevScrollPos(scrollPos);
-
             scrollPos > 0 ?
                 setAtTop(false) : setAtTop(true);
+            setPrevScrollPos(scrollPos);
         }
         /**
          * useEffect clean-up:
@@ -105,7 +103,6 @@ const Navbar = ({
     }, [scrollPos]);
 
     const iconClass = atTop ? "at-top" : "";
-
     const content = viewport.dimensions.width >= media.breakpoints.medium ?
         (
             <>
@@ -125,7 +122,7 @@ const Navbar = ({
                         to="/about"
                         activeClassName="active"
                         className={className + " uppercase nav-item"}
-                        atTop={atTop} >
+                        $atTop={atTop} >
                         About
                     </S.NavbarLink>
                 </S.ListItem>
@@ -134,7 +131,7 @@ const Navbar = ({
                         to="/blog"
                         activeClassName="active"
                         className={className + " uppercase nav-item"}
-                        atTop={atTop} >
+                        $atTop={atTop} >
                         Blog
                     </S.NavbarLink>
                 </S.ListItem>
@@ -143,7 +140,7 @@ const Navbar = ({
                         to="/store"
                         activeClassName="active"
                         className={className + " uppercase nav-item"}
-                        atTop={atTop} >
+                        $atTop={atTop} >
                         Store
                     </S.NavbarLink>
                 </S.ListItem>
@@ -152,7 +149,7 @@ const Navbar = ({
                         to="/contact"
                         activeClassName="active"
                         className={className + " uppercase nav-item"}
-                        atTop={atTop} >
+                        $atTop={atTop} >
                         Contact
                     </S.NavbarLink>
                 </S.ListItem>
@@ -197,7 +194,7 @@ const Navbar = ({
         <S.Navbar
             className={className}
             scrolledUp={scrolledUp}
-            atTop={atTop}
+            $atTop={atTop}
             type={viewport.type}>
             <S.FlexContainer className="no-margin" justifyContent="flex-end">
                 {content}
