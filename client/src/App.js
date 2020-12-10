@@ -22,6 +22,10 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
+import Store from "./pages/Store";
+import Privacy from "./pages/Privacy";
+import Cookies from "./pages/Cookies";
+import Legal from "./pages/Legal";
 import Article from "./pages/Article";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
@@ -88,10 +92,11 @@ const App = ({ handleViewportChange, sidebarNav, }) => {
                         <Route path="/" component={Home} exact />
                         <Route path="/about" component={About} />
                         <Route path="/contact" component={Contact} />
-                        <Route
-                            path="/blog"
-                            component={Blog}
-                        />
+                        <Route path="/blog" component={Blog} />
+                        <Route path="/store" component={Store} />
+                        <Route path="/privacy" component={Privacy} />
+                        <Route path="/cookies" component={Cookies} />
+                        <Route path="/legal" component={Legal} />
                         <Route
                             path="/article/:name"
                             component={Article} />

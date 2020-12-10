@@ -588,3 +588,19 @@ export const TextArea = styled.textarea`
         transition: box-shadow linear 0.2s
     }
 `;
+
+/**
+ * Text Area Component.
+ */
+export const CoolList = styled.ul`
+    text-align: center;
+    margin: 2rem auto;
+
+    & li {
+        list-style: circle inside none;
+
+        & ::marker {
+            color: ${color.blue.lighter};
+        }
+    }
+`;

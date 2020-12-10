@@ -113,6 +113,23 @@ export const TopHeader = styled.header.attrs((props) => ({
         );
     }}
     }
+
+    &.privacy {
+        min-height: 100vh;
+        ${(props) => {
+        return linearGradientBackground(
+            css`to top`,
+            [
+                color.grey.shade.dark,
+                color.grey.shade.dark + transparency.x80,
+                color.grey.shade.dark + transparency.x70,
+            ],
+            props.url,
+            props.attachment,
+            props.pos,
+        );
+    }}
+    }
 `;
 
 /**
