@@ -372,23 +372,6 @@ export const Icon = styled.svg.attrs((props) => ({
         transition: ease-in-out 0.4s;
     }
 
-    &.nav-item {
-        fill: ${color.grey.tint.light};
-        margin: auto 0;
-
-        &:hover {
-            fill: ${color.white};
-        }
-
-        &.at-top {
-            fill: ${color.grey.shade.dark};
-
-            &:hover {
-                fill: ${color.black};
-            }
-        }
-    }
-
     &.logo-slider {
         margin: auto 1.5rem;
     }

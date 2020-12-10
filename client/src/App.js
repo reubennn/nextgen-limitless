@@ -13,6 +13,9 @@ import { connect } from "react-redux";
 import {
     handleViewportChange,
 } from "./thunks/viewportThunks";
+import {
+    getSidebarNavState,
+} from "./selectors/viewportSelectors";
 
 /** React Components */
 import Home from "./pages/Home";
@@ -36,7 +39,7 @@ import * as S from "./styles/styled-components/styled";
  *
  * @return {Component} the React App
  */
-const App = ({ handleViewportChange }) => {
+const App = ({ handleViewportChange, sidebarNav, }) => {
     /**
      * useEffect used to add an event listener to handle window resizing event
      * for entire application, regardless of the current page.
@@ -79,7 +82,7 @@ const App = ({ handleViewportChange }) => {
     return (
         <Router>
             <ScrollToTop>
-                <S.Container>
+                <S.Container sidenav={sidebarNav.isActive}>
                     <SidebarNav />
                     <Switch>
                         <Route path="/" component={Home} exact />
@@ -115,7 +118,23 @@ App.propTypes = {
      * and dispatch Actions to manipulate the Redux store.
      */
     handleViewportChange: PropTypes.func,
+    /**
+     * The sidebarNav object which contains flag to indicate
+     * if the sidebar nav is active.
+     */
+    sidebarNav: PropTypes.object,
 };
+
+/**
+ * Assign props using Redux selectors
+ * to connect the Component to the Redux store.
+ *
+ * @param {*} state the Redux store state
+ * @return {*} props mapped to the Component
+ */
+const mapStateToProps = (state) => ({
+    sidebarNav: getSidebarNavState(state),
+});
 
 /**
  * Assign props to dispatch actions to the Redux Store.
@@ -128,4 +147,4 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(handleViewportChange(viewport)),
 });
 
-export default connect(null, mapDispatchToProps)(hot(module)(App));
+export default connect(mapStateToProps, mapDispatchToProps)(hot(module)(App));

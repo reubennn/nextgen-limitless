@@ -25,13 +25,8 @@ import * as S from "../styles/styled-components/styled";
  */
 const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
     /**
-     * useEffect to hide or show the navigation bar depending on
-     * window scrolling.
-     *
-     * - Called when the scroll position state is updated to check the
-     * current scroll position relative to the previous position.
-     *
-     * - Separate useEffect used as useState updates the value asynchronously.
+     * useEffect used to disable any scroll functionality when
+     * the sidebar navigation is active and enable it is not.
      */
     useEffect(() => {
         let isMounted = true; // Flag which denotes mount status
@@ -49,17 +44,17 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
     }, [sidebarNav.isActive]);
 
     return (
-        sidebarNav.isActive &&
-        <S.Navbar className={`${className} sidebar-nav`}>
+        <S.Sidenav className={sidebarNav.isActive ? "active" : ""}>
             <S.FlexContainer className="no-margin" justifyContent="flex-end">
                 <button
                     className="align-left"
                     onClick={() => setSidebarNavStatus(false)}>
                     <Icon
+                        navbar
                         xlinkHref={closeIcon}
                         width="36px"
                         height="36px"
-                        className={"align-left nav-item close-icon " +
+                        className={"align-left close-icon " +
                             className} />
                 </button>
                 <RouterLink
@@ -77,10 +72,11 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                     className="align-right"
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
+                        navbar
                         xlinkHref={searchIcon}
                         width="28px"
                         height="28px"
-                        className={`nav-item ${className}`} />
+                        className={`${className}`} />
                 </button>
             </S.FlexContainer>
             <br></br>
@@ -126,7 +122,7 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                 <S.ListItem className="nav-item sidebar-nav">
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
-                            to="/Store"
+                            to="/store"
                             activeClassName="active"
                             className={className + " uppercase"} >
                             Store
@@ -145,7 +141,7 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                     </button>
                 </S.ListItem>
             </S.FlexContainer>
-        </S.Navbar>
+        </S.Sidenav>
     );
 };
 

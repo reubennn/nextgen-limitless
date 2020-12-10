@@ -194,12 +194,12 @@ const Navbar = ({
             </>
         );
     return (
-        !sidebarNav.isActive &&
         <S.Navbar
             className={className}
             scrolledUp={scrolledUp}
             $atTop={atTop}
-            type={viewport.type}>
+            type={viewport.type}
+            sidenav={sidebarNav.isActive}>
             <S.FlexContainer className="no-margin" justifyContent="flex-end">
                 {content}
             </S.FlexContainer>

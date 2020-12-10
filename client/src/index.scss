@@ -86,6 +86,20 @@ h1 {
 }
 
 /**
+ * ID Attribute Styling
+ *
+ * styled-components take precedence over global classes,
+ * as they inject styles during runtime at the end of <head> by default.
+ *
+ * Therefore, we need to add !important to our styling properties, to ensure
+ * the style is used.
+ */
+#root {
+	/* Hide the scrollbars when the sidebar nav is active */
+	overflow: hidden !important;
+}
+
+/**
  * Class Attribute Styling
  *
  * styled-components take precedence over global classes,

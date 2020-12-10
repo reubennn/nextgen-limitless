@@ -6,7 +6,6 @@ import { Icon } from "./general";
 import { fontFamily } from "./fonts";
 import {
     color,
-    handleColor,
 } from "./colors";
 import {
     handleNavbarPadding,
@@ -114,6 +113,7 @@ export const NavbarLink = styled(NavLink).attrs((props) => ({
 * it to the DOM element.
 *   - Required to remove not recognized warning/error.
  *
+ * @param {Boolean} sidenav flag indicates sidebar nav is active
  * @param {Boolean} scrolledUp indicates if user scrolled up or not
  * @param {Boolean} $atTop indicates if browser is at the top of the page
  * @param {Object} viewport viewport object used for responsive design
@@ -128,31 +128,35 @@ export const Navbar = styled.nav.attrs((props) => ({
 }))`
     margin: 0;
     display: inline-block;
-    width: 100%;
+    width: 100vw;
     z-index: 100;
+    position: fixed;
     top: ${(props) => props.scrolledUp ? 0 : "-6rem"};
-    transition: top 0.3s ease-in-out 0.3s;
+    /* Push to the right when sidenav is active */
+    left: ${(props) => props.sidenav ? "100vw" : 0};
+    transition: top 0.3s ease-in-out 0.3s,
+                left 0.5s;
 
     /** Responsive Design Styling */
     padding: ${(props) => handleNavbarPadding(props.viewport.type)};
-
     color: ${(props) =>
         props.$atTop ? color.grey.shade.dark : color.grey.tint.light};
     background-color: ${(props) =>
         props.$atTop ? "transparent" : color.grey.shade.dark};
-    position: fixed;
 
     /** Dynamic transitioning */
     ${(props) => props.$atTop ?
         css`
         transition: top 0.3s ease-in-out 0.3s,
                     background-color 0.3s ease-in-out 0s,
-                    color 0.3s ease-in-out 0s;
+                    color 0.3s ease-in-out 0s,
+                    left 0.5s;
     ` :
         css`
         transition: top 0.3s ease-in-out 0s,
                     background-color 0.3s ease-in-out 0.3s,
-                    color 0.3s ease-in-out 0.3s;
+                    color 0.3s ease-in-out 0.3s,
+                    left 0.5s;
     `}
 
     &.sidebar-nav {
@@ -207,5 +211,33 @@ export const NavIcon = styled(Icon).attrs((props) => ({
         &:hover {
             fill: ${color.white};
         }
+    }
+`;
+
+/**
+ * Navigation bar Component.
+ *
+ * -> props.$atTop must be a transient prop (using $ prefix),
+* to avoid passing it to the underlying React node or rendering
+* it to the DOM element.
+*   - Required to remove not recognized warning/error.
+ *
+ * @param {Boolean} scrolledUp indicates if user scrolled up or not
+ * @param {Boolean} $atTop indicates if browser is at the top of the page
+ * @param {Object} viewport viewport object used for responsive design
+ *      - @property {String} type type classification
+ */
+export const Sidenav = styled(Navbar)`
+    height: 100%;
+    z-index: 100; /* Stay on top */
+    position: fixed;
+    overflow: hidden; /* Disable scroll */
+    transition: 0.5s;
+    top: 0;
+    left: -100vw;
+    width: 100vw;
+
+    &.active {
+        left: 0;
     }
 `;

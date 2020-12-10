@@ -10,13 +10,18 @@ import { color } from "./colors";
 
 /**
  * Main container for the React App.
+ *
+ * @param {Boolean} sidenav flag indicates sidebar nav is active
  */
 export const Container = styled.div`
-    margin: 1rem;
     color: ${color.grey.shade.dark};
-    width: auto;
     min-height: 100vh;
+    width: 100%;
     margin: 0;
+    overflow: hidden;
+    /* Push to right when sidebar nav is active */
+    margin-left: ${(props) => props.sidenav ? "100%" : 0};
+    transition: 0.5s;
 
     /* Ensures the Footer does not go above the bottom of the screen */
     display: flex;
