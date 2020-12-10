@@ -52,9 +52,9 @@ const About = ({ viewport }) => {
                     as="h4"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
-                    We are <em>transparent</em>.
+                    <span>We are <em>transparent</em>.</span>
                     {isSmallerViewport && <br />}
-                    We are <em>without limits</em>.
+                    <span> We are <em>without limits</em>.</span>
                 </S.HeaderSimple>
             </S.TopHeader>
             <S.MainPageBody>
