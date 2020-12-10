@@ -2,9 +2,11 @@
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
 
+import { Icon } from "./general";
 import { fontFamily } from "./fonts";
 import {
     color,
+    handleColor,
 } from "./colors";
 import {
     handleNavbarPadding,
@@ -171,5 +173,39 @@ export const Navbar = styled.nav.attrs((props) => ({
         background-color: ${(props) =>
         props.$atTop ? "transparent" : color.grey.shade.dark};
         position: fixed;
+    }
+`;
+
+/**
+ * Navigation Bar Icon Component displayed from a SVG image file.
+ *
+ * -> props.$atTop must be a transient prop (using $ prefix),
+* to avoid passing it to the underlying React node or rendering
+* it to the DOM element.
+*   - Required to remove not recognized warning/error.
+ *
+ * @param {String} height the height of the icon
+ * @param {String} width the width of the icon
+ * @param {Number} fill the fill color
+ * @param {String} bgColor the background color for color invert
+ * @param {Boolean} $atTop indicates if browser is at the top of the page
+ */
+export const NavIcon = styled(Icon).attrs((props) => ({
+    $atTop: props.$atTop,
+}))`
+    margin: auto 0;
+    fill: ${(props) =>
+        props.$atTop ? color.grey.shade.dark : color.grey.tint.light};
+
+    &:hover {
+        fill: ${(props) => props.$atTop ? color.black : color.white};
+    }
+
+    &.dark-background {
+        fill: ${color.grey.tint.light};
+
+        &:hover {
+            fill: ${color.white};
+        }
     }
 `;

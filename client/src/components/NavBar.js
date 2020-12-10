@@ -161,10 +161,12 @@ const Navbar = ({
                     className="align-left"
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
+                        navbar
+                        $atTop={atTop}
                         xlinkHref={menuIcon}
                         width="36px"
                         height="36px"
-                        className={`nav-item ${className} ${iconClass}`} />
+                        className={`${className} ${iconClass}`} />
                 </button>
                 <RouterLink
                     url="/"
@@ -182,10 +184,12 @@ const Navbar = ({
                     className="align-right"
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
+                        navbar
+                        $atTop={atTop}
                         xlinkHref={searchIcon}
                         width="28px"
                         height="28px"
-                        className={`nav-item ${className} ${iconClass}`} />
+                        className={`${className} ${iconClass}`} />
                 </button>
             </>
         );

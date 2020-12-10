@@ -21,23 +21,44 @@ const Icon = ({
     alt,
     fill,
     bgColor = "grey-shade-dark",
+    navbar = false,
+    $atTop,
     className = "",
-}) =>
-    (
-        <S.Icon
+}) => {
+    const useElement =
+        <use
+            xlinkHref={`${xlinkHref}#${id}`}
             width={width}
-            height={height}
-            viewbox={`0 0 ${width} ${height}`}
-            alt={alt}
-            fill={fill}
-            bgColor={bgColor}
-            className={className}>
-            <use
-                xlinkHref={`${xlinkHref}#${id}`}
-                width={width}
-                height={height} />
-        </S.Icon>
+            height={height} />;
+    return (
+        navbar ?
+            (
+                <S.NavIcon
+                    width={width}
+                    height={height}
+                    viewbox={`0 0 ${width} ${height}`}
+                    alt={alt}
+                    fill={fill}
+                    bgColor={bgColor}
+                    $atTop={$atTop}
+                    className={className}>
+                    {useElement}
+                </S.NavIcon>
+            ) :
+            (
+                <S.Icon
+                    width={width}
+                    height={height}
+                    viewbox={`0 0 ${width} ${height}`}
+                    alt={alt}
+                    fill={fill}
+                    bgColor={bgColor}
+                    className={className}>
+                    {useElement}
+                </S.Icon>
+            )
     );
+};
 
 Icon.propTypes = {
     /**
@@ -73,6 +94,19 @@ Icon.propTypes = {
      * fill="currentColor".
      */
     bgColor: PropTypes.string,
+    /**
+     * Flag indicating if the Icon is for the navbar.
+     */
+    navbar: PropTypes.bool,
+    /**
+     * Flag indicating if the window is at the top of the page.
+     *
+     * Prefixed with $ for consistency among other navbar components.
+     * - $ prefix indicates it is a styled-component transient prop,
+     * to avoid passing it to the underlying React node or rendering
+     * it to the DOM element.
+     */
+    $atTop: PropTypes.bool,
     /**
      * The class name to be passed onto styled-components Icon.
      * - As the Icon React Component is called, the class name
