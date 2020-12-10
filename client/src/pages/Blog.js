@@ -23,7 +23,7 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} a page full of article lists
  */
-const Articles = ({ loadStatus, viewport }) => {
+const Blog = ({ loadStatus, viewport }) => {
     return (
         <>
             <S.TopHeader
@@ -61,7 +61,7 @@ const Articles = ({ loadStatus, viewport }) => {
     );
 };
 
-Articles.propTypes = {
+Blog.propTypes = {
     /**
      * Redux load status of fetching the data
      */
@@ -88,4 +88,4 @@ const mapStateToProps = (state) => ({
     },
 });
 
-export default connect(mapStateToProps)(Articles);
+export default connect(mapStateToProps)(Blog);
