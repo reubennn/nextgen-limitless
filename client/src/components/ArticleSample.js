@@ -69,11 +69,14 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
             <S.ArticleSampleText type={viewport.type}>
                 {article.content[0].substring(0, 200)}...
             </S.ArticleSampleText>
-            <S.ArticleSampleButton
-                className="uppercase"
-                onClick={() => null}>
+            <Link
+                to={`/article/${article.name}`}>
+                <S.ArticleSampleButton
+                    className="uppercase"
+                    onClick={() => linkClicked(article.name)}>
                     Read More
-            </S.ArticleSampleButton>
+                </S.ArticleSampleButton>
+            </Link>
         </S.ArticleSampleContainer>
     );
 };

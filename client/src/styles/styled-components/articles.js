@@ -34,6 +34,7 @@ export const ArticleSampleContainer = styled.article.attrs((props) => ({
     transition: ease-in-out 0.25s;
     overflow: hidden;
     flex-basis: ${(props) => handleFlexBasis(props.viewport.type)};
+    border: solid 0.05rem ${color.grey.tint.lighter};
 
     &:hover {
         box-shadow: 0 0 1rem 0 ${color.black + transparency.x50};
