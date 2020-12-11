@@ -15,7 +15,7 @@ import * as S from "../styles/styled-components/styled";
  */
 const CommentsList = ({
     comments,
-    articleName,
+    path,
     setArticleInfo,
     containsComments,
 }) => {
@@ -42,7 +42,7 @@ const CommentsList = ({
                 </div>
             ))}
             <AddCommentForm
-                articleName={articleName}
+                path={path}
                 setArticleInfo={setArticleInfo} />
         </S.CommentsList>
     );
@@ -54,9 +54,9 @@ CommentsList.propTypes = {
      */
     comments: PropTypes.array,
     /**
-     * The article name.
+     * The article url path.
      */
-    articleName: PropTypes.string,
+    path: PropTypes.string,
     /**
      * useState React Hook passed down as props to update the article info.
      * Not used in this Component, but passed onto AddCommentForm.

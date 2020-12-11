@@ -4,7 +4,6 @@
  */
 
 import {
-    // ADD_COMMENT,
     SET_LOADING,
     RESET_LOADING,
     LOAD_ARTICLES_IN_PROGRESS,
@@ -53,19 +52,6 @@ export const articles = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        // TODO
-        // case (ADD_COMMENT): {
-        //     /** TO DO */
-        //     const { article, comment } = payload;
-        //     return {
-        //         ...state, // Use spread operator to return the rest of state
-        //         articles: state.articles.map((article) => {
-        //             if (article.name === article.name) {
-
-        //             }
-        //         })
-        //     };
-        // }
         /**
          * Sets the loading state depending on the payload.
          */

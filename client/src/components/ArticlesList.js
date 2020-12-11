@@ -80,7 +80,7 @@ const ArticlesList = ({
                 setOtherArticles(articles) :
                 (
                     articles.map((article) => {
-                        if (article.name !== articleToFilter) {
+                        if (article.path !== articleToFilter) {
                             setOtherArticles((prevState) => [
                                 ...prevState,
                                 article,
@@ -94,10 +94,10 @@ const ArticlesList = ({
 
     /*
      * If linked clicked to navigate to another article,
-     * update the state with the clicked on article name.
+     * update the state with the clicked on article path.
     */
-    const linkClicked = (articleName) => {
-        setCurrentArticle(articleName);
+    const linkClicked = (articlePath) => {
+        setCurrentArticle(articlePath);
     };
     /*
      * Ternary operators to determine the content to render.

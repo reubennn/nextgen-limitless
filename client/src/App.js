@@ -92,13 +92,13 @@ const App = ({ handleViewportChange, sidebarNav, }) => {
                         <Route path="/" component={Home} exact />
                         <Route path="/about" component={About} />
                         <Route path="/contact" component={Contact} />
-                        <Route path="/blog" component={Blog} />
+                        <Route path="/blog" component={Blog} exact/>
                         <Route path="/store" component={Store} />
                         <Route path="/privacy" component={Privacy} />
                         <Route path="/cookies" component={Cookies} />
                         <Route path="/legal" component={Legal} />
                         <Route
-                            path="/article/:name"
+                            path="/blog/:path"
                             component={Article} />
                         <Route render={(props) => (
                             <NotFound {...props} item={"page"} />

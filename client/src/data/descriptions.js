@@ -12,7 +12,7 @@ import blogImg from ".../icons/blog.svg";
  * on the Next Gen LIMITLESS company.
  *
  * @property {String} title description title
- * @property {Array} text JSX HTML elements (needs key prop) to display
+ * @property {Array} content JSX HTML elements (needs key prop) to display
  * @property {String} image image asset path url
  * @property {Bool} shrinkImage flag to shrink the image to fit
  * @property {String} gradient gradient class name used for CSS styling
@@ -20,7 +20,7 @@ import blogImg from ".../icons/blog.svg";
 export const featureDescriptions = [
     {
         title: "Disruptive Innovation",
-        text: [
+        content: [
             <p key="disruptive-innovation">
                 Partnering with <strong>Next Gen LIMITLESS</strong> will provide you with the means to disrupt the market using undeniable value. It&apos;s no secret as to why our partners are coming to us for our disruptive methodologies. Leave your competitors in the dust by implementing our <em>next generation technology</em> today.
             </p>,
@@ -31,7 +31,7 @@ export const featureDescriptions = [
     },
     {
         title: "Put Your Mind At Ease",
-        text: [
+        content: [
             <p key="relax">
                 Whatever the situation, let us take it upon ourselves to get it done right the first time, every time. Our broad range of services will cover just about anything you require. When you choose us, you&apos;ll be able to put your mind at ease. So sit back, relax and enjoy the scenery - you are in good hands.
             </p>,
@@ -42,7 +42,7 @@ export const featureDescriptions = [
     },
     {
         title: "100% Satisfaction Guaranteed",
-        text: [
+        content: [
             <p key="satisfaction-guaranteed">
                 We have become very good in what we do. But if for any reason you are not satisfied with our services, we will do everything in our power to make it right.
             </p>,
@@ -60,7 +60,7 @@ export const featureDescriptions = [
  * Is an array of objects with the property values to display.
  *
  * @property {String} title description title
- * @property {Array} text JSX HTML elements (needs key prop) to display
+ * @property {Array} content JSX HTML elements (needs key prop) to display
  * @property {String} image image asset path url
  * @property {Bool} shrinkImage flag to shrink the image to fit
  * @property {String} gradient gradient class name used for CSS styling
@@ -69,7 +69,7 @@ export const featureDescriptions = [
 export const otherDescriptions = [
     {
         title: "Store",
-        text: [
+        content: [
             <p key="store">
                 Thanks to strategic partnerships with some quality merchandise brands, we&apos;re able to stock a variety of products. With a massive range of fresh merchandise coming in regularly, now is the best time to check out the store.
             </p>,
@@ -81,7 +81,7 @@ export const otherDescriptions = [
     },
     {
         title: "Blog",
-        text: [
+        content: [
             <p key="blog">
                 At <strong>Next Gen LIMITLESS</strong>, we believe knowledge is power. We also believe sharing is caring. For this reason, we provide useful articles on a range of topics - written by our industry experts, <em>absolutely free</em>. Jump over to our blog now!
             </p>,
@@ -98,7 +98,7 @@ export const otherDescriptions = [
  * on the Next Gen LIMITLESS company (less description than home page).
  *
  * @property {String} title description title
- * @property {Array} text JSX HTML elements (needs key prop) to display
+ * @property {Array} content JSX HTML elements (needs key prop) to display
  * @property {String} image image asset path url
  * @property {Bool} shrinkImage flag to shrink the image to fit
  * @property {String} gradient gradient class name used for CSS styling
@@ -106,7 +106,7 @@ export const otherDescriptions = [
 export const aboutFeatureDescriptions = [
     {
         title: "Disruptive Innovation",
-        text: [
+        content: [
             <p key="disruptive-innovation">
                 Partnering with <strong>Next Gen LIMITLESS</strong> will provide you with the means to disrupt the market using undeniable value. Leave your competitors in the dust by implementing our <em>next generation technology</em> today.
             </p>,
@@ -117,7 +117,7 @@ export const aboutFeatureDescriptions = [
     },
     {
         title: "Your Mind At Ease",
-        text: [
+        content: [
             <p key="relax">
                 Our broad range of services will cover just about anything you require. When you choose us, you&apos;ll be able to put your mind at ease. So sit back, relax and enjoy the scenery - you are in good hands.
             </p>,
@@ -128,7 +128,7 @@ export const aboutFeatureDescriptions = [
     },
     {
         title: "Satisfaction Guaranteed",
-        text: [
+        content: [
             <p key="satisfaction-guaranteed">
                 We have become very good in what we do. But if for any reason you are not satisfied with our services, we will do everything in our power to make it right.
             </p>,

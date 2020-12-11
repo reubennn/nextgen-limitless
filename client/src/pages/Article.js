@@ -26,7 +26,7 @@ import * as S from "../styles/styled-components/styled";
  * @return {Component} an article page for a given topic
  */
 const Article = ({ match }) => {
-    const name = match.params.name;
+    const path = match.params.path;
     const [found, setFound] = useState(true);
     const [loading, setLoading] = useState(true);
     const inArticlePage = true;
@@ -40,11 +40,11 @@ const Article = ({ match }) => {
      */
     const defaults = {
         _id: null,
-        name: name,
+        path: path,
         title: null,
         author: null,
         pubDate: null,
-        featureImg: null,
+        image: null,
         content: [],
         upvotes: null,
         comments: [],
@@ -63,7 +63,7 @@ const Article = ({ match }) => {
 
     /**
      * React Hook: Sets the article info.
-     * useEffect is called every time name (the URL) is changed.
+     * useEffect is called every time path (the URL) is changed.
      * ie. User has navigated to another article
      */
     useEffect(() => {
@@ -76,7 +76,7 @@ const Article = ({ match }) => {
         }
 
         const fetchData = async () => {
-            const result = await fetch(`/api/articles/${name}`);
+            const result = await fetch(`/api/articles/${path}`);
             const body = await result.json();
             return {
                 result,
@@ -101,7 +101,7 @@ const Article = ({ match }) => {
         return () => {
             isMounted = false;
         };
-    }, [name]);
+    }, [path]);
 
     // Check if the article has any comments
     let containsComments = false;
@@ -142,8 +142,8 @@ const Article = ({ match }) => {
                     <S.Section>
                         <S.Header>{articleInfo.title}</S.Header>
                         <S.Image
-                            src={articleInfo.featureImg.src}
-                            alt={articleInfo.featureImg.alt} />
+                            src={articleInfo.image.src}
+                            alt={articleInfo.image.alt} />
                         <S.FlexContainer smallMargin justifyContent="left">
                             <S.Paragraph className="author-date">
                                 By <i>{articleInfo.author}</i>
@@ -160,7 +160,7 @@ const Article = ({ match }) => {
                             </S.Paragraph>
                         </S.FlexContainer>
                         <UpvotesSection
-                            articleName={name}
+                            articlePath={path}
                             upvotes={articleInfo.upvotes}
                             setArticleInfo={setArticleInfo} />
                         {articleInfo.content.map((paragraph, key) => {
@@ -196,12 +196,12 @@ const Article = ({ match }) => {
                         </S.FlexContainer>
                         <CommentsList
                             comments={articleInfo.comments}
-                            articleName={name}
+                            articlePath={path}
                             setArticleInfo={setArticleInfo}
                             containsComments={containsComments} />
                         <S.Header small>Other Articles...</S.Header>
                         <ArticlesList
-                            articleToFilter={name}
+                            articleToFilter={path}
                             inArticlePage={inArticlePage}
                         />
                     </S.Section>
@@ -216,12 +216,12 @@ const Article = ({ match }) => {
 
 Article.propTypes = {
     /**
-     * Router parameter passed down from :name in URL.
+     * Router parameter passed down from :path in URL.
      * - We can use shape as we know the object properties beforehand.
      */
     match: PropTypes.shape({
         params: PropTypes.shape({
-            name: PropTypes.string.isRequired,
+            path: PropTypes.string.isRequired,
         }),
     }),
 };

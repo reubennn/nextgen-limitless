@@ -8,14 +8,14 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} upvote section
  */
-const UpvoteSection = ({ articleName, upvotes, setArticleInfo }) => {
+const UpvoteSection = ({ path, upvotes, setArticleInfo }) => {
     /**
      * Function called during upvote button on click event.
      * - Sends POST request to server API to add an upvote to the database.
      * - Updates the article info with the new upvote number.
      */
     const upvoteArticle = async () => {
-        const response = await fetch(`/api/articles/${articleName}/upvote`, {
+        const response = await fetch(`/api/articles/${path}/upvote`, {
             method: "POST",
         });
         const body = await response.json();
@@ -49,9 +49,9 @@ const UpvoteSection = ({ articleName, upvotes, setArticleInfo }) => {
 
 UpvoteSection.propTypes = {
     /**
-     * The name of the article.
+     * The article url path.
      */
-    articleName: PropTypes.string,
+    path: PropTypes.string,
     /**
      * The number of upvotes the article has.
      */

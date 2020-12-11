@@ -15,13 +15,13 @@ const router = express.Router();
 router.route("/articles")
     .get(getAllArticles);
 
-router.route("/articles/:name")
+router.route("/articles/:path")
     .get(getArticle);
 
-router.route("/articles/:name/upvote")
+router.route("/articles/:path/upvote")
     .post(upvoteArticle);
 
-router.route("/articles/:name/add-comment")
+router.route("/articles/:path/add-comment")
     .post(addCommentToArticle);
 
 export default router;

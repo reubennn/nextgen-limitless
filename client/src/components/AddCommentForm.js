@@ -12,7 +12,7 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} add comment form for posting a comment to an article
  */
-const AddCommentForm = ({ articleName, setArticleInfo }) => {
+const AddCommentForm = ({ path, setArticleInfo }) => {
     const [username, setUsername] = useState("");
     const [commentText, setCommentText] = useState("");
 
@@ -22,7 +22,7 @@ const AddCommentForm = ({ articleName, setArticleInfo }) => {
      */
     const addComment = async () => {
         const response = await fetch(
-            `/api/articles/${articleName}/add-comment`,
+            `/api/articles/${path}/add-comment`,
             {
                 method: "POST",
                 headers: {
@@ -67,7 +67,7 @@ AddCommentForm.propTypes = {
     /**
      * Name of the article
      */
-    articleName: PropTypes.string,
+    path: PropTypes.string,
     /**
      * useState React Hook passed down as props to update the article info
      * to include the new comment if successfully posted to the database.

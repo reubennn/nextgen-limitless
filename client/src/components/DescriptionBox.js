@@ -80,7 +80,7 @@ const DescriptionBox = ({
                     <S.DescriptionBoxText
                         className={className}
                         color={textColor}>
-                        {description.text.map((paragraph) => paragraph)}
+                        {description.content.map((paragraph) => paragraph)}
                     </S.DescriptionBoxText>
                 </S.DescriptionBoxTextbox>
             </S.DescriptionBox>
@@ -97,7 +97,7 @@ DescriptionBox.propTypes = {
      * The description box object containing content properties.
      *
      * @property {String} title description title
-     * @property {Array} text JSX HTML elements (needs key prop) to display
+     * @property {Array} content JSX HTML elements (needs key prop) to display
      * @property {String} image image asset path url
      * @property {Bool} shrinkImage flag to shrink the image to fit
      * @property {String} gradient gradient class name used for CSS styling

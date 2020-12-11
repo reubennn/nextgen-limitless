@@ -25,20 +25,20 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
             <S.ArticleImageTitleContainer>
                 <S.ArticleImageContainer>
                     <Link
-                        to={`/article/${article.name}`}
-                        onClick={() => linkClicked(article.name)}>
+                        to={`/blog/${article.path}`}
+                        onClick={() => linkClicked(article.path)}>
                         <S.ArticleSampleImage
                             className={smallerViewport &&
                                 "full-width"}
-                            src={article.featureImg.src}
-                            alt={article.featureImg.alt}
+                            src={article.image.src}
+                            alt={article.image.alt}
                             height={smallerViewport ? "60vh" : "45vh"} />
                     </Link>
                 </S.ArticleImageContainer>
                 <S.ArticleSampleTitlebox>
                     <Link
-                        to={`/article/${article.name}`}
-                        onClick={() => linkClicked(article.name)}>
+                        to={`/blog/${article.path}`}
+                        onClick={() => linkClicked(article.path)}>
                         <S.ArticleSampleTitle as="h3">
                             {article.title}
                         </S.ArticleSampleTitle>
@@ -47,8 +47,8 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                         className="no-margin"
                         justifyContent="left">
                         <S.AuthorAvatar
-                            src={article.featureImg.src}
-                            alt={article.featureImg.alt} />
+                            src={article.image.src}
+                            alt={article.image.alt} />
                         <S.ArticleSampleTitle
                             as="h5"
                             className="author">
@@ -57,7 +57,7 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                                 className="no-underline"
                                 color="blue-dark"
                                 bgColor="grey-shade-darkest-x90"
-                                href={`/article/${article.name}`}
+                                href={`/blog/${article.path}`}
                                 rel="noreferrer"
                                 thicker>
                                 {article.author}
@@ -70,10 +70,10 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                 {article.content[0].substring(0, 200)}...
             </S.ArticleSampleText>
             <Link
-                to={`/article/${article.name}`}>
+                to={`/blog/${article.path}`}>
                 <S.ArticleSampleButton
                     className="uppercase"
-                    onClick={() => linkClicked(article.name)}>
+                    onClick={() => linkClicked(article.path)}>
                     Read More
                 </S.ArticleSampleButton>
             </Link>
@@ -87,7 +87,7 @@ ArticleSample.propTypes = {
      */
     article: PropTypes.object,
     /**
-     * Function which triggers updating the current article name state
+     * Function which triggers updating the current article path state
      * from the ArticlesList.
      */
     linkClicked: PropTypes.func,
