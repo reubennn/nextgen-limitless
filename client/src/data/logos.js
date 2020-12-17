@@ -6,11 +6,11 @@ import amazon from ".../logos/amazon.svg";
 import apple from ".../logos/apple.svg";
 import aruza from ".../logos/aruza.svg";
 import att from ".../logos/att.svg";
-import berkshireHathaway from ".../logos/berkshire-hathaway.svg";
 import bing from ".../logos/bing.svg";
 import carmelsBarAndGrill from ".../logos/carmels-bar-and-grill.svg";
 import chevron from ".../logos/chevron.svg";
 import cisco from ".../logos/cisco.svg";
+import cocaCola from ".../logos/coca-cola.svg";
 import dassaultSystemes from ".../logos/dassault-systemes.svg";
 import dell from ".../logos/dell.svg";
 import disney from ".../logos/disney.svg";
@@ -66,11 +66,11 @@ const logos = {
     apple,
     aruza,
     att,
-    berkshireHathaway,
     bing,
     carmelsBarAndGrill,
     chevron,
     cisco,
+    cocaCola,
     dassaultSystemes,
     dell,
     disney,
