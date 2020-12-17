@@ -13,7 +13,7 @@ import Navbar from "../components/Navbar";
 import LogoSlider from "../components/LogoSlider";
 import DescriptionBox from "../components/DescriptionBox";
 
-import { logos } from "../data/logos";
+import { logoSlider } from "../data/logos";
 import { featureDescriptions, otherDescriptions } from "../data/descriptions";
 
 import logoLarge from ".../images/logo-large.svg";
@@ -100,9 +100,8 @@ const Home = ({ viewport }) => {
                             Some of our past &amp; present partners...*
                         </S.HeaderSimple>
                         <br />
-                        <LogoSlider logos={logos.primary} duration={15} bgColor="grey-shade-dark" />
-                        <LogoSlider logos={logos.secondary} duration={20} reverse bgColor="grey-shade-dark" />
-                        <br />
+                        <LogoSlider logos={logoSlider.primary} duration={15} bgColor="grey-shade-dark" />
+                        <LogoSlider logos={logoSlider.secondary} duration={20} reverse bgColor="grey-shade-dark" />
                         <S.TinyText className="center-text" superTiny color="grey-shade-lightest">*These companies may or may not have actually partnered with us.</S.TinyText>
                     </S.FlexContainer>
                 </S.Section>
