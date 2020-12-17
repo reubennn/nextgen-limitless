@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -57,9 +56,12 @@ const Home = ({ viewport }) => {
                         className="feature-text header-home"
                         color="grey-tint-lightest"
                         as="h4">
-                        It&apos;s time to take off during these unprecedented times.
+                        It&apos;s time to take off during these
+                        unprecedented times.
                     </S.HeaderSimple>
-                    <S.Button className="home gradient uppercase">Learn More</S.Button>
+                    <S.Button className="home gradient uppercase">
+                        Learn More
+                    </S.Button>
                 </S.FlexContainer>
             </S.TopHeader>
             <S.MainPageBody>
@@ -83,7 +85,12 @@ const Home = ({ viewport }) => {
                             reverse={reverse} />;
                     })}
                 </S.Section>
-                <S.SectionWithBackground className="primary-gradient" url={abstractMountains} pos="top" attachment="fixed" height="70vh" >
+                <S.SectionWithBackground
+                    className="primary-gradient"
+                    url={abstractMountains}
+                    pos="top"
+                    attachment="fixed"
+                    height="70vh" >
                     <S.FeatureText
                         className="uppercase center-text"
                         type={viewport.type}
@@ -100,12 +107,30 @@ const Home = ({ viewport }) => {
                             Some of our past &amp; present partners...*
                         </S.HeaderSimple>
                         <br />
-                        <LogoSlider logos={logoSlider.primary} duration={15} bgColor="grey-shade-dark" />
-                        <LogoSlider logos={logoSlider.secondary} duration={20} reverse bgColor="grey-shade-dark" />
-                        <S.TinyText className="center-text" superTiny color="grey-shade-lightest">*These companies may or may not have actually partnered with us.</S.TinyText>
+                        <LogoSlider
+                            logos={logoSlider.primary}
+                            duration={15}
+                            bgColor="grey-shade-dark" />
+                        <LogoSlider
+                            logos={logoSlider.secondary}
+                            duration={20}
+                            reverse
+                            bgColor="grey-shade-dark" />
+                        <S.TinyText
+                            className="center-text"
+                            superTiny
+                            color="grey-shade-lightest">
+                            *These companies may or may not have actually
+                            partnered with us.
+                        </S.TinyText>
                     </S.FlexContainer>
                 </S.Section>
-                <S.SectionWithBackground className="secondary-gradient" url={lofotenIslands} pos="center" attachment="fixed" height="70vh" >
+                <S.SectionWithBackground
+                    className="secondary-gradient"
+                    url={lofotenIslands}
+                    pos="center"
+                    attachment="fixed"
+                    height="70vh" >
                     <S.FeatureText
                         className="uppercase center-text"
                         type={viewport.type}
@@ -142,12 +167,28 @@ const Home = ({ viewport }) => {
                         })}
                     </S.FlexContainer>
                 </S.Section>
-                <S.SectionWithBackground color="grey-shade-dark" height="35vh" url={subtlePrismSVG}>
-                    <S.FlexContainer column className="center-text items-margin">
-                        <S.HeaderSimple as="h1">What are you waiting for?</S.HeaderSimple>
-                        <S.HeaderSimple as="h3">Get started today.**</S.HeaderSimple>
-                        <S.Button className="gradient uppercase">Unlock the key</S.Button>
-                        <S.TinyText superTiny color="grey-shade-dark">**Maybe not today - today, but you know what we mean.</S.TinyText>
+                <S.SectionWithBackground
+                    color="grey-shade-dark"
+                    height="35vh"
+                    url={subtlePrismSVG}>
+                    <S.FlexContainer
+                        className="center-text items-margin"
+                        column>
+                        <S.HeaderSimple as="h1">
+                            What are you waiting for?
+                        </S.HeaderSimple>
+                        <S.HeaderSimple as="h3">
+                            Get started today.**
+                        </S.HeaderSimple>
+                        <S.Button className="gradient uppercase">
+                            Unlock the key
+                        </S.Button>
+                        <S.TinyText
+                            superTiny
+                            color="grey-shade-dark">
+                            **Maybe not today - today, but you know what
+                            we mean.
+                        </S.TinyText>
                     </S.FlexContainer>
                 </S.SectionWithBackground>
             </S.MainPageBody>
