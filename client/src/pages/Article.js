@@ -177,11 +177,11 @@ const Article = ({ match }) => {
                             }
                         })}
                         <S.HorizontalRuler
+                            className="small-margin"
                             thin
-                            smallMargin
                             color="grey-tint-neutral" />
                         <S.FlexContainer
-                            smallMargin
+                            className="small-margin"
                             wrapContent
                             justifyContent="flex-end">
                             <S.TinyText color="grey-shade-light" margin="0.25rem">

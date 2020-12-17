@@ -103,6 +103,73 @@ export const handleFlexBasis = (viewportType) => {
     };
 };
 
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~ Carousel ~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+/**
+ * Handles the Carousel toggle button padding, which ultimately
+ * adjusts the position location.
+ *
+ * @param {String} viewportType the viewport type classification
+ * @return {String} the distance from one side of the viewport
+ */
+export const handleTogglePosition = (viewportType) => {
+    switch (viewportType) {
+        case ("super-small"):
+            return "0.75vw";
+        case ("extra-small"):
+            return "1vw";
+        case ("small"):
+            return "5vw";
+        case ("medium"):
+            return "8vw";
+        case ("large"):
+            return "12vw";
+        case ("extra-large"):
+            return "15vw";
+        case ("super-large"):
+            return "18vw";
+        default: return "0.75vw";
+    };
+};
+
+/**
+ * Handles the Carousel toggle button padding, which ultimately
+ * adjusts the position location.
+ *
+ * @param {String} viewportType the viewport type classification
+ * @return {String} the distance from one side of the viewport
+ */
+export const handleCarouselBlockWidth = (viewportType) => {
+    switch (viewportType) {
+        case ("medium"):
+            return css`
+                width: 70vw;
+                margin: auto 15vw;
+            `;
+        case ("large"):
+            return css`
+                width: 65vw;
+                margin: auto 17.5vw;
+            `;
+        case ("extra-large"):
+            return css`
+                width: 60vw;
+                margin: auto 20vw;
+            `;
+        case ("super-large"):
+            return css`
+                width: 55vw;
+                margin: auto 22.5vw;
+            `;
+        default:
+            return css`
+                width: 75vw;
+                margin: auto 12.5vw;
+            `;
+    };
+};
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~ Logo ~~~~~~~~~~~~~~~~

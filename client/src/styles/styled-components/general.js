@@ -211,7 +211,7 @@ export const HeaderSimple = styled.h1.attrs((props) => ({
     color: ${(props) => handleColor(props.color)};
     background-color: ${(props) => handleColor(props.bgColor)};
     text-align: ${(props) => props.textAlign};
-    margin: 2rem 3rem;
+    margin: 2rem auto;
     font-family: inherit;
     font-weight: 500;
     line-height: 1.2;
@@ -222,6 +222,7 @@ export const HeaderSimple = styled.h1.attrs((props) => ({
             case ("h3"): return "1.5rem";
             case ("h4"): return "1.2rem";
             case ("h5"): return "1rem";
+            case ("h6"): return "0.8rem";
             default: return "2.25rem";
         }
     }};
@@ -465,7 +466,7 @@ export const Button = styled.button`
  * @param {String} width width of the horizontal ruler
  * @param {String} color color of the horizontal ruler
  * @param {Boolean} thin flag indicating horizontal ruler is thin
- * @param {Boolean} smallMargin flag indicating component has small margin
+ * @param {Boolean} noMargin flag indicating component has small margin
  */
 export const HorizontalRuler = styled.hr.attrs((props) => ({
     width: props.width || "100%",
@@ -475,11 +476,16 @@ export const HorizontalRuler = styled.hr.attrs((props) => ({
     height: 0;
     width: ${(props) => props.width};
     background-color: transparent;
-    margin-bottom: ${(props) => props.smallMargin ? "1rem" : "2rem"};
-    margin-top: ${(props) => props.smallMargin ? "0.8rem" : "1.5rem"};
+    margin-bottom: ${(props) => props.noMargin ? 0 : "2rem"};
+    margin-top: ${(props) => props.noMargin ? 0 : "1.5rem"};
     border-top: ${(props) => props.thin ? "0.05rem" : "0.1rem"}
                 solid
                 ${(props) => handleColor(props.color)};
+
+    &.small-margin {
+        margin-top: 0.8rem;
+        margin-bottom: 1rem;
+    }
 
     &.footer-hr {
         border-top: 0.05rem solid ${color.grey.shade.light};

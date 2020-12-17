@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { shuffle } from "../scripts/shuffleArray";
 
 import {
     getViewportDimensions,
@@ -10,8 +11,12 @@ import {
 
 import Navbar from "../components/Navbar";
 import DescriptionBox from "../components/DescriptionBox";
+import Carousel from "../components/Carousel";
+import Testimonial from "../components/Testimonial";
 
 import { aboutFeatureDescriptions } from "../data/descriptions";
+import { testimonials } from "../data/testimonials";
+
 
 import rockMountainNight from ".../images/rock-mountain-night.jpg";
 import gardenShed from ".../images/garden-shed.png";
@@ -31,6 +36,7 @@ const About = ({ viewport }) => {
     const displayAsColumn = viewport.size.is.lessThan.large;
     const isSmallerViewport = viewport.size.is.lessThan.medium;
     const topHeaderHeight = viewport.size.is.superSmall ? "100vh" : "60vh";
+    const shuffledTestimonials = shuffle(testimonials);
     return (
         <>
             <S.TopHeader
@@ -203,7 +209,9 @@ const About = ({ viewport }) => {
                         color="grey-tint-lightest" >
                         Testimonials.
                     </S.HeaderSimple>
-                    <p>placeholder for testimonials</p>
+                    <Carousel initialData={shuffledTestimonials} interval={60}>
+                        <Testimonial />
+                    </Carousel>
                 </S.Section>
                 <S.Section
                     color="grey-shade-dark"

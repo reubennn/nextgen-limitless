@@ -66,6 +66,7 @@ module.exports = {
             ".../logos": path.resolve(__dirname, "./public/assets/logos"),
             ".../images": path.resolve(__dirname, "./public/assets/images"),
             ".../icons": path.resolve(__dirname, "./public/assets/icons"),
+            ".../avatars": path.resolve(__dirname, "./public/assets/avatars"),
         },
     },
 };
