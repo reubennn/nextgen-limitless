@@ -109,7 +109,7 @@ const Home = ({ viewport }) => {
                         <br />
                         <LogoSlider
                             logos={logoSlider.primary}
-                            duration={15}
+                            duration={20}
                             bgColor="grey-shade-dark" />
                         <LogoSlider
                             logos={logoSlider.secondary}

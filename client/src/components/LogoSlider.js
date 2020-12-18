@@ -13,7 +13,12 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} logo slider
  */
-const LogoSlider = ({ logos, reverse, bgColor = "grey-shade-dark" }) => {
+const LogoSlider = ({
+    logos,
+    reverse,
+    duration,
+    bgColor = "grey-shade-dark",
+}) => {
     const offset = [-1, 0, 1];
     const logoSliders = [];
     for (let i = 0; i < 3; i++) {
@@ -21,7 +26,8 @@ const LogoSlider = ({ logos, reverse, bgColor = "grey-shade-dark" }) => {
             <S.LogoSlider
                 key={i}
                 offset={offset[i]}
-                reverse={reverse}>
+                reverse={reverse}
+                duration={duration}>
                 {logos.map((logo, key) =>
                     <Icon
                         key={key}
@@ -55,6 +61,10 @@ LogoSlider.propTypes = {
      * Indicates if the slider should translate in reverse direction.
      */
     reverse: PropTypes.bool,
+    /**
+     * The duration the slider takes to get from the first logo to the last.
+     */
+    duration: PropTypes.number,
     /**
      * The background color, so that inner parts of the SVG
      * can be inverted and visible.
