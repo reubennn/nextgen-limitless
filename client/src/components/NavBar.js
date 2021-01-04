@@ -17,6 +17,7 @@ import media from "../data/media";
 import menuIcon from ".../icons/menu.svg";
 import searchIcon from ".../icons/magnifying-glass.svg";
 import logoSmall from ".../images/logo-small.svg";
+import gitHubIcon from ".../logos/github.svg";
 
 import RouterLink from "./RouterLink";
 import Icon from "./Icon";
@@ -152,6 +153,20 @@ const Navbar = ({
                         $atTop={atTop} >
                         Contact
                     </S.NavbarLink>
+                </S.ListItem>
+                <S.ListItem className="nav-icon">
+                    <a href="https://github.com/reubennn/fullstack-react"
+                        target="_blank"
+                        rel="noreferrer">
+                        <Icon
+                            navbar
+                            $atTop={atTop}
+                            xlinkHref={gitHubIcon}
+                            width="28px"
+                            height="28px"
+                            alt="GitHub Repo"
+                            className={`${className} ${iconClass}`} />
+                    </a>
                 </S.ListItem>
             </>
         ) :

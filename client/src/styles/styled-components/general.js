@@ -286,6 +286,10 @@ export const ListItem = styled.li`
         margin: auto 0.3rem;
     }
 
+    &.nav-icon {
+        margin: auto 0.7rem;
+    }
+
     &.sidebar-nav {
         margin: 5vh auto;
     }
