@@ -45,6 +45,7 @@ export const TopHeader = styled.header.attrs((props) => ({
     justify-content: center;
     align-items: center;
     position: relative;
+    padding: 0 2rem;
     ${(props) => {
         return linearGradientBackground(
             css`to top`,
