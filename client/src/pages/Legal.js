@@ -55,7 +55,7 @@ const Legal = ({ viewport }) => {
                         This page is under maintenance.
                     </S.HeaderSimple>
                     <S.HeaderSimple as="h3">
-                        Our ninjas are currently working hard to write up a contractual agreement so you are able to sign your life away.
+                        Our Ninjas are currently working hard to write up a contractual agreement so you are able to sign your life away.
                     </S.HeaderSimple>
                 </S.Section>
                 <S.SectionWithBackground
@@ -88,6 +88,13 @@ const Legal = ({ viewport }) => {
                             thicker>
                             www.flaticon.com
                         </S.InlineAnchor>.
+                    </div>
+                </S.Section>
+                <S.Section
+                    color="grey-tint-light"
+                    bgColor="grey-shade-dark">
+                    <div className="center-text">
+                        We should also mention some of our Ninjas secretly grabbed some images seen throughout this website off the net from various sources...
                     </div>
                 </S.Section>
                 <S.Section
