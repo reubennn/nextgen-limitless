@@ -172,6 +172,54 @@ export const handleCarouselBlockWidth = (viewportType) => {
 };
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~ Contact Form ~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+/**
+ * Handles the width of the contact form.
+ *
+ * @param {String} viewportType the viewport type classification
+ * @return {String} the font-size value
+ */
+export const handleContactFormWidth = (viewportType) => {
+    switch (viewportType) {
+        case ("super-small"):
+            return "100%";
+        case ("extra-small"):
+            return "100%";
+        case ("small"):
+            return "100%";
+        case ("medium"):
+            return "80%";
+        case ("large"):
+            return "60%";
+        default:
+            return "50%";
+    };
+};
+
+/**
+ * Handles the width of the contact form.
+ *
+ * @param {String} viewportType the viewport type classification
+ * @return {String} the font-size value
+ */
+export const handleContactFormPadding = (viewportType) => {
+    switch (viewportType) {
+        case ("super-small"):
+            return "3rem 1rem 4rem 1rem";
+        case ("extra-small"):
+            return "3rem 1.2rem 4rem 1.2rem";
+        case ("small"):
+            return "3rem 3rem 4rem 3rem";
+        case ("medium"):
+            return "3rem 4rem 4rem 4rem";
+        default:
+            return "3rem 4rem 4rem 4rem";
+    };
+};
+
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~ Logo ~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */

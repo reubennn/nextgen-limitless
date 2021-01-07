@@ -566,28 +566,6 @@ export const Label = styled.label`
     }
 `;
 
-/**
- * Invalid input helper text which displays red helper text
- * under the input field when the form detects that the input is invalid.
- */
-export const InvalidInputHelper = styled.label`
-    color: transparent;
-    font-size: 0.8rem;
-    max-height: 0;
-    transition: all 0.5s ease-in-out 0s,
-                max-height 0.8s ease-in-out 0s;
-
-    &.show {
-        max-height: 10rem;
-        color: ${color.red.neutral};
-    }
-
-    &:last-of-type {
-        text-align: center;
-        margin-top: 2rem;
-    }
-`;
-
 
 /**
  * Input Component.

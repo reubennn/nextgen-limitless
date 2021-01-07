@@ -24,4 +24,5 @@ export * from "./comments";
 export * from "./description-box";
 export * from "./testimonials";
 export * from "./navbar";
+export * from "./forms";
 export * from "./sliders";
