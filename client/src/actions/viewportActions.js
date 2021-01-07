@@ -20,6 +20,15 @@ export const setSidebarNavStatus = (status) => ({
 });
 
 /**
+* Sets the atTop flag status.
+*/
+export const SET_AT_TOP = "SET_AT_TOP";
+export const setAtTopStatus = (status) => ({
+    type: SET_AT_TOP,
+    payload: { status },
+});
+
+/**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~ Thunk Actions ~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

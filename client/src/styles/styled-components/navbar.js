@@ -36,7 +36,15 @@ export const NavbarLink = styled(NavLink).attrs((props) => ({
     padding: 0.25rem 0;
     margin: 0 0.75rem;
     border-radius: 0.25rem;
-    transition: ease-in-out 0.3s;
+
+    ${(props) => props.$atTop ?
+        css`
+            transition: all 0.3s ease-in-out;
+        ` :
+        css`
+            transition: all 0.3s ease-in-out,
+                        color 0.3s ease-in-out 0.45s;
+        `}
 
     &:hover {
         ${(props) => css` /* eslint indent enforce workaround */
@@ -68,8 +76,8 @@ export const NavbarLink = styled(NavLink).attrs((props) => ({
                         opacity 0.3s ease-in-out 0s;
         ` :
         css`
-            transition: background-color 0.3s ease-in-out 0.3s,
-                        color 0.3s ease-in-out 0.3s,
+            transition: background-color 0.45s ease-in-out 0.45s,
+                        color 0.45s ease-in-out 0.45s,
                         padding 0.3s ease-in-out 0s,
                         margin 0.3s ease-in-out 0s,
                         opacity 0.3s ease-in-out 0s;
@@ -148,14 +156,14 @@ export const Navbar = styled.nav.attrs((props) => ({
     ${(props) => props.$atTop ?
         css`
         transition: top 0.3s ease-in-out 0.3s,
-                    background-color 0.3s ease-in-out 0s,
-                    color 0.3s ease-in-out 0s,
+                    background-color 0.2s ease-in-out 0s,
+                    color 0.2s ease-in-out 0s,
                     left 0.5s;
     ` :
         css`
-        transition: top 0.3s ease-in-out 0s,
-                    background-color 0.3s ease-in-out 0.3s,
-                    color 0.3s ease-in-out 0.3s,
+        transition: top 0.3s ease-in-out 0.1s,
+                    background-color 0.45s ease-in-out 0.45s,
+                    color 0.45s ease-in-out 0.45s,
                     left 0.5s;
     `}
 
@@ -200,6 +208,14 @@ export const NavIcon = styled(Icon).attrs((props) => ({
     margin: auto 0;
     fill: ${(props) =>
         props.$atTop ? color.grey.shade.dark : color.grey.tint.light};
+    ${(props) => props.$atTop ?
+        css`
+            transition: all 0.3s ease-in-out;
+        ` :
+        css`
+            transition: all 0.3s ease-in-out,
+                        fill 0.3s ease-in-out 0.45s;
+        `}
 
     &:hover {
         fill: ${(props) => props.$atTop ? color.black : color.white};

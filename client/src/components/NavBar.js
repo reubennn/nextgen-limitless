@@ -8,9 +8,13 @@ import {
     getViewportSize,
     getViewportType,
     getSidebarNavState,
+    getAtTopState,
 } from "../selectors/viewportSelectors";
 
-import { setSidebarNavStatus } from "../actions/viewportActions";
+import {
+    setSidebarNavStatus,
+    setAtTopStatus,
+} from "../actions/viewportActions";
 
 import media from "../data/media";
 
@@ -39,12 +43,13 @@ const Navbar = ({
     viewport,
     sidebarNav,
     setSidebarNavStatus,
+    setAtTopStatus,
 }) => {
     const [scrolledUp, setScrolledUp] = useState(true);
-    const [atTop, setAtTop] = useState(true);
     const [scrollPos, setScrollPos] = useState(window.pageYOffset);
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
-
+    /** Get the atTop status from the Redux Store */
+    const atTop = viewport.atTop;
     /**
      * useEffect used to add an event listener to handle window scroll
      * and update the Component state.
@@ -91,7 +96,7 @@ const Navbar = ({
             prevScrollPos >= scrollPos ?
                 setScrolledUp(true) : setScrolledUp(false);
             scrollPos > 0 ?
-                setAtTop(false) : setAtTop(true);
+                setAtTopStatus(false) : setAtTopStatus(true);
             setPrevScrollPos(scrollPos);
         }
         /**
@@ -243,6 +248,10 @@ Navbar.propTypes = {
      * Function to dispatch Redux Action to set sidebar nav status.
      */
     setSidebarNavStatus: PropTypes.func,
+    /**
+     * Function to dispatch Redux Action to set viewport atTop flag status.
+     */
+    setAtTopStatus: PropTypes.func,
 };
 
 /**
@@ -257,6 +266,7 @@ const mapStateToProps = (state) => ({
         dimensions: getViewportDimensions(state),
         size: getViewportSize(state),
         type: getViewportType(state),
+        atTop: getAtTopState(state),
     },
     sidebarNav: getSidebarNavState(state),
 });
@@ -269,6 +279,7 @@ const mapStateToProps = (state) => ({
  */
 const mapDispatchToProps = (dispatch) => ({
     setSidebarNavStatus: (status) => dispatch(setSidebarNavStatus(status)),
+    setAtTopStatus: (status) => dispatch(setAtTopStatus(status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

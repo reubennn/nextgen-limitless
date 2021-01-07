@@ -21,6 +21,7 @@ const persistConfig = {
     /* ^ Tells Redux persist how to reconcile initial
     * and stored states of the Application
     * - as in how deep should it go
+    * For more info: https://www.npmjs.com/package/redux-persist#state-reconciler
     */
 };
 
