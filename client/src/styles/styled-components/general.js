@@ -382,24 +382,21 @@ export const Icon = styled.svg.attrs((props) => ({
     }
 `;
 
-/** Pseudo button properties required for gradient transition */
-const pseudoButtonProperties = css`
-    border-radius: 1.5rem;
-`;
-
 /**
  * Button Component.
  */
-export const Button = styled.button`
+export const Button = styled.button.attrs((props) => ({
+    $radius: props.$radius || "1.5rem",
+}))`
     color: ${color.white};
     background-color: ${color.grey.shade.dark};
     font-weight: 600;
     font-size: 1.2rem;
     text-shadow: 0.03rem 0.03rem
     ${color.grey.shade.darkest + transparency.x25};
-    box-shadow: 0.1rem 0.15rem
+    box-shadow: 0.1rem 0.15rem 0.3rem
     ${color.grey.shade.darker + transparency.x50};
-    border-radius: 1.5rem;
+    border-radius: ${(props) => props.$radius};
     padding: 0.6rem 1.7rem;
     display: block;
     margin: 0 auto;
@@ -415,7 +412,13 @@ export const Button = styled.button`
         transition: cubic-bezier(0.9, 0.75, 1, 1) 0.3s;
 
         &:hover {
-        background-color: ${color.black};
+            background-color: ${color.grey.shade.darker};
+            color: ${color.white};
+        }
+
+        &:active {
+            background-color: ${color.black};
+            transition: linear 0.05s;
         }
     }
 
@@ -430,7 +433,7 @@ export const Button = styled.button`
         return gradientTransition(
             color.blue.darker,
             color.purple.darker,
-            pseudoButtonProperties,
+            css`border-radius: ${(props) => props.$radius};`,
         );
     }}
     }
@@ -446,7 +449,7 @@ export const Button = styled.button`
         return gradientTransition(
             color.blue.darker + transparency.x70,
             color.purple.darker + transparency.x70,
-            pseudoButtonProperties,
+            css`border-radius: ${(props) => props.$radius};`,
         );
     }}
     }
@@ -454,6 +457,10 @@ export const Button = styled.button`
     &.home {
         margin-top: 4rem;
         margin-bottom: 4rem;
+    }
+
+    &.full {
+        width: 100%;
     }
 
     &.upvote-button {

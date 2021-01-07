@@ -36,7 +36,14 @@ export const gradientTransition = (start, end, properties) => css`
 
     &:hover {
         &:before {
-        opacity: 1;
+            opacity: 0.8;
+        }
+    }
+
+    &:active {
+        &:before {
+            opacity: 1;
+            transition: linear 0.05s;
         }
     }
 `;
