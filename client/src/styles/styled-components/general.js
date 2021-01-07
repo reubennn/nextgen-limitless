@@ -558,26 +558,64 @@ export const FlexContainer = styled.div.attrs((props) => ({
  * Label Component.
  */
 export const Label = styled.label`
-    margin-top: 0.5rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.4rem;
+    margin-top: 0;
+
+    &:not(:first-of-type) {
+        margin-top: 1rem;
+    }
 `;
+
+/**
+ * Invalid input helper text which displays red helper text
+ * under the input field when the form detects that the input is invalid.
+ */
+export const InvalidInputHelper = styled.label`
+    color: transparent;
+    font-size: 0.8rem;
+    max-height: 0;
+    transition: all 0.5s ease-in-out 0s,
+                max-height 0.8s ease-in-out 0s;
+
+    &.show {
+        max-height: 10rem;
+        color: ${color.red.neutral};
+    }
+
+    &:last-of-type {
+        text-align: center;
+        margin-top: 2rem;
+    }
+`;
+
 
 /**
  * Input Component.
  */
 export const Input = styled.input`
     outline: 0;
-    border: 0.05rem solid ${color.grey.shade.dark};
+    border: 0.05rem solid ${color.grey.shade.light};
     padding: 0.5rem 0.7rem;
     border-radius: 0.25rem;
     box-shadow: none;
     transition: box-shadow linear 0.2s;
+    margin-bottom: 0.2rem;
+    line-height: 1.4;
 
     &:focus {
         outline: 0;
         border: 0.05rem solid ${color.blue.neutral};
         box-shadow: 0 0 0.3rem ${color.blue.neutral};
         transition: box-shadow linear 0.2s
+    }
+
+    &.invalid {
+        border: 0.05rem solid ${color.red.neutral};
+
+        &:focus {
+            border: 0.05rem solid ${color.red.neutral};
+            box-shadow: 0 0 0.3rem ${color.red.neutral};
+        }
     }
 `;
 
@@ -587,10 +625,10 @@ export const Input = styled.input`
 export const TextArea = styled.textarea`
     resize: none;
     outline: 0;
-    border: 0.05rem solid ${color.grey.shade.dark};
+    border: 0.05rem solid ${color.grey.shade.light};
     padding: 0.5rem 0.7rem;
     border-radius: 0.25rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.2rem;
     resize: none;
     overflow: auto;
     height: auto;
@@ -603,6 +641,15 @@ export const TextArea = styled.textarea`
         border: 0.05rem solid ${color.blue.neutral};
         box-shadow: 0 0 0.3rem ${color.blue.neutral};
         transition: box-shadow linear 0.2s
+    }
+
+    &.invalid {
+        border: 0.05rem solid ${color.red.neutral};
+
+        &:focus {
+            border: 0.05rem solid ${color.red.neutral};
+            box-shadow: 0 0 0.3rem ${color.red.neutral};
+        }
     }
 `;
 
