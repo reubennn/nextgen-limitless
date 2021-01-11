@@ -19,9 +19,8 @@ const NotFound = ({ item }) => (
         <S.MainPageBody>
             <S.Section bgColor="#f1f1f1">
                 <S.Header
-                    className="no-background center-text"
-                    small
-                >
+                    as="h3"
+                    className="uppercase">
                     Oops...
                 </S.Header>
                 <p style={{ textAlign: "center" }}>
