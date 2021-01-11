@@ -35,7 +35,6 @@ const Home = ({ viewport }) => {
             <S.TopHeader className="home" url={abstractScenery}>
                 <Navbar />
                 <S.FlexContainer column className="no-margin">
-                    {/* <S.Header>Zero Gravity</S.Header> */}
                     <S.LogoImage
                         className="large header-home"
                         src={logoLarge}
