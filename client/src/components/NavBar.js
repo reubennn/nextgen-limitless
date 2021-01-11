@@ -135,6 +135,7 @@ const Navbar = ({
                 <S.ListItem className="nav-item">
                     <S.NavbarLink
                         to="/blog"
+                        exact
                         activeClassName="active"
                         className={className + " uppercase nav-item"}
                         $atTop={atTop} >

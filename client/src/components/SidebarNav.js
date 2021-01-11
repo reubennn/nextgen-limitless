@@ -112,6 +112,7 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
                             to="/blog"
+                            exact
                             activeClassName="active"
                             className={className + " uppercase"} >
                             Blog
