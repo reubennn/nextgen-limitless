@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import {
-    getViewportDimensions,
-    getViewportSize,
     getViewportType,
 } from "../selectors/viewportSelectors";
 
@@ -234,10 +232,7 @@ const ContactForm = ({ viewport }) => {
      * @return {Boolean} true if the input is empty, otherwise false
      */
     const checkIfInputIsEmpty = (value) => {
-        if (value === "") {
-            return true;
-        }
-        return value.replace(/\s/g, "").length ? false : true;
+        return value.trim() === "" ? true : false;
     };
 
     /**
@@ -386,7 +381,9 @@ const ContactForm = ({ viewport }) => {
     const formContent = !form.submitted ?
         (
             <>
-                <S.Label className="uppercase">First name:</S.Label>
+                <S.Label className="uppercase">
+                    First name:
+                </S.Label>
                 <S.Input
                     className={form.isValid.firstName ? "" : "invalid"}
                     type="text"
@@ -398,7 +395,9 @@ const ContactForm = ({ viewport }) => {
                     className={!form.isValid.firstName ? "show" : ""}>
                     Please enter a name with letters and symbols.
                 </S.InvalidInputHelper>
-                <S.Label className="uppercase">Last name:</S.Label>
+                <S.Label className="uppercase">
+                    Last name:
+                </S.Label>
                 <S.Input
                     className={form.isValid.lastName ? "" : "invalid"}
                     type="text"
@@ -410,7 +409,9 @@ const ContactForm = ({ viewport }) => {
                     className={!form.isValid.lastName ? "show" : ""}>
                     Please enter a name with letters and symbols.
                 </S.InvalidInputHelper>
-                <S.Label className="uppercase">Email:</S.Label>
+                <S.Label className="uppercase">
+                    Email:
+                </S.Label>
                 <S.Input
                     className={form.isValid.email ? "" : "invalid"}
                     type="email"
@@ -423,13 +424,14 @@ const ContactForm = ({ viewport }) => {
                     className={!form.isValid.email ? "show" : ""}>
                     Please enter a valid email address.
                 </S.InvalidInputHelper>
-                <S.Label className="uppercase">Message:</S.Label>
+                <S.Label className="uppercase">
+                    Message:
+                </S.Label>
                 <ResizableTextarea
                     placeholder="Let's have a conversation about..."
                     onChangeHandler={textAreaHandleOnChange}
-                    errorMessage=
-                    "Please let us know why you'd like to get in contact."
-                />
+                    errorMessage="Please let us know why you'd
+                    like to get in contact." />
                 <br />
                 <S.Button
                     className="full gradient uppercase"
