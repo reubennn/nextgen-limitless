@@ -2,6 +2,8 @@ import { css } from "styled-components";
 
 import { infiniteLinearTranslate } from "./keyframes";
 
+import { color, transparency } from "./colors";
+
 /**
  * CSS to create a gradient transition effect.
  *
@@ -77,6 +79,34 @@ export const linearGradientBackground = (
     background-attachment: ${attachment};
     background-position: ${pos};
     background-color: ${colors[0]};
+`;
+
+/**
+ * CSS to create a background with a linear gradient overlay.
+ *
+ * @param {String} color color to use as the overlay
+ * @param {String} url image asset url path
+ * @param {String} attachment background image attachment
+ * @param {String} pos background image position
+ * @return {String} CSS styling for background with linear gradient
+ */
+export const overlayBackground = (
+    color,
+    url,
+    attachment = "fixed",
+    pos = "center",
+) => css`
+    background: linear-gradient(
+        0deg,
+        ${color},
+        ${color}
+    ),
+    url(${url});
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-attachment: ${attachment};
+    background-position: ${pos};
+    background-color: ${color};
 `;
 
 /**

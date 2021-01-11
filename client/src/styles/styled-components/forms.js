@@ -2,8 +2,8 @@
 import styled from "styled-components";
 
 import {
-    handleContactFormWidth,
-    handleContactFormPadding,
+    handleFormWidth,
+    handleFormPadding,
 } from "./responsive";
 import {
     color,
@@ -11,7 +11,7 @@ import {
 } from "./colors";
 
 /**
- * Contact Form component which contains all input fields.
+ * General Form Component which contains input fields.
  *
  * To avoid the form collapsing suddenly due to React re-rendering the content:
  *      - When form is complete, .done class hides the new content text, and
@@ -22,7 +22,7 @@ import {
  * @param {Object} viewport viewport object used for responsive design
  *      - @property {String} type type classification
  */
-export const ContactForm = styled.form.attrs((props) => ({
+export const Form = styled.form.attrs((props) => ({
     viewport: {
         type: props.type || "default",
     },
@@ -41,8 +41,8 @@ export const ContactForm = styled.form.attrs((props) => ({
     transition: all 0.4s ease-in-out 0s;
 
     /** Responsive design*/
-    width: ${(props) => handleContactFormWidth(props.viewport.type)};
-    padding: ${(props) => handleContactFormPadding(props.viewport.type)};
+    width: ${(props) => handleFormWidth(props.viewport.type)};
+    padding: ${(props) => handleFormPadding(props.viewport.type)};
 
     &.done {
         padding-bottom: 15rem;

@@ -39,9 +39,9 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                     <Link
                         to={`/blog/${article.path}`}
                         onClick={() => linkClicked(article.path)}>
-                        <S.ArticleSampleTitle as="h3">
+                        <S.ArticleTitle as="h3">
                             {article.title}
-                        </S.ArticleSampleTitle>
+                        </S.ArticleTitle>
                     </Link>
                     <S.FlexContainer
                         className="no-margin"
@@ -49,7 +49,7 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                         <S.AuthorAvatar
                             src={article.image.src}
                             alt={article.image.alt} />
-                        <S.ArticleSampleTitle
+                        <S.ArticleTitle
                             as="h5"
                             className="author">
                             By
@@ -62,7 +62,7 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                                 thicker>
                                 {article.author}
                             </S.InlineAnchor>
-                        </S.ArticleSampleTitle>
+                        </S.ArticleTitle>
                     </S.FlexContainer>
                 </S.ArticleSampleTitlebox>
             </S.ArticleImageTitleContainer>

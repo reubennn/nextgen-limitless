@@ -456,12 +456,12 @@ const ContactForm = ({ viewport }) => {
         );
 
     return (
-        <S.ContactForm
+        <S.Form
             className={getContactFormClasses()}
             onSubmit={(e) => handleSubmitEvent(e)}
             type={viewport.type} >
             {formContent}
-        </S.ContactForm >
+        </S.Form >
     );
 };
 

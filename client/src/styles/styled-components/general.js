@@ -138,11 +138,16 @@ export const InlineAnchor = styled(Anchor)`
 /**
  * Header Component.
  *
+ * Setting props.as will convert the html tag to the appropriate
+ * header type (h1, h2, h3.. etc.)
+ *
+ * @param {String} as sets the html tag, h1, h2 etc.
  * @param {String} color text color
  * @param {String} bgColor background color
  * @param {String} textAlign text align style
  */
 export const Header = styled.h1.attrs((props) => ({
+    as: props.as || "h1",
     color: props.color || color.white,
     bgColor: props.bgColor || color.grey.shade.dark,
     textAlign: props.textAlign || "left",
@@ -160,34 +165,6 @@ export const Header = styled.h1.attrs((props) => ({
         color: ${color.grey.shade.dark};
         background-color: transparent;
         padding: 0;
-    }
-`;
-
-/**
- * Secondary Header Component.
- *
- * @param {String} color text color
- * @param {String} bgColor background color
- * @param {String} textAlign text align style
- * @param {Boolean} small flag to indicate slightly smaller text
- */
-export const HeaderSecondary = styled(Header).attrs((props) => ({
-    color: props.color || color.white,
-    bgColor: props.bgColor || color.grey.shade.dark,
-    textAlign: props.textAlign || "left",
-}))`
-    color: ${(props) => handleColor(props.color)};
-    background-color: ${(props) => handleColor(props.bgColor)};
-    padding: 0.5rem;
-    padding-left: 0.75rem;
-    border-radius: 0.2rem;
-    font-size: ${(props) => props.small ? "1.5rem" : "2.25rem"};
-    margin: ${(props) => props.small ? "2.5rem 0 1.5rem 0" : "1rem 0"};
-    text-align: ${(props) => props.textAlign};
-
-    &.no-background {
-        color: ${(props) => handleColor(props.color)};
-        background-color: transparent;
     }
 `;
 
@@ -227,9 +204,9 @@ export const HeaderSimple = styled.h1.attrs((props) => ({
         }
     }};
     padding: ${(props) =>
-        props.bgColor !== "transparent" ? "0.25rem 25vw" : "0"};
+        props.bgColor !== "transparent" ? "0.5rem 1rem" : "0"};
     border-radius: ${(props) =>
-        props.bgColor !== "transparent" ? "3rem" : " 0"};
+        props.bgColor !== "transparent" ? "0.2rem" : " 0"};
 
     &.feature-text {
         text-shadow: 0.05rem 0.05rem 0.25rem ${color.grey.shade.light};
@@ -246,6 +223,15 @@ export const HeaderSimple = styled.h1.attrs((props) => ({
 
     &.section-top {
         margin-top: 0;
+    }
+
+    &.dark-background {
+        text-align: left;
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border-radius: 0.2rem;
+        color: ${color.white};
+        background-color: ${color.grey.shade.dark};
     }
 `;
 
@@ -332,6 +318,7 @@ export const Icon = styled.svg.attrs((props) => ({
     fill: ${(props) => handleColor(props.fill)};
     text-decoration: none;
     margin: auto;
+    display: block;
 
     /* Required to limit the icon size */
     max-height: ${(props) => props.height};

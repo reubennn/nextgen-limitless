@@ -2,7 +2,10 @@
 import styled, { css } from "styled-components";
 
 import { rotate } from "./keyframes";
-import { linearGradientBackground } from "./mixins";
+import {
+    linearGradientBackground,
+    overlayBackground,
+} from "./mixins";
 import {
     color,
     transparency,
@@ -131,7 +134,22 @@ export const TopHeader = styled.header.attrs((props) => ({
         );
     }}
     }
-`;
+
+    &.article {
+        min-height: 100vh;
+        ${(props) => {
+        return linearGradientBackground(
+            css`to top`,
+            [
+                color.grey.shade.darker + transparency.x75,
+                color.grey.shade.darker + transparency.x90,
+            ],
+            props.url,
+            props.attachment,
+            props.pos,
+        );
+    }}
+}`;
 
 /**
  * Page Section Component.
@@ -160,6 +178,26 @@ export const Section = styled.section.attrs((props) => ({
 
     &.small-viewport {
         padding: 3rem 0;
+    }
+
+    &.small-viewport.text-friendly {
+        padding: 3rem 1.5rem;
+    }
+
+    &.remove-top {
+        padding-top: 0;
+    }
+
+    &.remove-bottom {
+        padding-bottom: 0;
+    }
+
+    &.small-top {
+        padding-top: 1rem;
+    }
+
+    &.small-bottom {
+        padding-bottom: 1rem;
     }
 `;
 
@@ -210,6 +248,17 @@ export const SectionWithBackground = styled(Section).attrs((props) => ({
                 color.grey.shade.dark + transparency.x80,
                 color.orange.dark + transparency.x25,
             ],
+            props.url,
+            props.attachment,
+            props.pos,
+        );
+    }}
+    }
+
+    &.article {
+        ${(props) => {
+        return overlayBackground(
+            color.grey.shade.darker + transparency.x70,
             props.url,
             props.attachment,
             props.pos,

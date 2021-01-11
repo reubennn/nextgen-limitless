@@ -113,22 +113,22 @@ export const upvoteArticle = async (req, res) => {
 
 /**
  * Adds a comment to the database based on the request.
- * - Stores username and text as an Object from req.body.
+ * - Stores name and comment as an Object from req.body.
  * - Concatenates to end of comments array.
  *
  * @example
- * // Adds comment to article with req :path in database with username and text.
+ * // Adds comment to article with req :path in database with name and comment.
  * endpoint: ".../articles/:path/add-comment"
  * req.body {
- *   "username": "me",
- *   "text": "I love this article!"
+ *   "name": "me",
+ *   "comment": "I love this article!"
  * }
  *
  * @param {Object} req HTTP request object
  * @param {Object} res HTTP response object
  */
 export const addCommentToArticle = async (req, res) => {
-    const { username, text } = req.body;
+    const { name, comment } = req.body;
     const articlePath = req.params.path;
 
     queryDB(ARTICLES, res, async (collection) => {
@@ -141,7 +141,7 @@ export const addCommentToArticle = async (req, res) => {
                 {
                     "$set": {
                         comments: articleInfo.comments
-                            .concat({ username, text }),
+                            .concat({ name, comment }),
                     },
                 },
                 { returnOriginal: false },

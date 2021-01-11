@@ -172,7 +172,7 @@ export const handleCarouselBlockWidth = (viewportType) => {
 };
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * ~~~~~~~~~~~~~ Contact Form ~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~ Forms ~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 /**
@@ -181,7 +181,7 @@ export const handleCarouselBlockWidth = (viewportType) => {
  * @param {String} viewportType the viewport type classification
  * @return {String} the font-size value
  */
-export const handleContactFormWidth = (viewportType) => {
+export const handleFormWidth = (viewportType) => {
     switch (viewportType) {
         case ("super-small"):
             return "100%";
@@ -204,7 +204,7 @@ export const handleContactFormWidth = (viewportType) => {
  * @param {String} viewportType the viewport type classification
  * @return {String} the font-size value
  */
-export const handleContactFormPadding = (viewportType) => {
+export const handleFormPadding = (viewportType) => {
     switch (viewportType) {
         case ("super-small"):
             return "3rem 1rem 4rem 1rem";

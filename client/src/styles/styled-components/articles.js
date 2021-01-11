@@ -130,7 +130,7 @@ export const ArticleSampleTitlebox = styled.div`
  * @param {String} bgColor background color
  * @param {String} textAlign text align style
  */
-export const ArticleSampleTitle = styled(HeaderSimple)`
+export const ArticleTitle = styled(HeaderSimple)`
     text-align: left;
     margin: 0.5rem;
     margin-top: 0;
@@ -163,6 +163,11 @@ export const ArticleSampleTitle = styled(HeaderSimple)`
         &::after {
             content: none;
         }
+    }
+
+    &.on-page {
+        margin: 0 auto;
+        margin-bottom: 1rem;
     }
 `;
 
