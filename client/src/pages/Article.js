@@ -255,11 +255,11 @@ const Article = ({ match, viewport }) => {
                         bgColor="grey-tint-lightest-x70"
                         className={viewport.size.is.lessThan.medium &&
                             "small-viewport"}>
-                        <S.HeaderSimple
+                        <S.Header
                             as="h3"
                             className="uppercase">
                             Other Articles...
-                        </S.HeaderSimple>
+                        </S.Header>
                         <ArticlesList
                             articleToFilter={path}
                             inArticlePage={inArticlePage} />

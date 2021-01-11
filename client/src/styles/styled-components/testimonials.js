@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {
     color,
 } from "./colors";
-import { Image, HeaderSimple } from "./general";
+import { Image, Header } from "./general";
 
 /**
  * Article Sample Container Component.
@@ -34,7 +34,7 @@ export const TestimonialText = styled.div`
  * Contains all elements for an article sample.
  *
  */
-export const TestimonialAuthor = styled(HeaderSimple)`
+export const TestimonialAuthor = styled(Header)`
     margin-top: 1rem;
     margin-bottom: 0.75rem;
     text-transform: uppercase;
@@ -46,7 +46,7 @@ export const TestimonialAuthor = styled(HeaderSimple)`
  * Contains all elements for an article sample.
  *
  */
-export const TestimonialRole = styled(HeaderSimple)`
+export const TestimonialRole = styled(Header)`
     margin-bottom: 0.5rem;
     margin-top: 1rem;
 `;

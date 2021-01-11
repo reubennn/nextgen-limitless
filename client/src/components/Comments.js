@@ -29,11 +29,11 @@ const Comments = ({
 }) => {
     return (
         <>
-            <S.HeaderSimple
+            <S.Header
                 as="h2"
                 className="uppercase dark-background">
                 Comments:
-            </S.HeaderSimple>
+            </S.Header>
             <S.CommentsList>
                 {!containsComments &&
                     <>

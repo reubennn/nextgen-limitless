@@ -29,7 +29,7 @@ const Privacy = ({ viewport }) => {
                 url={privacyImage}
                 height="100vh">
                 <Navbar className="dark-background" />
-                <S.HeaderSimple
+                <S.Header
                     as="h1"
                     className="feature-text uppercase"
                     color="grey-tint-lightest" >
@@ -38,30 +38,30 @@ const Privacy = ({ viewport }) => {
                     <S.TextSized><b>Privacy</b></S.TextSized>
                     <br />
                     <S.Text > - in the safest hands.</S.Text>
-                </S.HeaderSimple>
-                <S.HeaderSimple
+                </S.Header>
+                <S.Header
                     as="h4"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     Want to know what we do with your data? You&apos;ve come to the right place.
-                </S.HeaderSimple>
+                </S.Header>
             </S.TopHeader>
             <S.MainPageBody>
                 <S.Section
                     color="grey-tint-light"
                     bgColor="grey-shade-dark">
-                    <S.HeaderSimple
+                    <S.Header
                         as="h2"
                         className="uppercase section-top"
                         color="grey-tint-lightest" >
                         Personal Information.
-                    </S.HeaderSimple>
-                    <S.HeaderSimple as="h4">
+                    </S.Header>
+                    <S.Header as="h4">
                         Our ninjas are currently working hard to ensure your personal information is handled responsibly and is put into the right hands.
-                    </S.HeaderSimple>
-                    <S.HeaderSimple as="h5" className="no-margin">
+                    </S.Header>
+                    <S.Header as="h5" className="no-margin">
                         We take your privacy at the uttermost importance, and we promise to ensure that it <b>is shared</b> with the following parties:
-                    </S.HeaderSimple>
+                    </S.Header>
                     <S.CoolList>
                         <li>
                             Companies that need to target you to sell you stuff.
@@ -93,28 +93,28 @@ const Privacy = ({ viewport }) => {
                     color="grey-tint-light"
                     bgColor="grey-shade-dark"
                     height="50vh">
-                    <S.HeaderSimple
+                    <S.Header
                         as="h2"
                         className="uppercase section-top"
                         color="grey-tint-lightest" >
                         Privacy.
-                    </S.HeaderSimple>
-                    <S.HeaderSimple as="h5">
+                    </S.Header>
+                    <S.Header as="h5">
                         Just remember what Mark Zuckerberg once said:
-                    </S.HeaderSimple>
-                    <S.HeaderSimple as="h5" color="blue-lightest">
+                    </S.Header>
+                    <S.Header as="h5" color="blue-lightest">
                         <q>The age of privacy is over.</q>
-                    </S.HeaderSimple>
+                    </S.Header>
                 </S.Section>
                 <S.Section
                     color="grey-shade-dark"
                     height="70vh">
-                    <S.HeaderSimple as="h5">
+                    <S.Header as="h5">
                         By simply browsing our website, you agree to all of the terms and conditions stated.
-                    </S.HeaderSimple>
-                    <S.HeaderSimple as="h5">
+                    </S.Header>
+                    <S.Header as="h5">
                         Thank you and have a nice day.
-                    </S.HeaderSimple>
+                    </S.Header>
                 </S.Section>
             </S.MainPageBody>
         </>

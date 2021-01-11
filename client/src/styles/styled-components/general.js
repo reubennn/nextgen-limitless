@@ -136,39 +136,6 @@ export const InlineAnchor = styled(Anchor)`
 `;
 
 /**
- * Header Component.
- *
- * Setting props.as will convert the html tag to the appropriate
- * header type (h1, h2, h3.. etc.)
- *
- * @param {String} as sets the html tag, h1, h2 etc.
- * @param {String} color text color
- * @param {String} bgColor background color
- * @param {String} textAlign text align style
- */
-export const Header = styled.h1.attrs((props) => ({
-    as: props.as || "h1",
-    color: props.color || color.white,
-    bgColor: props.bgColor || color.grey.shade.dark,
-    textAlign: props.textAlign || "left",
-}))`
-    color: ${(props) => handleColor(props.color)};
-    background-color: ${(props) => handleColor(props.bgColor)};
-    padding: 0.5rem;
-    padding-left: 0.75rem;
-    border-radius: 0.2rem;
-    font-size: ${(props) => props.small ? "1.5rem" : "2.25rem"};
-    margin: ${(props) => props.small ? "2.5rem 0 1.5rem 0" : "1rem 0"};
-    text-align: ${(props) => props.textAlign};
-
-    &.no-background {
-        color: ${color.grey.shade.dark};
-        background-color: transparent;
-        padding: 0;
-    }
-`;
-
-/**
  * Simple Header Component with minimal styling.
  *
  * Setting props.as will convert the html tag to the appropriate
@@ -179,7 +146,7 @@ export const Header = styled.h1.attrs((props) => ({
  * @param {String} bgColor background color
  * @param {String} textAlign text align style
  */
-export const HeaderSimple = styled.h1.attrs((props) => ({
+export const Header = styled.h1.attrs((props) => ({
     as: props.as || "h1",
     color: props.color || "inherit",
     bgColor: props.bgColor || "transparent",

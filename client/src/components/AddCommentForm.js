@@ -375,11 +375,11 @@ const AddCommentForm = ({ articlePath, setArticle, viewport }) => {
     const formContent = !form.submitted ?
         (
             <>
-                <S.HeaderSimple
+                <S.Header
                     as="h3"
                     className="uppercase">
                     Add Comment
-                </S.HeaderSimple>
+                </S.Header>
                 <S.Label className="uppercase">
                     Name:
                 </S.Label>
@@ -415,9 +415,9 @@ const AddCommentForm = ({ articlePath, setArticle, viewport }) => {
         ) :
         (
             <>
-                <S.HeaderSimple as="h4">
+                <S.Header as="h4">
                     Thanks for taking the time to comment!
-                </S.HeaderSimple>
+                </S.Header>
                 <S.Button
                     className="full gradient uppercase"
                     $radius="0.4rem"

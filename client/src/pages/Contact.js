@@ -30,26 +30,26 @@ const Contact = ({ viewport }) => {
                 url={typingOnLaptop}
                 height="100vh">
                 <Navbar className="dark-background" />
-                <S.HeaderSimple
+                <S.Header
                     as="h1"
                     className="feature-text uppercase"
                     color="grey-tint-lightest" >
                     Get in Touch with us.
-                </S.HeaderSimple>
-                <S.HeaderSimple
+                </S.Header>
+                <S.Header
                     as="h4"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     We&apos;d love to hear from you.
-                </S.HeaderSimple>
+                </S.Header>
             </S.TopHeader>
             <S.MainPageBody>
                 <S.Section
                     color="grey-shade-dark"
                     bgColor="grey-tint-lightest">
-                    <S.HeaderSimple as="h2" className="uppercase">
+                    <S.Header as="h2" className="uppercase">
                         How can we help?
-                    </S.HeaderSimple>
+                    </S.Header>
                     <ContactForm />
                 </S.Section>
             </S.MainPageBody>

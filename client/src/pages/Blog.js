@@ -31,7 +31,7 @@ const Blog = ({ loadStatus, viewport }) => {
                 url={blogDeskImage}
                 height="100vh">
                 <Navbar className="dark-background" />
-                <S.HeaderSimple
+                <S.Header
                     as="h1"
                     className="feature-text uppercase"
                     color="grey-tint-lightest" >
@@ -40,13 +40,13 @@ const Blog = ({ loadStatus, viewport }) => {
                     <S.TextSized><b>Next Gen</b></S.TextSized>
                     {viewport.size.is.lessThan.small && <br />}
                     <S.Text > Blog.</S.Text>
-                </S.HeaderSimple>
-                <S.HeaderSimple
+                </S.Header>
+                <S.Header
                     as="h4"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     Find quality articles written on a range of topics here.
-                </S.HeaderSimple>
+                </S.Header>
             </S.TopHeader>
             <S.MainPageBody>
                 <S.Section

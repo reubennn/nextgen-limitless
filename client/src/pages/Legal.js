@@ -30,7 +30,7 @@ const Legal = ({ viewport }) => {
                 pos="left"
                 height="100vh">
                 <Navbar className="dark-background" />
-                <S.HeaderSimple
+                <S.Header
                     as="h1"
                     className="feature-text uppercase"
                     color="grey-tint-lightest" >
@@ -39,24 +39,24 @@ const Legal = ({ viewport }) => {
                     <S.TextSized><b>Legal</b></S.TextSized>
                     {viewport.size.is.lessThan.small && <br />}
                     <S.Text > Stuff.</S.Text>
-                </S.HeaderSimple>
-                <S.HeaderSimple
+                </S.Header>
+                <S.Header
                     as="h4"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     Boring, but necessary.
-                </S.HeaderSimple>
+                </S.Header>
             </S.TopHeader>
             <S.MainPageBody>
                 <S.Section
                     color="grey-tint-light"
                     bgColor="grey-shade-dark">
-                    <S.HeaderSimple color="white">
+                    <S.Header color="white">
                         This page is under maintenance.
-                    </S.HeaderSimple>
-                    <S.HeaderSimple as="h3">
+                    </S.Header>
+                    <S.Header as="h3">
                         Our Ninjas are currently working hard to write up a contractual agreement so you are able to sign your life away.
-                    </S.HeaderSimple>
+                    </S.Header>
                 </S.Section>
                 <S.SectionWithBackground
                     className="primary-gradient"
@@ -99,9 +99,9 @@ const Legal = ({ viewport }) => {
                 </S.Section>
                 <S.Section
                     color="grey-shade-dark">
-                    <S.HeaderSimple as="h5">
+                    <S.Header as="h5">
                         Please come back later.
-                    </S.HeaderSimple>
+                    </S.Header>
                 </S.Section>
             </S.MainPageBody>
         </>

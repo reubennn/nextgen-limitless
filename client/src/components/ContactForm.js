@@ -447,13 +447,13 @@ const ContactForm = ({ viewport }) => {
         ) :
         (
             <>
-                <S.HeaderSimple as="h4">
+                <S.Header as="h4">
                     Thanks for getting in contact with us!
-                </S.HeaderSimple>
-                <S.HeaderSimple as="h5">
+                </S.Header>
+                <S.Header as="h5">
                     Our Ninjas will do their best to get back to you
                     as soon as possible.
-                </S.HeaderSimple>
+                </S.Header>
             </>
         );
 

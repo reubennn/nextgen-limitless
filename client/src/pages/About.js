@@ -44,7 +44,7 @@ const About = ({ viewport }) => {
                 url={rockMountainNight}
                 height={topHeaderHeight}>
                 <Navbar className="dark-background" />
-                <S.HeaderSimple
+                <S.Header
                     as="h1"
                     className="feature-text uppercase"
                     color="grey-tint-lightest" >
@@ -53,15 +53,15 @@ const About = ({ viewport }) => {
                     <S.TextSized><b>Next Gen</b></S.TextSized>
                     {isSmallerViewport && <br />}
                     <S.Text > Story.</S.Text>
-                </S.HeaderSimple>
-                <S.HeaderSimple
+                </S.Header>
+                <S.Header
                     as="h4"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     <span>We are <em>transparent</em>.</span>
                     {isSmallerViewport && <br />}
                     <span> We are <em>without limits</em>.</span>
-                </S.HeaderSimple>
+                </S.Header>
             </S.TopHeader>
             <S.MainPageBody>
                 <S.Section
@@ -69,7 +69,7 @@ const About = ({ viewport }) => {
                     color="grey-tint-lighter"
                     bgColor="grey-shade-dark"
                     height="40vh">
-                    <S.HeaderSimple
+                    <S.Header
                         as="h3"
                         className="uppercase section-top"
                         color="grey-tint-lightest" >
@@ -77,7 +77,7 @@ const About = ({ viewport }) => {
                         {isSmallerViewport && <br />}
                         <S.TextSized><b>Next Gen LIMITLESS</b></S.TextSized>
                         <S.Text >.</S.Text>
-                    </S.HeaderSimple>
+                    </S.Header>
                     <p>
                         Our philosophy here is that we are a customer centric company; if our customers aren&apos;t successful, then neither are we. We are very good at understanding the needs and visions that our clients possess. Through our positive working environments and thriving employees, our teams are able to deliver undeniable value through our range of services to help partnerships grow whilst delivering on our promises. Through changing landscapes with COVID-19 at bay, we have quickly adapted to unfamiliar markets so that we can assist our partners assert dominance in their specialty areas.
                     </p>
@@ -99,12 +99,12 @@ const About = ({ viewport }) => {
                     className="center-text"
                     color="grey-tint-lighter"
                     bgColor="grey-shade-dark">
-                    <S.HeaderSimple
+                    <S.Header
                         as="h2"
                         className="uppercase section-top"
                         color="grey-tint-lightest" >
                         Origins.
-                    </S.HeaderSimple>
+                    </S.Header>
                     <p>
                         We come from humble beginnings. <b>Next Gen LIMITLESS</b> first launched within a garage in a small city called Adelaide; similarly to how big name companies like Amazon, Google, Apple and Microsoft started. The company was initially focused in software services like website design, app development and database development, but has since branched off into a wider range of services.
                     </p>
@@ -132,12 +132,12 @@ const About = ({ viewport }) => {
                     className="center-text"
                     color="grey-tint-lighter"
                     bgColor="grey-shade-dark">
-                    <S.HeaderSimple
+                    <S.Header
                         as="h2"
                         className="uppercase section-top"
                         color="grey-tint-lightest" >
                         Services.
-                    </S.HeaderSimple>
+                    </S.Header>
                     <p>
                         <b>Next Gen LIMITLESS</b> offers a range of services, covering a broad spectrum of the development cycle. We can follow through all or just part of the process, from idea conception, implementation, integration or delivery. We will be by your side every step of the way <i>- if you&apos;d like us to be!</i>
                     </p>
@@ -175,12 +175,12 @@ const About = ({ viewport }) => {
                     className="center-text"
                     color="grey-tint-lighter"
                     bgColor="grey-shade-dark">
-                    <S.HeaderSimple
+                    <S.Header
                         as="h2"
                         className="uppercase section-top"
                         color="grey-tint-lightest" >
                         Here to stay.
-                    </S.HeaderSimple>
+                    </S.Header>
                     <p>
                         With over 15 years of service and an ever-growing number of partnerships with quality customers, we can safely say that we are here to stay. Have peace of mind, knowing that if you put your trust in us, we&apos;ll be there with you through it all. We&apos;re in this for the long haul.
                     </p>
@@ -203,12 +203,12 @@ const About = ({ viewport }) => {
                     color="grey-tint-lighter"
                     bgColor="grey-shade-dark"
                     height="60vh">
-                    <S.HeaderSimple
+                    <S.Header
                         as="h2"
                         className="uppercase section-top"
                         color="grey-tint-lightest" >
                         Testimonials.
-                    </S.HeaderSimple>
+                    </S.Header>
                     <Carousel initialData={shuffledTestimonials} interval={60}>
                         <Testimonial />
                     </Carousel>
@@ -217,12 +217,12 @@ const About = ({ viewport }) => {
                     color="grey-shade-dark"
                     bgColor="white"
                     height="100vh">
-                    <S.HeaderSimple
+                    <S.Header
                         as="h3"
                         className="at-top no-margin"
                         color="grey-shade-neutral">
                         The leaders in the market.
-                    </S.HeaderSimple>
+                    </S.Header>
                     <S.FlexContainer
                         column={displayAsColumn}
                         className="center-text items-margin">
@@ -252,12 +252,12 @@ const About = ({ viewport }) => {
                     <S.FlexContainer
                         className="center-text items-margin"
                         column>
-                        <S.HeaderSimple as="h1">
+                        <S.Header as="h1">
                             Launch into a partnership with us today.
-                        </S.HeaderSimple>
-                        <S.HeaderSimple as="h3">
+                        </S.Header>
+                        <S.Header as="h3">
                             It will be out of this world.
-                        </S.HeaderSimple>
+                        </S.Header>
                         <S.Button className="gradient uppercase">
                             Contact Us
                         </S.Button>

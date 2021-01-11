@@ -51,13 +51,13 @@ const Home = ({ viewport }) => {
                         thin
                         color="grey-tint-neutral"
                         width={"50%"} />
-                    <S.HeaderSimple
+                    <S.Header
                         className="feature-text header-home"
                         color="grey-tint-lightest"
                         as="h4">
                         It&apos;s time to take off during these
                         unprecedented times.
-                    </S.HeaderSimple>
+                    </S.Header>
                     <S.Button className="home gradient uppercase">
                         Learn More
                     </S.Button>
@@ -102,9 +102,9 @@ const Home = ({ viewport }) => {
                     bgColor="grey-shade-dark"
                     height="50vh">
                     <S.FlexContainer column>
-                        <S.HeaderSimple as="h4">
+                        <S.Header as="h4">
                             Some of our past &amp; present partners...*
-                        </S.HeaderSimple>
+                        </S.Header>
                         <br />
                         <LogoSlider
                             logos={logoSlider.primary}
@@ -141,9 +141,9 @@ const Home = ({ viewport }) => {
                     color="grey-shade-dark"
                     bgColor="white"
                     height="100vh">
-                    <S.HeaderSimple as="h3">
+                    <S.Header as="h3">
                         ...or are you looking for something else?
-                    </S.HeaderSimple>
+                    </S.Header>
                     <S.FlexContainer
                         column={displayAsColumn}
                         className="center-text items-margin">
@@ -173,12 +173,12 @@ const Home = ({ viewport }) => {
                     <S.FlexContainer
                         className="center-text items-margin"
                         column>
-                        <S.HeaderSimple as="h1">
+                        <S.Header as="h1">
                             What are you waiting for?
-                        </S.HeaderSimple>
-                        <S.HeaderSimple as="h3">
+                        </S.Header>
+                        <S.Header as="h3">
                             Get started today.**
-                        </S.HeaderSimple>
+                        </S.Header>
                         <S.Button className="gradient uppercase">
                             Unlock the key
                         </S.Button>

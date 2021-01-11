@@ -1,7 +1,7 @@
 /* eslint-disable valid-jsdoc */
 import styled, { css } from "styled-components";
 
-import { HeaderSimple, Button, Image } from "./general";
+import { Header, Button, Image } from "./general";
 import { gradientTransition } from "./mixins";
 import { handleTextSampleHeight, handleFlexBasis } from "./responsive";
 import {
@@ -130,7 +130,7 @@ export const ArticleSampleTitlebox = styled.div`
  * @param {String} bgColor background color
  * @param {String} textAlign text align style
  */
-export const ArticleTitle = styled(HeaderSimple)`
+export const ArticleTitle = styled(Header)`
     text-align: left;
     margin: 0.5rem;
     margin-top: 0;

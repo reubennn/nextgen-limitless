@@ -28,7 +28,7 @@ const Store = ({ viewport }) => {
                 url={onlineShoppingImage}
                 height="100vh">
                 <Navbar className="dark-background" />
-                <S.HeaderSimple
+                <S.Header
                     as="h1"
                     className="feature-text uppercase"
                     color="grey-tint-lightest" >
@@ -37,30 +37,30 @@ const Store = ({ viewport }) => {
                     <S.TextSized><b>Next Gen</b></S.TextSized>
                     {viewport.size.is.lessThan.small && <br />}
                     <S.Text > Store.</S.Text>
-                </S.HeaderSimple>
-                <S.HeaderSimple
+                </S.Header>
+                <S.Header
                     as="h4"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     Fresh merchandise to suit all your needs.
-                </S.HeaderSimple>
+                </S.Header>
             </S.TopHeader>
             <S.MainPageBody>
                 <S.Section
                     color="grey-tint-light"
                     bgColor="grey-shade-dark">
-                    <S.HeaderSimple>
+                    <S.Header>
                         This page is under maintenance.
-                    </S.HeaderSimple>
-                    <S.HeaderSimple as="h3">
+                    </S.Header>
+                    <S.Header as="h3">
                         Our ninjas are currently working hard to get the store up and running!
-                    </S.HeaderSimple>
+                    </S.Header>
                 </S.Section>
                 <S.Section
                     color="grey-shade-dark">
-                    <S.HeaderSimple as="h5">
+                    <S.Header as="h5">
                         Please come back later.
-                    </S.HeaderSimple>
+                    </S.Header>
                 </S.Section>
             </S.MainPageBody>
         </>
