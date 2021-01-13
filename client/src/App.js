@@ -43,12 +43,13 @@ import * as S from "./styles/styled-components/styled";
  *
  * @return {Component} the React App
  */
-const App = ({ handleViewportChange, sidebarNav, }) => {
+const App = ({ handleViewportChange, sidebarNav }) => {
     /**
      * useEffect used to add an event listener to handle window resizing event
      * for entire application, regardless of the current page.
      */
     useEffect(() => {
+        let isMounted = true;
         /**
          * Handler function called during window viewport resize.
          */
@@ -62,24 +63,27 @@ const App = ({ handleViewportChange, sidebarNav, }) => {
             handleViewportChange(viewport);
         }
 
-        /**
-         * Add the event listener and attach lodash debounce delay,
-         * so that the function is not continuously called during
-         * a window resize.
-         */
-        window.addEventListener("resize", debounce(handleResize, 200));
+        if (isMounted) {
+            /**
+             * Add the event listener and attach lodash debounce delay,
+             * so that the function is not continuously called during
+             * a window resize.
+             */
+            window.addEventListener("resize", debounce(handleResize, 200));
 
-        /**
-         * Call Handler immediately to update the initial window size
-         * in state.
-         */
-        handleResize();
+            /**
+             * Call Handler immediately to update the initial window size
+             * in state.
+             */
+            handleResize();
+        }
 
         /**
          * Clean-up to remove the event listener.
          */
         return () => {
             window.removeEventListener("resize", debounce(handleResize, 200));
+            isMounted = false;
         };
     }, []);
 
@@ -92,7 +96,7 @@ const App = ({ handleViewportChange, sidebarNav, }) => {
                         <Route path="/" component={Home} exact />
                         <Route path="/about" component={About} />
                         <Route path="/contact" component={Contact} />
-                        <Route path="/blog" component={Blog} exact/>
+                        <Route path="/blog" component={Blog} exact />
                         <Route path="/store" component={Store} />
                         <Route path="/privacy" component={Privacy} />
                         <Route path="/cookies" component={Cookies} />
