@@ -176,10 +176,10 @@ export const handleCarouselBlockWidth = (viewportType) => {
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 /**
- * Handles the width of the contact form.
+ * Handles the width of the form.
  *
  * @param {String} viewportType the viewport type classification
- * @return {String} the font-size value
+ * @return {String} the width for the form
  */
 export const handleFormWidth = (viewportType) => {
     switch (viewportType) {
@@ -199,10 +199,10 @@ export const handleFormWidth = (viewportType) => {
 };
 
 /**
- * Handles the width of the contact form.
+ * Handles the padding of the form.
  *
  * @param {String} viewportType the viewport type classification
- * @return {String} the font-size value
+ * @return {String} the padding for the form
  */
 export const handleFormPadding = (viewportType) => {
     switch (viewportType) {
@@ -216,6 +216,33 @@ export const handleFormPadding = (viewportType) => {
             return "3rem 4rem 4rem 4rem";
         default:
             return "3rem 4rem 4rem 4rem";
+    };
+};
+
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~ Comments ~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+/**
+ * Handles the width of the conversation section.
+ *
+ * @param {String} viewportType the viewport type classification
+ * @return {String} the width of the conversation section
+ */
+export const handleCommentsWidth = (viewportType) => {
+    switch (viewportType) {
+        case ("super-small"):
+            return "100%";
+        case ("extra-small"):
+            return "100%";
+        case ("small"):
+            return "100%";
+        case ("medium"):
+            return "90%";
+        case ("large"):
+            return "90%";
+        default:
+            return "70%";
     };
 };
 

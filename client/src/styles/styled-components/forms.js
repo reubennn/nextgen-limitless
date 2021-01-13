@@ -11,6 +11,71 @@ import {
 } from "./colors";
 
 /**
+ * Label Component.
+ */
+export const Label = styled.label`
+    margin-bottom: 0.4rem;
+    margin-top: 0;
+
+    &:not(:first-of-type) {
+        margin-top: 1rem;
+    }
+
+    &.comments-section {
+        margin-right: 0.5rem;
+    }
+`;
+
+
+/**
+ * Input Component.
+ */
+export const Input = styled.input`
+    outline: 0;
+    border: 0.05rem solid ${color.grey.shade.light};
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    transition: box-shadow linear 0.2s;
+    margin-bottom: 0.2rem;
+    line-height: 1.4;
+
+    &:focus {
+        outline: 0;
+        border: 0.05rem solid ${color.blue.neutral};
+        box-shadow: 0 0 0.3rem ${color.blue.neutral};
+        transition: box-shadow linear 0.2s
+    }
+
+    &.invalid {
+        border: 0.05rem solid ${color.red.neutral};
+
+        &:focus {
+            border: 0.05rem solid ${color.red.neutral};
+            box-shadow: 0 0 0.3rem ${color.red.neutral};
+        }
+    }
+`;
+
+/**
+ * Select Component.
+ */
+export const Select = styled.select`
+    margin: auto 0.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.4rem;
+    border: 0.05rem solid ${color.grey.tint.darker};
+    cursor: pointer;
+`;
+
+/**
+ * Option Component for a Select.
+ */
+export const Option = styled.option`
+    /* text-transform: uppercase; */
+`;
+
+/**
  * General Form Component which contains input fields.
  *
  * To avoid the form collapsing suddenly due to React re-rendering the content:

@@ -203,6 +203,47 @@ export const Header = styled.h1.attrs((props) => ({
 `;
 
 /**
+ * Simple Header Component with minimal styling.
+ *
+ * Setting props.as will convert the html tag to the appropriate
+ * header type (h1, h2, h3.. etc.)
+ *
+ * @param {String} as sets the html tag, h1, h2 etc.
+ * @param {String} color text color
+ * @param {String} bgColor background color
+ * @param {String} textAlign text align style
+ */
+export const HeaderAssistant = styled.h2.attrs((props) => ({
+    as: props.as || "h2",
+    color: props.color || color.grey.tint.darkest,
+    textAlign: props.textAlign || "center",
+}))`
+    color: ${(props) => handleColor(props.color)};
+    margin: auto;
+    margin-left: 0;
+
+    font-size: ${(props) => {
+        switch (props.as) {
+            case ("h1"): return "2rem";
+            case ("h2"): return "1.5rem";
+            case ("h3"): return "1.2rem";
+            case ("h4"): return "0.9rem";
+            case ("h5"): return "0.7rem";
+            case ("h6"): return "0.5rem";
+            default: return "1.7rem";
+        }
+    }};
+
+    &::before {
+        content: "|";
+        color: ${(props) => handleColor(props.color + transparency.x50)};
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+`;
+
+
+/**
  * Simple Text Component used for multi-size text in the same
  * line.
  *
@@ -322,7 +363,7 @@ export const Icon = styled.svg.attrs((props) => ({
     }
 
     &.footer-icon {
-        fill: ${color.grey};
+        fill: ${color.grey.tint.lighter};
         transition: ease-in-out 0.4s;
     }
 
@@ -334,10 +375,25 @@ export const Icon = styled.svg.attrs((props) => ({
     &.logo-slider {
         margin: auto 1.5rem;
     }
+
+    &.no-color-change {
+        &:hover {
+            fill: ${(props) => handleColor(props.fill)};
+        }
+    }
+
+    &.dark-hover {
+        &:hover {
+            fill: ${color.grey.shade.neutral};
+            transition: ease-in-out 0.4s;
+        }
+    }
 `;
 
 /**
  * Button Component.
+ *
+ * @param {String} $radius transient prop for the button radius
  */
 export const Button = styled.button.attrs((props) => ({
     $radius: props.$radius || "1.5rem",
@@ -423,6 +479,50 @@ export const Button = styled.button.attrs((props) => ({
         margin: 0;
         border-radius: 0.6rem;
     }
+
+    &.comments-section {
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+    }
+`;
+
+/**
+ * Options Button Component.
+ *
+ * @param {String} $radius transient prop for the button radius
+ */
+export const OptionsButton = styled.button.attrs((props) => ({
+    $radius: props.$radius || "50%",
+}))`
+    color: ${color.grey.tint.neutral};
+    border-radius: ${(props) => props.$radius};
+    padding: 0.4rem;
+    display: block;
+    margin: auto;
+    transition: ease-out 0.3s;
+
+    &:hover {
+        background-color: ${color.grey.tint.lightest + transparency.x20};
+
+        /* If Icon is inside, change color when button is hovered over */
+        & ${Icon} {
+            fill: ${color.grey.shade.neutral}
+        }
+    }
+
+    &.no-bg {
+        padding: 0;
+
+        &:hover {
+            color: ${color.grey.shade.neutral};
+            background-color: transparent;
+        }
+    }
+
+    &.keep-next {
+        margin-left: 0;
+        margin-right: 0.5rem;
+    }
 `;
 
 /**
@@ -431,7 +531,7 @@ export const Button = styled.button.attrs((props) => ({
  * @param {String} width width of the horizontal ruler
  * @param {String} color color of the horizontal ruler
  * @param {Boolean} thin flag indicating horizontal ruler is thin
- * @param {Boolean} noMargin flag indicating component has small margin
+ * @param {Boolean} noMargin flag indicating component has no margin
  */
 export const HorizontalRuler = styled.hr.attrs((props) => ({
     width: props.width || "100%",
@@ -505,49 +605,6 @@ export const FlexContainer = styled.div.attrs((props) => ({
 
     &.items-margin > * {
         margin: 0.8rem auto;
-    }
-`;
-
-/**
- * Label Component.
- */
-export const Label = styled.label`
-    margin-bottom: 0.4rem;
-    margin-top: 0;
-
-    &:not(:first-of-type) {
-        margin-top: 1rem;
-    }
-`;
-
-
-/**
- * Input Component.
- */
-export const Input = styled.input`
-    outline: 0;
-    border: 0.05rem solid ${color.grey.shade.light};
-    padding: 0.5rem 0.7rem;
-    border-radius: 0.25rem;
-    box-shadow: none;
-    transition: box-shadow linear 0.2s;
-    margin-bottom: 0.2rem;
-    line-height: 1.4;
-
-    &:focus {
-        outline: 0;
-        border: 0.05rem solid ${color.blue.neutral};
-        box-shadow: 0 0 0.3rem ${color.blue.neutral};
-        transition: box-shadow linear 0.2s
-    }
-
-    &.invalid {
-        border: 0.05rem solid ${color.red.neutral};
-
-        &:focus {
-            border: 0.05rem solid ${color.red.neutral};
-            box-shadow: 0 0 0.3rem ${color.red.neutral};
-        }
     }
 `;
 

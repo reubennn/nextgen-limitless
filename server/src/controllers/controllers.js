@@ -141,7 +141,14 @@ export const addCommentToArticle = async (req, res) => {
                 {
                     "$set": {
                         comments: articleInfo.comments
-                            .concat({ name, comment }),
+                            .concat({
+                                name,
+                                comment,
+                                timestamp: new Date(Date.now()),
+                                upvotes: 0,
+                                downvotes: 0,
+                                replies: [],
+                            }),
                     },
                 },
                 { returnOriginal: false },

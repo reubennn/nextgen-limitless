@@ -78,6 +78,16 @@ const Legal = ({ viewport }) => {
                             thicker>
                             Good Ware
                         </S.InlineAnchor>
+                        and
+                        <S.InlineAnchor
+                            title="Good Ware"
+                            color="blue-dark"
+                            bgColor="grey-shade-darkest-x90"
+                            href="https://www.flaticon.com/authors/pixel-perfect"
+                            rel="noreferrer"
+                            thicker>
+                            Pixel perfect
+                        </S.InlineAnchor>
                         from
                         <S.InlineAnchor
                             title="Flaticon"

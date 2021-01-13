@@ -111,13 +111,6 @@ const Article = ({ match, viewport }) => {
         };
     }, [path]);
 
-    // Check if the article has any comments
-    let containsComments = false;
-    if (typeof article.comments !== "undefined" &&
-        article.comments.length > 0) {
-        containsComments = true;
-    }
-
     if (!found) {
         return (
             <NotFound item="article" />
@@ -242,8 +235,7 @@ const Article = ({ match, viewport }) => {
                         <Comments
                             comments={article.comments}
                             articlePath={path}
-                            setArticle={setArticle}
-                            containsComments={containsComments} />
+                            setArticle={setArticle} />
                     </S.Section>
                     <S.SectionWithBackground
                         className="article"
