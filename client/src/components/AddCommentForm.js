@@ -4,6 +4,11 @@ import { connect } from "react-redux";
 
 import { getViewportType } from "../selectors/viewportSelectors";
 
+import {
+    cloudAvatars,
+    getRandomAvatar,
+} from "../data/avatars";
+
 import ResizableTextarea from "./ResizableTextArea";
 
 import * as S from "../styles/styled-components/styled";
@@ -57,8 +62,12 @@ const AddCommentForm = ({ articlePath, setArticle, viewport }) => {
     };
 
     /**
-     * Function called from on click event of the add comment button.
+     * Function called when the form is confirmed to be complete and
+     * the user submits the comment.
+     *
      * - Sends POST request to server API to post the comment to the database.
+     * - Until user login is implemented, we will create a mock avatar for each
+     * comment to display.
      */
     const postCommentToServer = async () => {
         const response = await fetch(
@@ -72,6 +81,7 @@ const AddCommentForm = ({ articlePath, setArticle, viewport }) => {
                 body: JSON.stringify({
                     name: form.input.name,
                     comment: form.input.comment,
+                    avatar: getRandomAvatar(cloudAvatars),
                 }),
             });
         const body = await response.json();

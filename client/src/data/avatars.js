@@ -28,6 +28,26 @@ export const avatars = {
     zaneFrost,
 };
 
+export const cloudAvatars = {
+    harveyCarson: "https://res.cloudinary.com/reuben/image/upload/v1608010751/fullstack-react/authors/harvey-carson_ghu2ms.jpg",
+    jamilThomson: "https://res.cloudinary.com/reuben/image/upload/v1608009191/fullstack-react/authors/jamil-thomson_mkzu8o.jpg",
+    jocelynWynn: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/jocelyn-wynn_p3o3rg.jpg",
+    julieRoberts: "https://res.cloudinary.com/reuben/image/upload/v1608010637/fullstack-react/authors/julie-roberts_o3efc9.jpg",
+    kaidanNairn: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/kaidan-nairn_toopg0.jpg",
+    kalebMaxwell: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/kaleb-maxwell_wxds8a.jpg",
+    kathrynSutherland: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/kathryn-sutherland_sxrwjn.jpg",
+    lilianNoel: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/lilian-noel_byoqkl.jpg",
+    oliviaBourne: "https://res.cloudinary.com/reuben/image/upload/v1608009191/fullstack-react/authors/olivia-bourne_x6qgwx.jpg",
+    rogerWhite: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/roger-white_ryykyd.jpg",
+    scottBryan: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/scott-bryan_mxciog.jpg",
+    taylaMills: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/tayla-mills_hm0mbv.jpg",
+    toddSullivan: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+    veraMercer: "https://res.cloudinary.com/reuben/image/upload/v1608009191/fullstack-react/authors/vera-mercer_h9cgoh.jpg",
+    zaneFrost: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/zane-frost_q60eot.jpg",
+};
+
+export const defaultAvatar = "https://res.cloudinary.com/reuben/image/upload/v1610515162/fullstack-react/authors/default-avatar_umlq3b.png";
+
 /**
  * Function for generating mock data.
  * Generates an array of random avatars using the avatars data

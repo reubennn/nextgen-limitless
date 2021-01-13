@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { DateTime } from "luxon";
 import { connect } from "react-redux";
 
 import {
@@ -14,12 +15,6 @@ import AddCommentForm from "./AddCommentForm";
 import moreOptions from ".../icons/more-options.svg";
 import thumbsUp from ".../icons/thumbs-up.svg";
 import thumbsDown from ".../icons/thumbs-down.svg";
-
-import {
-    avatars,
-    getRandomAvatar,
-    getRandomAvatars,
-} from "../data/avatars";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -37,24 +32,65 @@ const Comments = ({
     setArticle,
     viewport,
 }) => {
-    /** Store random avatars into state so they do not update and change */
-    const initialState = getRandomAvatars(avatars, comments.length);
-    const [randomAvatars, setRandomAvatars] = useState(initialState);
+    const [now, setNow] = useState(DateTime.local());
 
     const smallerViewport = viewport.size.is.lessThan.small;
     const hasComments = comments.length > 0;
 
     /**
-     * useEffect which is called when a new comment is added
+     * useEffect which sets up an interval, which will update the current
+     * time every minute.
      *
-     * - For generating a mock data avatar for a new comment.
+     * - Keeps the user updated about how long a commented was posted without
+     * having to refresh the page.
+     * - Only relevant for timestamps less than an hour ago.
+     *
      */
     useEffect(() => {
-        setRandomAvatars((prevState) => [
-            ...prevState,
-            getRandomAvatar(avatars),
-        ]);
-    }, [comments.length]);
+        let isMounted = true;
+        let updateTimeInterval;
+        if (isMounted) {
+            updateTimeInterval = setInterval(() =>
+                setNow(DateTime.local()), 1000 * 60);
+        }
+        /** Clean-up: clear interval when unmounted to avoid memory leaks */
+        return () => {
+            isMounted = false;
+            clearInterval(updateTimeInterval);
+        };
+    }, []);
+
+    /**
+     * Function which gets the relative time since a given date-time timestamp.
+     *
+     * - Uses Luxon library to determine deconstructed years, months, days,
+     * hours, minutes and seconds since the timestamp to now.
+     * - Depending how long ago, it will return that it was posted some time
+     * ago.
+     *
+     * @param {Date} timestamp posted date-time
+     * @return {String} time since the given date-time
+     */
+    const getRelativeTime = (timestamp) => {
+        const posted = DateTime.fromISO(timestamp);
+        const delta = now.diff(
+            posted, ["years", "months", "days", "hours", "minutes", "seconds"])
+            .toObject();
+        const { years, months, days, hours, minutes, seconds } = delta;
+        if (years > 0) {
+            return `${years} year${years === 1 ? "" : "s"} ago`;
+        } else if (months > 0) {
+            return `${months} month${months === 1 ? "" : "s"} ago`;
+        } else if (days > 0) {
+            return `${days} day${days === 1 ? "" : "s"} ago`;
+        } else if (hours > 0) {
+            return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+        } else if (minutes > 0) {
+            return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
+        }
+        const secondsAsInt = parseInt(seconds);
+        return `${secondsAsInt} second${secondsAsInt === 1 ? "" : "s"} ago`;
+    };
 
     return (
         <>
@@ -136,7 +172,7 @@ const Comments = ({
                             className="no-margin"
                             justifyContent="flex-start">
                             <S.UserAvatar
-                                src={randomAvatars[key]}
+                                src={item.avatar}
                                 alt="Avatar" />
                             <S.FlexContainer
                                 column
@@ -145,7 +181,7 @@ const Comments = ({
                                     {item.name}
                                 </S.CommentUser>
                                 <S.CommentTimestamp>
-                                    2 days ago
+                                    {getRelativeTime(item.timestamp)}
                                 </S.CommentTimestamp>
                             </S.FlexContainer>
                             <S.OptionsButton className="justify-right">
@@ -176,8 +212,7 @@ const Comments = ({
                                         fill="grey-tint-neutral" />
                                 </S.OptionsButton>
                                 <S.TallyCount>
-                                    {typeof item.upvotes !== "undefined" ?
-                                        item.upvotes : "17"}
+                                    {item.upvotes}
                                 </S.TallyCount>
                             </S.TallyContainer>
                             <S.TallyContainer>
@@ -190,8 +225,7 @@ const Comments = ({
                                         fill="grey-tint-neutral" />
                                 </S.OptionsButton>
                                 <S.TallyCount>
-                                    {typeof item.downvotes !== "undefined" ?
-                                        item.downvotes : "4"}
+                                    {item.downvotes}
                                 </S.TallyCount>
                             </S.TallyContainer>
                         </S.FlexContainer>

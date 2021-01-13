@@ -128,7 +128,7 @@ export const upvoteArticle = async (req, res) => {
  * @param {Object} res HTTP response object
  */
 export const addCommentToArticle = async (req, res) => {
-    const { name, comment } = req.body;
+    const { name, comment, avatar } = req.body;
     const articlePath = req.params.path;
 
     queryDB(ARTICLES, res, async (collection) => {
@@ -144,6 +144,7 @@ export const addCommentToArticle = async (req, res) => {
                             .concat({
                                 name,
                                 comment,
+                                avatar,
                                 timestamp: new Date(Date.now()),
                                 upvotes: 0,
                                 downvotes: 0,
