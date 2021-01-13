@@ -37,7 +37,7 @@ const UpvoteSection = ({ articlePath, upvotes, setArticle }) => {
                 <i>This post has been upvoted <b>{upvotes}</b> time
                     {!upvotesIsOne && "s"}</i>
                 <S.Button
-                    className="upvote-button gradient align-center"
+                    className="upvote-button gradient justify-center"
                     onClick={() => upvoteArticle()}>
                     +1
                 </S.Button>
