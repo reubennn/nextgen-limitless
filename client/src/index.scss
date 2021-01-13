@@ -117,17 +117,34 @@ h1 {
 	margin: 0 !important;
 }
 
-.align-left {
+.justify-left {
+	margin-right: auto !important;
+	margin-left: 0 !important;
+}
+
+.justify-right {
+	margin-left: auto !important;
+	margin-right: 0 !important;
+}
+
+.justify-center {
+	margin-left: auto !important;
 	margin-right: auto !important;
 }
 
-.align-right {
-	margin-left: auto !important;
+.align-top {
+	margin-bottom: auto !important;
+	margin-top: 0 !important;
+}
+
+.align-bottom {
+	margin-top: auto !important;
+	margin-bottom: 0 !important;
 }
 
 .align-center {
-	margin-left: auto !important;
-	margin-right: auto !important;
+	margin-top: auto !important;
+	margin-bottom: auto !important;
 }
 
 .uppercase {

@@ -47,19 +47,19 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
         <S.Sidenav className={sidebarNav.isActive ? "active" : ""}>
             <S.FlexContainer className="no-margin" justifyContent="flex-end">
                 <button
-                    className="align-left"
+                    className="justify-left"
                     onClick={() => setSidebarNavStatus(false)}>
                     <Icon
                         navbar
                         xlinkHref={closeIcon}
                         width="36px"
                         height="36px"
-                        className={"align-left close-icon " +
+                        className={"justify-left close-icon " +
                             className} />
                 </button>
                 <RouterLink
                     url="/"
-                    className="nav-item align-center"
+                    className="nav-item justify-center"
                     isImage={true}
                 >
                     <S.LogoImage
@@ -69,7 +69,7 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                         alt="Spaceship Logo Nav Home Icon" />
                 </RouterLink>
                 <button
-                    className="align-right"
+                    className="justify-right"
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
                         navbar

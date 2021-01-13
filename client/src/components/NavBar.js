@@ -114,7 +114,7 @@ const Navbar = ({
             <>
                 <RouterLink
                     url="/"
-                    className="align-left nav-item"
+                    className="justify-left nav-item"
                     isImage={true} >
                     <S.LogoImage
                         className="small"
@@ -179,7 +179,7 @@ const Navbar = ({
         (
             <>
                 <button
-                    className="align-left"
+                    className="justify-left"
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
                         navbar
@@ -191,7 +191,7 @@ const Navbar = ({
                 </button>
                 <RouterLink
                     url="/"
-                    className="nav-item align-center"
+                    className="nav-item justify-center"
                     isImage={true}
                 >
                     <S.LogoImage
@@ -202,7 +202,7 @@ const Navbar = ({
                         alt="Spaceship Logo Nav Home Icon" />
                 </RouterLink>
                 <button
-                    className="align-right"
+                    className="justify-right"
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
                         navbar

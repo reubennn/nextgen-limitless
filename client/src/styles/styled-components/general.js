@@ -247,7 +247,7 @@ export const ListItem = styled.li`
         margin: 5vh auto;
     }
 
-    &.align-left {
+    &.justify-left {
         margin-right: auto;
     }
 `;

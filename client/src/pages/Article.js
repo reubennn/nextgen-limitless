@@ -216,14 +216,14 @@ const Article = ({ match, viewport }) => {
                                 true : false}>
                             <S.TinyText
                                 className={smallerViewport ?
-                                    "align-center" : "align-right"}
+                                    "justify-center" : "justify-right"}
                                 color="grey-shade-light"
                                 margin="0.25rem">
                                 <i>Share this article:</i>
                             </S.TinyText>
                             <S.FlexContainer
                                 className={`no-margin ${smallerViewport ?
-                                    "align-center" : ""}`}
+                                    "justify-center" : ""}`}
                                 wrapContent
                                 justifyContent="flex-end">
                                 {socialMediaIcons.map((icon, key) => (

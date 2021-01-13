@@ -26,7 +26,7 @@ const ServerError = ({ errorCode }) => (
                     500 Internal Server Error
                 </S.Header>
                 <Icon
-                    className="align-center"
+                    className="justify-center"
                     xlinkHref={chromeDinosaur}
                     height="128px"
                     width="128px"
