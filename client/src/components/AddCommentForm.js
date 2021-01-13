@@ -361,7 +361,11 @@ const AddCommentForm = ({ articlePath, setArticle, viewport }) => {
     const [commentAgain, setCommentAgain] = useState(false);
 
     /**
-     * 
+     * Handler function when a user presses the button
+     * to add another comment.
+     *
+     * - This allows a method to confirm if the user is sure they
+     * want to post another comment.
      */
     const handleCommentAgainButton = () => {
         if (!commentAgain) {
@@ -422,7 +426,11 @@ const AddCommentForm = ({ articlePath, setArticle, viewport }) => {
                     className="full gradient uppercase"
                     $radius="0.4rem"
                     onClick={() => handleCommentAgainButton()}>
-                    Comment Again
+                    {
+                        commentAgain ?
+                            "Yes, let me comment again!" :
+                            "Comment Again"
+                    }
                 </S.Button>
                 <S.InvalidInputHelper
                     className={commentAgain ? "show" : ""}>
