@@ -1,55 +1,144 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { debounce } from "lodash";
 
 import {
     getViewportDimensions,
     getViewportSize,
     getViewportType,
     getSidebarNavState,
+    getAtTopState,
 } from "../selectors/viewportSelectors";
 
-import { setSidebarNavStatus } from "../actions/viewportActions";
+import {
+    setSidebarNavStatus,
+    setAtTopStatus,
+} from "../actions/viewportActions";
 
 import media from "../data/media";
 
-import menuIcon from ".../icons/menu-icon.svg";
+import menuIcon from ".../icons/menu.svg";
 import searchIcon from ".../icons/magnifying-glass.svg";
+import logoSmall from ".../images/logo-small.svg";
+import gitHubIcon from ".../logos/github.svg";
 
 import RouterLink from "./RouterLink";
-import Logo from "./Logo";
 import Icon from "./Icon";
+
 import * as S from "../styles/styled-components/styled";
 
 /**
  * React Component which displays the navigation bar to access
  * links to different pages on the website.
  *
+ * - When the user scrolls down, the navigation bar is hidden.
+ * - When the user scrolls up or the window scroll is at the top of the page,
+ * the navigation bar is shown.
+ *
  * @return {Component} navbar for navigating through website
  */
-const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
+const Navbar = ({
+    className = "",
+    viewport,
+    sidebarNav,
+    setSidebarNavStatus,
+    setAtTopStatus,
+}) => {
+    const [scrolledUp, setScrolledUp] = useState(true);
+    const [scrollPos, setScrollPos] = useState(window.pageYOffset);
+    const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+    /** Get the atTop status from the Redux Store */
+    const atTop = viewport.atTop;
+    /**
+     * useEffect used to add an event listener to handle window scroll
+     * and update the Component state.
+     */
+    useEffect(() => {
+        let isMounted = true; // Flag which denotes mount status
+        /**
+         * Handler function called during window scrolling.
+         */
+        const handleNav = () => {
+            if (isMounted) {
+                setScrollPos(window.pageYOffset);
+            }
+        };
+
+        /**
+         * Add the event listener and attach lodash debounce delay,
+         * so that the function is not continuously called during
+         * window scrolling.
+         */
+        window.addEventListener("scroll", debounce(handleNav, 150));
+
+        /**
+         * Clean-up to remove the event listener.
+         */
+        return () => {
+            window.removeEventListener("scroll", debounce(handleNav, 150));
+            isMounted = false;
+        };
+    }, []);
+
+    /**
+     * useEffect to hide or show the navigation bar depending on
+     * window scrolling.
+     *
+     * - Called when the scroll position state is updated to check the
+     * current scroll position relative to the previous position.
+     *
+     * - Separate useEffect used as useState updates the value asynchronously.
+     */
+    useEffect(() => {
+        let isMounted = true; // Flag which denotes mount status
+        if (isMounted) {
+            prevScrollPos >= scrollPos ?
+                setScrolledUp(true) : setScrolledUp(false);
+            scrollPos > 0 ?
+                setAtTopStatus(false) : setAtTopStatus(true);
+            setPrevScrollPos(scrollPos);
+        }
+        /**
+         * useEffect clean-up:
+         * If unmounted, set mount status flag to false
+         */
+        return () => {
+            isMounted = false;
+        };
+    }, [scrollPos]);
+
+    const iconClass = atTop ? "at-top" : "";
     const content = viewport.dimensions.width >= media.breakpoints.medium ?
         (
             <>
                 <RouterLink
                     url="/"
-                    className="align-left nav-item"
+                    className="justify-left nav-item"
                     isImage={true} >
-                    <Logo className="small" />
+                    <S.LogoImage
+                        className="small"
+                        src={logoSmall}
+                        type={viewport.type}
+                        height="3rem"
+                        alt="Spaceship Logo Nav Home Icon" />
                 </RouterLink>
                 <S.ListItem className="nav-item">
                     <S.NavbarLink
                         to="/about"
                         activeClassName="active"
-                        className={className + " uppercase"} >
+                        className={className + " uppercase nav-item"}
+                        $atTop={atTop} >
                         About
                     </S.NavbarLink>
                 </S.ListItem>
                 <S.ListItem className="nav-item">
                     <S.NavbarLink
                         to="/blog"
+                        exact
                         activeClassName="active"
-                        className={className + " uppercase"} >
+                        className={className + " uppercase nav-item"}
+                        $atTop={atTop} >
                         Blog
                     </S.NavbarLink>
                 </S.ListItem>
@@ -57,7 +146,8 @@ const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
                     <S.NavbarLink
                         to="/store"
                         activeClassName="active"
-                        className={className + " uppercase"} >
+                        className={className + " uppercase nav-item"}
+                        $atTop={atTop} >
                         Store
                     </S.NavbarLink>
                 </S.ListItem>
@@ -65,42 +155,72 @@ const Navbar = ({ className, viewport, sidebarNav, setSidebarNavStatus }) => {
                     <S.NavbarLink
                         to="/contact"
                         activeClassName="active"
-                        className={className + " uppercase"} >
+                        className={className + " uppercase nav-item"}
+                        $atTop={atTop} >
                         Contact
                     </S.NavbarLink>
+                </S.ListItem>
+                <S.ListItem className="nav-icon">
+                    <a href="https://github.com/reubennn/fullstack-react"
+                        target="_blank"
+                        rel="noreferrer">
+                        <Icon
+                            navbar
+                            $atTop={atTop}
+                            xlinkHref={gitHubIcon}
+                            width="28px"
+                            height="28px"
+                            alt="GitHub Repo"
+                            className={`${className} ${iconClass}`} />
+                    </a>
                 </S.ListItem>
             </>
         ) :
         (
             <>
                 <button
-                    className="align-left"
+                    className="justify-left"
                     onClick={() => setSidebarNavStatus(true)}>
                     <Icon
+                        navbar
+                        $atTop={atTop}
                         xlinkHref={menuIcon}
-                        id="hamburger-menu-icon"
-                        width="36"
-                        height="36"
-                        className={`align-left nav-item ${className}`} />
+                        width="36px"
+                        height="36px"
+                        className={`${className} ${iconClass}`} />
                 </button>
                 <RouterLink
                     url="/"
-                    className="nav-item align-center"
+                    className="nav-item justify-center"
                     isImage={true}
                 >
-                    <Logo className="small" />
+                    <S.LogoImage
+                        className="small"
+                        src={logoSmall}
+                        type={viewport.type}
+                        height="3rem"
+                        alt="Spaceship Logo Nav Home Icon" />
                 </RouterLink>
-                <Icon
-                    xlinkHref={searchIcon}
-                    id="magnifying-glass"
-                    width="28"
-                    height="28"
-                    className={`align-right nav-item ${className}`} />
+                <button
+                    className="justify-right"
+                    onClick={() => setSidebarNavStatus(true)}>
+                    <Icon
+                        navbar
+                        $atTop={atTop}
+                        xlinkHref={searchIcon}
+                        width="28px"
+                        height="28px"
+                        className={`${className} ${iconClass}`} />
+                </button>
             </>
         );
     return (
-        !sidebarNav.isActive &&
-        <S.Navbar className={className} type={viewport.type}>
+        <S.Navbar
+            className={className}
+            scrolledUp={scrolledUp}
+            $atTop={atTop}
+            type={viewport.type}
+            sidenav={sidebarNav.isActive}>
             <S.FlexContainer className="no-margin" justifyContent="flex-end">
                 {content}
             </S.FlexContainer>
@@ -129,6 +249,10 @@ Navbar.propTypes = {
      * Function to dispatch Redux Action to set sidebar nav status.
      */
     setSidebarNavStatus: PropTypes.func,
+    /**
+     * Function to dispatch Redux Action to set viewport atTop flag status.
+     */
+    setAtTopStatus: PropTypes.func,
 };
 
 /**
@@ -143,6 +267,7 @@ const mapStateToProps = (state) => ({
         dimensions: getViewportDimensions(state),
         size: getViewportSize(state),
         type: getViewportType(state),
+        atTop: getAtTopState(state),
     },
     sidebarNav: getSidebarNavState(state),
 });
@@ -155,6 +280,7 @@ const mapStateToProps = (state) => ({
  */
 const mapDispatchToProps = (dispatch) => ({
     setSidebarNavStatus: (status) => dispatch(setSidebarNavStatus(status)),
+    setAtTopStatus: (status) => dispatch(setAtTopStatus(status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

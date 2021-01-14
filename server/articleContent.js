@@ -6,11 +6,11 @@
  */
 const articles = [
     {
-        name: "complete-guide-to-animals",
+        path: "complete-guide-to-animals",
         title: "A Complete Guide To Animals",
         author: "Franklin Finbar",
         pubDate: new Date(Date.now() - 86400000 * 47),
-        featureImg: {
+        image: {
             src: `https://res.cloudinary.com/reuben/image/upload/v1603930321/fullstack-react/article-images/complete-guide-to-animals/origami-animals_ncv8vx.jpg`,
             alt: "Origami paper animals",
         },
@@ -71,11 +71,11 @@ const articles = [
         ],
     },
     {
-        name: "how-to-smolder",
+        path: "how-to-smolder",
         title: "How to Smolder the Right Way",
         author: "Dr. Smolder Bravestone",
         pubDate: new Date(Date.now() - 86400000 * 3),
-        featureImg: {
+        image: {
             src: `https://res.cloudinary.com/reuben/image/upload/v1603930324/fullstack-react/article-images/bravestone-smolder_ptuhxc.jpg`,
             alt: "Dr. Bravestone Smolder",
         },
@@ -105,11 +105,11 @@ const articles = [
         ],
     },
     {
-        name: "dance-fighting",
+        path: "dance-fighting",
         title: "The Best Dance Fighting Techniques",
         author: "Ruby Roundhouse",
         pubDate: new Date(Date.now() - 86400000 * 9),
-        featureImg: {
+        image: {
             src: `https://res.cloudinary.com/reuben/image/upload/v1603953164/fullstack-react/article-images/dance-fighting/kungfu-dance-fighting_vb9zu5.jpg`,
             alt: "Kung-fu Dance Fighting",
         },
@@ -143,11 +143,11 @@ const articles = [
         ],
     },
     {
-        name: "reading-maps",
+        path: "reading-maps",
         title: "You've Been Reading Maps Wrong Your Whole Life...",
         author: "Professor Shelly Oberon",
         pubDate: new Date(Date.now()),
-        featureImg: {
+        image: {
             src: `https://res.cloudinary.com/reuben/image/upload/v1603953512/fullstack-react/article-images/reading-maps/adult-car-finger-map_kzccoz.jpg`,
             alt: "Adult Finger Pointing At Map Reading",
         },
@@ -180,11 +180,11 @@ const articles = [
         ],
     },
     {
-        name: "jumanji-review",
+        path: "jumanji-review",
         title: "Jumanji - An Honest Review",
         author: "Dr. Smolder Bravestone",
         pubDate: new Date(Date.now() - 86400000 * 4),
-        featureImg: {
+        image: {
             src: `https://res.cloudinary.com/reuben/image/upload/v1603953956/fullstack-react/article-images/jumanji-review/jumanji-next-level_mpojdj.jpg`,
             alt: "Jumanji Next Level",
         },
@@ -214,11 +214,11 @@ const articles = [
         ],
     },
     {
-        name: "npc-seeking-assistance",
+        path: "npc-seeking-assistance",
         title: "NPC Seeking Assistance from Brave Strong Hero",
         author: "Nigel",
         pubDate: new Date(Date.now() - 86400000 * 587),
-        featureImg: {
+        image: {
             src: `https://res.cloudinary.com/reuben/image/upload/v1603955200/fullstack-react/article-images/npc-seeking-assistance/van-pelt-holding-jewel-of-jumanji_mlvtd4.jpg`,
             alt: "Van Pelt Holding Jaguar's Eye Jewel of Jumanji",
         },
@@ -239,11 +239,11 @@ const articles = [
         ],
     },
     {
-        name: "npc-still-seeking-assistance",
+        path: "npc-still-seeking-assistance",
         title: "Angry NPC Seeking Assistance from Anyone Available",
         author: "Nigel",
         pubDate: new Date(Date.now() - 86400000 * 496),
-        featureImg: {
+        image: {
             src: `https://res.cloudinary.com/reuben/image/upload/v1603955043/fullstack-react/article-images/npc-still-seeking-assistance/nigel-weird-face_xynrfs.png`,
             alt: "Nigel Weird Face",
         },

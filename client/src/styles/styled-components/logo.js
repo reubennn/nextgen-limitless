@@ -6,6 +6,9 @@ import { fontFamily } from "./fonts";
 import { color } from "./colors";
 
 import {
+    handleLargeLogoMargin,
+    handleLargeLogoSize,
+    /** Legacy website logo handlers (below) */
     handleLogoContainerPadding,
     handleLogoContainerMargin,
     handleLogoIconWidthHeight,
@@ -13,8 +16,45 @@ import {
     handleLogoTextFontSize,
 } from "./responsive";
 
+import { Image } from "./general";
+
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~ Website Logo ~~~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
+/**
+* Logo Image Component to style the website logo.
+*
+* @param {String} height height of the image
+* @param {String} width width of the image
+* @param {Object} viewport viewport object used for responsive design
+*      - @property {String} type type classification
+*/
+export const LogoImage = styled(Image).attrs((props) => ({
+    viewport: {
+        type: props.type || "default",
+    },
+}))`
+    width: auto;
+
+    &.small {
+        margin: 0.25rem;
+    }
+
+    &.large {
+        margin: 3rem auto;
+
+        &.header-home {
+            margin-bottom: 3rem;
+            ${(props) => handleLargeLogoMargin(props.viewport.type)};
+            ${(props) => handleLargeLogoSize(props.viewport.type)};
+        }
+    }
+`;
+
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~ Legacy Website Logo ~~~~~~~~
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
@@ -87,6 +127,7 @@ export const LogoIconContainer = styled.span.attrs((props) => ({
         /* Keep the Logo size consistent */
         width: 2.7rem;
         height:2.7rem;
+        padding: 0.1rem;
     }
 
     &.large {
@@ -110,11 +151,11 @@ export const LogoText = styled.span.attrs((props) => ({
     },
 }))`
     font-family: ${fontFamily.logo};
-    color: #fff;
+    color: ${color.white};
     white-space: nowrap;
 
     &.small {
-        line-height: 1.2rem;
+        line-height: 1.2;
 
         &.first-line {
             font-size: 1.2rem;

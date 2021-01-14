@@ -13,12 +13,19 @@ import { connect } from "react-redux";
 import {
     handleViewportChange,
 } from "./thunks/viewportThunks";
+import {
+    getSidebarNavState,
+} from "./selectors/viewportSelectors";
 
 /** React Components */
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Articles from "./pages/Articles";
+import Blog from "./pages/Blog";
+import Store from "./pages/Store";
+import Privacy from "./pages/Privacy";
+import Cookies from "./pages/Cookies";
+import Legal from "./pages/Legal";
 import Article from "./pages/Article";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
@@ -36,12 +43,13 @@ import * as S from "./styles/styled-components/styled";
  *
  * @return {Component} the React App
  */
-const App = ({ handleViewportChange }) => {
+const App = ({ handleViewportChange, sidebarNav }) => {
     /**
      * useEffect used to add an event listener to handle window resizing event
      * for entire application, regardless of the current page.
      */
     useEffect(() => {
+        let isMounted = true;
         /**
          * Handler function called during window viewport resize.
          */
@@ -55,42 +63,46 @@ const App = ({ handleViewportChange }) => {
             handleViewportChange(viewport);
         }
 
-        /**
-         * Add the event listener and attach lodash debounce delay,
-         * so that the function is not continuously called during
-         * a window resize.
-         */
-        window.addEventListener("resize", debounce(handleResize, 200));
+        if (isMounted) {
+            /**
+             * Add the event listener and attach lodash debounce delay,
+             * so that the function is not continuously called during
+             * a window resize.
+             */
+            window.addEventListener("resize", debounce(handleResize, 200));
 
-        /**
-         * Call Handler immediately to update the initial window size
-         * in state.
-         */
-        handleResize();
+            /**
+             * Call Handler immediately to update the initial window size
+             * in state.
+             */
+            handleResize();
+        }
 
         /**
          * Clean-up to remove the event listener.
          */
         return () => {
             window.removeEventListener("resize", debounce(handleResize, 200));
+            isMounted = false;
         };
     }, []);
 
     return (
         <Router>
             <ScrollToTop>
-                <S.Container>
+                <S.Container sidenav={sidebarNav.isActive}>
                     <SidebarNav />
                     <Switch>
                         <Route path="/" component={Home} exact />
                         <Route path="/about" component={About} />
                         <Route path="/contact" component={Contact} />
+                        <Route path="/blog" component={Blog} exact />
+                        <Route path="/store" component={Store} />
+                        <Route path="/privacy" component={Privacy} />
+                        <Route path="/cookies" component={Cookies} />
+                        <Route path="/legal" component={Legal} />
                         <Route
-                            path="/blog"
-                            component={Articles}
-                        />
-                        <Route
-                            path="/article/:name"
+                            path="/blog/:path"
                             component={Article} />
                         <Route render={(props) => (
                             <NotFound {...props} item={"page"} />
@@ -115,7 +127,23 @@ App.propTypes = {
      * and dispatch Actions to manipulate the Redux store.
      */
     handleViewportChange: PropTypes.func,
+    /**
+     * The sidebarNav object which contains flag to indicate
+     * if the sidebar nav is active.
+     */
+    sidebarNav: PropTypes.object,
 };
+
+/**
+ * Assign props using Redux selectors
+ * to connect the Component to the Redux store.
+ *
+ * @param {*} state the Redux store state
+ * @return {*} props mapped to the Component
+ */
+const mapStateToProps = (state) => ({
+    sidebarNav: getSidebarNavState(state),
+});
 
 /**
  * Assign props to dispatch actions to the Redux Store.
@@ -128,4 +156,4 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(handleViewportChange(viewport)),
 });
 
-export default connect(null, mapDispatchToProps)(hot(module)(App));
+export default connect(mapStateToProps, mapDispatchToProps)(hot(module)(App));

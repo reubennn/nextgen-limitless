@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 /** Retrieve secret data not stored in Git */
-import { MONGO_URI, DB_NAME } from "../../secrets";
+import { MONGO_URI, DB_NAME, ARTICLES } from "../../secrets";
 
 /* Connect client to MongoDB */
 const client = new MongoClient(MONGO_URI, {
@@ -51,7 +51,7 @@ const queryDB = async (collectionName, res, operations) => {
  * @param {Object} res HTTP response object
  */
 export const getAllArticles = async (req, res) => {
-    queryDB("articles", res, async (collection) => {
+    queryDB(ARTICLES, res, async (collection) => {
         const result = await collection.find({}).toArray();
 
         if (result) {
@@ -71,11 +71,11 @@ export const getAllArticles = async (req, res) => {
  * @param {Object} res HTTP response object
  */
 export const getArticle = async (req, res) => {
-    const articleName = req.params.name;
+    const articlePath = req.params.path;
 
-    queryDB("articles", res, async (collection) => {
+    queryDB(ARTICLES, res, async (collection) => {
         const result = await collection
-            .findOne({ name: articleName });
+            .findOne({ path: articlePath });
 
         if (result) {
             res.status(200).json(result);
@@ -94,15 +94,15 @@ export const getArticle = async (req, res) => {
  * @param {Object} res HTTP response object
  */
 export const upvoteArticle = async (req, res) => {
-    const articleName = req.params.name;
+    const articlePath = req.params.path;
 
-    queryDB("articles", res, async (collection) => {
+    queryDB(ARTICLES, res, async (collection) => {
         const articleInfo = await collection
-            .findOne({ name: articleName });
+            .findOne({ path: articlePath });
 
         const updatedArticleInfo = await collection
             .findOneAndUpdate(
-                { name: articleName },
+                { path: articlePath },
                 { "$set": { upvotes: articleInfo.upvotes + 1 } },
                 { returnOriginal: false },
             );
@@ -113,35 +113,43 @@ export const upvoteArticle = async (req, res) => {
 
 /**
  * Adds a comment to the database based on the request.
- * - Stores username and text as an Object from req.body.
+ * - Stores name and comment as an Object from req.body.
  * - Concatenates to end of comments array.
  *
  * @example
- * // Adds comment to article with req :name in database with username and text.
- * endpoint: ".../articles/:name/add-comment"
+ * // Adds comment to article with req :path in database with name and comment.
+ * endpoint: ".../articles/:path/add-comment"
  * req.body {
- *   "username": "me",
- *   "text": "I love this article!"
+ *   "name": "me",
+ *   "comment": "I love this article!"
  * }
  *
  * @param {Object} req HTTP request object
  * @param {Object} res HTTP response object
  */
 export const addCommentToArticle = async (req, res) => {
-    const { username, text } = req.body;
-    const articleName = req.params.name;
+    const { name, comment, avatar } = req.body;
+    const articlePath = req.params.path;
 
-    queryDB("articles", res, async (collection) => {
+    queryDB(ARTICLES, res, async (collection) => {
         const articleInfo = await collection
-            .findOne({ name: articleName });
+            .findOne({ path: articlePath });
 
         const updatedArticleInfo = await collection
             .findOneAndUpdate(
-                { name: articleName },
+                { path: articlePath },
                 {
                     "$set": {
                         comments: articleInfo.comments
-                            .concat({ username, text }),
+                            .concat({
+                                name,
+                                comment,
+                                avatar,
+                                timestamp: new Date(Date.now()),
+                                upvotes: 0,
+                                downvotes: 0,
+                                replies: [],
+                            }),
                     },
                 },
                 { returnOriginal: false },

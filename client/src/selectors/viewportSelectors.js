@@ -35,3 +35,11 @@ export const getViewportType = (store) => store.viewport.type;
  * @return {Object} the sidebar nav status
  */
 export const getSidebarNavState = (store) => store.viewport.sidebarNav;
+
+/**
+ * Gets the viewport atTop flag status.
+ *
+ * @param {*} store Redux store reference
+ * @return {Object} the atTop flag status
+ */
+export const getAtTopState = (store) => store.viewport.atTop;

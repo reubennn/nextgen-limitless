@@ -43,7 +43,7 @@ module.exports = {
             },
             {
                 /** Load Files */
-                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2|json|xml|ico)$/i,
+                test: /\.(png|jpg|jfif|gif|svg|eot|ttf|woff|woff2|json|xml|ico)$/i,
                 loader: "file-loader",
                 options: {
                     name: "[path][name].[ext]",
@@ -66,6 +66,7 @@ module.exports = {
             ".../logos": path.resolve(__dirname, "./public/assets/logos"),
             ".../images": path.resolve(__dirname, "./public/assets/images"),
             ".../icons": path.resolve(__dirname, "./public/assets/icons"),
+            ".../avatars": path.resolve(__dirname, "./public/assets/avatars"),
         },
     },
 };

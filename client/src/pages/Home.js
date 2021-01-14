@@ -1,7 +1,7 @@
-/* eslint-disable max-len */
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import {
     getViewportDimensions,
@@ -10,13 +10,17 @@ import {
 } from "../selectors/viewportSelectors";
 
 import Navbar from "../components/Navbar";
-import Logo from "../components/Logo";
 import LogoSlider from "../components/LogoSlider";
+import DescriptionBox from "../components/DescriptionBox";
 
-import { logos } from "../data/logos";
+import { logoSlider } from "../data/logos";
+import { featureDescriptions, otherDescriptions } from "../data/descriptions";
 
-import graffitImg from ".../images/graffiti-artist.jpg";
+import logoLarge from ".../images/logo-large.svg";
+import abstractScenery from ".../images/abstract-scenery.jpg";
+import abstractMountains from ".../images/abstract-mountains.jpg";
 import subtlePrismSVG from ".../images/subtle-prism.svg";
+import lofotenIslands from ".../images/lofoten-islands.jpg";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -25,110 +29,194 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} home page for a website
  */
-const Home = ({ viewport }) => (
-    <>
-        <S.HomepageHeader>
-            <Navbar className="home" />
-            <S.FlexContainer column className="no-margin">
-                {/* <S.Header>Zero Gravity</S.Header> */}
-                <Logo className="large" />
-                <S.FeatureText
-                    className="header-home"
-                    color="grey-tint-lightest"
-                    type={viewport.type}>
-                    Unplugged potential at your fingertips.
-                </S.FeatureText>
-                <S.Button className="home gradient uppercase">Learn More</S.Button>
-            </S.FlexContainer>
-        </S.HomepageHeader>
-        <S.FlexContainer className="no-margin" column>
-            <S.Section
-                color="grey-tint-lighter"
-                bgColor="grey-shade-dark"
-                height="15vh">
-                <S.FeatureText fontWeight="600">Prepare yourself...</S.FeatureText>
-            </S.Section>
+const Home = ({ viewport }) => {
+    /** useRef to the information section for the scrolling event */
+    const learnMoreRef = useRef(null);
+
+    /**
+     * Handler function to smoothly scroll the page so the information section
+     * is in the center of the viewport.
+     *
+     * - Called when the user presses the "learn more" button
+     * in the top header.
+     */
+    const learnMoreOnClickHandler = () => {
+        learnMoreRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    };
+
+    const displayAsColumn = viewport.size.is.lessThan.large;
+    return (
+        <>
+            <S.TopHeader className="home" url={abstractScenery}>
+                <Navbar />
+                <S.FlexContainer column className="no-margin">
+                    <S.LogoImage
+                        className="large header-home"
+                        src={logoLarge}
+                        type={viewport.type}
+                        alt="Spaceship Logo Icon" />
+                    <S.FeatureText
+                        className="header-home"
+                        color="grey-tint-lightest"
+                        type={viewport.type}>
+                        Launch into next generation technology today.
+                    </S.FeatureText>
+                    <S.HorizontalRuler
+                        className="header-home"
+                        thin
+                        color="grey-tint-neutral"
+                        width={"50%"} />
+                    <S.Header
+                        className="feature-text header-home"
+                        color="grey-tint-lightest"
+                        as="h4">
+                        It&apos;s time to take off during these
+                        unprecedented times.
+                    </S.Header>
+                    <S.Button
+                        className="home gradient uppercase"
+                        onClick={learnMoreOnClickHandler}>
+                        Learn More
+                    </S.Button>
+                </S.FlexContainer>
+            </S.TopHeader>
             <S.MainPageBody>
                 <S.Section
-                    color="grey-shade-dark"
-                    bgColor="white"
-                    height="50vh">
-                    <p>
-                        Do you really listen when you are talking with someone? I have a friend who listens in an unforgiving way. She actually takes every word you say as being something important and when you have a friend that listens like that, words take on a whole new meaning.
-                    </p>
-                    <p>
-                        She tried to explain that love wasn&apos;t like pie. There wasn&apos;t a set number of slices to be given out. There wasn&apos;t less to be given to one person if you wanted to give more to another. That after a set amount was given out it would all disappear. She tried to explain this, but it fell on deaf ears.
-                    </p>
-                </S.Section>
-                <S.Section
-                    color="grey-tint-light"
+                    color="grey-tint-lighter"
                     bgColor="grey-shade-dark"
-                    height="2vh">
+                    height="75vh"
+                    ref={learnMoreRef}>
+                    {featureDescriptions.map((description, index) => {
+                        let last;
+                        let reverse;
+                        featureDescriptions.length === index + 1 ?
+                            last = true : last = false;
+                        /** Reverse the content for odd numbers */
+                        index % 2 == 0 || displayAsColumn ?
+                            reverse = false : reverse = true;
+                        return <DescriptionBox
+                            key={index}
+                            description={description}
+                            last={last}
+                            column={displayAsColumn}
+                            reverse={reverse} />;
+                    })}
                 </S.Section>
-                <S.SectionWithBackground className="linear-gradient" url={graffitImg} pos="center" attachment="fixed" height="60vh" />
-                <S.Section
-                    color="grey-tint-light"
-                    bgColor="grey-shade-dark"
-                    height="20vh">
-                    <S.FeatureText type={viewport.type}>
+                <S.SectionWithBackground
+                    className="primary-gradient"
+                    url={abstractMountains}
+                    pos="top"
+                    attachment="fixed"
+                    height="70vh" >
+                    <S.FeatureText
+                        className="uppercase center-text"
+                        type={viewport.type}
+                        color="grey-tint-lightest">
                         Are you ready to embrace the power of true innovation?
                     </S.FeatureText>
-                </S.Section>
-                <S.Section
-                    color="grey-shade-dark"
-                    bgColor="white"
-                    height="30vh">
-                    <p>
-                        She tried to explain that love wasn&apos;t like pie. There wasn&apos;t a set number of slices to be given out. There wasn&apos;t less to be given to one person if you wanted to give more to another. That after a set amount was given out it would all disappear. She tried to explain this, but it fell on deaf ears.
-                    </p>
-                </S.Section>
+                </S.SectionWithBackground>
                 <S.Section
                     color="grey-tint-light"
                     bgColor="grey-shade-dark"
                     height="50vh">
-                    <S.FlexContainer column className="no-margin">
-                        <h3 className="center-text">
+                    <S.FlexContainer column>
+                        <S.Header as="h4">
                             Some of our past &amp; present partners...*
-                        </h3>
+                        </S.Header>
                         <br />
-                        <LogoSlider logos={logos.primary} type={viewport.dimensions} bgColor="grey-shade-dark" />
-                        <LogoSlider logos={logos.secondary} type={viewport.dimensions} reverse bgColor="grey-shade-dark" />
-                        <br />
-                        <S.TinyText className="align-center" superTiny color="grey-shade-lightest">*These companies may or may not have actually partnered with us.</S.TinyText>
+                        <LogoSlider
+                            logos={logoSlider.primary}
+                            duration={20}
+                            bgColor="grey-shade-dark" />
+                        <LogoSlider
+                            logos={logoSlider.secondary}
+                            duration={20}
+                            reverse
+                            bgColor="grey-shade-dark" />
+                        <S.TinyText
+                            className="center-text"
+                            superTiny
+                            color="grey-shade-lightest">
+                            *These companies may or may not have actually
+                            partnered with us.
+                        </S.TinyText>
                     </S.FlexContainer>
                 </S.Section>
-                <S.Section>
-                    <p>
-                        Dave found joy in the daily routine of life. He awoke at the same time, ate the same breakfast and drove the same commute. He worked at a job that never seemed to change and he got home at 6 pm sharp every night. It was who he had been for the last ten years and he had no idea that was all about to change.
-                    </p>
-                    <p>
-                        It was a scrape that he hardly noticed. Sure, there was a bit of blood but it was minor compared to most of the other cuts and bruises he acquired on his adventures. There was no way he could know that the rock that produced the cut had alien genetic material on it that was now racing through his bloodstream. He felt perfectly normal and continued his adventure with no knowledge of what was about to happen to him.
-                    </p>
-                    <p>
-                        Stranded. Yes, she was now the first person ever to land on Venus, but that was of little consequence. Her name would be read by millions in school as the first to land here, but that celebrity would never actually be seen by her. She looked at the control panel and knew there was nothing that would ever get it back into working order. She was the first and it was not clear this would also be her last.
-                    </p>
-                    <p>
-                        Her eyebrows were a shade darker than her hair. They were thick and almost horizontal, emphasizing the depth of her eyes. She was rather handsome than beautiful. Her face was captivating by reason of a certain frankness of expression and a contradictory subtle play of features. Her manner was engaging.
-                    </p>
-                    <p>
-                        Eating raw fish didn&apos;t sound like a good idea. <q>It&apos;s a delicacy in Japan,</q> didn&apos;t seem to make it any more appetizing. Raw fish is raw fish, delicacy or not.
-                    </p>
-                    <p>
-                        There was something special about this little creature. Donna couldn&apos;t quite pinpoint what it was, but she knew with all her heart that it was true. It wasn&apos;t a matter of if she was going to try and save it, but a matter of how she was going to save it. She went back to the car to get a blanket and when she returned the creature was gone.
-                    </p>
+                <S.SectionWithBackground
+                    className="secondary-gradient"
+                    url={lofotenIslands}
+                    pos="center"
+                    attachment="fixed"
+                    height="70vh" >
+                    <S.FeatureText
+                        className="uppercase center-text"
+                        type={viewport.type}
+                        color="grey-tint-lightest">
+                        Don&apos;t get left behind.
+                    </S.FeatureText>
+                </S.SectionWithBackground>
+                <S.Section
+                    color="grey-shade-dark"
+                    bgColor="white"
+                    height="100vh">
+                    <S.Header as="h3">
+                        ...or are you looking for something else?
+                    </S.Header>
+                    <S.FlexContainer
+                        column={displayAsColumn}
+                        className="center-text items-margin">
+                        {otherDescriptions.map((description, index) => {
+                            let separator;
+                            otherDescriptions.length === index + 1 ?
+                                separator = false : separator = true;
+                            if (!displayAsColumn) {
+                                separator = false;
+                            }
+                            return (
+                                <DescriptionBox
+                                    key={index}
+                                    className="min-shadow secondary"
+                                    description={description}
+                                    separator={separator}
+                                    column={true}
+                                    textColor="grey-shade-dark" />
+                            );
+                        })}
+                    </S.FlexContainer>
                 </S.Section>
-                <S.SectionWithBackground color="grey-shade-dark" height="35vh" url={subtlePrismSVG}>
-                    <S.FlexContainer column className="center-text items-margin">
-                        <h1>What are you waiting for?</h1>
-                        <h2>Get started today.**</h2>
-                        <S.Button className="gradient uppercase">Unlock the key</S.Button>
-                        <S.TinyText superTiny color="grey-shade-dark">**Maybe not today - today, but you know what we mean.</S.TinyText>
+                <S.SectionWithBackground
+                    color="grey-shade-dark"
+                    height="35vh"
+                    url={subtlePrismSVG}>
+                    <S.FlexContainer
+                        className="center-text items-margin"
+                        column>
+                        <S.Header as="h1">
+                            What are you waiting for?
+                        </S.Header>
+                        <S.Header as="h3">
+                            Get started today.**
+                        </S.Header>
+                        <Link to="/contact">
+                            <S.Button className="gradient uppercase">
+                                Unlock the key
+                            </S.Button>
+                        </Link>
+                        <S.TinyText
+                            superTiny
+                            color="grey-shade-dark">
+                            **Maybe not today - today, but you know what
+                            we mean.
+                        </S.TinyText>
                     </S.FlexContainer>
                 </S.SectionWithBackground>
             </S.MainPageBody>
-        </S.FlexContainer>
-    </>
-);
+        </>
+    );
+};
 
 Home.propTypes = {
     /**

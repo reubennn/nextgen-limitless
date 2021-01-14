@@ -71,15 +71,32 @@ h1 {
 /* Chrome/Edge/Safari */
 *::-webkit-scrollbar {
 	width: 0.6rem;
+	z-index: 101; /* Keep scrollbar on top*/
 }
 
 *::-webkit-scrollbar-track {
 	background: $colorDark;
+	z-index: 101; /* Keep scrollbar on top*/
 }
 
 *::-webkit-scrollbar-thumb {
 	background-color: $colorGrey;
 	border: 0.075rem solid $colorDark;
+	z-index: 101; /* Keep scrollbar on top*/
+}
+
+/**
+ * ID Attribute Styling
+ *
+ * styled-components take precedence over global classes,
+ * as they inject styles during runtime at the end of <head> by default.
+ *
+ * Therefore, we need to add !important to our styling properties, to ensure
+ * the style is used.
+ */
+#root {
+	/* Hide the scrollbars when the sidebar nav is active */
+	overflow: hidden !important;
 }
 
 /**
@@ -88,38 +105,59 @@ h1 {
  * styled-components take precedence over global classes,
  * as they inject styles during runtime at the end of <head> by default.
  *
- * Therefore, we need to increase specificity of our selectors below
- * by writing them twice.
+ * Therefore, we need to add !important to our styling properties, to ensure
+ * the style is used. Another approach is bumping up the specificity of the selectors
+ * by writing them twice. (e.g. .no-margin.no-margin {...})
  */
-.center-text.center-text {
-	text-align: center;
+.center-text {
+	text-align: center !important;
 }
 
-.no-margin.no-margin {
-	margin: 0;
+.no-margin {
+	margin: 0 !important;
 }
 
-.align-left.align-left {
-	margin-right: auto;
+.justify-left {
+	margin-right: auto !important;
+	margin-left: 0 !important;
 }
 
-.align-right.align-right {
-	margin-left: auto;
+.justify-right {
+	margin-left: auto !important;
+	margin-right: 0 !important;
 }
 
-.align-center.align-center {
-	margin-left: auto;
-	margin-right: auto;
+.justify-center {
+	margin-left: auto !important;
+	margin-right: auto !important;
 }
 
-.uppercase.uppercase {
-	text-transform: uppercase;
+.align-top {
+	margin-bottom: auto !important;
+	margin-top: 0 !important;
 }
 
-.center-text.center-text {
-	text-align: center;
+.align-bottom {
+	margin-top: auto !important;
+	margin-bottom: 0 !important;
 }
 
-.hidden.hidden {
-	display: none;
+.align-center {
+	margin-top: auto !important;
+	margin-bottom: auto !important;
+}
+
+.uppercase {
+	text-transform: uppercase !important;
+}
+
+.hidden {
+	display: none !important;
+}
+
+/* Span the element over the entire screen width */
+.full-width {
+	position: relative !important;
+	width: 100vw !important;
+	left: calc(-50vw + 50%) !important;
 }

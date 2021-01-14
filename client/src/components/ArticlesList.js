@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import {
@@ -14,7 +13,13 @@ import {
     setLoading,
     resetLoading,
 } from "../actions/articleActions";
+import {
+    getViewportDimensions,
+    getViewportSize,
+    getViewportType,
+} from "../selectors/viewportSelectors";
 
+import ArticleSample from "./ArticleSample";
 import LoadingIcon from "./LoadingIcon";
 import ServerError from "../pages/ServerError";
 
@@ -31,17 +36,17 @@ const ArticlesList = ({
     articleToFilter,
     inArticlePage,
     /** Redux */
+    viewport,
     loadStatus,
     articles,
     setLoading,
-    resetLoading,
     fetchAllArticles,
 }) => {
     const [currentArticle, setCurrentArticle] = useState(articleToFilter);
     // const [articles, setArticles] = useState([]);
     // const [loading, setLoading] = useState(true);
     const [otherArticles, setOtherArticles] = useState([]);
-
+    const displayAsRow = viewport.size.is.greaterThan.small;
     /**
      * useEffect tracking currentArticle.
      * - When user navigates to different page, currentArticle updates,
@@ -74,8 +79,8 @@ const ArticlesList = ({
             articleToFilter === "undefined" ?
                 setOtherArticles(articles) :
                 (
-                    articles.map((article, key) => {
-                        if (article.name !== articleToFilter) {
+                    articles.map((article) => {
+                        if (article.path !== articleToFilter) {
                             setOtherArticles((prevState) => [
                                 ...prevState,
                                 article,
@@ -89,12 +94,11 @@ const ArticlesList = ({
 
     /*
      * If linked clicked to navigate to another article,
-     * update the state with the clicked on article name.
+     * update the state with the clicked on article path.
     */
-    const linkClicked = (articleName) => {
-        setCurrentArticle(articleName);
+    const linkClicked = (articlePath) => {
+        setCurrentArticle(articlePath);
     };
-
     /*
      * Ternary operators to determine the content to render.
      *
@@ -119,28 +123,25 @@ const ArticlesList = ({
             loadStatus.failed ?
                 <ServerError errorCode={loadStatus.code} /> :
                 (
-                    otherArticles.map((article, key) => (
-                        <S.ArticleSample key={key}>
-                            <Link to={`/article/${article.name}`}
-                                onClick={() => linkClicked(article.name)}>
-                                <S.FlexContainer row className="no-margin">
-                                    <S.Image
-                                        src={article.featureImg.src}
-                                        alt={article.featureImg.alt}
-                                        height="auto"
-                                        width="60%" />
-                                    <S.FlexContainer column>
-                                        <h3>{article.title}</h3>
-                                        <p>
-                                            {article.content[0]
-                                                .substring(0, 150)}...
-                                        </p>
-                                    </S.FlexContainer>
-                                </S.FlexContainer>
-                            </Link>
-                            <S.HorizontalRuler />
-                        </S.ArticleSample>
-                    ))
+                    displayAsRow ?
+                        (
+                            <S.FlexContainer
+                                className="full-width no-margin"
+                                wrapContent>
+                                {otherArticles.map((article, key) => (
+                                    <ArticleSample
+                                        key={key}
+                                        article={article}
+                                        linkClicked={linkClicked} />
+                                ))}
+                            </S.FlexContainer>
+                        ) :
+                        otherArticles.map((article, key) => (
+                            <ArticleSample
+                                key={key}
+                                article={article}
+                                linkClicked={linkClicked} />
+                        ))
                 )
         );
 
@@ -165,6 +166,11 @@ ArticlesList.propTypes = {
      * The articles stored as an array.
      */
     articles: PropTypes.array,
+    /**
+     * Viewport Redux state.
+     * - Contains information about the viewport.
+     */
+    viewport: PropTypes.object,
     /**
      * The loading status for fetching data from server API.
      */
@@ -193,6 +199,11 @@ ArticlesList.propTypes = {
 const mapStateToProps = (state) => ({
     loadStatus: getLoadStatus(state),
     articles: getArticlesList(state),
+    viewport: {
+        dimensions: getViewportDimensions(state),
+        size: getViewportSize(state),
+        type: getViewportType(state),
+    },
 });
 
 /**

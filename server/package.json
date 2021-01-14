@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "open-cli http://localhost:9000 -- chrome && nodemon --exec babel-node src/server.js",
+    "server": "nodemon --exec babel-node src/server.js",
+    "server-chrome": "open-cli http://localhost:9000 -- chrome && nodemon --exec babel-node src/server.js",
     "db-setup": "babel-node addContentToDB.js",
     "build": "cd ../client && npx webpack --config webpack.prod.js --watch"
   },
@@ -14,7 +15,7 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "helmet": "^4.2.0",
-    "mongodb": "^3.6.2"
+    "mongodb": "^3.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",

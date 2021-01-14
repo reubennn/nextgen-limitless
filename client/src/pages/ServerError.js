@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Navbar from "../components/Navbar";
+import Icon from "../components/Icon";
+
+import chromeDinosaur from ".../images/chrome-dinosaur.svg";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -16,33 +18,42 @@ import * as S from "../styles/styled-components/styled";
  */
 const ServerError = ({ errorCode }) => (
     <>
-        <Navbar />
-        <S.MainPageBody>
-            <S.Section>
-                <S.FooterPaddingPlaceholder>
-                    <S.Header>500 Internal Server Error</S.Header>
-                    <S.Header
-                        className="no-background center-text"
-                        small >
-                        Oops...
-                        <br></br><br></br>
-                        It&apos;s not you, it&apos;s us!
-                    </S.Header>
+        <S.Section bgColor="transparent">
+            <S.FooterPaddingPlaceholder>
+                <S.Header
+                    as="h2"
+                    className="uppercase dark-background">
+                    500 Internal Server Error
+                </S.Header>
+                <Icon
+                    className="justify-center"
+                    xlinkHref={chromeDinosaur}
+                    height="128px"
+                    width="128px"
+                    fill="grey-shade-dark" />
+                <S.Header
+                    as="h3"
+                    className="uppercase">
+                    Oops...
+                </S.Header>
+                <S.Header
+                    as="h4"
+                    className="uppercase">
+                    It&apos;s not you, it&apos;s us!
+                </S.Header>
+                <p className="center-text">
+                    We&apos;re unable to connect to our
+                    servers at the moment.
+                </p>
+                <p className="center-text">
+                    Please try again later.
+                </p>
+                {errorCode &&
                     <p className="center-text">
-                        We&apos;re unable to connect to our &nbsp;
-                        servers at the moment.
-                        <br></br>
-                        Please try again later.
-                        <br></br>
-                        <br></br>
-                    </p>
-                    {errorCode &&
-                        <p className="center-text">
-                            <b>Error code: {errorCode}</b>
-                        </p>}
-                </S.FooterPaddingPlaceholder>
-            </S.Section>
-        </S.MainPageBody>
+                        <b>Error code: {errorCode}</b>
+                    </p>}
+            </S.FooterPaddingPlaceholder>
+        </S.Section>
     </>
 );
 

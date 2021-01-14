@@ -8,18 +8,18 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} upvote section
  */
-const UpvoteSection = ({ articleName, upvotes, setArticleInfo }) => {
+const UpvoteSection = ({ articlePath, upvotes, setArticle }) => {
     /**
      * Function called during upvote button on click event.
      * - Sends POST request to server API to add an upvote to the database.
      * - Updates the article info with the new upvote number.
      */
     const upvoteArticle = async () => {
-        const response = await fetch(`/api/articles/${articleName}/upvote`, {
+        const response = await fetch(`/api/articles/${articlePath}/upvote`, {
             method: "POST",
         });
         const body = await response.json();
-        setArticleInfo(body.value);
+        setArticle(body.value);
     };
 
     /**
@@ -37,7 +37,8 @@ const UpvoteSection = ({ articleName, upvotes, setArticleInfo }) => {
                 <i>This post has been upvoted <b>{upvotes}</b> time
                     {!upvotesIsOne && "s"}</i>
                 <S.Button
-                    className="upvote-button"
+                    className="upvote-button gradient justify-center"
+                    $radius="0.5rem"
                     onClick={() => upvoteArticle()}>
                     +1
                 </S.Button>
@@ -49,9 +50,9 @@ const UpvoteSection = ({ articleName, upvotes, setArticleInfo }) => {
 
 UpvoteSection.propTypes = {
     /**
-     * The name of the article.
+     * The article url articlePath.
      */
-    articleName: PropTypes.string,
+    articlePath: PropTypes.string,
     /**
      * The number of upvotes the article has.
      */
@@ -60,7 +61,7 @@ UpvoteSection.propTypes = {
      * useState React Hook passed down as props to update the article info
      * to include the new upvote value.
      */
-    setArticleInfo: PropTypes.func,
+    setArticle: PropTypes.func,
 };
 
 export default UpvoteSection;

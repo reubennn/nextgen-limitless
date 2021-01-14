@@ -12,6 +12,7 @@ import {
     SET_VIEWPORT_SIZE,
     SET_VIEWPORT_TYPE,
     SET_SIDEBAR_NAV_STATUS,
+    SET_AT_TOP,
 } from "../actions/viewportActions";
 
 const initialState = {
@@ -101,6 +102,10 @@ const initialState = {
     sidebarNav: {
         isActive: false,
     },
+    /**
+     * Flag to indicate if window is at the top of the page.
+     */
+    atTop: true,
 };
 
 /**
@@ -145,6 +150,13 @@ export const viewport = (state = initialState, action) => {
                 sidebarNav: {
                     isActive: status,
                 },
+            };
+        };
+        case (SET_AT_TOP): {
+            const { status } = payload;
+            return {
+                ...state,
+                atTop: status,
             };
         };
         default: {

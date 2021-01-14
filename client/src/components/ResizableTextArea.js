@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import * as S from "../styles/styled-components/styled";
@@ -10,13 +10,23 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} navbar for navigating through website
  */
-const ResizableTextarea = ({ commentText, setCommentText }) => {
+const ResizableTextarea = ({
+    required = true,
+    placeholder = "Enter your comment here...",
+    onChangeHandler = undefined,
+    errorMessage = "Please complete the field.",
+}) => {
+    /** React Hook for storing and setting the input text */
+    const [text, setText] = useState("");
+    /** Flag to indicate if the input is valid */
+    const [isValid, setIsValid] = useState(true);
+
     /**
      * Function to handle the on change event.
      *
      * -Adjusts the textarea height as more lines of text
      * are added.
-     * - Populates the commentText state with the text value.
+     * - Populates the text state with the text value.
      *
      * @param {Event} event the onchange event
      */
@@ -29,30 +39,72 @@ const ResizableTextarea = ({ commentText, setCommentText }) => {
          */
         textarea.style.height = scrollHeight + 2 + "px";
 
-        setCommentText(textarea.value);
+        setText(textarea.value);
+
+        if (required) {
+            if (isEmpty(textarea.value)) {
+                setIsValid(false);
+            } else if (isValid === false) {
+                setIsValid(true);
+            }
+        }
+
+        if (onChangeHandler !== undefined) {
+            onChangeHandler(textarea.value);
+        }
+    };
+
+    /**
+    * Uses Regular Expression to test if the input contains
+    * whitespace only (spaces, tabs or line breaks).
+    *
+    * @param {String} value the value of the textarea
+    * @return {Boolean} flag indicating if empty or not
+    */
+    const isEmpty = (value) => {
+        return !value.replace(/\s/g, "").length;
     };
 
     return (
-        <S.TextArea
-            rows="4"
-            value={commentText}
-            placeholder={"Enter your comment here..."}
-            onChange={(event) => handleChange(event)}
-        />
+        <>
+            <S.TextArea
+                className={isValid ? "" : "invalid"}
+                rows="4"
+                value={text}
+                placeholder={placeholder}
+                onChange={(event) => handleChange(event)}
+            />
+            <S.InvalidInputHelper
+                className={!isValid ? "show" : ""}>
+                {errorMessage}
+            </S.InvalidInputHelper>
+        </>
     );
 };
 
 ResizableTextarea.propTypes = {
     /**
-     * React Hook state for the current text inside the textarea.
+     * Flag indicating if it is a required input field.
+     *
+     * - If it is, then appropriate warning messages will display.
      */
-    commentText: PropTypes.string,
+    required: PropTypes.bool,
     /**
-     * React Hook to set the comment text state in the add
-     * comment form.
-     * - Originates from AddCommentForm -> ResizableTextArea.
+     * Placeholder text for the textarea.
      */
-    setCommentText: PropTypes.func,
+    placeholder: PropTypes.string,
+    /**
+     * onChange event handler function passed from parent to perform an
+     * action with the input value.
+     *
+     * @param {String} value the textarea input value
+     */
+    onChangeHandler: PropTypes.func,
+    /**
+     * The error message to display if the field is required and the input
+     * is not valid.
+     */
+    errorMessage: PropTypes.string,
 };
 
 export default ResizableTextarea;
