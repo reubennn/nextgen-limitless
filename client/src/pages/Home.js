@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import {
     getViewportDimensions,
@@ -29,6 +30,23 @@ import * as S from "../styles/styled-components/styled";
  * @return {Component} home page for a website
  */
 const Home = ({ viewport }) => {
+    /** useRef to the information section for the scrolling event */
+    const learnMoreRef = useRef(null);
+
+    /**
+     * Handler function to smoothly scroll the page so the information section
+     * is in the center of the viewport.
+     *
+     * - Called when the user presses the "learn more" button
+     * in the top header.
+     */
+    const learnMoreOnClickHandler = () => {
+        learnMoreRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    };
+
     const displayAsColumn = viewport.size.is.lessThan.large;
     return (
         <>
@@ -58,7 +76,9 @@ const Home = ({ viewport }) => {
                         It&apos;s time to take off during these
                         unprecedented times.
                     </S.Header>
-                    <S.Button className="home gradient uppercase">
+                    <S.Button
+                        className="home gradient uppercase"
+                        onClick={learnMoreOnClickHandler}>
                         Learn More
                     </S.Button>
                 </S.FlexContainer>
@@ -67,7 +87,8 @@ const Home = ({ viewport }) => {
                 <S.Section
                     color="grey-tint-lighter"
                     bgColor="grey-shade-dark"
-                    height="75vh">
+                    height="75vh"
+                    ref={learnMoreRef}>
                     {featureDescriptions.map((description, index) => {
                         let last;
                         let reverse;
@@ -179,9 +200,11 @@ const Home = ({ viewport }) => {
                         <S.Header as="h3">
                             Get started today.**
                         </S.Header>
-                        <S.Button className="gradient uppercase">
-                            Unlock the key
-                        </S.Button>
+                        <Link to="/contact">
+                            <S.Button className="gradient uppercase">
+                                Unlock the key
+                            </S.Button>
+                        </Link>
                         <S.TinyText
                             superTiny
                             color="grey-shade-dark">

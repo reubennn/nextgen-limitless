@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { shuffle } from "../scripts/shuffleArray";
 
 import {
@@ -258,9 +259,11 @@ const About = ({ viewport }) => {
                         <S.Header as="h3">
                             It will be out of this world.
                         </S.Header>
-                        <S.Button className="gradient uppercase">
-                            Contact Us
-                        </S.Button>
+                        <Link to="contact">
+                            <S.Button className="gradient uppercase">
+                                Contact Us
+                            </S.Button>
+                        </Link>
                     </S.FlexContainer>
                 </S.SectionWithBackground>
             </S.MainPageBody>
