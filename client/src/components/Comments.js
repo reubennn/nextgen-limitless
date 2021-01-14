@@ -142,7 +142,8 @@ const Comments = ({
                             <>
                                 <S.Button
                                     className="gradient uppercase
-                                    comments-section justify-center">
+                                    comments-section justify-center"
+                                    $radius="0.5rem"
                                     onClick={scrollToCommentForm}>
                                     Comment
                                 </S.Button>
@@ -163,7 +164,8 @@ const Comments = ({
                         {!smallerViewport &&
                             <S.Button
                                 className="gradient uppercase comments-section
-                            justify-right">
+                                justify-right"
+                                $radius="0.5rem"
                                 onClick={scrollToCommentForm}>
                                 Comment
                             </S.Button>

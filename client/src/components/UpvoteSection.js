@@ -38,6 +38,7 @@ const UpvoteSection = ({ articlePath, upvotes, setArticle }) => {
                     {!upvotesIsOne && "s"}</i>
                 <S.Button
                     className="upvote-button gradient justify-center"
+                    $radius="0.5rem"
                     onClick={() => upvoteArticle()}>
                     +1
                 </S.Button>

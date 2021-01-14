@@ -477,12 +477,10 @@ export const Button = styled.button.attrs((props) => ({
         padding: 0.35rem;
         padding-top: 0.25rem;
         margin: 0;
-        border-radius: 0.6rem;
     }
 
     &.comments-section {
         padding: 0.5rem 0.75rem;
-        border-radius: 0.5rem;
     }
 `;
 
