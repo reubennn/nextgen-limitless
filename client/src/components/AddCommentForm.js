@@ -16,11 +16,18 @@ import * as S from "../styles/styled-components/styled";
 /**
  * React Component for an add comment form.
  *
- * Allows a user to enter their name, a comment and then post it.
+ * - Allows a user to enter their name, a comment and then post it.
+ * - In order to useRef the component (ie, when scrolling to the component),
+ * we need to use React.forwardRef as we are using a Functional React
+ * Component.
+ *
  *
  * @return {Component} add comment form for posting a comment to an article
  */
-const AddCommentForm = ({ articlePath, setArticle, viewport }) => {
+const AddCommentForm = React.forwardRef((
+    { articlePath, setArticle, viewport },
+    ref,
+) => {
     const initialState = {
         /** Input field values */
         input: {
@@ -250,7 +257,7 @@ const AddCommentForm = ({ articlePath, setArticle, viewport }) => {
      * @param {String} property the input property value
      * @return {Boolean} true if the input is valid, false otherwise
      */
-    const checkInputIsValid = (value, property) => {
+    const checkInputIsValid = (value) => {
         const isEmpty = checkIfInputIsEmpty(value);
         return isEmpty ? false : true;
     };
@@ -453,11 +460,12 @@ const AddCommentForm = ({ articlePath, setArticle, viewport }) => {
         <S.Form
             className={getFormClasses()}
             onSubmit={(e) => handleSubmitEvent(e)}
-            type={viewport.type}>
+            type={viewport.type}
+            ref={ref}>
             {formContent}
         </S.Form>
     );
-};
+});
 
 AddCommentForm.propTypes = {
     /**
@@ -479,6 +487,12 @@ AddCommentForm.propTypes = {
 };
 
 /**
+ * Add the Display Name for the Component.
+ * - Required as React.forwardRef hides the name.
+ */
+AddCommentForm.displayName = "AddCommentForm";
+
+/**
  * Assign props using Redux selectors
  * to connect the Component to the Redux store.
  *
@@ -491,4 +505,10 @@ const mapStateToProps = (state) => ({
     },
 });
 
-export default connect(mapStateToProps)(AddCommentForm);
+/** We need to add forwardRef option to ensure our ref is passed through */
+export default connect(
+    mapStateToProps,
+    null,
+    null,
+    { forwardRef: true },
+)(AddCommentForm);

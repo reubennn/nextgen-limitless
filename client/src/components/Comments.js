@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { DateTime } from "luxon";
 import { connect } from "react-redux";
@@ -32,10 +32,28 @@ const Comments = ({
     setArticle,
     viewport,
 }) => {
+    /** Store the current time into state */
     const [now, setNow] = useState(DateTime.local());
 
     const smallerViewport = viewport.size.is.lessThan.small;
     const hasComments = comments.length > 0;
+
+    /** useRef for our AddCommentForm Component for the scrolling event */
+    const commentFormRef = useRef(null);
+
+    /**
+     * Handler function to smoothly scroll the page so the add comment
+     * form is in the center of the viewport.
+     *
+     * - Called when the user presses the "quick" comment button
+     * at the top of the conversation section.
+     */
+    const scrollToCommentForm = () => {
+        commentFormRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
+    };
 
     /**
      * useEffect which sets up an interval, which will update the current
@@ -125,6 +143,7 @@ const Comments = ({
                                 <S.Button
                                     className="gradient uppercase
                                     comments-section justify-center">
+                                    onClick={scrollToCommentForm}>
                                     Comment
                                 </S.Button>
                                 <br />
@@ -145,6 +164,7 @@ const Comments = ({
                             <S.Button
                                 className="gradient uppercase comments-section
                             justify-right">
+                                onClick={scrollToCommentForm}>
                                 Comment
                             </S.Button>
                         }
@@ -240,7 +260,8 @@ const Comments = ({
                 className={smallerViewport &&
                     "small-viewport"}
                 articlePath={articlePath}
-                setArticle={setArticle} />
+                setArticle={setArticle}
+                ref={commentFormRef} />
         </>
     );
 };
