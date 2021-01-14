@@ -35,25 +35,15 @@ const Comments = ({
     /** Store the current time into state */
     const [now, setNow] = useState(DateTime.local());
 
+    /** Store comments sorting states */
+    const [sortingMethod, setSortingMethod] = useState("Interaction");
+    const [sortedComments, setSortedComments] = useState(comments);
+
     const smallerViewport = viewport.size.is.lessThan.small;
     const hasComments = comments.length > 0;
 
     /** useRef for our AddCommentForm Component for the scrolling event */
     const commentFormRef = useRef(null);
-
-    /**
-     * Handler function to smoothly scroll the page so the add comment
-     * form is in the center of the viewport.
-     *
-     * - Called when the user presses the "quick" comment button
-     * at the top of the conversation section.
-     */
-    const scrollToCommentForm = () => {
-        commentFormRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-        });
-    };
 
     /**
      * useEffect which sets up an interval, which will update the current
@@ -77,6 +67,50 @@ const Comments = ({
             clearInterval(updateTimeInterval);
         };
     }, []);
+
+    /**
+     * useEffect which is called when the sorting method is changed,
+     * or a new comment is added.
+     *
+     * - Sorts the comments based on the sorting method and updates the state.
+     */
+    useEffect(() => {
+        let isMounted = true;
+        if (isMounted) {
+            setSortedComments([
+                ...comments.sort((a, b) => sortCompareAlgorithm(a, b)),
+            ]);
+        }
+        return () => {
+            isMounted = false;
+        };
+    }, [sortingMethod, comments.length]);
+
+    /**
+     * Algorithm to determine how to sort the elements depending
+     * on the sorting method specified from the select drop-down.
+     *
+     * @param {Object} a first element to compare
+     * @param {Object} b second element to compare
+     * @return {Number} value which determines the sorting method
+     */
+    const sortCompareAlgorithm = (a, b) => {
+        const dateTimeA = DateTime.fromISO(a.timestamp);
+        const dateTimeB = DateTime.fromISO(b.timestamp);
+        if (sortingMethod === "Interaction") {
+            if ((a.upvotes + a.downvotes) > (b.upvotes + b.downvotes)) {
+                return -1;
+            } else if ((a.upvotes + a.downvotes) < (b.upvotes + b.downvotes)) {
+                return 1;
+            } else {
+                return dateTimeB.minus(dateTimeA.ts);
+            }
+        } else if (sortingMethod === "Newest") {
+            return dateTimeB.minus(dateTimeA.ts);
+        } else if (sortingMethod === "Oldest") {
+            return dateTimeA.minus(dateTimeB.ts);
+        }
+    };
 
     /**
      * Function which gets the relative time since a given date-time timestamp.
@@ -107,7 +141,23 @@ const Comments = ({
             return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
         }
         const secondsAsInt = parseInt(seconds);
-        return `${secondsAsInt} second${secondsAsInt === 1 ? "" : "s"} ago`;
+        return seconds < 1 ?
+            "Just now" :
+            `${secondsAsInt} second${secondsAsInt === 1 ? "" : "s"} ago`;
+    };
+
+    /**
+     * Handler function to smoothly scroll the page so the add comment
+     * form is in the center of the viewport.
+     *
+     * - Called when the user presses the "quick" comment button
+     * at the top of the conversation section.
+     */
+    const scrollToCommentForm = () => {
+        commentFormRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
     };
 
     return (
@@ -155,10 +205,21 @@ const Comments = ({
                         comments-section">
                                 Sort by:
                             </S.Label>
-                            <S.SelectSort name="sort" className="uppercase">
-                                <S.Option value="Popular">Popular</S.Option>
-                                <S.Option value="Newest">Newest</S.Option>
-                                <S.Option value="Oldest">Oldest</S.Option>
+                            <S.SelectSort
+                                name="sort"
+                                className="uppercase"
+                                value={sortingMethod}
+                                onChange={(e) =>
+                                    setSortingMethod(e.target.value)}>
+                                <S.Option value="Interaction">
+                                    Interaction
+                                </S.Option>
+                                <S.Option value="Newest">
+                                    Newest
+                                </S.Option>
+                                <S.Option value="Oldest">
+                                    Oldest
+                                </S.Option>
                             </S.SelectSort>
                         </S.FlexContainer>
                         {!smallerViewport &&
@@ -188,7 +249,7 @@ const Comments = ({
                             thin />
                     </>
                 }
-                {comments.map((item, key) => (
+                {sortedComments.map((item, key) => (
                     <S.CommentWrapper key={key}>
                         <S.FlexContainer
                             className="no-margin"
