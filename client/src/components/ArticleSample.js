@@ -47,8 +47,8 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                         className="no-margin"
                         justifyContent="left">
                         <S.AuthorAvatar
-                            src={article.image.src}
-                            alt={article.image.alt} />
+                            src={article.author.avatar}
+                            alt={article.author.name} />
                         <S.ArticleTitle
                             as="h5"
                             className="author">
@@ -60,7 +60,7 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                                 href={`/blog/${article.path}`}
                                 rel="noreferrer"
                                 thicker>
-                                {article.author}
+                                {article.author.name}
                             </S.InlineAnchor>
                         </S.ArticleTitle>
                     </S.FlexContainer>

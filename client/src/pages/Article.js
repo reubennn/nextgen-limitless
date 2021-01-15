@@ -51,7 +51,7 @@ const Article = ({ match, viewport }) => {
         path: path,
         title: null,
         author: null,
-        pubDate: null,
+        timestamp: null,
         image: null,
         content: [],
         upvotes: null,
@@ -122,8 +122,8 @@ const Article = ({ match, viewport }) => {
      * - Immediately invoked to assign the value to dateString constant
     */
     const dateString = (() => {
-        if (article.pubDate !== undefined && article.pubDate !== null) {
-            const date = moment(article.pubDate);
+        if (article.timestamp !== undefined && article.timestamp !== null) {
+            const date = moment(article.timestamp);
             return date.format(DATE_FORMAT);
         }
     })();
@@ -153,8 +153,8 @@ const Article = ({ match, viewport }) => {
                         className="no-margin"
                         justifyContent="left">
                         <S.AuthorAvatar
-                            src={article.image.src}
-                            alt={article.image.alt} />
+                            src={article.author.avatar}
+                            alt={article.author.name} />
                         <S.ArticleTitle
                             as="h5"
                             className="author"
@@ -167,7 +167,7 @@ const Article = ({ match, viewport }) => {
                                 href={`/blog/${article.path}`}
                                 rel="noreferrer"
                                 thicker>
-                                {article.author}
+                                {article.author.name}
                             </S.InlineAnchor>
                             {viewport.size.is.greaterThan.extraSmall &&
                                 <>&nbsp;|&nbsp;&nbsp;</>}
