@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 import { Image } from "./general";
-import { color } from "./colors";
+import { color, transparency } from "./colors";
 import { handleCommentsWidth } from "./responsive";
 
 /**
@@ -28,6 +28,15 @@ export const ConversationSection = styled.div.attrs((props) => ({
  */
 export const CommentWrapper = styled.ul`
     margin-top: 1.5rem;
+`;
+
+/**
+ * Wrapper container for a comment.
+ */
+export const RepliesWrapper = styled.ul`
+    margin-left: 1.5rem;
+    padding-left: 1.5rem;
+    border-left: 0.05rem solid ${color.grey.tint.lightest + transparency.x75};
 `;
 
 /**
