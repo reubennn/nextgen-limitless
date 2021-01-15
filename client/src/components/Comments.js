@@ -9,12 +9,8 @@ import {
     getViewportType,
 } from "../selectors/viewportSelectors";
 
-import Icon from "./Icon";
 import AddCommentForm from "./AddCommentForm";
-
-import moreOptions from ".../icons/more-options.svg";
-import thumbsUp from ".../icons/thumbs-up.svg";
-import thumbsDown from ".../icons/thumbs-down.svg";
+import Comment from "./Comment";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -160,83 +156,6 @@ const Comments = ({
         });
     };
 
-    const displayReplies = (replies) => replies.length > 0 &&
-        <S.RepliesWrapper>
-            {
-                replies.map((item, key) => (
-                    <S.CommentWrapper key={key}>
-                        <S.FlexContainer
-                            className="no-margin"
-                            justifyContent="flex-start">
-                            <S.UserAvatar
-                                src={item.avatar}
-                                alt="Avatar" />
-                            <S.FlexContainer
-                                column
-                                className="no-margin">
-                                <S.CommentUser>
-                                    {item.name}
-                                </S.CommentUser>
-                                <S.CommentTimestamp>
-                                    {getRelativeTime(item.timestamp)}
-                                </S.CommentTimestamp>
-                            </S.FlexContainer>
-                            <S.OptionsButton className="justify-right">
-                                <Icon
-                                    className="dark-hover"
-                                    xlinkHref={moreOptions}
-                                    height="16px"
-                                    width="16px"
-                                    fill="grey-tint-neutral" />
-                            </S.OptionsButton>
-                        </S.FlexContainer>
-                        <S.CommentText>
-                            {item.comment}
-                        </S.CommentText>
-                        <S.FlexContainer
-                            className="no-margin"
-                            justifyContent="flex-start">
-                            <S.OptionsButton className="keep-next no-bg">
-                                Reply
-                            </S.OptionsButton>
-                            <S.TallyContainer>
-                                <S.OptionsButton className="keep-next no-bg">
-                                    <Icon
-                                        className="dark-hover"
-                                        xlinkHref={thumbsUp}
-                                        height="16px"
-                                        width="16px"
-                                        fill="grey-tint-neutral" />
-                                </S.OptionsButton>
-                                <S.TallyCount>
-                                    {item.upvotes}
-                                </S.TallyCount>
-                            </S.TallyContainer>
-                            <S.TallyContainer>
-                                <S.OptionsButton className="keep-next no-bg">
-                                    <Icon
-                                        className="dark-hover"
-                                        xlinkHref={thumbsDown}
-                                        height="16px"
-                                        width="16px"
-                                        fill="grey-tint-neutral" />
-                                </S.OptionsButton>
-                                <S.TallyCount>
-                                    {item.downvotes}
-                                </S.TallyCount>
-                            </S.TallyContainer>
-                        </S.FlexContainer>
-                        {key !== replies.length - 1 &&
-                            <S.HorizontalRuler
-                                className="small-margin"
-                                color="grey-tint-lighter"
-                                thin />
-                        }
-                    </S.CommentWrapper>
-                ))
-            }
-        </S.RepliesWrapper>;
-
     return (
         <>
             <S.FlexContainer
@@ -326,84 +245,12 @@ const Comments = ({
                             thin />
                     </>
                 }
-                {sortedComments.map((item, key) => (
-                    <S.CommentWrapper key={key}>
-                        <S.FlexContainer
-                            className="no-margin"
-                            justifyContent="flex-start">
-                            <S.UserAvatar
-                                src={item.avatar}
-                                alt="Avatar" />
-                            <S.FlexContainer
-                                column
-                                className="no-margin">
-                                <S.CommentUser>
-                                    {item.name}
-                                </S.CommentUser>
-                                <S.CommentTimestamp>
-                                    {getRelativeTime(item.timestamp)}
-                                </S.CommentTimestamp>
-                            </S.FlexContainer>
-                            <S.OptionsButton className="justify-right">
-                                <Icon
-                                    className="dark-hover"
-                                    xlinkHref={moreOptions}
-                                    height="16px"
-                                    width="16px"
-                                    fill="grey-tint-neutral" />
-                            </S.OptionsButton>
-                        </S.FlexContainer>
-                        <S.CommentText>
-                            {item.comment}
-                        </S.CommentText>
-                        <S.FlexContainer
-                            className="no-margin"
-                            justifyContent="flex-start">
-                            <S.OptionsButton className="keep-next no-bg">
-                                Reply
-                            </S.OptionsButton>
-                            <S.TallyContainer>
-                                <S.OptionsButton className="keep-next no-bg">
-                                    <Icon
-                                        className="dark-hover"
-                                        xlinkHref={thumbsUp}
-                                        height="16px"
-                                        width="16px"
-                                        fill="grey-tint-neutral" />
-                                </S.OptionsButton>
-                                <S.TallyCount>
-                                    {item.upvotes}
-                                </S.TallyCount>
-                            </S.TallyContainer>
-                            <S.TallyContainer>
-                                <S.OptionsButton className="keep-next no-bg">
-                                    <Icon
-                                        className="dark-hover"
-                                        xlinkHref={thumbsDown}
-                                        height="16px"
-                                        width="16px"
-                                        fill="grey-tint-neutral" />
-                                </S.OptionsButton>
-                                <S.TallyCount>
-                                    {item.downvotes}
-                                </S.TallyCount>
-                            </S.TallyContainer>
-                        </S.FlexContainer>
-                        <S.HorizontalRuler
-                            className="small-margin"
-                            color="grey-tint-lighter"
-                            thin />
-                        {
-                            item.replies.length > 0 &&
-                            <>
-                                {displayReplies(item.replies)}
-                                <S.HorizontalRuler
-                                    className="small-margin"
-                                    color="grey-tint-lighter"
-                                    thin />
-                            </>
-                        }
-                    </S.CommentWrapper>
+                {sortedComments.map((comment, key) => (
+                    <Comment
+                        key={key}
+                        data={comment}
+                        getRelativeTime={getRelativeTime}
+                        viewport={viewport} />
                 ))}
             </S.ConversationSection>
             <AddCommentForm

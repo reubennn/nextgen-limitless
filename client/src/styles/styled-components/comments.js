@@ -34,8 +34,8 @@ export const CommentWrapper = styled.ul`
  * Wrapper container for a comment.
  */
 export const RepliesWrapper = styled.ul`
-    margin-left: 1.5rem;
-    padding-left: 1.5rem;
+    margin-left: 1rem;
+    padding-left: 1rem;
     border-left: 0.05rem solid ${color.grey.tint.lightest + transparency.x75};
 `;
 

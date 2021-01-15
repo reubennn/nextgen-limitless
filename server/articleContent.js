@@ -1,6 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable max-len */
 import { DateTime } from "luxon";
+import { ObjectID } from "mongodb";
 
 /**
  * Initial article content to upload to MongoDB.
@@ -68,15 +69,158 @@ const articles = [
         upvotes: 79,
         comments: [
             {
+                _id: new ObjectID(),
                 name: "Todd Sullivan",
                 comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
                 timestamp: DateTime.local().minus({ days: 45 }),
                 upvotes: 8,
                 downvotes: 2,
-                replies: [],
+                replies: [
+                    {
+                        _id: new ObjectID(),
+                        name: "Todd Sullivan",
+                        comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
+                        avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                        timestamp: DateTime.local().minus({ days: 45 }),
+                        upvotes: 0,
+                        downvotes: 0,
+                        replies: [
+                            {
+                                _id: new ObjectID(),
+                                name: "Todd Sullivan",
+                                comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
+                                avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                                timestamp: DateTime.local().minus({ days: 45 }),
+                                upvotes: 0,
+                                downvotes: 0,
+                                replies: [
+                                    {
+                                        _id: new ObjectID(),
+                                        name: "Todd Sullivan",
+                                        comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
+                                        avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                                        timestamp: DateTime.local().minus({ days: 45 }),
+                                        upvotes: 0,
+                                        downvotes: 0,
+                                        replies: [
+                                            {
+                                                _id: new ObjectID(),
+                                                name: "Todd Sullivan",
+                                                comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
+                                                avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                                                timestamp: DateTime.local().minus({ days: 45 }),
+                                                upvotes: 0,
+                                                downvotes: 0,
+                                                replies: [
+                                                    {
+                                                        _id: new ObjectID(),
+                                                        name: "Todd Sullivan",
+                                                        comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
+                                                        avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                                                        timestamp: DateTime.local().minus({ days: 45 }),
+                                                        upvotes: 0,
+                                                        downvotes: 0,
+                                                        replies: [
+                                                            {
+                                                                _id: new ObjectID(),
+                                                                name: "Todd Sullivan",
+                                                                comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
+                                                                avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                                                                timestamp: DateTime.local().minus({ days: 45 }),
+                                                                upvotes: 0,
+                                                                downvotes: 0,
+                                                                replies: [
+                                                                    {
+                                                                        _id: new ObjectID(),
+                                                                        name: "Todd Sullivan",
+                                                                        comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
+                                                                        avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                                                                        timestamp: DateTime.local().minus({ days: 45 }),
+                                                                        upvotes: 0,
+                                                                        downvotes: 0,
+                                                                        replies: [
+                                                                            {
+                                                                                _id: new ObjectID(),
+                                                                                name: "Todd Sullivan",
+                                                                                comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
+                                                                                avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                                                                                timestamp: DateTime.local().minus({ days: 45 }),
+                                                                                upvotes: 0,
+                                                                                downvotes: 0,
+                                                                                replies: [
+                                                                                    {
+                                                                                        _id: new ObjectID(),
+                                                                                        name: "Todd Sullivan",
+                                                                                        comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
+                                                                                        avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                                                                                        timestamp: DateTime.local().minus({ days: 45 }),
+                                                                                        upvotes: 0,
+                                                                                        downvotes: 0,
+                                                                                        replies: [
+                                                                                            {
+                                                                                                _id: new ObjectID(),
+                                                                                                name: "Todd Sullivan",
+                                                                                                comment: "Animals are such interesting creatures. I always wonder what it would like to be a llama.",
+                                                                                                avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                                                                                                timestamp: DateTime.local().minus({ days: 45 }),
+                                                                                                upvotes: 0,
+                                                                                                downvotes: 0,
+                                                                                                replies: [
+                                                                                                    {
+                                                                                                        _id: new ObjectID(),
+                                                                                                        name: "Todd Sullivan",
+                                                                                                        comment: "Huh? That was weird.",
+                                                                                                        avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/todd-sullivan_bt8oqy.jpg",
+                                                                                                        timestamp: DateTime.local().minus({ days: 40 }),
+                                                                                                        upvotes: 47,
+                                                                                                        downvotes: 4,
+                                                                                                        replies: [],
+                                                                                                    },
+                                                                                                    {
+                                                                                                        _id: new ObjectID(),
+                                                                                                        name: "Jamil Thomson",
+                                                                                                        comment: "Very weird! How did you even manage to do that?",
+                                                                                                        avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009191/fullstack-react/authors/jamil-thomson_mkzu8o.jpg",
+                                                                                                        timestamp: DateTime.local().minus({ days: 37 }),
+                                                                                                        upvotes: 5,
+                                                                                                        downvotes: 0,
+                                                                                                        replies: [],
+                                                                                                    },
+                                                                                                ],
+                                                                                            },
+                                                                                        ],
+                                                                                    },
+                                                                                ],
+                                                                            },
+                                                                            {
+                                                                                _id: new ObjectID(),
+                                                                                name: "Jocelyn Wynn",
+                                                                                comment: "I think you've broken the website.",
+                                                                                avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/jocelyn-wynn_p3o3rg.jpg",
+                                                                                timestamp: DateTime.local().minus({ days: 45 }),
+                                                                                upvotes: 89,
+                                                                                downvotes: 2,
+                                                                                replies: [],
+                                                                            },
+                                                                        ],
+                                                                    },
+                                                                ],
+                                                            },
+                                                        ],
+                                                    },
+                                                ],
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
             },
             {
+                _id: new ObjectID(),
                 name: "Todd Sullivan",
                 comment: "You'd definitely think that the author of this article really loves animals?! I mean, animals are cool and all, but I think the author went a bit overboard here.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/tayla-mills_hm0mbv.jpg",
@@ -86,6 +230,7 @@ const articles = [
                 replies: [],
             },
             {
+                _id: new ObjectID(),
                 name: "Animal_Lover45",
                 comment: "DEFEND ANIMALS!!!!!",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1610515162/fullstack-react/authors/default-avatar_umlq3b.png",
@@ -94,6 +239,7 @@ const articles = [
                 downvotes: 56,
                 replies: [
                     {
+                        _id: new ObjectID(),
                         name: "Franklin \"Mouse\" Finbar",
                         comment: "Yes, I agree. Except for that hippo that ate Shelly. That was just plain nasty!",
                         avatar: "https://res.cloudinary.com/reuben/image/upload/v1610673901/fullstack-react/authors/franklin-finbar_y4dehe.jpg",
@@ -143,6 +289,7 @@ const articles = [
         upvotes: 172,
         comments: [
             {
+                _id: new ObjectID(),
                 name: "Kaidan Nairn",
                 comment: "Very interesting article. I will have to practice these techniques some time to up my dating game!",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/kaidan-nairn_toopg0.jpg",
@@ -151,6 +298,7 @@ const articles = [
                 downvotes: 124,
                 replies: [
                     {
+                        _id: new ObjectID(),
                         name: "Julie Roberts",
                         comment: "Up your dating game? So what about our 7 year relationship!!?! Is this really how I find out - through some lame smoldering article??! I can't believe you Kaidan!! WE ARE DONE!!!!!!!!",
                         avatar: "https://res.cloudinary.com/reuben/image/upload/v1608010637/fullstack-react/authors/julie-roberts_o3efc9.jpg",
@@ -160,6 +308,7 @@ const articles = [
                         replies: [],
                     },
                     {
+                        _id: new ObjectID(),
                         name: "Roger White",
                         comment: "Hi Julie. So sorry for your loss. My name is Roger - I am a 37 y/o upbeat and vibrant man looking for someone who has your qualities. Please respond to my private message and I hope that we can discuss the possibility of going on a date sometime in the near future. You can reach me on +1-808-555-0135. Thanks, and looking forward to hearing from you.",
                         avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/roger-white_ryykyd.jpg",
@@ -171,6 +320,7 @@ const articles = [
                 ],
             },
             {
+                _id: new ObjectID(),
                 name: "Zane Frost",
                 comment: "I am commenting for the fun of it.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/zane-frost_q60eot.jpg",
@@ -180,6 +330,7 @@ const articles = [
                 replies: [],
             },
             {
+                _id: new ObjectID(),
                 name: "Jamil Thomson",
                 comment: "What kind of an article is this? How to smolder? What even is smoldering? This was pointless. I want 5 minutes of my life back.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009191/fullstack-react/authors/jamil-thomson_mkzu8o.jpg",
@@ -189,6 +340,7 @@ const articles = [
                 replies: [],
             },
             {
+                _id: new ObjectID(),
                 name: "Vera Mercer",
                 comment: "I'm just trying to do my grocery shopping and ended up here some how. I just want to order my weekly shop from Coles. Please can someone just redirect me. I am getting quite hungry and could do with some food.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009191/fullstack-react/authors/vera-mercer_h9cgoh.jpg",
@@ -198,6 +350,7 @@ const articles = [
                 replies: [],
             },
             {
+                _id: new ObjectID(),
                 name: "Tayla Mills",
                 comment: "Incredibly written article. I will definitely put my new found knowledge to use. Thanks for helping me to learn to smolder the right way.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/tayla-mills_hm0mbv.jpg",
@@ -207,6 +360,7 @@ const articles = [
                 replies: [],
             },
             {
+                _id: new ObjectID(),
                 name: "Lilian Noel",
                 comment: "I've been smoldering since I was 6 years old. I am now 36.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/lilian-noel_byoqkl.jpg",
@@ -215,6 +369,7 @@ const articles = [
                 downvotes: 0,
                 replies: [
                     {
+                        _id: new ObjectID(),
                         name: "Dr. Smolder Bravestone",
                         comment: "Thanks for sharing, Lilian.",
                         avatar: "https://res.cloudinary.com/reuben/image/upload/v1610673901/fullstack-react/authors/smolder-bravestone_uugl1e.jpg",
@@ -269,6 +424,7 @@ const articles = [
         upvotes: 15,
         comments: [
             {
+                _id: new ObjectID(),
                 name: "Ruby Roundhouse",
                 comment: "Hello??? Anyone?????????",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1610673901/fullstack-react/authors/ruby-roundhouse_ubn3m8.jpg",
@@ -319,6 +475,7 @@ const articles = [
         upvotes: 0,
         comments: [
             {
+                _id: new ObjectID(),
                 name: "Roger White",
                 comment: "Hi Professor Shelley Oberon. My name is Roger White. I am a 37 y/o man who considers himself quite skilled in the art of maps. I once found myself lost in the African desert with nothing but the shirt on my back, a metal soup spoon, a map of Antarctica, a 15m rope, 5 cans of baked beans, 250 grams of strong blend Arabian coffee beans, 1L of VOSS sparkling water and my trusty Lakers snapback. Boy, did it turn out that map of Antarctica was useless when you're lost in the desert of Africa. I still managed to decipher it and get back to humanity. Thanks for reading.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/roger-white_ryykyd.jpg",
@@ -395,6 +552,7 @@ const articles = [
         upvotes: 1,
         comments: [
             {
+                _id: new ObjectID(),
                 name: "Roger White",
                 comment: "Hi Nigel. My name is Roger - I am a 36 y/o upbeat and vibrant man who would consider himself a superhero. Please respond to my private message and I hope that we can discuss my services that I provide. You can reach me on +1-808-555-0135. I think I would be a very good match. Please contact me ASAP.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/roger-white_ryykyd.jpg",
@@ -439,6 +597,7 @@ const articles = [
         upvotes: 203,
         comments: [
             {
+                _id: new ObjectID(),
                 name: "Roger White",
                 comment: "Hi Nigel. I reached out to you in response to your last article. Just thought I would let you know I am now 37 y/o, and I'm not hurt about you not replying to my message. After 6 months of counselling sessions, I am now in a good place again after you ghosting me and also probably most likely something to do with my divorce with my ex-wife of 27 years.. Anyway, I still believe I would be a good fit to help you out. You mention that you are looking for anyone available. Surely that means that I am a match. Please Nigel. Respond to my private messages and we can talk price. You can reach me on +1-808-555-0135. Please contact me at your soonest convenience.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/roger-white_ryykyd.jpg",
@@ -448,6 +607,7 @@ const articles = [
                 replies: [],
             },
             {
+                _id: new ObjectID(),
                 name: "Not Telling",
                 comment: "Seems like the author is pretty annoyed here, hey? I mean, it looks like they've been waiting for someone to help them for quite some time now...",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1610515162/fullstack-react/authors/default-avatar_umlq3b.png",
@@ -456,6 +616,7 @@ const articles = [
                 downvotes: 1,
                 replies: [
                     {
+                        _id: new ObjectID(),
                         name: "Kathryn Sutherland",
                         comment: "Yeah, they're angry alright!",
                         avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/kathryn-sutherland_sxrwjn.jpg",
@@ -467,6 +628,7 @@ const articles = [
                 ],
             },
             {
+                _id: new ObjectID(),
                 name: "Scott Bryan",
                 comment: "LOL, triggered.",
                 avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009190/fullstack-react/authors/scott-bryan_mxciog.jpg",
