@@ -25,7 +25,7 @@ import * as S from "../styles/styled-components/styled";
  * @return {Component} add comment form for posting a comment to an article
  */
 const AddCommentForm = React.forwardRef((
-    { articlePath, setArticle, viewport },
+    { articlePath, setNewComment, viewport },
     ref,
 ) => {
     const initialState = {
@@ -49,6 +49,8 @@ const AddCommentForm = React.forwardRef((
         showError: false,
         /** Flag indicating if the submit button was clicked */
         buttonClicked: false,
+        /** When post request to server fails, is populated with error code */
+        postToServerFailure: null,
     };
 
     const [form, setForm] = useState(initialState);
@@ -78,11 +80,11 @@ const AddCommentForm = React.forwardRef((
      */
     const postCommentToServer = async () => {
         const response = await fetch(
-            `/api/articles/${articlePath}/add-comment`,
+            `/api/comments/${articlePath}/add-comment`,
             {
                 method: "POST",
                 headers: {
-                    // Tell server we are passing JSON
+                    /** Tell the server we are passing JSON */
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
@@ -92,7 +94,12 @@ const AddCommentForm = React.forwardRef((
                 }),
             });
         const body = await response.json();
-        setArticle(body.value);
+        if (response.status !== 200) {
+            handlePostToServerFailure(response.status);
+        } else {
+            handlePostToServerSuccess();
+            setNewComment(body);
+        }
     };
 
     /**
@@ -195,6 +202,22 @@ const AddCommentForm = React.forwardRef((
             isMounted = false;
         };
     }, [form.buttonClicked]);
+
+    /**
+     * useEffect which is triggered when posting to the server failed.
+     *
+     */
+    useEffect(() => {
+        let isMounted = true;
+        let timeout;
+        if (isMounted) {
+            timeout = setTimeout(() => resetServerFailureFlag(), 10000);
+        }
+        return () => {
+            clearTimeout(timeout);
+            isMounted = false;
+        };
+    }, [form.postToServerFailure]);
 
     /**
      * Handler function for the onChange event of the resizable text area.
@@ -306,7 +329,7 @@ const AddCommentForm = React.forwardRef((
      */
     const handleButtonClick = () => {
         if (form.isComplete) {
-            handleCompleteSubmit();
+            postCommentToServer();
         } else {
             handleIncompleteSubmit();
         }
@@ -337,14 +360,43 @@ const AddCommentForm = React.forwardRef((
      * form to collapse.
      * - It is here that we would use the information to send to the database.
      */
-    const handleCompleteSubmit = () => {
+    const handlePostToServerSuccess = () => {
         setForm((prevState) => {
             return {
                 ...prevState,
                 submitted: true,
             };
         });
-        postCommentToServer();
+    };
+
+    /**
+     * Handler function if the submit button was pressed and
+     * the form is complete and valid.
+     *
+     * @param {Number} error server response error code
+     *
+     */
+    const handlePostToServerFailure = (error) => {
+        setForm((prevState) => {
+            return {
+                ...prevState,
+                postToServerFailure: error,
+            };
+        });
+    };
+
+    /**
+     * Handler function if the submit button was pressed and
+     * the form is complete and valid.
+     *
+     */
+    const resetServerFailureFlag = () => {
+        setForm((prevState) => {
+            return {
+                ...prevState,
+                postToServerFailure: null,
+            };
+        });
     };
 
     /**
@@ -429,7 +481,8 @@ const AddCommentForm = React.forwardRef((
                     Add Comment
                 </S.Button>
                 <S.InvalidInputHelper
-                    className={form.showError ? "show" : ""}>
+                    className={form.showError ? "show" : ""}
+                    after>
                     Please complete the form to add a comment.
                 </S.InvalidInputHelper>
             </>
@@ -450,7 +503,8 @@ const AddCommentForm = React.forwardRef((
                     }
                 </S.Button>
                 <S.InvalidInputHelper
-                    className={commentAgain ? "show" : ""}>
+                    className={commentAgain ? "show" : ""}
+                    after>
                     Woah. Are you really sure you want to make another comment?
                 </S.InvalidInputHelper>
             </>
@@ -463,6 +517,17 @@ const AddCommentForm = React.forwardRef((
             type={viewport.type}
             ref={ref}>
             {formContent}
+            <S.InvalidInputHelper
+                className={form.postToServerFailure !== null ? "show" : ""}
+                after>
+                Oops.. there seems to be a problem with our servers at the
+                moment.
+                <br />
+                Please try again later.
+                <br /><br />
+                Server error code: {form.postToServerFailure !== null ?
+                    form.postToServerFailure : "N/A"}
+            </S.InvalidInputHelper>
         </S.Form>
     );
 });
@@ -473,12 +538,14 @@ AddCommentForm.propTypes = {
      */
     articlePath: PropTypes.string,
     /**
-     * useState React Hook passed down as props to update the article info
-     * to include the new comment if successfully posted to the database.
-     * - Originates from ArticlePage -> CommentsList -> AddCommentForm.
-     * - TODO: Use Redux to avoid props drilling.
+     * useState React Hook passed down as props to add the new comment info
+     * if successfully posted to the database.
+     *
+     * - Allows client to append the comment to the existing comments.
+     * - Avoids having to do another fetch request to the server.
+     * - Originates from Comment -> AddCommentForm.
      */
-    setArticle: PropTypes.func,
+    setNewComment: PropTypes.func,
     /**
      * Viewport Redux state.
      * - Contains information about the viewport.

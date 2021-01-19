@@ -2,6 +2,7 @@
 import styled from "styled-components";
 
 import { Image } from "./general";
+import { InvalidInputHelper } from "./forms";
 import { color, transparency } from "./colors";
 import { handleCommentsWidth } from "./responsive";
 
@@ -37,6 +38,10 @@ export const RepliesWrapper = styled.ul`
     margin-left: 1rem;
     padding-left: 1rem;
     border-left: 0.05rem solid ${color.grey.tint.lightest + transparency.x75};
+
+    &:hover {
+        border-left: 0.05rem solid ${color.grey.shade.light};
+    }
 `;
 
 /**
@@ -125,4 +130,13 @@ export const UpvoteSection = styled.div`
         margin: auto 0.6rem;
         text-align: right;
     }
+`;
+
+/**
+ * Server Error message which displays red helper text
+ * under the interaction buttons to indicate there was
+ * a problem with the server when trying to reply, upvote or downvote.
+ */
+export const ServerErrorHelper = styled(InvalidInputHelper)`
+    margin-top: 0.4rem;
 `;

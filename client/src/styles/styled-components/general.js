@@ -391,6 +391,11 @@ export const Icon = styled.svg.attrs((props) => ({
             fill: ${color.grey.shade.neutral};
             transition: ease-in-out 0.4s;
         }
+
+        &.highlight {
+            fill: ${color.grey.shade.neutral};
+            transition: ease-in-out 0.4s;
+        }
     }
 `;
 

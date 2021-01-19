@@ -5,8 +5,8 @@
  * - Simply run `npm run db-setup`.
  */
 import { MongoClient } from "mongodb";
-import documents from "./articleContent";
-import { MONGO_URI, DB_NAME, ARTICLES } from "./secrets";
+import documents from "./comments";
+import { MONGO_URI, DB_NAME, COMMENTS } from "../secrets";
 
 /* Connects client to MongoDB */
 const client = new MongoClient(MONGO_URI, {
@@ -21,7 +21,7 @@ const run = async () => {
     try {
         await client.connect();
         const db = client.db(DB_NAME);
-        const collection = db.collection(ARTICLES);
+        const collection = db.collection(COMMENTS);
         console.log("Successfully connected to MongoDB server\n");
 
         /**
@@ -30,10 +30,13 @@ const run = async () => {
          */
         const options = { ordered: true };
 
-        console.log("Inserting article content to MongoDB.\n");
+        console.log("Inserting comments to MongoDB.\n");
 
-        const result = await collection.insertMany(documents, options);
-        console.log(`${result.insertedCount} documents were inserted.`);
+
+        for await (const article of documents) {
+            const result = await collection.insertMany(article, options);
+            console.log(`${result.insertedCount} documents were inserted.`);
+        };
     } finally {
         await client.close();
     }

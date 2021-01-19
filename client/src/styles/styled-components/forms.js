@@ -130,21 +130,25 @@ export const Form = styled.form.attrs((props) => ({
 /**
  * Invalid input helper text which displays red helper text
  * under the input field when the form detects that the input is invalid.
+ *
+ * @param {Boolean} after label for after the form submit button
  */
-export const InvalidInputHelper = styled.label`
+export const InvalidInputHelper = styled.label.attrs((props) => ({
+    after: props.after || false,
+}))`
     color: transparent;
+    display: block;
     font-size: 0.8rem;
     max-height: 0;
     transition: all 0.5s ease-in-out 0s,
                 max-height 0.8s ease-in-out 0s;
+    text-align: ${(props) => props.after ? "center" : ""};
 
     &.show {
         max-height: 10rem;
         color: ${color.red.neutral};
-    }
-
-    &:last-of-type {
-        text-align: center;
-        margin-top: 2rem;
+        margin-top: ${(props) => props.after ? "1.5rem" : ""};
+        transition: all 0.5s ease-in-out 0s,
+                    max-height 0.8s ease-in-out 0s;
     }
 `;

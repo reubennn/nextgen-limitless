@@ -23,23 +23,86 @@ import * as S from "../styles/styled-components/styled";
  * @return {Component} list of comments if any exist
  */
 const Comments = ({
-    comments,
     articlePath,
-    setArticle,
     viewport,
 }) => {
     /** Store the current time into state */
     const [now, setNow] = useState(DateTime.local());
 
-    /** Store comments sorting states */
+    /** Store comment states */
     const [sortingMethod, setSortingMethod] = useState("Interaction");
-    const [sortedComments, setSortedComments] = useState(comments);
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState(null);
 
     const smallerViewport = viewport.size.is.lessThan.small;
     const hasComments = comments.length > 0;
 
     /** useRef for our AddCommentForm Component for the scrolling event */
     const commentFormRef = useRef(null);
+
+    /**
+     * Function which fetches all comments associated with the article.
+     *
+     * @return {Object} HTTP response parameters
+     * @property {Object} result HTTP response values
+     * @property {Object} body the data sent from the server
+     */
+    const fetchComments = async () => {
+        const result = await fetch(`/api/comments/${articlePath}`);
+        const body = await result.json();
+        return {
+            result,
+            body,
+        };
+    };
+
+    /**
+     * useEffect which sets up an interval, which will update the current
+     * time every minute.
+     *
+     * - Keeps the user updated about how long a commented was posted without
+     * having to refresh the page.
+     * - Only relevant for timestamps less than an hour ago.
+     *
+     */
+    useEffect(() => {
+        let isMounted = true;
+        fetchComments()
+            .then((data) => {
+                if (data.result.status !== 200) {
+                    console.log(`Error code: ${data.result.status}`);
+                } else if (isMounted) {
+                    /** Cancel Promise if unmounted to avoid memory leak */
+                    setComments(data.body);
+                }
+            });
+        return () => {
+            isMounted = false;
+        };
+    }, [articlePath]);
+
+    /**
+     * useEffect called when a new comment has been added by the
+     * New Comment Form.
+     *
+     * - Append the new comment to the comments array.
+     * - Adding a new comment will trigger the sort useEffect.
+     * - Reset newComment to initial state.
+     *
+     */
+    useEffect(() => {
+        let isMounted = true;
+        if (isMounted && newComment !== null) {
+            setComments((prevState) => [
+                ...prevState,
+                newComment,
+            ]);
+            setNewComment(null);
+        }
+        return () => {
+            isMounted = false;
+        };
+    }, [newComment]);
 
     /**
      * useEffect which sets up an interval, which will update the current
@@ -73,7 +136,7 @@ const Comments = ({
     useEffect(() => {
         let isMounted = true;
         if (isMounted) {
-            setSortedComments([
+            setComments([
                 ...comments.sort((a, b) => sortCompareAlgorithm(a, b)),
             ]);
         }
@@ -245,9 +308,9 @@ const Comments = ({
                             thin />
                     </>
                 }
-                {sortedComments.map((comment, key) => (
+                {comments.map((comment) => (
                     <Comment
-                        key={key}
+                        key={comment._id}
                         data={comment}
                         getRelativeTime={getRelativeTime}
                         viewport={viewport} />
@@ -257,7 +320,7 @@ const Comments = ({
                 className={smallerViewport &&
                     "small-viewport"}
                 articlePath={articlePath}
-                setArticle={setArticle}
+                setNewComment={setNewComment}
                 ref={commentFormRef} />
         </>
     );
@@ -272,13 +335,6 @@ Comments.propTypes = {
      * The article url articlePath.
      */
     articlePath: PropTypes.string,
-    /**
-     * useState React Hook passed down as props to update the article info.
-     * Not used in this Component, but passed onto AddCommentForm.
-     * - Originates from ArticlePage -> CommentsList -> AddCommentForm.
-     * - TODO: Use Redux to avoid props drilling.
-     */
-    setArticle: PropTypes.func,
     /**
      * Viewport Redux state.
      * - Contains information about the viewport.

@@ -1,6 +1,6 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectID } from "mongodb";
 /** Retrieve secret data not stored in Git */
-import { MONGO_URI, DB_NAME, ARTICLES } from "../../secrets";
+import { MONGO_URI, DB_NAME, ARTICLES, COMMENTS } from "../../secrets";
 
 /* Connect client to MongoDB */
 const client = new MongoClient(MONGO_URI, {
@@ -113,15 +113,16 @@ export const upvoteArticle = async (req, res) => {
 
 /**
  * Adds a comment to the database based on the request.
- * - Stores name and comment as an Object from req.body.
- * - Concatenates to end of comments array.
+ * - Stores name, comment and avatar as an Object from req.body.
+ * - We know which article it belongs to with the :path property.
  *
  * @example
- * // Adds comment to article with req :path in database with name and comment.
+ * // Adds comment to database with specified name, comment and avatar.
  * endpoint: ".../articles/:path/add-comment"
  * req.body {
- *   "name": "me",
+ *   "name": "John Doe",
  *   "comment": "I love this article!"
+ *   "avatar": https://res.cloudinary.com/reuben/image/upload/v1608009191/fullstack-react/authors/jamil-thomson_mkzu8o.jpg"
  * }
  *
  * @param {Object} req HTTP request object
@@ -131,30 +132,147 @@ export const addCommentToArticle = async (req, res) => {
     const { name, comment, avatar } = req.body;
     const articlePath = req.params.path;
 
-    queryDB(ARTICLES, res, async (collection) => {
-        const articleInfo = await collection
-            .findOne({ path: articlePath });
-
-        const updatedArticleInfo = await collection
-            .findOneAndUpdate(
-                { path: articlePath },
+    queryDB(COMMENTS, res, async (collection) => {
+        const result = await collection
+            .insertOne(
                 {
-                    "$set": {
-                        comments: articleInfo.comments
-                            .concat({
-                                name,
-                                comment,
-                                avatar,
-                                timestamp: new Date(Date.now()),
-                                upvotes: 0,
-                                downvotes: 0,
-                                replies: [],
-                            }),
+                    name,
+                    comment,
+                    avatar,
+                    timestamp: new Date(Date.now()),
+                    upvotes: 0,
+                    downvotes: 0,
+                    depth: 0,
+                    parent: "root",
+                    path: articlePath,
+                },
+            );
+        if (result.insertedCount !== 1) {
+            res.status(500).json({
+                message: "Server error: unable to add comment at this time.",
+            });
+        } else {
+            res.status(200).json(result.ops[0]);
+        }
+    });
+};
+
+/**
+ * Fetches all the root comments of an article.
+ *
+ * @param {Object} req HTTP request object
+ * @param {Object} res HTTP response object
+ */
+export const getRootComments = async (req, res) => {
+    const articlePath = req.params.path;
+
+    queryDB(COMMENTS, res, async (collection) => {
+        const result = await collection
+            .find({ path: articlePath, parent: "root" }).toArray();
+
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({
+                message: "Could not find the specified article.",
+            });
+        }
+    });
+};
+
+/**
+ * Fetches all of the replies associated with a particular comment.
+ *
+ * @param {Object} req HTTP request object
+ * @param {Object} res HTTP response object
+ */
+export const getReplies = async (req, res) => {
+    const articlePath = req.params.path;
+    const _id = req.params._id;
+
+    queryDB(COMMENTS, res, async (collection) => {
+        const result = await collection
+            .find({ path: articlePath, parent: ObjectID(_id) }).toArray();
+
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({
+                message: "Could not find the specified article.",
+            });
+        }
+    });
+};
+
+/**
+ * Using the _id, we can find the desired comment,
+ * and add one upvote to it.
+ *
+ * @param {Object} req HTTP request object
+ * @param {Object} res HTTP response object
+ */
+export const upvoteComment = async (req, res) => {
+    const articlePath = req.params.path;
+    const _id = req.params._id;
+
+    queryDB(COMMENTS, res, async (collection) => {
+        const result = await collection
+            .findOneAndUpdate(
+                { path: articlePath, _id: ObjectID(_id) },
+                {
+                    "$inc": {
+                        upvotes: 1,
                     },
                 },
                 { returnOriginal: false },
             );
-        res.status(200).json(updatedArticleInfo);
+        if (result.lastErrorObject.updatedExisting) {
+            res.status(200).json(result.value);
+        } else if (!result.lastErrorObject.updatedExisting) {
+            res.status(404).json({
+                message: "Could not find the specified comment.",
+            });
+        } else {
+            res.status(500).json({
+                message: "Server error: unable to upvote comment.",
+            });
+        }
+    });
+};
+
+/**
+ * Using the _id, we can find the desired comment,
+ * and add one downvote to it.
+ *
+ * @param {Object} req HTTP request object
+ * @param {Object} res HTTP response object
+ */
+export const downvoteComment = async (req, res) => {
+    const articlePath = req.params.path;
+    const _id = req.params._id;
+
+    queryDB(COMMENTS, res, async (collection) => {
+        const result = await collection
+            .findOneAndUpdate(
+                { path: articlePath, _id: ObjectID(_id) },
+                {
+                    "$inc": {
+                        downvotes: 1,
+                    },
+                },
+                { returnOriginal: false },
+            );
+        if (result.lastErrorObject.updatedExisting) {
+            res.status(200).json(result.value);
+        } else if (!result.lastErrorObject.updatedExisting) {
+            res.status(404).json({
+                message: "Could not find the specified comment.",
+            });
+        } else {
+            res.status(500).json({
+                message: "Server error: unable to upvote comment.",
+            });
+        }
     });
 };
 

@@ -6,7 +6,9 @@
   "scripts": {
     "server": "nodemon --exec babel-node src/server.js",
     "server-chrome": "open-cli http://localhost:9000 -- chrome && nodemon --exec babel-node src/server.js",
-    "db-setup": "babel-node addContentToDB.js",
+    "db-setup": "npm run db-setup:articles && npm run db-setup:comments",
+    "db-setup:articles": "babel-node db-setup/addArticlesToDB.js",
+    "db-setup:comments": "babel-node db-setup/addCommentsToDB.js",
     "build": "cd ../client && npx webpack --config webpack.prod.js --watch"
   },
   "author": "Reuben Smith",
