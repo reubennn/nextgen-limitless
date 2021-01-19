@@ -376,6 +376,10 @@ export const Icon = styled.svg.attrs((props) => ({
         margin: auto 1.5rem;
     }
 
+    &.testimonial {
+        margin: 1.5rem auto;
+    }
+
     &.no-color-change {
         &:hover {
             fill: ${(props) => handleColor(props.fill)};

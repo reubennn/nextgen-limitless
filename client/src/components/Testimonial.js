@@ -42,7 +42,7 @@ const Testimonial = ({ item, bgColor= "grey-shade-dark" }) => (
             height="100px"
             width="150px"
             id="main"
-            className="logo-slider"
+            className="testimonial"
             bgColor={bgColor} />
     </S.TestimonialContainer>
 );
