@@ -1,0 +1,26 @@
+{
+  "name": "fullstack-react",
+  "version": "1.0.0",
+  "description": "A complete web application integrating the MERN stack: [MongoDB](https://www.mongodb.com/), [Express.js](https://expressjs.com/), [React.js](https://reactjs.org/), [Node.js](https://nodejs.org/en/).",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "eslint-config-prettier": "^6.12.0",
+    "react": "^16.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "client": "cd client/ && npm run dev",
+    "server": "cd server/ && npm run server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reubennn/fullstack-react.git"
+  },
+  "author": "Reuben Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reubennn/fullstack-react/issues"
+  },
+  "homepage": "https://github.com/reubennn/fullstack-react#readme"
+}
