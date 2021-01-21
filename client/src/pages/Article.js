@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { connect } from "react-redux";
@@ -33,6 +33,9 @@ import * as S from "../styles/styled-components/styled";
  * @return {Component} an article page for a given topic
  */
 const Article = ({ match, viewport }) => {
+    /** useRef Mount status for cleanup and avoiding memory leaks  */
+    const isMounted = useRef(true);
+
     const path = match.params.path;
     const [found, setFound] = useState(true);
     const [loading, setLoading] = useState(true);
@@ -70,44 +73,99 @@ const Article = ({ match, viewport }) => {
     const [article, setArticle] = useState(initialState);
 
     /**
-     * React Hook: Sets the article info.
-     * useEffect is called every time path (the URL) is changed.
-     * ie. User has navigated to another article
+     * Handle fetch function wrapper to handle interrupted HTTP fetch requests.
+     *
+     * - If the AbortController signal is aborted (ie, through a component
+     * unmount).
+     *
+     * @param {AbortController} controller AbortController used to cancel fetch
+     * @param {Function} operations fetch operations to perform
+     * @return {*} HTTP response object or null if empty or aborted
+     *      - @property {Object} result HTTP response values
+     *      - @property {Object} body the data sent from the server
      */
-    useEffect(() => {
-        let isMounted = true; // Flag which denotes mount status
-
-        // Reset the article state properties with the defaults
-        if (isMounted) {
-            setArticle(initialState);
-            setLoading(true);
+    const handleFetch = async (controller, operations) => {
+        try {
+            // Set Loading state to true
+            return await operations(controller);
+        } catch (error) {
+            if (error.name === "AbortError") {
+                return null;
+            } else {
+                console.error(error);
+                return null;
+            };
+        } finally {
+            if (!controller.signal.aborted) {
+                // Set Loading to false
+            }
         }
+    };
 
-        const fetchData = async () => {
-            const result = await fetch(`/api/articles/${path}`);
+    /**
+     * Function which fetches all article data.
+     *
+     * @param {AbortController} controller AbortController used to cancel fetch
+     * @return {Object} HTTP response parameters
+     * @return {*} HTTP response object or null if empty or aborted
+     *      - @property {Object} result HTTP response values
+     *      - @property {Object} body the data sent from the server
+     */
+    const fetchArticleData = async (controller) => {
+        const result = handleFetch(controller, async () => {
+            const result = await fetch(`/api/articles/${path}`,
+                { signal: controller.signal },
+            );
             const body = await result.json();
             return {
                 result,
                 body,
             };
-        };
-        fetchData().then((data) => {
-            if (isMounted) {
-                if (data.result.status === 404) {
-                    setFound(false);
-                } else {
-                    setArticle(data.body);
-                    setLoading(false);
-                }
-            }
         });
+        return result;
+    };
 
-        /**
-         * useEffect clean-up:
-         * if unmounted, set mount status flag to false
-         */
+    /**
+     * useEffect which performs cleanup, setting isMounted to false.
+     *
+     * - This ensures subscriptions and async tasks are cancelled
+     * while the component is unmounted.
+     */
+    useEffect(() => {
         return () => {
-            isMounted = false;
+            isMounted.current = false;
+        };
+    }, []);
+
+    /**
+     * useEffect React Hook: Sets the article info.
+     *
+     * useEffect is called every time path (the URL) is changed.
+     * ie. User has navigated to another article
+     * - Unsubscribes the promise if component is unmounted, to avoid
+     * any memory leaks.
+     */
+    useEffect(() => {
+        const controller = new AbortController();
+        // Reset the article state properties with the defaults
+        if (isMounted.current) {
+            setArticle(initialState);
+            setLoading(true);
+
+            fetchArticleData(controller)
+                .then((data) => {
+                    if (isMounted.current && data !== null) {
+                        if (isMounted.current && data.result.status !== 200) {
+                            setFound(false);
+                        } else if (isMounted.current) {
+                            setArticle(data.body);
+                            setLoading(false);
+                        }
+                    }
+                });
+        }
+        return () => {
+            controller.abort();
         };
     }, [path]);
 
@@ -131,6 +189,7 @@ const Article = ({ match, viewport }) => {
     const content = loading ?
         (
             <S.LoadingPlaceholder>
+                <Navbar />
                 <S.CenterInViewport>
                     <LoadingIcon />
                 </S.CenterInViewport>

@@ -41,19 +41,56 @@ const Comments = ({
     const commentFormRef = useRef(null);
 
     /**
+     * Handle fetch function wrapper to handle interrupted HTTP fetch requests.
+     *
+     * - If the AbortController signal is aborted (ie, through a component
+     * unmount).
+     *
+     * @param {AbortController} controller AbortController used to cancel fetch
+     * @param {Function} operations fetch operations to perform
+     * @return {*} HTTP response object or null if empty or aborted
+     *      - @property {Object} result HTTP response values
+     *      - @property {Object} body the data sent from the server
+     */
+    const handleFetch = async (controller, operations) => {
+        try {
+            // Set Loading state to true
+            return await operations(controller);
+        } catch (error) {
+            if (error.name === "AbortError") {
+                return null;
+            } else {
+                console.error(error);
+                return null;
+            };
+        } finally {
+            if (!controller.signal.aborted) {
+                // Set Loading to false
+            }
+        }
+    };
+
+    /**
      * Function which fetches all comments associated with the article.
      *
+     * @param {AbortController} controller AbortController used to cancel fetch
      * @return {Object} HTTP response parameters
-     * @property {Object} result HTTP response values
-     * @property {Object} body the data sent from the server
+     * @return {*} HTTP response object or null if empty or aborted
+     *      - @property {Object} result HTTP response values
+     *      - @property {Object} body the data sent from the server
      */
-    const fetchComments = async () => {
-        const result = await fetch(`/api/comments/${articlePath}`);
-        const body = await result.json();
-        return {
-            result,
-            body,
-        };
+    const fetchComments = async (controller) => {
+        const result = await handleFetch(controller, async (controller) => {
+            const result = await fetch(`/api/comments/${articlePath}`,
+                { signal: controller.signal },
+            );
+            const body = await result.json();
+            return {
+                result,
+                body,
+            };
+        });
+        return result;
     };
 
     /**
@@ -63,21 +100,29 @@ const Comments = ({
      * - Keeps the user updated about how long a commented was posted without
      * having to refresh the page.
      * - Only relevant for timestamps less than an hour ago.
+     * - Unsubscribes the promise if component is unmounted, to avoid
+     * any memory leaks.
      *
      */
     useEffect(() => {
         let isMounted = true;
-        fetchComments()
-            .then((data) => {
-                if (data.result.status !== 200) {
-                    console.log(`Error code: ${data.result.status}`);
-                } else if (isMounted) {
-                    /** Cancel Promise if unmounted to avoid memory leak */
-                    setComments(data.body);
-                }
-            });
+        const controller = new AbortController();
+        if (isMounted) {
+            fetchComments(controller)
+                .then((response) => {
+                    if (isMounted && response !== null) {
+                        if (response.result.status !== 200) {
+                            console.log(
+                                `Error code: ${response.result.status}`);
+                        } else {
+                            setComments(response.body);
+                        }
+                    }
+                });
+        }
         return () => {
             isMounted = false;
+            controller.abort();
         };
     }, [articlePath]);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import PropTypes from "prop-types";
 
 import Icon from "./Icon";
@@ -22,6 +22,9 @@ const Comment = ({
     getRelativeTime,
     viewport,
 }) => {
+    /** useRef Mount status for cleanup and avoiding memory leaks  */
+    const isMounted = useRef(true);
+
     /** Initial state values for the interaction buttons */
     const initialInteractionValues = {
         clicked: false,
@@ -58,20 +61,61 @@ const Comment = ({
     };
 
     /**
+     * Handle fetch function wrapper to handle interrupted HTTP fetch requests.
+     *
+     * - If the AbortController signal is aborted (ie, through a component
+     * unmount).
+     *
+     * @param {AbortController} controller AbortController used to cancel fetch
+     * @param {Function} operations fetch operations to perform
+     * @return {*} HTTP response object or null if empty or aborted
+     *      - @property {Object} result HTTP response values
+     *      - @property {Object} body the data sent from the server
+     */
+    const handleFetch = useCallback(
+        async (controller, operations) => {
+            if (isMounted.current) {
+                try {
+                    // Set Loading state to true
+                    return await operations(controller);
+                } catch (error) {
+                    return null;
+                } finally {
+                    if (!controller.signal.aborted) {
+                        // Set Loading state to false
+                    }
+                }
+            } else {
+                return null;
+            }
+        }, []);
+
+    /**
      * Function which fetches all replies associated with the comment.
      *
-     * @return {Object} HTTP response parameters
-     * @property {Object} result HTTP response values
-     * @property {Object} body the data sent from the server
+     * @param {AbortController} controller AbortController used to cancel fetch
+     * @return {*} HTTP response object or null if empty or aborted
+     *      - @property {Object} result HTTP response values
+     *      - @property {Object} body the data sent from the server
      */
-    const fetchReplies = async () => {
-        const result = await fetch(
-            `/api/comments/${data.path}/${data._id}`);
-        const body = await result.json();
-        return {
-            result,
-            body,
-        };
+    const fetchReplies = async (controller) => {
+        const result = await handleFetch(
+            controller, async (controller) => {
+                const result = await fetch(
+                    `/api/comments/${data.path}/${data._id}`,
+                    { signal: controller.signal },
+                );
+                const body = await result.json();
+                if (isMounted.current) {
+                    return {
+                        result,
+                        body,
+                    };
+                } else {
+                    return null;
+                }
+            });
+        return result;
     };
 
     /**
@@ -81,26 +125,44 @@ const Comment = ({
      * - Either reply, upvote or downvote.
      *
      * @param {String} interaction the interaction method to perform
-     * @return {Object} HTTP response parameters
+     * @param {AbortController} controller AbortController used to cancel fetch
+     * @return {*} HTTP response object or null if empty or aborted
      * @property {Object} result HTTP response values
      * @property {Object} body the data sent from the server
      */
-    const commentInteractionRequest = async (interaction) => {
+    const commentInteractionRequest = async (interaction, controller) => {
         if (interaction === INTERACTIONS.upvote ||
             interaction === INTERACTIONS.downvote) {
-            const result = await fetch(
-                `/api/comments/${data.path}/${data._id}/${interaction}`,
-                { method: "POST" },
-            );
-            const body = await result.json();
-            return {
-                result,
-                body,
-            };
+            return await handleFetch(controller, async (controller) => {
+                const result = await fetch(
+                    `/api/comments/${data.path}/${data._id}/${interaction}`,
+                    {
+                        method: "POST",
+                        signal: controller.signal,
+                    },
+                );
+                const body = await result.json();
+                return {
+                    result,
+                    body,
+                };
+            });
         } else {
             // Reply to the comment POST request to server
         }
     };
+
+    /**
+     * useEffect which performs cleanup, setting isMounted to false.
+     *
+     * - This ensures subscriptions and async tasks are cancelled
+     * while the component is unmounted.
+     */
+    useEffect(() => {
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
 
     /**
      * useEffect which fetches the replies of the comment when mounted.
@@ -110,22 +172,24 @@ const Comment = ({
      *
      */
     useEffect(() => {
-        let isMounted = true;
-        if (isMounted) {
-            fetchReplies()
+        const controller = new AbortController();
+        if (isMounted.current) {
+            fetchReplies(controller)
                 .then((response) => {
-                    if (isMounted) {
+                    if (response !== null && isMounted.current) {
                         if (response.result.status !== 200) {
                             console.log(
                                 `Error code: ${response.result.status}`);
                         } else if (response.body.length > 0) {
-                            setReplies(response.body);
+                            if (isMounted.current) {
+                                setReplies(response.body);
+                            }
                         }
                     }
                 });
         }
         return () => {
-            isMounted = false;
+            controller.abort();
         };
     }, []);
 
@@ -135,14 +199,9 @@ const Comment = ({
      * - Set flag indicating that the comment does have replies.
      */
     useEffect(() => {
-        let isMounted = true;
-        if (isMounted) {
+        if (isMounted.current) {
             setHasReplies(replies.length > 0);
         }
-        /** Clean-up */
-        return () => {
-            isMounted = false;
-        };
     }, [replies]);
 
     /**
@@ -153,25 +212,27 @@ const Comment = ({
      *
      */
     useEffect(() => {
-        let isMounted = true;
-        if (isMounted && interaction.upvote.clicked) {
-            commentInteractionRequest(INTERACTIONS.upvote)
+        const controller = new AbortController();
+        if (isMounted.current && interaction.upvote.clicked) {
+            commentInteractionRequest(INTERACTIONS.upvote, controller)
                 .then((response) => {
-                    if (isMounted) {
+                    if (response !== null && isMounted.current) {
                         if (response.result.status !== 200) {
                             console.log(
                                 `Error code: ${response.result.status}`);
-                            setInteraction((prevState) => {
-                                return {
-                                    ...prevState,
-                                    upvote: {
-                                        clicked: false,
-                                        success: false,
-                                        failure: true,
-                                    },
-                                };
-                            });
-                        } else {
+                            if (isMounted) {
+                                setInteraction((prevState) => {
+                                    return {
+                                        ...prevState,
+                                        upvote: {
+                                            clicked: false,
+                                            success: false,
+                                            failure: true,
+                                        },
+                                    };
+                                });
+                            }
+                        } else if (isMounted.current) {
                             setInteraction((prevState) => {
                                 return {
                                     ...prevState,
@@ -187,7 +248,7 @@ const Comment = ({
                 });
         };
         return () => {
-            isMounted = false;
+            controller.abort();
         };
     }, [interaction.upvote.clicked]);
 
@@ -199,25 +260,27 @@ const Comment = ({
      *
      */
     useEffect(() => {
-        let isMounted = true;
-        if (isMounted && interaction.downvote.clicked) {
-            commentInteractionRequest(INTERACTIONS.downvote)
+        const controller = new AbortController();
+        if (isMounted.current && interaction.downvote.clicked) {
+            commentInteractionRequest(INTERACTIONS.downvote, controller)
                 .then((response) => {
-                    if (isMounted) {
+                    if (response !== null && isMounted.current) {
                         if (response.result.status !== 200) {
                             console.log(
                                 `Error code: ${response.result.status}`);
-                            setInteraction((prevState) => {
-                                return {
-                                    ...prevState,
-                                    downvote: {
-                                        clicked: false,
-                                        success: false,
-                                        failure: true,
-                                    },
-                                };
-                            });
-                        } else {
+                            if (isMounted) {
+                                setInteraction((prevState) => {
+                                    return {
+                                        ...prevState,
+                                        downvote: {
+                                            clicked: false,
+                                            success: false,
+                                            failure: true,
+                                        },
+                                    };
+                                });
+                            }
+                        } else if (isMounted.current) {
                             setInteraction((prevState) => {
                                 return {
                                     ...prevState,
@@ -233,7 +296,7 @@ const Comment = ({
                 });
         };
         return () => {
-            isMounted = false;
+            controller.abort();
         };
     }, [interaction.downvote.clicked]);
 
@@ -246,15 +309,13 @@ const Comment = ({
      *
      */
     useEffect(() => {
-        let isMounted = true;
         let timeout;
-        if (isMounted) {
+        if (isMounted.current) {
             timeout = setTimeout(() =>
                 resetInteraction(INTERACTIONS.upvote), 5000);
         };
         return () => {
             clearTimeout(timeout);
-            isMounted = false;
         };
     }, [interaction.upvote.failure]);
 
@@ -267,15 +328,13 @@ const Comment = ({
      *
      */
     useEffect(() => {
-        let isMounted = true;
         let timeout;
-        if (isMounted) {
+        if (isMounted.current) {
             timeout = setTimeout(() =>
                 resetInteraction(INTERACTIONS.downvote), 4000);
         };
         return () => {
             clearTimeout(timeout);
-            isMounted = false;
         };
     }, [interaction.downvote.failure]);
 
@@ -285,14 +344,16 @@ const Comment = ({
      * @param {String} interaction the interaction state to reset
      */
     const resetInteraction = (interaction) => {
-        setInteraction((prevState) => {
-            return {
-                ...prevState,
-                [interaction]: {
-                    ...initialInteractionValues,
-                },
-            };
-        });
+        if (isMounted.current) {
+            setInteraction((prevState) => {
+                return {
+                    ...prevState,
+                    [interaction]: {
+                        ...initialInteractionValues,
+                    },
+                };
+            });
+        }
     };
 
     /**
@@ -302,8 +363,8 @@ const Comment = ({
      *
      * @param {String} _interaction the interaction type
      */
-    const handleInteractionClick = async (_interaction) => {
-        if (!interaction[_interaction].clicked) {
+    const handleInteractionClick = (_interaction) => {
+        if (!interaction[_interaction].clicked && isMounted.current) {
             setInteraction((prevState) => {
                 return {
                     ...prevState,
