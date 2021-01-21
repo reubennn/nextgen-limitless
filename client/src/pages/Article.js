@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { connect } from "react-redux";
 
 import {
@@ -41,10 +41,6 @@ const Article = ({ match, viewport }) => {
     const [loading, setLoading] = useState(true);
     const inArticlePage = true;
     const smallerViewport = viewport.size.is.lessThan.small;
-
-    /** Set Moment.js locale to Australian format */
-    moment.locale("en-au");
-    const DATE_FORMAT = "D MMMM, YYYY";
 
     /**
      * Default article properties used to reset the state
@@ -181,8 +177,8 @@ const Article = ({ match, viewport }) => {
     */
     const dateString = (() => {
         if (article.timestamp !== undefined && article.timestamp !== null) {
-            const date = moment(article.timestamp);
-            return date.format(DATE_FORMAT);
+            const date = DateTime.fromISO(article.timestamp);
+            return date.toLocaleString(DateTime.DATE_FULL);
         }
     })();
 
