@@ -10,10 +10,6 @@ import {
     fetchAllArticles,
 } from "../thunks/articleThunks";
 import {
-    setLoading,
-    resetLoading,
-} from "../actions/articleActions";
-import {
     getViewportDimensions,
     getViewportSize,
     getViewportType,
@@ -33,36 +29,31 @@ import * as S from "../styles/styled-components/styled";
  * @return {Component} list of articles
  */
 const ArticlesList = ({
-    articleToFilter,
+    articleToFilter = null,
     inArticlePage,
     /** Redux */
     viewport,
     loadStatus,
     articles,
-    setLoading,
     fetchAllArticles,
 }) => {
     const [currentArticle, setCurrentArticle] = useState(articleToFilter);
-    // const [articles, setArticles] = useState([]);
-    // const [loading, setLoading] = useState(true);
     const [otherArticles, setOtherArticles] = useState([]);
+
     const displayAsRow = viewport.size.is.greaterThan.small;
+
     /**
-     * useEffect tracking currentArticle.
-     * - When user navigates to different page, currentArticle updates,
-     * so we need to update the article list.
+     * useEffect which will attempt to fetch the list of articles
+     * if the list has not been loaded yet.
      */
     useEffect(() => {
         let isMounted = true; // Flag which denotes mount status
-
-        if (isMounted) {
-            // Reset state values
-            setOtherArticles([]);
-            setLoading(true);
+        if (!loadStatus.loaded || loadStatus.failed) {
+            if (isMounted) {
+                /** Fetch all article content */
+                fetchAllArticles();
+            }
         }
-        // Fetch all article content
-        fetchAllArticles();
-
         /**
          * useEffect clean-up:
          * If unmounted, set mount status flag to false
@@ -70,27 +61,45 @@ const ArticlesList = ({
         return () => {
             isMounted = false;
         };
-    }, [currentArticle]);
+    }, []);
 
+    /**
+     * useEffect triggered when the current article changes, or the
+     * articles list has been loaded.
+     *
+     * - If an article has been provided to filter out, then filter out
+     * that article, otherwise populate the entire list.
+     */
     useEffect(() => {
-        // Populate the other articles list without the current article
-        if (typeof articles !== "undefined" &&
-            articles.length > 0) {
-            articleToFilter === "undefined" ?
+        let isMounted = true;
+        if (typeof articles !== undefined &&
+            articles.length > 0 && isMounted) {
+            articleToFilter === null ?
                 setOtherArticles(articles) :
-                (
-                    articles.map((article) => {
-                        if (article.path !== articleToFilter) {
-                            setOtherArticles((prevState) => [
-                                ...prevState,
-                                article,
-                            ]);
-                        }
-                    })
-                );
-            setLoading(false);
+                populateArticleList();
         }
-    }, [currentArticle]);
+        return () => {
+            isMounted = false;
+        };
+    }, [loadStatus.loaded, currentArticle]);
+
+    /**
+     * Function which populates the list of other articles.
+     *
+     * - If not article has been provided to filter, then
+     * we want to display the entire list.
+     * - If an article has been provided to filter, filter it
+     * out and display the remaining articles.
+     */
+    const populateArticleList = () => {
+        const temp = [];
+        articles.map((article) => {
+            if (article.path !== articleToFilter) {
+                temp.push(article);
+            }
+        });
+        setOtherArticles(temp);
+    };
 
     /*
      * If linked clicked to navigate to another article,
@@ -179,14 +188,6 @@ ArticlesList.propTypes = {
      * Function to fetch all articles from the server API.
      */
     fetchAllArticles: PropTypes.func,
-    /**
-     * Function to set the loading state.
-     */
-    setLoading: PropTypes.func,
-    /**
-     * Function to reset the loading state.
-     */
-    resetLoading: PropTypes.func,
 };
 
 /**
@@ -214,8 +215,6 @@ const mapStateToProps = (state) => ({
  */
 const mapDispatchToProps = (dispatch) => ({
     fetchAllArticles: () => dispatch(fetchAllArticles()),
-    setLoading: (loading) => dispatch(setLoading(loading)),
-    resetLoading: () => dispatch(resetLoading()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticlesList);

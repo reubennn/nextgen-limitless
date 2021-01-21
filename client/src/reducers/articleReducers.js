@@ -22,6 +22,7 @@ const initialState = {
      * @property {Number} code if loading failed, the error code if provided.
      */
     loadStatus: {
+        loaded: false,
         loading: true,
         failed: false,
         code: null,
@@ -60,6 +61,7 @@ export const articles = (state = initialState, action) => {
             return {
                 ...state,
                 loadStatus: {
+                    ...state.loadStatus,
                     loading,
                 },
             };
@@ -72,6 +74,7 @@ export const articles = (state = initialState, action) => {
             return {
                 ...state,
                 loadStatus: {
+                    ...state.loadStatus,
                     failed: false,
                     code: null,
                 },
@@ -87,6 +90,8 @@ export const articles = (state = initialState, action) => {
             return {
                 ...state,
                 loadStatus: {
+                    ...state.loadStatus,
+                    loaded: true,
                     loading: false,
                 },
                 list: articles,
@@ -100,6 +105,8 @@ export const articles = (state = initialState, action) => {
             return {
                 ...state,
                 loadStatus: {
+                    ...state.loadStatus,
+                    loaded: false,
                     loading: true,
                 },
             };
