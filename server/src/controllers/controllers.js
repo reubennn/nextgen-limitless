@@ -35,7 +35,7 @@ const queryDB = async (collectionName, res, operations) => {
     try {
         const db = client.db(DB_NAME);
         const collection = db.collection(collectionName);
-        await operations(collection);
+        return await operations(collection);
     } catch (error) {
         res.status(500).json({
             message: "Error fetching / updating data from MongoDB",
@@ -183,25 +183,68 @@ export const getRootComments = async (req, res) => {
 /**
  * Fetches all of the replies associated with a particular comment.
  *
+ * - For each reply, the function calls itself recursively to see if
+ * there are any replies associated with it until none are found.
+ *
+ * @param {String} _id the MongoDB ObjectID string => ObjectID(_id)
+ * @param {String} path the article url path
+ * @param {Object} res HTTP response object
+ * @return {Array} array containing all associated replies and nested replies
+ */
+const getReplies = async (_id, path, res) => {
+    const result = await queryDB(COMMENTS, res, async (collection) => {
+        const result = await collection
+            .find({ path: path, parent: ObjectID(_id) }).toArray();
+
+        const replies = result.slice();
+        if (result !== undefined && result !== null) {
+            if (result.length > 0) {
+                for (const [index, element] of result.entries()) {
+                    const deepResult =
+                        await getReplies(element._id, element.path);
+                    if (deepResult !== undefined && deepResult !== null) {
+                        if (deepResult.length > 0) {
+                            replies[index].replies = deepResult.slice();
+                        }
+                    }
+                };
+            }
+        } else {
+            return null;
+        }
+        return replies;
+    });
+    return result;
+};
+
+/**
+ * Fetches all of the replies associated with a particular comment.
+ *
+ * - Sends the array as JSON string which can be parsed by the client.
+ *
  * @param {Object} req HTTP request object
  * @param {Object} res HTTP response object
  */
-export const getReplies = async (req, res) => {
+export const getNestedReplies = async (req, res) => {
     const articlePath = req.params.path;
     const _id = req.params._id;
 
-    queryDB(COMMENTS, res, async (collection) => {
-        const result = await collection
-            .find({ path: articlePath, parent: ObjectID(_id) }).toArray();
-
-        if (result) {
-            res.status(200).json(result);
-        } else {
-            res.status(404).json({
-                message: "Could not find the specified article.",
+    getReplies(_id, articlePath, res)
+        .then((result) => {
+            if (result === null || result === undefined) {
+                res.status(200).json(JSON.stringify([]));
+            } else if (!result.length) {
+                res.status(200).json(JSON.stringify([]));
+            } else {
+                res.status(200).json(JSON.stringify(result));
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({
+                message: "An error occurred while trying to fetch the replies.",
             });
-        }
-    });
+        });
 };
 
 /**

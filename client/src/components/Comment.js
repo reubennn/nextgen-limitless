@@ -10,6 +10,19 @@ import thumbsDown from ".../icons/thumbs-down.svg";
 import * as S from "../styles/styled-components/styled";
 
 /**
+ * Function which returns the current replies of the comment,
+ * if any exist.
+ *
+ * @param {Object} comment the comment data
+ * @return {Array} the replies of the comment
+ */
+const getCurrentReplies = (comment) => {
+    return Object.prototype.hasOwnProperty.call(comment, "replies") ?
+        comment.replies.slice() :
+        [];
+};
+
+/**
  * React Component which displays a comment and its replies.
  *
  * This component will be called recursively for comments that have
@@ -45,13 +58,15 @@ const Comment = ({
     };
 
     /** Store the state of the replies for the comment */
-    const [replies, setReplies] = useState([]);
-    const [hasReplies, setHasReplies] = useState(false);
+    const [hasReplies, setHasReplies] = useState(
+        Object.prototype.hasOwnProperty.call(data, "replies"));
+    const [replies, setReplies] = useState(getCurrentReplies(data));
 
     /** Store the state of the interaction buttons for the comment */
     const [interaction, setInteraction] = useState(initialInteractionState);
 
     const isRoot = data.depth === 0 ? true : false;
+
     let maxDepth;
 
     const INTERACTIONS = {
@@ -69,8 +84,6 @@ const Comment = ({
      * @param {AbortController} controller AbortController used to cancel fetch
      * @param {Function} operations fetch operations to perform
      * @return {*} HTTP response object or null if empty or aborted
-     *      - @property {Object} result HTTP response values
-     *      - @property {Object} body the data sent from the server
      */
     const handleFetch = useCallback(
         async (controller, operations) => {
@@ -91,28 +104,27 @@ const Comment = ({
         }, []);
 
     /**
-     * Function which fetches all replies associated with the comment.
+     * Function which fetches all replies associated with the comment
+     * including any deep nested replies of replies.
      *
      * @param {AbortController} controller AbortController used to cancel fetch
-     * @return {*} HTTP response object or null if empty or aborted
-     *      - @property {Object} result HTTP response values
-     *      - @property {Object} body the data sent from the server
+     * @param {String} _id the MongoDB ObjectID string => ObjectID(_id)
+     * @param {String} path the article url path
+     * @return {*} the replies array or null if empty or aborted
      */
-    const fetchReplies = async (controller) => {
+    const fetchReplies = async (controller, _id, path) => {
         const result = await handleFetch(
             controller, async (controller) => {
                 const result = await fetch(
-                    `/api/comments/${data.path}/${data._id}`,
+                    `/api/comments/${path}/${_id}`,
                     { signal: controller.signal },
                 );
                 const body = await result.json();
-                if (isMounted.current) {
-                    return {
-                        result,
-                        body,
-                    };
-                } else {
+                const replies = JSON.parse(body);
+                if (result.status !== 200 || !replies.length) {
                     return null;
+                } else {
+                    return replies;
                 }
             });
         return result;
@@ -142,10 +154,14 @@ const Comment = ({
                     },
                 );
                 const body = await result.json();
-                return {
-                    result,
-                    body,
-                };
+                if (result.status !== 200) {
+                    return null;
+                } else {
+                    return {
+                        result,
+                        body,
+                    };
+                }
             });
         } else {
             // Reply to the comment POST request to server
@@ -173,17 +189,12 @@ const Comment = ({
      */
     useEffect(() => {
         const controller = new AbortController();
-        if (isMounted.current) {
-            fetchReplies(controller)
+        if (isMounted.current && isRoot) {
+            fetchReplies(controller, data._id, data.path)
                 .then((response) => {
                     if (response !== null && isMounted.current) {
-                        if (response.result.status !== 200) {
-                            console.log(
-                                `Error code: ${response.result.status}`);
-                        } else if (response.body.length > 0) {
-                            if (isMounted.current) {
-                                setReplies(response.body);
-                            }
+                        if (response.length) {
+                            setReplies(response);
                         }
                     }
                 });

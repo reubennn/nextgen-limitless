@@ -305,6 +305,18 @@ const howToSmolder = [
     {
         _id: getNextObjectID(),
         name: "Zane Frost",
+        comment: "Haha, nice.",
+        avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/zane-frost_q60eot.jpg",
+        timestamp: DateTime.local().minus({ days: 369 }),
+        upvotes: 5,
+        downvotes: 2,
+        depth: 1,
+        parent: getObjectIDFromBefore(3),
+        path: "how-to-smolder",
+    },
+    {
+        _id: getNextObjectID(),
+        name: "Zane Frost",
         comment: "I am commenting for the fun of it.",
         avatar: "https://res.cloudinary.com/reuben/image/upload/v1608009192/fullstack-react/authors/zane-frost_q60eot.jpg",
         timestamp: DateTime.local().minus({ days: 240 }),

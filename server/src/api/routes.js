@@ -7,7 +7,7 @@ import {
     getRootComments,
     upvoteComment,
     downvoteComment,
-    getReplies,
+    getNestedReplies,
 } from "../controllers/controllers";
 
 /** Set up the Express server router */
@@ -35,7 +35,7 @@ router.route("/comments/:path")
     .get(getRootComments);
 
 router.route("/comments/:path/:_id")
-    .get(getReplies);
+    .get(getNestedReplies);
 
 router.route("/comments/:path/:_id/upvote")
     .post(upvoteComment);
