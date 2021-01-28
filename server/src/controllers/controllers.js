@@ -1,9 +1,7 @@
 import { MongoClient, ObjectID } from "mongodb";
-/** Retrieve secret data not stored in Git */
-import { MONGO_URI, DB_NAME, ARTICLES, COMMENTS } from "../../secrets";
 
 /* Connect client to MongoDB */
-const client = new MongoClient(MONGO_URI, {
+const client = new MongoClient(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -33,7 +31,7 @@ connectDB().catch(console.error);
  */
 const queryDB = async (collectionName, res, operations) => {
     try {
-        const db = client.db(DB_NAME);
+        const db = client.db(process.env.DB_NAME);
         const collection = db.collection(collectionName);
         return await operations(collection);
     } catch (error) {
@@ -51,7 +49,7 @@ const queryDB = async (collectionName, res, operations) => {
  * @param {Object} res HTTP response object
  */
 export const getAllArticles = async (req, res) => {
-    queryDB(ARTICLES, res, async (collection) => {
+    queryDB(process.env.ARTICLES, res, async (collection) => {
         const result = await collection.find({}).toArray();
 
         if (result) {
@@ -73,7 +71,7 @@ export const getAllArticles = async (req, res) => {
 export const getArticle = async (req, res) => {
     const articlePath = req.params.path;
 
-    queryDB(ARTICLES, res, async (collection) => {
+    queryDB(process.env.ARTICLES, res, async (collection) => {
         const result = await collection
             .findOne({ path: articlePath });
 
@@ -96,7 +94,7 @@ export const getArticle = async (req, res) => {
 export const upvoteArticle = async (req, res) => {
     const articlePath = req.params.path;
 
-    queryDB(ARTICLES, res, async (collection) => {
+    queryDB(process.env.ARTICLES, res, async (collection) => {
         const articleInfo = await collection
             .findOne({ path: articlePath });
 
@@ -132,7 +130,7 @@ export const addCommentToArticle = async (req, res) => {
     const { name, comment, avatar } = req.body;
     const articlePath = req.params.path;
 
-    queryDB(COMMENTS, res, async (collection) => {
+    queryDB(process.env.COMMENTS, res, async (collection) => {
         const result = await collection
             .insertOne(
                 {
@@ -166,7 +164,7 @@ export const addCommentToArticle = async (req, res) => {
 export const getRootComments = async (req, res) => {
     const articlePath = req.params.path;
 
-    queryDB(COMMENTS, res, async (collection) => {
+    queryDB(process.env.COMMENTS, res, async (collection) => {
         const result = await collection
             .find({ path: articlePath, parent: "root" }).toArray();
 
@@ -192,7 +190,7 @@ export const getRootComments = async (req, res) => {
  * @return {Array} array containing all associated replies and nested replies
  */
 const getReplies = async (_id, path, res) => {
-    const result = await queryDB(COMMENTS, res, async (collection) => {
+    const result = await queryDB(process.env.COMMENTS, res, async (collection) => {
         const result = await collection
             .find({ path: path, parent: ObjectID(_id) }).toArray();
 
@@ -258,7 +256,7 @@ export const upvoteComment = async (req, res) => {
     const articlePath = req.params.path;
     const _id = req.params._id;
 
-    queryDB(COMMENTS, res, async (collection) => {
+    queryDB(process.env.COMMENTS, res, async (collection) => {
         const result = await collection
             .findOneAndUpdate(
                 { path: articlePath, _id: ObjectID(_id) },
@@ -294,7 +292,7 @@ export const downvoteComment = async (req, res) => {
     const articlePath = req.params.path;
     const _id = req.params._id;
 
-    queryDB(COMMENTS, res, async (collection) => {
+    queryDB(process.env.COMMENTS, res, async (collection) => {
         const result = await collection
             .findOneAndUpdate(
                 { path: articlePath, _id: ObjectID(_id) },

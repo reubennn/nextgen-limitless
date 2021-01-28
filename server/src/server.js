@@ -1,10 +1,13 @@
+/** dotenv config setup for loading secret environment variables */
+import "../config/loadEnv";
+
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import helmet from "helmet";
 import router from "./api/routes";
 
-const PORT = 9000;
+const PORT = process.env.PORT || 9000;
 
 /** Set up the Express.js app */
 const app = express();

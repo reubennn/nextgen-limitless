@@ -1,3 +1,5 @@
+/** dotenv config setup for loading secret environment variables */
+const Dotenv = require("dotenv-webpack");
 const path = require("path");
 const webpack = require("webpack");
 const { merge } = require("webpack-merge");
@@ -15,14 +17,14 @@ module.exports = merge(common, {
     },
     devServer: {
         contentBase: path.join(__dirname, "public/"),
-        port: 3000,
+        port: process.env.DEV_PORT || 3000,
         publicPath: "/",
         hotOnly: true,
         /** Configuration to allow React Router to work */
         historyApiFallback: true,
         proxy: {
             "/api/**": {
-                target: "http://localhost:9000",
+                target: `http://localhost:${process.env.API_PORT || 9000}`,
                 secure: false,
                 changeOrigin: true,
             },
@@ -31,5 +33,9 @@ module.exports = merge(common, {
     plugins: [
         /** Enable hot loading for react-hot-loader */
         new webpack.HotModuleReplacementPlugin(),
+        /** Define dotenv plugin for process.env */
+        new Dotenv({
+            path: path.join(__dirname, "config/secrets.env"),
+        }),
     ],
 });

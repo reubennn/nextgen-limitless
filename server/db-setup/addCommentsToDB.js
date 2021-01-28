@@ -1,15 +1,18 @@
 /**
- * This file adds initial content to the database using
- * data from articleContent.js.
+ * This file adds initial comments to the database using
+ * data from comments.js.
  *
- * - Simply run `npm run db-setup`.
+ * - Simply run `npm run db-setup:comments`.
+ * - Or to load all data into MongoDB:`npm run db-setup`.
  */
 import { MongoClient } from "mongodb";
 import documents from "./comments";
-import { MONGO_URI, DB_NAME, COMMENTS } from "../secrets";
+
+/** dotenv config setup for loading secret environment variables */
+import "../config/loadEnv";
 
 /* Connects client to MongoDB */
-const client = new MongoClient(MONGO_URI, {
+const client = new MongoClient(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -20,8 +23,8 @@ const client = new MongoClient(MONGO_URI, {
 const run = async () => {
     try {
         await client.connect();
-        const db = client.db(DB_NAME);
-        const collection = db.collection(COMMENTS);
+        const db = client.db(process.env.DB_NAME);
+        const collection = db.collection(process.env.COMMENTS);
         console.log("Successfully connected to MongoDB server\n");
 
         /**

@@ -47,6 +47,7 @@
     "babel-plugin-styled-components": "^1.11.1",
     "copy-webpack-plugin": "^6.2.1",
     "css-loader": "^4.3.0",
+    "dotenv-webpack": "^6.0.0",
     "eslint": "^7.10.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.12.0",

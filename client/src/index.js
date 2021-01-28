@@ -16,9 +16,7 @@ import "./styles/normalize.scss";
 import "./styles/reset.local.scss";
 import "./index.scss";
 
-/**
- * Set up the Redux store and persistor
- */
+/** Set up the Redux store and persistor */
 const store = configureStore();
 const persistor = persistStore(store);
 
