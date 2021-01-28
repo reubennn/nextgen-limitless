@@ -2,7 +2,7 @@
 
 A complete web application integrating the MERN stack: [MongoDB](https://www.mongodb.com/), [Express.js](https://expressjs.com/), [React.js](https://reactjs.org/), [Node.js](https://nodejs.org/en/).
 
-This project contains the code for both front-end client files and back-end server files. The back-end utilises Express.js to act as a server API which queries the database from MongoDB. The front-end incorporates React.js to display the user interface which renders content that has been fetched using the server API.
+This project contains the code for both front-end client files and back-end server files. The main reason was easier tracking of site-wide changes that affected the client and server simultaneously. The back-end utilises Express.js to act as a server API which queries the database from MongoDB. The front-end incorporates React.js to display the user interface which renders content that has been fetched using the server API.
 
 ## An Ongoing Project
 
@@ -23,6 +23,8 @@ Popular libraries used include:
 - [body-parser](https://www.npmjs.com/package/body-parser) middleware to parse request bodies.
 - [helmet](https://helmetjs.github.io/) to help secure the Express app by setting various HTTP headers.
 - [MongoDB Client](https://mongodb.github.io/node-mongodb-native/) to interact with MongoDB using native Node.js driver.
+- [Luxon.js](https://moment.github.io/luxon/) to quickly and efficiently format dates.
+- [dotenv](https://www.npmjs.com/package/dotenv) to load confidential information as environment variables into process.env, to keep it hidden from Git.
 
 ## Client
 
@@ -38,36 +40,39 @@ Popular libraries used include:
 - [React Router](https://reactrouter.com/) for navigating between the various pages.
 - [Redux](https://redux.js.org/) for global state management.
 - [Redux Thunk](https://github.com/reduxjs/redux-thunk) to act as middleware to write async logic to interact with the Redux store.
+- [styled-components](https://styled-components.com/) for a modern approach to styling, using reusable components, and implementing dynamic styling.
+- [Webpack](https://webpack.js.org/) for bundling our React App together, to run either the development environment or for our production build.
+- [Dotenv Webpack](https://www.npmjs.com/package/dotenv-webpack) to add dotenv plugin to webpack, so we can keep our confidential information hidden from Git.
 - { [_.debounce](https://lodash.com/docs/4.17.15#debounce) } from [lodash](https://lodash.com/): function to limit calls during window resizing.
-- [Moment.js](https://momentjs.com/) to quickly and efficiently format dates.
+- [Luxon.js](https://moment.github.io/luxon/) to quickly and efficiently format dates.
 
 ## Getting Started
+
+### Setting up Environment Variables
+
+The URI, database name and collection names have not been provided in Git due to confidentiality of data. These would be stored in `secrets.env` located in `config/`. You can find an example file containing mock keys-value pairs in `secrets.env.example`. You have two options to populate the data:
+
+ 1. Replace `MONGO_URI`, `DB_NAME`, `ARTICLES` and `AUTHORS`, `COMMENTS` with the URI, database name and collection names, respectively.
+ 2. Create a file called `secrets.env` inside `config/` and populate it with the appropriate data:
+
+ ```env
+MONGO_URI=mongodb+srv://<user>:<password>@<database>?retryWrites=true&w=majority
+DB_NAME=database-name
+ARTICLES=article-collection
+AUTHORS=author-collection
+COMMENTS=comments-collection
+PORT=9000
+ ```
 
 ### Integrating with MongoDB
 
  The data is hosted on [MongoDB Atlas cloud](https://www.mongodb.com/) using [MongoDB Client Node.js Driver](https://mongodb.github.io/node-mongodb-native/).
 
- Inside the `server/` directory, files have been provided to set-up the database with initial data. Initial data can be found in `articleContent.js`, and the file to import the content into the database is `addContentToDB.js`.
+ Inside the `server/` directory, files have been provided to set-up the database with initial data. Initial data can be found in `articles.js` and `comments.js`; the files to import the content into the database are `addArticlesToDB.js` and `addCommentsToDB.js`.
 
- The URI, database name and collection name have not been provided in Git due to confidentiality of data. These would be stored in `secrets.js` located in the root of server/. You have two options to populate the data:
+ Simply run `npm run db-setup` to upload all data as documents to MongoDB.
 
- 1. Replace `MONGO_URI`, `DB_NAME`, `ARTICLES` and `AUTHORS` with the URI, database name and collection name, respectively.
- 2. Create a file called `secrets.js` and populate it with the appropriate data:
-
- ```javascript
-const MONGO_URI = "{MONGO_URI}";
-const DB_NAME = "{DB_NAME}";
-const ARTICLES = "{COLLECTION_NAME}";
-const AUTHORS = "{COLLECTION_NAME}";
-
-export {
-    MONGO_URI,
-    DB_NAME,
-    ARTICLES,
-    AUTHORS,
-};
-
- ```
+ Alternatively, you can upload just the articles, or just the comments using `npm run db-setup:articles` or `npm run db-setup:comments`, respectively.
 
 ### Running the React App
 
@@ -79,6 +84,8 @@ To run the app, there are two choices:
 ### Running the Express.js Server
 
 In `server/`, simply run `npm run server`. The server will run on [http://localhost:9000](http://localhost:9000).
+
+Alternatively, from the project root folder, simply run `npm run server`;
 
 #### Running Express.js Server Without Client react-dev-server
 
@@ -92,7 +99,9 @@ Either directory it is ran it, it runs the command from the client directory whi
 
 ### Running the React Application Development Server
 
-In `client/`, simply run `npm run dev`. The dev-server will run on [http://localhost:3000](http://localhost:3000).
+In `client/`, simply run `npm run dev`. The dev-server will run on [http://localhost:3000](http://localhost:3000). 
+
+Alternatively, from the project root folder, simply run `npm run client`;
 
 The development server supports [Hot Module Replacement](https://webpack.js.org/guides/hot-module-replacement/), which allows the app to update without needing a full refresh.
 
@@ -121,6 +130,7 @@ The client uses rules extended from:
 The server uses rules extended from:
 
 - eslint:recommended
+- prettier
 - google
 
 ### Transpiling
