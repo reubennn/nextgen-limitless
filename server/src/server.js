@@ -5,7 +5,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import helmet from "helmet";
-import router from "./api/routes";
+import articleRouter from "./api/articleRoutes";
+import commentRouter from "./api/commentRoutes";
 
 const PORT = process.env.PORT || 9000;
 
@@ -25,7 +26,8 @@ app.use(express.static(path.join(__dirname, "/dist")));
 app.use(bodyParser.json());
 
 /** Use API router as middleware with endpoint "/api" */
-app.use("/api", router);
+app.use("/api", articleRouter);
+app.use("/api", commentRouter);
 
 /**
  * All requests which are not caught by the other API routes should be
@@ -45,6 +47,6 @@ const server = app.listen(PORT, () => {
 });
 
 /* Close the server before Node.js exits */
-process.on("exit", function () {
+process.on("exit", () => {
     server.close();
 });

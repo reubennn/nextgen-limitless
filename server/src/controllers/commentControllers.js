@@ -1,113 +1,5 @@
-import { MongoClient, ObjectID } from "mongodb";
-
-/* Connect client to MongoDB */
-const client = new MongoClient(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
-
-/**
- * Async function used to connect to MongoDB.
- * - Keeps the connection open to reduce overhead.
- */
-const connectDB = async () => {
-    try {
-        await client.connect();
-        console.log("Successfully connected to the MongoDB server.\n");
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-/** Immediately call db connect function */
-connectDB().catch(console.error);
-
-/**
- * Generic function to query the database with specified operations.
- *
- * @param {String} collectionName name of the collection to query
- * @param {Object} res HTTP response object
- * @param {Function} operations to be performed
- */
-const queryDB = async (collectionName, res, operations) => {
-    try {
-        const db = client.db(process.env.DB_NAME);
-        const collection = db.collection(collectionName);
-        return await operations(collection);
-    } catch (error) {
-        res.status(500).json({
-            message: "Error fetching / updating data from MongoDB",
-            error,
-        });
-    }
-};
-
-/**
- * Fetches all articles from the database.
- *
- * @param {Object} req HTTP request object
- * @param {Object} res HTTP response object
- */
-export const getAllArticles = async (req, res) => {
-    queryDB(process.env.ARTICLES, res, async (collection) => {
-        const result = await collection.find({}).toArray();
-
-        if (result) {
-            res.status(200).json(result);
-        } else {
-            res.status(404).json({
-                message: "Could not find the articles.",
-            });
-        }
-    });
-};
-
-/**
- * Fetches a single article from database matching a name from the request.
- *
- * @param {Object} req HTTP request object
- * @param {Object} res HTTP response object
- */
-export const getArticle = async (req, res) => {
-    const articlePath = req.params.path;
-
-    queryDB(process.env.ARTICLES, res, async (collection) => {
-        const result = await collection
-            .findOne({ path: articlePath });
-
-        if (result) {
-            res.status(200).json(result);
-        } else {
-            res.status(404).json({
-                message: "Could not find the specified article.",
-            });
-        }
-    });
-};
-
-/**
- * Updates the article upvote +1 in the database.
- *
- * @param {Object} req HTTP request object
- * @param {Object} res HTTP response object
- */
-export const upvoteArticle = async (req, res) => {
-    const articlePath = req.params.path;
-
-    queryDB(process.env.ARTICLES, res, async (collection) => {
-        const articleInfo = await collection
-            .findOne({ path: articlePath });
-
-        const updatedArticleInfo = await collection
-            .findOneAndUpdate(
-                { path: articlePath },
-                { "$set": { upvotes: articleInfo.upvotes + 1 } },
-                { returnOriginal: false },
-            );
-
-        res.status(200).json(updatedArticleInfo);
-    });
-};
+import { ObjectID } from "mongodb";
+import { queryDB } from "../database/query";
 
 /**
  * Adds a comment to the database based on the request.
@@ -190,28 +82,29 @@ export const getRootComments = async (req, res) => {
  * @return {Array} array containing all associated replies and nested replies
  */
 const getReplies = async (_id, path, res) => {
-    const result = await queryDB(process.env.COMMENTS, res, async (collection) => {
-        const result = await collection
-            .find({ path: path, parent: ObjectID(_id) }).toArray();
+    const result = await queryDB(
+        process.env.COMMENTS, res, async (collection) => {
+            const result = await collection
+                .find({ path: path, parent: ObjectID(_id) }).toArray();
 
-        const replies = result.slice();
-        if (result !== undefined && result !== null) {
-            if (result.length > 0) {
-                for (const [index, element] of result.entries()) {
-                    const deepResult =
-                        await getReplies(element._id, element.path);
-                    if (deepResult !== undefined && deepResult !== null) {
-                        if (deepResult.length > 0) {
-                            replies[index].replies = deepResult.slice();
+            const replies = result.slice();
+            if (result !== undefined && result !== null) {
+                if (result.length > 0) {
+                    for (const [index, element] of result.entries()) {
+                        const deepResult =
+                            await getReplies(element._id, element.path);
+                        if (deepResult !== undefined && deepResult !== null) {
+                            if (deepResult.length > 0) {
+                                replies[index].replies = deepResult.slice();
+                            }
                         }
-                    }
-                };
+                    };
+                }
+            } else {
+                return null;
             }
-        } else {
-            return null;
-        }
-        return replies;
-    });
+            return replies;
+        });
     return result;
 };
 
@@ -316,8 +209,3 @@ export const downvoteComment = async (req, res) => {
         }
     });
 };
-
-/** Close the MongoDB client before Node.js exits */
-process.on("exit", function () {
-    client.close();
-});
