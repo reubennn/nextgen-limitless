@@ -219,6 +219,14 @@ export const NavIcon = styled(Icon).attrs((props) => ({
 
     &:hover {
         fill: ${(props) => props.$atTop ? color.black : color.white};
+        ${(props) => props.$atTop ?
+        css`
+            transition: all 0.3s ease-in-out;
+        ` :
+        css`
+            transition: all 0.3s ease-in-out,
+                        fill 0.3s ease-in-out 0.45s;
+        `}
     }
 
     &.dark-background {
