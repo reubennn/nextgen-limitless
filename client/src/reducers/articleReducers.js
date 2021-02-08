@@ -15,6 +15,7 @@ const initialState = {
     /**
      * Load status of the content to be fetched from database.
      *
+     * @property {Boolean} loaded data has loaded from the server.
      * @property {Boolean} loading loading status for fetching data
      *                               from the server API.
      * @property {Boolean} failed flag indicating if fetching data from the
