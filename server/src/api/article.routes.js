@@ -3,7 +3,7 @@ import {
     getAllArticles,
     getArticle,
     upvoteArticle,
-} from "../controllers/articleControllers";
+} from "../controllers/article.controllers";
 
 /** Set up the Express server router */
 const router = express.Router();

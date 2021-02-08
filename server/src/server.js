@@ -5,8 +5,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import helmet from "helmet";
-import articleRouter from "./api/articleRoutes";
-import commentRouter from "./api/commentRoutes";
+import articleRouter from "./api/article.routes";
+import commentRouter from "./api/comment.routes";
 
 const PORT = process.env.PORT || 9000;
 

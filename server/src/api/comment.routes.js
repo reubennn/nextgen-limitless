@@ -5,7 +5,7 @@ import {
     upvoteComment,
     downvoteComment,
     getNestedReplies,
-} from "../controllers/commentControllers";
+} from "../controllers/comment.controllers.js";
 
 /** Set up the Express server router */
 const router = express.Router();
