@@ -9,11 +9,14 @@
     "db-setup": "npm run db-setup:articles && npm run db-setup:comments",
     "db-setup:articles": "babel-node db-setup/addArticlesToDB.js",
     "db-setup:comments": "babel-node db-setup/addCommentsToDB.js",
-    "build": "cd ../client && npx webpack --config webpack.prod.js --watch"
+    "build": "cd ../client && npx webpack --config webpack.prod.js --watch",
+    "customize:login": "babel-node src/auth/customizeLogin.js",
+    "customize:signup": "babel-node src/auth/customizeSignup.js"
   },
   "author": "Reuben Smith",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

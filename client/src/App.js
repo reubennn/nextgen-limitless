@@ -1,5 +1,6 @@
 import { hot } from "react-hot-loader";
 import React, { useEffect } from "react";
+import Auth0ProviderWithHistory from "./auth/auth0ProviderWithHistory";
 import PropTypes from "prop-types";
 import {
     BrowserRouter as Router,
@@ -89,29 +90,31 @@ const App = ({ handleViewportChange, sidebarNav }) => {
 
     return (
         <Router>
-            <ScrollToTop>
-                <S.Container sidenav={sidebarNav.isActive}>
-                    <SidebarNav />
-                    <Switch>
-                        <Route path="/" component={Home} exact />
-                        <Route path="/about" component={About} />
-                        <Route path="/contact" component={Contact} />
-                        <Route path="/blog" component={Blog} exact />
-                        <Route path="/store" component={Store} />
-                        <Route path="/privacy" component={Privacy} />
-                        <Route path="/cookies" component={Cookies} />
-                        <Route path="/legal" component={Legal} />
-                        <Route
-                            path="/blog/:path"
-                            component={Article} />
-                        <Route render={(props) => (
-                            <NotFound {...props} item={"page"} />
-                        )}
-                        />
-                    </Switch>
-                    <Footer />
-                </S.Container >
-            </ScrollToTop>
+            <Auth0ProviderWithHistory>
+                <ScrollToTop>
+                    <S.Container sidenav={sidebarNav.isActive}>
+                        <SidebarNav />
+                        <Switch>
+                            <Route path="/" component={Home} exact />
+                            <Route path="/about" component={About} />
+                            <Route path="/contact" component={Contact} />
+                            <Route path="/blog" component={Blog} exact />
+                            <Route path="/store" component={Store} />
+                            <Route path="/privacy" component={Privacy} />
+                            <Route path="/cookies" component={Cookies} />
+                            <Route path="/legal" component={Legal} />
+                            <Route
+                                path="/blog/:path"
+                                component={Article} />
+                            <Route render={(props) => (
+                                <NotFound {...props} item={"page"} />
+                            )}
+                            />
+                        </Switch>
+                        <Footer />
+                    </S.Container >
+                </ScrollToTop>
+            </Auth0ProviderWithHistory>
         </Router>
     );
 };

@@ -492,6 +492,59 @@ export const Button = styled.button.attrs((props) => ({
     }}
     }
 
+    &.auth {
+        font-size: 1.1rem;
+        padding: 0.2rem 1.2rem;
+        transition: cubic-bezier(0.9, 0.75, 1, 1) 0.3s;
+
+        &.top-nav {
+            margin: 0 0.3rem;
+            box-shadow: none;
+        }
+    }
+
+    &.login {
+        background-color: ${color.blue.neutral};
+
+        &:hover {
+            background-color: ${color.blue.dark};
+            color: ${color.white};
+        }
+
+        &:active {
+            background-color: ${color.blue.darker};
+            transition: linear 0.05s;
+        }
+    }
+
+    &.logout {
+        background-color: ${color.red.neutral};
+
+        &:hover {
+            background-color: ${color.red.dark};
+            color: ${color.white};
+        }
+
+        &:active {
+            background-color: ${color.red.darker};
+            transition: linear 0.05s;
+        }
+    }
+
+    &.signup {
+        background-color: ${color.grey.shade.dark};
+
+        &:hover {
+            background-color: ${color.grey.shade.darker};
+            color: ${color.white};
+        }
+
+        &:active {
+            background-color: ${color.grey.shade.darkest};
+            transition: linear 0.05s;
+        }
+    }
+
     &.home {
         margin-top: 4rem;
         margin-bottom: 4rem;

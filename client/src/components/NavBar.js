@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { debounce } from "lodash";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
 
 import {
     getViewportDimensions,
@@ -16,15 +18,19 @@ import {
     setAtTopStatus,
 } from "../actions/viewportActions";
 
-import media from "../data/media";
-
 import menuIcon from ".../icons/menu.svg";
 import searchIcon from ".../icons/magnifying-glass.svg";
+import userIcon from ".../icons/user.svg";
+import dropdownIcon from ".../icons/dropdown-arrow-shifted.svg";
 import logoSmall from ".../images/logo-small.svg";
 import gitHubIcon from ".../logos/github.svg";
 
 import RouterLink from "./RouterLink";
 import Icon from "./Icon";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
+import SignupButton from "./SignupButton";
+import DropdownMenu from "./DropdownMenu";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -50,6 +56,10 @@ const Navbar = ({
     const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
     /** Get the atTop status from the Redux Store */
     const atTop = viewport.atTop;
+
+    /** Check if user is authenticated */
+    const { isAuthenticated } = useAuth0();
+
     /**
      * useEffect used to add an event listener to handle window scroll
      * and update the Component state.
@@ -108,8 +118,44 @@ const Navbar = ({
         };
     }, [scrollPos]);
 
+    const accountImageComponent =
+        <S.FlexContainer className="no-margin">
+            <Icon
+                navbar
+                $atTop={atTop}
+                xlinkHref={userIcon}
+                width="32px"
+                height="32px"
+                alt="User Account"
+                className={`${className} ${iconClass}`} />
+            <Icon
+                navbar
+                $atTop={atTop}
+                xlinkHref={dropdownIcon}
+                width="16px"
+                height="16px"
+                alt="Dropdown Arrow"
+                className={`${className} ${iconClass}`} />
+        </S.FlexContainer>;
+
+    const authOptions = isAuthenticated ?
+        <>
+            <Link to="/account" value="Account">Account</Link>
+            <LogoutButton
+                value="Log out"
+                noStyle
+                bgHoverColor="red-neutral" />
+        </> :
+        <>
+            <LoginButton noStyle value="Log in" />
+            <SignupButton
+                value="Sign up"
+                noStyle
+                bgHoverColor="grey-tint-dark" />
+        </>;
+
     const iconClass = atTop ? "at-top" : "";
-    const content = viewport.dimensions.width >= media.breakpoints.medium ?
+    const content = viewport.size.is.greaterThan.small ?
         (
             <>
                 <RouterLink
@@ -160,6 +206,27 @@ const Navbar = ({
                         Contact
                     </S.NavbarLink>
                 </S.ListItem>
+                {
+                    viewport.size.is.greaterThan.small &&
+                    <S.ListItem className="nav-icon">
+                        <Icon
+                            navbar
+                            $atTop={atTop}
+                            xlinkHref={searchIcon}
+                            width="22px"
+                            height="22px"
+                            alt="Search Icon"
+                            className={`${className} ${iconClass}`} />
+                    </S.ListItem>
+                }
+                <S.ListItem className="nav-item">
+                    <DropdownMenu
+                        imageComponent={accountImageComponent}
+                        options={authOptions}
+                        hide={!scrolledUp} >
+                        {authOptions}
+                    </DropdownMenu>
+                </S.ListItem>
                 <S.ListItem className="nav-icon">
                     <a href="https://github.com/reubennn/fullstack-react"
                         target="_blank"
@@ -189,29 +256,35 @@ const Navbar = ({
                         height="36px"
                         className={`${className} ${iconClass}`} />
                 </button>
-                <RouterLink
-                    url="/"
-                    className="nav-item justify-center"
-                    isImage={true}
-                >
-                    <S.LogoImage
-                        className="small"
-                        src={logoSmall}
-                        type={viewport.type}
-                        height="3rem"
-                        alt="Spaceship Logo Nav Home Icon" />
-                </RouterLink>
-                <button
-                    className="justify-right"
-                    onClick={() => setSidebarNavStatus(true)}>
-                    <Icon
-                        navbar
-                        $atTop={atTop}
-                        xlinkHref={searchIcon}
-                        width="28px"
-                        height="28px"
-                        className={`${className} ${iconClass}`} />
-                </button>
+                <S.AbsoluteElement justifyCenter>
+                    <Link
+                        to="/">
+                        <S.ListItem className="nav-icon">
+                            <S.LogoImage
+                                className="small no-margin"
+                                src={logoSmall}
+                                type={viewport.type}
+                                height="3rem"
+                                alt="Spaceship Logo Nav Home Icon" />
+                        </S.ListItem>
+                    </Link>
+                </S.AbsoluteElement>
+                <S.FlexContainer className="no-margin">
+                    {viewport.size.is.greaterThan.extraSmall &&
+                        <Icon
+                            navbar
+                            $atTop={atTop}
+                            xlinkHref={searchIcon}
+                            width="28px"
+                            height="28px"
+                            alt="Search"
+                            className={`nav ${className} ${iconClass}`} />}
+                    <DropdownMenu
+                        imageComponent={accountImageComponent}
+                        hide={!scrolledUp} >
+                        {authOptions}
+                    </DropdownMenu>
+                </S.FlexContainer>
             </>
         );
     return (

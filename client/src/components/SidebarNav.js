@@ -1,15 +1,20 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
+
 import { enableScroll, disableScroll } from "../scripts/disableScroll";
 import {
     getSidebarNavState,
+    getViewportSize,
 } from "../selectors/viewportSelectors";
 
 import { setSidebarNavStatus } from "../actions/viewportActions";
 
 import Icon from "./Icon";
 import RouterLink from "./RouterLink";
+import LoginButton from "./LoginButton";
+import SignupButton from "./SignupButton";
 
 import closeIcon from ".../icons/close.svg";
 import searchIcon from ".../icons/magnifying-glass.svg";
@@ -23,7 +28,18 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} navbar for navigating through website
  */
-const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
+const SidebarNav = ({
+    className = "",
+    sidebarNav,
+    setSidebarNavStatus,
+    viewport,
+}) => {
+    /** Check if user is authenticated */
+    const { isAuthenticated } = useAuth0();
+
+    const spacing = viewport.size.is.superSmall ? " super-small" : "";
+    const listItemClassName = `nav-item sidebar-nav${spacing}`;
+
     /**
      * useEffect used to disable any scroll functionality when
      * the sidebar navigation is active and enable it is not.
@@ -60,8 +76,7 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                 <RouterLink
                     url="/"
                     className="nav-item justify-center"
-                    isImage={true}
-                >
+                    isImage={true}>
                     <S.LogoImage
                         className="small"
                         src={logoSmall}
@@ -85,7 +100,7 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                 column
                 justifyContent="flex-end">
                 <S.HorizontalRuler className="sidebar-nav" />
-                <S.ListItem className="nav-item sidebar-nav">
+                <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
                             to="/"
@@ -97,7 +112,7 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                     </button>
                 </S.ListItem>
                 <S.HorizontalRuler className="sidebar-nav" />
-                <S.ListItem className="nav-item sidebar-nav">
+                <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
                             to="/about"
@@ -108,7 +123,7 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                     </button>
                 </S.ListItem>
                 <S.HorizontalRuler className="sidebar-nav" />
-                <S.ListItem className="nav-item sidebar-nav">
+                <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
                             to="/blog"
@@ -120,7 +135,7 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                     </button>
                 </S.ListItem>
                 <S.HorizontalRuler className="sidebar-nav" />
-                <S.ListItem className="nav-item sidebar-nav">
+                <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
                             to="/store"
@@ -131,7 +146,7 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                     </button>
                 </S.ListItem>
                 <S.HorizontalRuler className="sidebar-nav" />
-                <S.ListItem className="nav-item sidebar-nav">
+                <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
                             to="/contact"
@@ -141,6 +156,35 @@ const SidebarNav = ({ className = "", sidebarNav, setSidebarNavStatus }) => {
                         </S.NavbarLink>
                     </button>
                 </S.ListItem>
+                <S.HorizontalRuler className="sidebar-nav" />
+                <S.ListItem className={listItemClassName}>
+                    <button onClick={() => setSidebarNavStatus(false)}>
+                        <S.NavbarLink
+                            to="/account"
+                            activeClassName="active"
+                            className={className + " uppercase"} >
+                            Account
+                        </S.NavbarLink>
+                    </button>
+                </S.ListItem>
+                {viewport.size.is.greaterThan.extraSmall &&
+                    !isAuthenticated &&
+                        <>
+                            <S.HorizontalRuler className="sidebar-nav" />
+                            <S.AbsoluteElement bottom justifyCenter>
+                                <S.FlexContainer>
+                                    <S.ListItem
+                                        className="nav-item sidebar-nav login">
+                                        <LoginButton />
+                                    </S.ListItem>
+                                    <S.ListItem
+                                        className="nav-item sidebar-nav signup">
+                                        <SignupButton />
+                                    </S.ListItem>
+                                </S.FlexContainer>
+                            </S.AbsoluteElement>
+                        </>
+                }
             </S.FlexContainer>
         </S.Sidenav>
     );
@@ -162,6 +206,11 @@ SidebarNav.propTypes = {
      * Function to dispatch Redux Action to set sidebar nav status.
      */
     setSidebarNavStatus: PropTypes.func,
+    /**
+     * Viewport Redux state.
+     * - Contains information about the viewport.
+     */
+    viewport: PropTypes.object,
 };
 
 /**
@@ -173,6 +222,9 @@ SidebarNav.propTypes = {
  */
 const mapStateToProps = (state) => ({
     sidebarNav: getSidebarNavState(state),
+    viewport: {
+        size: getViewportSize(state),
+    },
 });
 
 /**
