@@ -62,13 +62,12 @@ const Comment = ({
     const [hasReplies, setHasReplies] = useState(
         Object.prototype.hasOwnProperty.call(data, "replies"));
     const [replies, setReplies] = useState(getCurrentReplies(data));
+    const [maxDepth, setMaxDepth] = useState(2);
 
     /** Store the state of the interaction buttons for the comment */
     const [interaction, setInteraction] = useState(initialInteractionState);
 
     const isRoot = data.depth === 0 ? true : false;
-
-    let maxDepth;
 
     const INTERACTIONS = {
         reply: "reply",
@@ -180,6 +179,31 @@ const Comment = ({
             isMounted.current = false;
         };
     }, []);
+
+    /**
+      * UseEffect triggered when the viewport size changes.
+      *
+      * Uses a switch statement to dynamically select the maxDepth of
+      * the replies.
+      *
+      * For smaller viewports, we do not have enough room to
+      * continue to indent replies, so this limits the number
+      * of indents to allow them to fit on the screen.
+      */
+    useEffect(() => {
+        if (isMounted.current) {
+            switch (viewport.type) {
+                case ("super-small"): setMaxDepth(2); break;
+                case ("extra-small"): setMaxDepth(3); break;
+                case ("small"): setMaxDepth(4); break;
+                case ("medium"): setMaxDepth(7); break;
+                case ("large"): setMaxDepth(10); break;
+                case ("extra-large"): setMaxDepth(12); break;
+                case ("super-large"): setMaxDepth(15); break;
+                default: setMaxDepth(2); break;
+            };
+        }
+    }, [viewport.type]);
 
     /**
      * useEffect which fetches the replies of the comment when mounted.
@@ -387,25 +411,6 @@ const Comment = ({
                 };
             });
         }
-    };
-
-    /**
-     * Switch statement to dynamically select the maxDepth of
-     * the replies.
-     *
-     * For smaller viewports, we do not have enough room to
-     * continue to indent replies, so this limits the number
-     * of indents.
-     */
-    switch (viewport.type) {
-        case ("super-small"): maxDepth = 2; break;
-        case ("extra-small"): maxDepth = 3; break;
-        case ("small"): maxDepth = 4; break;
-        case ("medium"): maxDepth = 7; break;
-        case ("large"): maxDepth = 10; break;
-        case ("extra-large"): maxDepth = 12; break;
-        case ("super-large"): maxDepth = 15; break;
-        default: maxDepth = 2; break;
     };
 
     /** Determine flag status to display server error message */
