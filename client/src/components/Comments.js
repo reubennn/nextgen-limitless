@@ -11,6 +11,7 @@ import {
 
 import AddCommentForm from "./AddCommentForm";
 import Comment from "./Comment";
+import DropdownMenu from "./DropdownMenu";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -309,22 +310,18 @@ const Comments = ({
                         comments-section">
                                 Sort by:
                             </S.Label>
-                            <S.SelectSort
-                                name="sort"
-                                className="uppercase"
-                                value={sortingMethod}
-                                onChange={(e) =>
-                                    setSortingMethod(e.target.value)}>
-                                <S.Option value="Interaction">
+                            <DropdownMenu
+                                onSelection={setSortingMethod}>
+                                <S.DropdownChild value="Interaction">
                                     Interaction
-                                </S.Option>
-                                <S.Option value="Newest">
+                                </S.DropdownChild>
+                                <S.DropdownChild value="Newest">
                                     Newest
-                                </S.Option>
-                                <S.Option value="Oldest">
+                                </S.DropdownChild>
+                                <S.DropdownChild value="Oldest">
                                     Oldest
-                                </S.Option>
-                            </S.SelectSort>
+                                </S.DropdownChild>
+                            </DropdownMenu>
                         </S.FlexContainer>
                         {!smallerViewport &&
                             <S.Button

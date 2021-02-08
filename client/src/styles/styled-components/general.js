@@ -275,6 +275,7 @@ export const TextSized = styled(Text).attrs((props) => ({
 export const ListItem = styled.li`
     color: inherit;
     margin: 0.3rem 0;
+    transition: ease-in-out 0.25s;
 
     &.nav-item {
         margin: auto 0.3rem;
@@ -286,10 +287,22 @@ export const ListItem = styled.li`
 
     &.sidebar-nav {
         margin: 5vh auto;
+
+        &.super-small {
+            margin: 3.5vh auto;
+        }
     }
 
     &.justify-left {
         margin-right: auto;
+    }
+
+    &.login {
+        margin-right: 1rem;
+    }
+
+    &.signup {
+        margin-left: 1rem;
     }
 `;
 
@@ -337,6 +350,11 @@ export const Icon = styled.svg.attrs((props) => ({
     /* Make inner elements inverted */
     & > use {
         color: ${(props) => handleColor(props.bgColor)};
+    }
+
+    &.nav {
+        margin-left: 1rem;
+        margin-right: 1rem;
     }
 
     /* Close icon uses stroke for lines, not fill */
@@ -411,6 +429,7 @@ export const Button = styled.button.attrs((props) => ({
     background-color: ${color.grey.shade.dark};
     font-weight: 600;
     font-size: 1.2rem;
+    white-space: nowrap;
     text-shadow: 0.03rem 0.03rem
     ${color.grey.shade.darkest + transparency.x25};
     box-shadow: 0.1rem 0.15rem 0.3rem
@@ -663,4 +682,215 @@ export const CoolList = styled.ul`
             color: ${color.blue.lighter};
         }
     }
+`;
+
+/**
+ * Wrapper to set an element in absolute position.
+ *
+ * @param {Boolean} top flag to position element at top
+ * @param {Boolean} bottom flag to position element at bottom
+ * @param {Boolean} left flag to position element to the left
+ * @param {Boolean} right flag to position element to the right
+ * @param {Boolean} justifyCenter flag to justify to center
+ * @param {Boolean} alignCenter flag to align to center
+ */
+export const AbsoluteElement = styled.div`
+    width: auto;
+    position: absolute;
+    transition: ease-in-out 0.5s;
+    ${(props) => props.top ? "top: 0" : ""};
+    ${(props) => props.bottom ? "bottom: 0" : ""};
+    ${(props) => props.left ? "left: 0" : ""};
+    ${(props) => props.right ? "right: 0" : ""};
+    ${(props) => props.justifyCenter &&
+        css`
+        left: 50%;
+        transform: translate(-50%, 0);
+    `};
+    ${(props) => props.alignCenter &&
+        css`
+        top: 50%;
+        transform: translate(0, -50%);
+    `};
+`;
+
+/**
+ * Wrapper to set an element in a fixed position.
+ *
+ * @param {Boolean} top flag to position element at top
+ * @param {Boolean} bottom flag to position element at bottom
+ * @param {Boolean} left flag to position element to the left
+ * @param {Boolean} right flag to position element to the right
+ * @param {Boolean} justifyCenter flag to justify to center
+ * @param {Boolean} alignCenter flag to align to center
+ */
+export const FixedElement = styled(AbsoluteElement)`
+    position: fixed;
+`;
+
+/**
+ * Container component for the Dropdown Menu.
+ */
+export const DropdownContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    cursor: pointer;
+    /* Remove blue highlight on Chrome mobile when pressing button/selection */
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+`;
+
+/**
+ * Button container for the dropdown menu.
+ *
+ * - If no button image is supplied, the component adds additional
+ * styling to look like a button
+ *
+ * @param {Boolean} imageSupplied flag indicate if button image supplied
+ */
+export const DropdownButtonContainer = styled.button`
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+
+    /** Styling when no image supplied */
+    ${(props) => !props.imageSupplied &&
+        css`
+        background: ${color.white};
+        border-radius: 2rem;
+        align-items: center;
+        padding: 0.25rem 0.6rem 0.25rem 1rem;
+        box-shadow: 0.2rem 0.2rem 0.6rem 0
+        ${color.grey.shade.dark + transparency.x20};
+        border: 0.03rem solid ${color.grey.tint.lightest + transparency.x50};
+        transition: box-shadow 0.4s ease-in-out;
+
+        &:hover {
+            box-shadow: 0.2rem 0.2rem 0.6rem -0.05rem
+            ${color.grey.shade.dark + transparency.x40};
+        }
+
+        &:active {
+            box-shadow: 0.1rem 0.1rem 0.6rem 0
+            ${color.grey.shade.dark + transparency.x50};
+        }
+
+    `}
+`;
+
+/**
+ * Component for the selected value if shown.
+ *
+ * - This will appear in the DropdownMenu button container.
+ */
+export const DropdownSelectedValue = styled.span`
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: auto;
+`;
+
+/**
+ * Dropdown options container used to set the relative position.
+ */
+export const DropdownOptionsContainer = styled.div`
+    position: relative;
+`;
+
+/**
+ * Container list of dropdown options positioned slightly
+ * below the dropdown menu button.
+ */
+export const DropdownOptions = styled.ul`
+    position: absolute;
+    display: block;
+    opacity: 0;
+    max-height: 0;
+    top: 2rem;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background: ${color.white};
+    border-radius: 0.5rem;
+    box-shadow: 0 0.05rem 0.5rem ${color.grey.shade.dark + transparency.x30};
+    transform: translateY(-1.5rem);
+    overflow: hidden;
+    transition: all 1s ease-in-out 0s,
+                opacity 0.4s ease-in-out 0s,
+                transform 0.6s ease-in-out 0s;
+
+    &.active {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 50rem;
+        transition: all 1s ease-in-out 0s,
+                    opacity 0.4s ease-in-out 0s,
+                    transform 0.6s ease-in-out 0s;
+    }
+`;
+
+/**
+ * Dropdown menu option to be selected.
+ *
+ * - Uses consistent styling no matter what the child element is.
+ *
+ * @param {String} bgHoverColor background color to display on option hover
+ */
+export const DropdownOption = styled.li.attrs((props) => ({
+    bgHoverColor: props.bgHoverColor || "blue-lightest",
+}))`
+    background-color: transparent;
+    color: ${color.grey.shade.dark};
+
+    &:not(:last-of-type) {
+        border-bottom: 0.05rem solid ${color.grey.tint.lighter};
+    }
+
+    & *:not(li) {
+        display: inline-block;
+        white-space: nowrap;
+        color: transparent;
+        max-height: 0;
+        text-align: left;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: all 0.6s ease-in-out 0s,
+                    background-color 0.2s ease-in-out 0s;
+
+        &:hover {
+            background-color:
+            ${(props) => handleColor(props.bgHoverColor + "-x20")};
+            transition: all 0.6s ease-in-out 0s,
+                        background-color 0.2s ease-in-out 0s;
+        }
+
+        &:active {
+            background-color:
+            ${(props) => handleColor(props.bgHoverColor)};
+        }
+    }
+
+    ${DropdownOptions}.active & *:not(li) {
+        max-height: 50rem;
+        color: ${color.grey.shade.dark};
+        padding: 1rem 4rem 1rem 1rem;
+        transition: all 0.6s ease-in-out 0s,
+                    background-color 0.2s ease-in-out 0s;
+    }
+`;
+
+/**
+ * Simple component to use when passing children to the Dropdown Menu
+ * that do not require any specific HTML element.
+ * - This also allows us to pass bgHoverColor without React giving us errors.
+ */
+export const DropdownChild = styled.span`
+    /** We don't need to add any styles to this component */
 `;

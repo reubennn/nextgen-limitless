@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import PropTypes from "prop-types";
 
 import Icon from "./Icon";
+import DropdownMenu from "./DropdownMenu";
 
-import moreOptions from ".../icons/more-options.svg";
+import moreOptionsIcon from ".../icons/more-options.svg";
 import thumbsUp from ".../icons/thumbs-up.svg";
 import thumbsDown from ".../icons/thumbs-down.svg";
 
@@ -418,6 +419,26 @@ const Comment = ({
     const downvoteButtonClassName = interaction.downvote.success ?
         "highlight" : "";
 
+    const moreOptionsIconComponent =
+        <Icon
+            className="dark-hover"
+            xlinkHref={moreOptionsIcon}
+            height="16px"
+            width="16px"
+            fill="grey-tint-neutral" />;
+
+    const moreOptions =
+        <>
+            <S.DropdownChild value="Hide comment">
+                Hide comment
+            </S.DropdownChild>
+            <S.DropdownChild
+                bgHoverColor="red-neutral"
+                value="Report comment">
+                Report
+            </S.DropdownChild>
+        </>;
+
     return (
         <S.CommentWrapper>
             <S.FlexContainer
@@ -436,14 +457,11 @@ const Comment = ({
                         {getRelativeTime(data.timestamp)}
                     </S.CommentTimestamp>
                 </S.FlexContainer>
-                <S.OptionsButton className="justify-right">
-                    <Icon
-                        className="dark-hover"
-                        xlinkHref={moreOptions}
-                        height="16px"
-                        width="16px"
-                        fill="grey-tint-neutral" />
-                </S.OptionsButton>
+                <DropdownMenu
+                    className="justify-right"
+                    imageComponent={moreOptionsIconComponent} >
+                    {moreOptions}
+                </DropdownMenu>
             </S.FlexContainer>
             <S.CommentText>
                 {data.comment}
