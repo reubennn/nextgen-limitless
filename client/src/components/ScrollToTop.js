@@ -1,6 +1,6 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 /**
  * React Component to push scrollbar to top of page when
@@ -10,7 +10,10 @@ import { withRouter } from "react-router-dom";
  *
  * @return {Component} wrapper for React Router to push scrollbar to top
  */
-const ScrollToTop = ({ history, children }) => {
+const ScrollToTop = ({ children }) => {
+    /** Get the history object from React Router */
+    const history = useHistory();
+
     /**
      * useEffect to track any URL change with React Router.
      */
@@ -32,17 +35,13 @@ const ScrollToTop = ({ history, children }) => {
     }, []);
 
     return (
-        <Fragment>
+        <>
             {children}
-        </Fragment>
+        </>
     );
 };
 
 ScrollToTop.propTypes = {
-    /**
-     * history API used when navigating to other pages.
-     */
-    history: PropTypes.object,
     /**
      * React Router children Components.
      */
@@ -53,4 +52,4 @@ ScrollToTop.propTypes = {
  * Wrap ScrollToTop in withRouter function
  * to give component access to history prop.
  */
-export default withRouter(ScrollToTop);
+export default ScrollToTop;
