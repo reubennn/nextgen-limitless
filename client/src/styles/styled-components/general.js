@@ -421,6 +421,8 @@ export const Icon = styled.svg.attrs((props) => ({
  * Button Component.
  *
  * @param {String} $radius transient prop for the button radius
+ * @param {Boolean} left position button to the left with small margin
+ * @param {Boolean} right position button to the left with small margin
  */
 export const Button = styled.button.attrs((props) => ({
     $radius: props.$radius || "1.5rem",
@@ -438,6 +440,8 @@ export const Button = styled.button.attrs((props) => ({
     padding: 0.6rem 1.7rem;
     display: block;
     margin: 0 auto;
+    margin-left: ${(props) => props.right ? "1rem" : "auto"};
+    margin-right: ${(props) => props.left ? "1rem" : "auto"};
 
     &:hover {
         color: ${color.grey.tint.lighter};
