@@ -24,7 +24,7 @@ module.exports = merge(common, {
         historyApiFallback: true,
         proxy: {
             "/api/**": {
-                target: `http://localhost:${process.env.API_PORT || 9000}`,
+                target: `http://localhost:${process.env.SERVER_PORT || 9000}`,
                 secure: false,
                 changeOrigin: true,
             },
