@@ -1,6 +1,9 @@
 # LinkedIn Learning files
 ~LL*files
 
+# Temporary files
+temp/
+
 # Secret config files
 secrets.env
 
