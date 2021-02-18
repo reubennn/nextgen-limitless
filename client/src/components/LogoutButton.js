@@ -17,6 +17,7 @@ const LogoutButton = ({
     left = false,
     right = false,
 }) => {
+    /** Use below if only authenticating on client side */
     const { logout } = useAuth0();
 
     /**
@@ -24,6 +25,10 @@ const LogoutButton = ({
      * home page when they log out.
      */
     const handleOnClick = () => {
+        // window.location.href =
+        //     `${process.env.REACT_APP_SERVER_URL}/auth/logout`;
+
+        /** Use below if only authenticating on client side */
         logout({
             returnTo: window.location.origin,
         });

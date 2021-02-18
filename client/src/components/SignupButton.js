@@ -18,6 +18,7 @@ const SignupButton = ({
     left = false,
     right = false,
 }) => {
+    /** Use below if only authenticating on client side */
     const { loginWithRedirect } = useAuth0();
 
     /**
@@ -25,6 +26,10 @@ const SignupButton = ({
      * to the account sign up page for Auth0.
      */
     const handleOnClick = () => {
+        // window.location.href =
+        //     `${process.env.REACT_APP_SERVER_URL}/auth/signup`;
+
+        /** Use below if only authenticating on client side */
         loginWithRedirect({
             screen_hint: "signup",
             /** Pass the current url so Auth0 knows what to redirect back to */

@@ -17,6 +17,7 @@ const LoginButton = ({
     left = false,
     right = false,
 }) => {
+    /** Use below if only authenticating on client side */
     const { loginWithRedirect } = useAuth0();
 
     /**
@@ -24,8 +25,11 @@ const LoginButton = ({
      * to the account log in page for Auth0.
      */
     const handleOnClick = () => {
+        // window.location.href = `${process.env.REACT_APP_SERVER_URL}/auth/login`;
+
+        /** Use below if only authenticating on client side */
         loginWithRedirect({
-        /** Pass the current url so Auth0 knows what to redirect back to */
+            /** Pass the current url so Auth0 knows what to redirect back to */
             appState: {
                 returnTo: window.location.pathname,
             },
