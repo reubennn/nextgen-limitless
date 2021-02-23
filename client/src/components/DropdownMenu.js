@@ -31,8 +31,12 @@ const DropdownMenu = ({
     hide = false,
     onSelection = undefined,
 }) => {
-    /** Initially display the first child as the current value */
-    const firstValue = getComponentChildren(children)[0].props.value;
+    const componentChildren = getComponentChildren(children)[0];
+
+    /** Initially display the first child as the current value. */
+    const firstValue = componentChildren === undefined ?
+        children.props.value :
+        componentChildren.props.value;
 
     /** Ref used when closing the dropdown upon clicking away from it */
     const dropdownRef = useRef(null);
