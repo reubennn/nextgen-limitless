@@ -80,7 +80,7 @@ const About = ({ viewport }) => {
                         <S.Text >.</S.Text>
                     </S.Header>
                     <p>
-                        Our philosophy here is that we are a customer centric company; if our customers aren&apos;t successful, then neither are we. We are very good at understanding the needs and visions that our clients possess. Through our positive working environments and thriving employees, our teams are able to deliver undeniable value through our range of services to help partnerships grow whilst delivering on our promises. Through changing landscapes with COVID-19 at bay, we have quickly adapted to unfamiliar markets so that we can assist our partners assert dominance in their specialty areas.
+                        Our philosophy here is that we are a customer centric company; if our customers aren&apos;t successful, then neither are we. We are very good at understanding the needs and visions that our clients possess. Through our positive working environments and thriving employees, our teams are able to deliver undeniable value through our range of services to help partnerships grow whilst delivering on our promises. Through changing landscapes with COVID-19 at bay, we have quickly adapted to unfamiliar markets so that we can assist our partners in asserting dominance in their specialty areas.
                     </p>
                 </S.Section>
                 <S.SectionWithBackground
