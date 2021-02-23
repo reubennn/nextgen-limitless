@@ -13,7 +13,6 @@ import rateLimit from "express-rate-limit";
 
 import articleRouter from "./api/article.routes";
 import commentRouter from "./api/comment.routes";
-import authRouter from "./api/auth.routes";
 
 const PORT = process.env.PORT || 9000;
 
@@ -55,9 +54,6 @@ app.use(bodyParser.json());
 /** Use API router as middleware with endpoint "/api" */
 app.use("/api", articleRouter);
 app.use("/api", commentRouter);
-
-/** Use the authentication router as middleware with endpoint "/auth" */
-app.use("/auth", authRouter);
 
 /**
  * All requests which are not caught by the other API routes should be
