@@ -90,17 +90,17 @@ const Home = ({ viewport }) => {
                     height="75vh"
                     ref={learnMoreRef}>
                     {featureDescriptions.map((description, index) => {
-                        let last;
+                        let separator;
                         let reverse;
                         featureDescriptions.length === index + 1 ?
-                            last = true : last = false;
+                            separator = false : separator = true;
                         /** Reverse the content for odd numbers */
                         index % 2 == 0 || displayAsColumn ?
                             reverse = false : reverse = true;
                         return <DescriptionBox
                             key={index}
                             description={description}
-                            last={last}
+                            separator={separator}
                             column={displayAsColumn}
                             reverse={reverse} />;
                     })}

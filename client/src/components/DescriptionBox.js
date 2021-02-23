@@ -56,8 +56,6 @@ const DescriptionBox = ({
         <>
             {separator && column && reverse &&
                 <S.HorizontalRuler className="description-box full-width" />}
-            {separator && !column && reverse &&
-                <S.HorizontalRuler className="description-box" />}
             <S.DescriptionBox
                 column={column}
                 reverse={reverse}
