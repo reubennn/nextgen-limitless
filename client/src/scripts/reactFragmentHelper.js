@@ -18,6 +18,7 @@ export const isReactFragment = (component) => {
  *
  * - If a React Fragment is passed as the child,
  * we can extract the children from it.
+ * - If no children exist, it returns undefined.
  *
  * @param {*} children React Component children
  * @return {Array} React Component children as an array
