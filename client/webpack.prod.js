@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
+const dotenv = require("dotenv");
 
 module.exports = merge(common, {
     mode: "production",
@@ -12,6 +13,16 @@ module.exports = merge(common, {
         filename: "bundle.js",
     },
     plugins: [
+        /**
+         * NOT SAFE - COMMENT OUT FOR FINAL PRODUCTION BUILD
+         * Copy process.env config secrets
+         *  - Used to test serving static files on server
+         */
+        new webpack.DefinePlugin({
+            "process.env": JSON.stringify(dotenv.config({
+                path: __dirname + "/config/secrets.env",
+            }).parsed),
+        }),
         /** Copy files from public directory to dist directory */
         new CopyWebpackPlugin({
             patterns: [{
