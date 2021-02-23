@@ -57,7 +57,7 @@ const Navbar = ({
     /** Get the atTop status from the Redux Store */
     const atTop = viewport.atTop;
 
-    /** Check if user is authenticated */
+    /** Check if Auth0 user is authenticated */
     const { isAuthenticated } = useAuth0();
 
     /**
@@ -209,14 +209,16 @@ const Navbar = ({
                 {
                     viewport.size.is.greaterThan.small &&
                     <S.ListItem className="nav-icon">
-                        <Icon
-                            navbar
-                            $atTop={atTop}
-                            xlinkHref={searchIcon}
-                            width="22px"
-                            height="22px"
-                            alt="Search Icon"
-                            className={`${className} ${iconClass}`} />
+                        <button onClick={() => null}>
+                            <Icon
+                                navbar
+                                $atTop={atTop}
+                                xlinkHref={searchIcon}
+                                width="22px"
+                                height="22px"
+                                alt="Search Icon"
+                                className={`${className} ${iconClass}`} />
+                        </button>
                     </S.ListItem>
                 }
                 <S.ListItem className="nav-item">
@@ -271,14 +273,16 @@ const Navbar = ({
                 </S.AbsoluteElement>
                 <S.FlexContainer className="no-margin">
                     {viewport.size.is.greaterThan.extraSmall &&
-                        <Icon
-                            navbar
-                            $atTop={atTop}
-                            xlinkHref={searchIcon}
-                            width="28px"
-                            height="28px"
-                            alt="Search"
-                            className={`nav ${className} ${iconClass}`} />}
+                        <button onClick={() => null}>
+                            <Icon
+                                navbar
+                                $atTop={atTop}
+                                xlinkHref={searchIcon}
+                                width="28px"
+                                height="28px"
+                                alt="Search"
+                                className={`nav ${className} ${iconClass}`} />
+                        </button>}
                     <DropdownMenu
                         imageComponent={accountImageComponent}
                         hide={!scrolledUp} >
