@@ -64,7 +64,7 @@ const Footer = ({ viewport }) => {
                     width="50%" />
             }
             <S.TinyText>
-                <span>© 2020 Next Gen LIMITLESS.&nbsp;</span>
+                <span>© 2021 Next Gen LIMITLESS.&nbsp;</span>
             All Rights Reserved.
             </S.TinyText>
             <S.TinyText superTiny>
