@@ -28,9 +28,11 @@ router.route("/comments/:path/add-comment")
         addCommentToArticle);
 
 router.route("/comments/:path/:_id/upvote")
-    .post(upvoteComment);
+    .post(...checkAuthentication(),
+        upvoteComment);
 
 router.route("/comments/:path/:_id/downvote")
-    .post(downvoteComment);
+    .post(...checkAuthentication(),
+        downvoteComment);
 
 export default router;

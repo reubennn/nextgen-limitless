@@ -1,5 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
+import { useAuth0 } from "@auth0/auth0-react";
+import { handleFetchWithController } from "../api/handleFetch";
+import useSecuredApi from "../hooks/useSecuredApi";
 
 import Icon from "./Icon";
 import DropdownMenu from "./DropdownMenu";
@@ -75,33 +78,24 @@ const Comment = ({
         downvote: "downvote",
     };
 
-    /**
-     * Handle fetch function wrapper to handle interrupted HTTP fetch requests.
-     *
-     * - If the AbortController signal is aborted (ie, through a component
-     * unmount).
-     *
-     * @param {AbortController} controller AbortController used to cancel fetch
-     * @param {Function} operations fetch operations to perform
-     * @return {*} HTTP response object or null if empty or aborted
-     */
-    const handleFetch = useCallback(
-        async (controller, operations) => {
-            if (isMounted.current) {
-                try {
-                    // Set Loading state to true
-                    return await operations(controller);
-                } catch (error) {
-                    return null;
-                } finally {
-                    if (!controller.signal.aborted) {
-                        // Set Loading state to false
-                    }
-                }
-            } else {
-                return null;
-            }
-        }, []);
+    /** Check if user is authenticated with Auth0 authentication */
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
+
+    const upvoteRequestUrl =
+        `/api/comments/${data.path}/${data._id}/upvote`;
+    const downvoteRequestUrl =
+        `/api/comments/${data.path}/${data._id}/downvote`;
+    const interactionRequestOptions = { method: "POST" };
+
+    /** Custom React Hooks for sending HTTP request to secure API endpoints */
+    const {
+        state: upvoteRequest,
+        securedApiRequest: securedApiUpvoteRequest,
+    } = useSecuredApi(upvoteRequestUrl, interactionRequestOptions);
+    const {
+        state: downvoteRequest,
+        securedApiRequest: securedApiDownvoteRequest,
+    } = useSecuredApi(downvoteRequestUrl, interactionRequestOptions);
 
     /**
      * Function which fetches all replies associated with the comment
@@ -113,8 +107,9 @@ const Comment = ({
      * @return {*} the replies array or null if empty or aborted
      */
     const fetchReplies = async (controller, _id, path) => {
-        const result = await handleFetch(
-            controller, async (controller) => {
+        const result = await handleFetchWithController(
+            controller,
+            async (controller) => {
                 const result = await fetch(
                     `/api/comments/${path}/${_id}`,
                     { signal: controller.signal },
@@ -131,41 +126,17 @@ const Comment = ({
     };
 
     /**
-     * Dynamic function which performs a HTTP request to the server, based
-     * on the desired interaction with the comment.
-     *
-     * - Either reply, upvote or downvote.
-     *
-     * @param {String} interaction the interaction method to perform
-     * @param {AbortController} controller AbortController used to cancel fetch
-     * @return {*} HTTP response object or null if empty or aborted
-     * @property {Object} result HTTP response values
-     * @property {Object} body the data sent from the server
+     * Handler function which redirects the user
+     * to the account log in page for Auth0, while storing the current
+     * url to the appState to use upon redirect callback.
      */
-    const commentInteractionRequest = async (interaction, controller) => {
-        if (interaction === INTERACTIONS.upvote ||
-            interaction === INTERACTIONS.downvote) {
-            return await handleFetch(controller, async (controller) => {
-                const result = await fetch(
-                    `/api/comments/${data.path}/${data._id}/${interaction}`,
-                    {
-                        method: "POST",
-                        signal: controller.signal,
-                    },
-                );
-                const body = await result.json();
-                if (result.status !== 200) {
-                    return null;
-                } else {
-                    return {
-                        result,
-                        body,
-                    };
-                }
-            });
-        } else {
-            // Reply to the comment POST request to server
-        }
+    const redirectToAuthLogin = () => {
+        loginWithRedirect({
+            /** Pass the current url so Auth0 knows where to redirect back to */
+            appState: {
+                returnTo: window.location.pathname,
+            },
+        });
     };
 
     /**
@@ -209,7 +180,7 @@ const Comment = ({
      * useEffect which fetches the replies of the comment when mounted.
      *
      * - Unsubscribes the promise if component is unmounted, to avoid
-     * any memory leaks.
+     * any memory leaks by using an AbortController.
      *
      */
     useEffect(() => {
@@ -243,98 +214,138 @@ const Comment = ({
     /**
      * useEffect triggered when the upvote button is clicked.
      *
-     * - Performs the interaction request with the server and
-     * updates the state depending on the result response.
+     * - If user is authenticated, perform the upvote HTTP
+     * request to the secured endpoint of the API.
+     * - If not, reset upvote interaction state and redirect
+     * user to Auth0 log in page.
      *
      */
     useEffect(() => {
-        const controller = new AbortController();
-        if (isMounted.current && interaction.upvote.clicked) {
-            commentInteractionRequest(INTERACTIONS.upvote, controller)
-                .then((response) => {
-                    if (response !== null && isMounted.current) {
-                        if (response.result.status !== 200) {
-                            console.log(
-                                `Error code: ${response.result.status}`);
-                            if (isMounted) {
-                                setInteraction((prevState) => {
-                                    return {
-                                        ...prevState,
-                                        upvote: {
-                                            clicked: false,
-                                            success: false,
-                                            failure: true,
-                                        },
-                                    };
-                                });
-                            }
-                        } else if (isMounted.current) {
-                            setInteraction((prevState) => {
-                                return {
-                                    ...prevState,
-                                    upvote: {
-                                        clicked: true,
-                                        success: true,
-                                        failure: false,
-                                    },
-                                };
-                            });
-                        }
-                    }
-                });
-        };
-        return () => {
-            controller.abort();
-        };
+        if (interaction.upvote.clicked) {
+            if (isAuthenticated) {
+                securedApiUpvoteRequest();
+            } else {
+                resetInteraction(INTERACTIONS.upvote);
+                redirectToAuthLogin();
+            };
+        }
     }, [interaction.upvote.clicked]);
 
     /**
      * useEffect triggered when the downvote button is clicked.
      *
-     * - Performs the interaction request with the server and
-     * updates the state depending on the result response.
+     * - If user is authenticated, perform the downvote HTTP
+     * request to the secured endpoint of the API.
+     * - If not, reset downvote interaction state and redirect
+     * user to Auth0 log in page.
      *
      */
     useEffect(() => {
-        const controller = new AbortController();
-        if (isMounted.current && interaction.downvote.clicked) {
-            commentInteractionRequest(INTERACTIONS.downvote, controller)
-                .then((response) => {
-                    if (response !== null && isMounted.current) {
-                        if (response.result.status !== 200) {
-                            console.log(
-                                `Error code: ${response.result.status}`);
-                            if (isMounted) {
-                                setInteraction((prevState) => {
-                                    return {
-                                        ...prevState,
-                                        downvote: {
-                                            clicked: false,
-                                            success: false,
-                                            failure: true,
-                                        },
-                                    };
-                                });
-                            }
-                        } else if (isMounted.current) {
-                            setInteraction((prevState) => {
-                                return {
-                                    ...prevState,
-                                    downvote: {
-                                        clicked: true,
-                                        success: true,
-                                        failure: false,
-                                    },
-                                };
-                            });
-                        }
-                    }
-                });
-        };
-        return () => {
-            controller.abort();
-        };
+        if (interaction.downvote.clicked) {
+            if (isAuthenticated) {
+                securedApiDownvoteRequest();
+            } else {
+                resetInteraction(INTERACTIONS.downvote);
+                redirectToAuthLogin();
+            };
+        }
     }, [interaction.downvote.clicked]);
+
+    /**
+     * useEffect which is triggered when the upvoteRequest has changed,
+     * either if we receive a response from the server,
+     * or an error has occurred.
+     */
+    useEffect(() => {
+        if (upvoteRequest.data !== null) {
+            const { response } = upvoteRequest.data;
+            if (response.status !== 200 && isMounted.current) {
+                // console.log(`Error code: ${response.status}`);
+                setInteraction((prevState) => {
+                    return {
+                        ...prevState,
+                        upvote: {
+                            clicked: false,
+                            success: false,
+                            failure: true,
+                        },
+                    };
+                });
+            } else if (isMounted.current) {
+                setInteraction((prevState) => {
+                    return {
+                        ...prevState,
+                        upvote: {
+                            clicked: true,
+                            success: true,
+                            failure: false,
+                        },
+                    };
+                });
+            }
+        } else if (upvoteRequest.error !== null) {
+            if (isMounted.current) {
+                setInteraction((prevState) => {
+                    return {
+                        ...prevState,
+                        upvote: {
+                            clicked: false,
+                            success: false,
+                            failure: true,
+                        },
+                    };
+                });
+            }
+        }
+    }, [upvoteRequest]);
+
+    /**
+     * useEffect which is triggered when the downvoteRequest has changed,
+     * either if we receive a response from the server,
+     * or an error has occurred.
+     */
+    useEffect(() => {
+        if (downvoteRequest.data !== null) {
+            const { response } = downvoteRequest.data;
+            if (response.status !== 200 && isMounted.current) {
+                // console.log(`Error code: ${response.status}`);
+                setInteraction((prevState) => {
+                    return {
+                        ...prevState,
+                        downvote: {
+                            clicked: false,
+                            success: false,
+                            failure: true,
+                        },
+                    };
+                });
+            } else if (isMounted.current) {
+                setInteraction((prevState) => {
+                    return {
+                        ...prevState,
+                        downvote: {
+                            clicked: true,
+                            success: true,
+                            failure: false,
+                        },
+                    };
+                });
+            }
+        } else if (downvoteRequest.error !== null) {
+            if (isMounted.current) {
+                setInteraction((prevState) => {
+                    return {
+                        ...prevState,
+                        downvote: {
+                            clicked: false,
+                            success: false,
+                            failure: true,
+                        },
+                    };
+                });
+            }
+        }
+    }, [downvoteRequest]);
 
     /**
      * useEffect which is called when the HTTP request to the server
@@ -346,7 +357,7 @@ const Comment = ({
      */
     useEffect(() => {
         let timeout;
-        if (isMounted.current) {
+        if (isMounted.current && interaction.upvote.failure) {
             timeout = setTimeout(() =>
                 resetInteraction(INTERACTIONS.upvote), 5000);
         };
@@ -365,9 +376,9 @@ const Comment = ({
      */
     useEffect(() => {
         let timeout;
-        if (isMounted.current) {
+        if (isMounted.current && interaction.downvote.failure) {
             timeout = setTimeout(() =>
-                resetInteraction(INTERACTIONS.downvote), 4000);
+                resetInteraction(INTERACTIONS.downvote), 5000);
         };
         return () => {
             clearTimeout(timeout);
