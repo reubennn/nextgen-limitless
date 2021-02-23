@@ -66,3 +66,27 @@ export const upvoteArticle = async (req, res) => {
         res.status(200).json(updatedArticleInfo);
     });
 };
+
+/**
+ * Updates the article upvote +1 in the database.
+ *
+ * @param {Object} req HTTP request object
+ * @param {Object} res HTTP response object
+ */
+export const downvoteArticle = async (req, res) => {
+    const articlePath = req.params.path;
+
+    queryDB(process.env.ARTICLES, res, async (collection) => {
+        const articleInfo = await collection
+            .findOne({ path: articlePath });
+
+        const updatedArticleInfo = await collection
+            .findOneAndUpdate(
+                { path: articlePath },
+                { "$set": { upvotes: articleInfo.upvotes - 1 } },
+                { returnOriginal: false },
+            );
+
+        res.status(200).json(updatedArticleInfo);
+    });
+};
