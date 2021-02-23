@@ -6,18 +6,26 @@ import {
     downvoteComment,
     getNestedReplies,
 } from "../controllers/comment.controllers.js";
+import { checkAuthentication } from "../auth/authentication";
 
 /** Set up the Express server router */
 const router = express.Router();
 
-router.route("/comments/:path/add-comment")
-    .post(addCommentToArticle);
-
+/**
+* Public routes.
+*/
 router.route("/comments/:path")
     .get(getRootComments);
 
 router.route("/comments/:path/:_id")
     .get(getNestedReplies);
+
+/**
+* Protected routes requiring Auth0 authentication.
+*/
+router.route("/comments/:path/add-comment")
+    .post(...checkAuthentication(),
+        addCommentToArticle);
 
 router.route("/comments/:path/:_id/upvote")
     .post(upvoteComment);

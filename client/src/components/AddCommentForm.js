@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
+import useSecuredApi from "../hooks/useSecuredApi";
 
 import { getViewportType } from "../selectors/viewportSelectors";
 
@@ -10,6 +12,8 @@ import {
 } from "../data/avatars";
 
 import ResizableTextarea from "./ResizableTextArea";
+import LoginButton from "./LoginButton";
+import SignupButton from "./SignupButton";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -55,6 +59,9 @@ const AddCommentForm = React.forwardRef((
 
     const [form, setForm] = useState(initialState);
 
+    /** Check if user is authenticated with Auth0 authentication */
+    const { isAuthenticated } = useAuth0();
+
     /**
      * Input field property strings.
      */
@@ -62,6 +69,14 @@ const AddCommentForm = React.forwardRef((
         name: "name",
         comment: "comment",
     };
+
+    const addCommentRequestUrl = `/api/comments/${articlePath}/add-comment`;
+
+    /** Use custom React Hook for sending HTTP request to secure API endpoint */
+    const {
+        state: addCommentRequest,
+        securedApiRequestWithOptions,
+    } = useSecuredApi(addCommentRequestUrl);
 
     /**
      * Reset the form state to initial values.
@@ -74,33 +89,51 @@ const AddCommentForm = React.forwardRef((
      * Function called when the form is confirmed to be complete and
      * the user submits the comment.
      *
-     * - Sends POST request to server API to post the comment to the database.
+     * - Store the form data for our HTTP request body.
+     * - Sends POST request to server API to post the comment to the database
+     * using useSecuredApi hook.
      * - Until user login is implemented, we will create a mock avatar for each
      * comment to display.
      */
-    const postCommentToServer = async () => {
-        const response = await fetch(
-            `/api/comments/${articlePath}/add-comment`,
-            {
-                method: "POST",
-                headers: {
-                    /** Tell the server we are passing JSON */
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    name: form.input.name,
-                    comment: form.input.comment,
-                    avatar: getRandomAvatar(cloudAvatars),
-                }),
-            });
-        const body = await response.json();
-        if (response.status !== 200) {
-            handlePostToServerFailure(response.status);
-        } else {
-            handlePostToServerSuccess();
-            setNewComment(body);
-        }
+    const postCommentToServer = () => {
+        const options = {
+            method: "POST",
+            headers: {
+                /** Tell the server we are passing JSON */
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: form.input.name,
+                comment: form.input.comment,
+                avatar: getRandomAvatar(cloudAvatars),
+            }),
+        };
+        securedApiRequestWithOptions(options);
     };
+
+    /**
+     * useEffect called when the the secure API HTTP request
+     * returns a response, or an error has occurred.
+     */
+    useEffect(() => {
+        if (addCommentRequest.data !== null) {
+            const { body, response } = addCommentRequest.data;
+            if (response.status !== 200) {
+                handlePostToServerFailure(response.status);
+            } else {
+                handlePostToServerSuccess();
+                setNewComment(body);
+            }
+        } else if (addCommentRequest.error !== null) {
+            if (addCommentRequest.error.error === "login_required") {
+                console.log("Not logged in!");
+            } else if (addCommentRequest.error.error === "consent_required") {
+                console.log("Do not have the required consent");
+            } else {
+                console.error(addCommentRequest.error);
+            }
+        }
+    }, [addCommentRequest]);
 
     /**
      * useEffect which is called when any input field valid status changes.
@@ -510,13 +543,28 @@ const AddCommentForm = React.forwardRef((
             </>
         );
 
+    const loginContent =
+        <>
+            <S.Header
+                as="h4">
+                Please log in or sign up to comment.
+            </S.Header>
+            <S.FlexContainer className="no-margin">
+                <LoginButton left />
+                <SignupButton right />
+            </S.FlexContainer>
+        </>;
+
     return (
         <S.Form
             className={getFormClasses()}
             onSubmit={(e) => handleSubmitEvent(e)}
             type={viewport.type}
             ref={ref}>
-            {formContent}
+            {isAuthenticated ?
+                formContent :
+                loginContent
+            }
             <S.InvalidInputHelper
                 className={form.postToServerFailure !== null ? "show" : ""}
                 after>
