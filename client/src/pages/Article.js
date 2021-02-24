@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { DateTime } from "luxon";
 import { connect } from "react-redux";
+import { handleFetchWithController } from "../api/handleFetch";
 
 import {
     getViewportDimensions,
@@ -69,36 +70,6 @@ const Article = ({ match, viewport }) => {
     const [article, setArticle] = useState(initialState);
 
     /**
-     * Handle fetch function wrapper to handle interrupted HTTP fetch requests.
-     *
-     * - If the AbortController signal is aborted (ie, through a component
-     * unmount).
-     *
-     * @param {AbortController} controller AbortController used to cancel fetch
-     * @param {Function} operations fetch operations to perform
-     * @return {*} HTTP response object or null if empty or aborted
-     *      - @property {Object} result HTTP response values
-     *      - @property {Object} body the data sent from the server
-     */
-    const handleFetch = async (controller, operations) => {
-        try {
-            // Set Loading state to true
-            return await operations(controller);
-        } catch (error) {
-            if (error.name === "AbortError") {
-                return null;
-            } else {
-                console.error(error);
-                return null;
-            };
-        } finally {
-            if (!controller.signal.aborted) {
-                // Set Loading to false
-            }
-        }
-    };
-
-    /**
      * Function which fetches all article data.
      *
      * @param {AbortController} controller AbortController used to cancel fetch
@@ -108,7 +79,7 @@ const Article = ({ match, viewport }) => {
      *      - @property {Object} body the data sent from the server
      */
     const fetchArticleData = async (controller) => {
-        const result = handleFetch(controller, async () => {
+        const result = handleFetchWithController(controller, async () => {
             const result = await fetch(`/api/articles/${path}`,
                 { signal: controller.signal },
             );

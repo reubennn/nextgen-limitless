@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { DateTime } from "luxon";
 import { connect } from "react-redux";
+import { handleFetchWithController } from "../api/handleFetch";
 
 import {
     getViewportDimensions,
@@ -42,36 +43,6 @@ const Comments = ({
     const commentFormRef = useRef(null);
 
     /**
-     * Handle fetch function wrapper to handle interrupted HTTP fetch requests.
-     *
-     * - If the AbortController signal is aborted (ie, through a component
-     * unmount).
-     *
-     * @param {AbortController} controller AbortController used to cancel fetch
-     * @param {Function} operations fetch operations to perform
-     * @return {*} HTTP response object or null if empty or aborted
-     *      - @property {Object} result HTTP response values
-     *      - @property {Object} body the data sent from the server
-     */
-    const handleFetch = async (controller, operations) => {
-        try {
-            // Set Loading state to true
-            return await operations(controller);
-        } catch (error) {
-            if (error.name === "AbortError") {
-                return null;
-            } else {
-                console.error(error);
-                return null;
-            };
-        } finally {
-            if (!controller.signal.aborted) {
-                // Set Loading to false
-            }
-        }
-    };
-
-    /**
      * Function which fetches all comments associated with the article.
      *
      * @param {AbortController} controller AbortController used to cancel fetch
@@ -81,16 +52,18 @@ const Comments = ({
      *      - @property {Object} body the data sent from the server
      */
     const fetchComments = async (controller) => {
-        const result = await handleFetch(controller, async (controller) => {
-            const result = await fetch(`/api/comments/${articlePath}`,
-                { signal: controller.signal },
-            );
-            const body = await result.json();
-            return {
-                result,
-                body,
-            };
-        });
+        const result = await handleFetchWithController(
+            controller,
+            async (controller) => {
+                const result = await fetch(`/api/comments/${articlePath}`,
+                    { signal: controller.signal },
+                );
+                const body = await result.json();
+                return {
+                    result,
+                    body,
+                };
+            });
         return result;
     };
 
