@@ -133,10 +133,10 @@ export const UpvoteSection = styled.div`
 `;
 
 /**
- * Server Error message which displays red helper text
+ * Error message helper which displays red text
  * under the interaction buttons to indicate there was
- * a problem with the server when trying to reply, upvote or downvote.
+ * a problem (e.g. with the server) when trying to reply, upvote or downvote.
  */
-export const ServerErrorHelper = styled(InvalidInputHelper)`
+export const ErrorHelper = styled(InvalidInputHelper)`
     margin-top: 0.4rem;
 `;

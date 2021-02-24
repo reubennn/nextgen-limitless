@@ -67,6 +67,10 @@ const Comment = ({
     const [replies, setReplies] = useState(getCurrentReplies(data));
     const [maxDepth, setMaxDepth] = useState(2);
 
+    /** State for hiding and reporting a comment */
+    const [hide, setHide] = useState(false);
+    const [reported, setReported] = useState(false);
+
     /** Store the state of the interaction buttons for the comment */
     const [interaction, setInteraction] = useState(initialInteractionState);
 
@@ -81,13 +85,14 @@ const Comment = ({
     /** Check if user is authenticated with Auth0 authentication */
     const { isAuthenticated, loginWithRedirect } = useAuth0();
 
+    /** URL and options for useSecuredApi Hook */
     const upvoteRequestUrl =
         `/api/comments/${data.path}/${data._id}/upvote`;
     const downvoteRequestUrl =
         `/api/comments/${data.path}/${data._id}/downvote`;
     const interactionRequestOptions = { method: "POST" };
 
-    /** Custom React Hooks for sending HTTP request to secure API endpoints */
+    /** Hooks to handle upvote/downvote API HTTP requests */
     const {
         state: upvoteRequest,
         securedApiRequest: securedApiUpvoteRequest,
@@ -123,20 +128,6 @@ const Comment = ({
                 }
             });
         return result;
-    };
-
-    /**
-     * Handler function which redirects the user
-     * to the account log in page for Auth0, while storing the current
-     * url to the appState to use upon redirect callback.
-     */
-    const redirectToAuthLogin = () => {
-        loginWithRedirect({
-            /** Pass the current url so Auth0 knows where to redirect back to */
-            appState: {
-                returnTo: window.location.pathname,
-            },
-        });
     };
 
     /**
@@ -424,6 +415,53 @@ const Comment = ({
         }
     };
 
+    /**
+     * Handler function which redirects the user
+     * to the account log in page for Auth0, while storing the current
+     * url to the appState to use upon redirect callback.
+     */
+    const redirectToAuthLogin = () => {
+        loginWithRedirect({
+            /** Pass the current url so Auth0 knows where to redirect back to */
+            appState: {
+                returnTo: window.location.pathname,
+            },
+        });
+    };
+
+    /**
+     * Handler function which hides a comment by setting
+     * hide state to true.
+     */
+    const hideComment = () => {
+        if (isMounted.current) {
+            setHide(true);
+        }
+    };
+
+    /**
+     * Handler function which shows a hidden comment by setting
+     * hide state to false.
+     */
+    const showComment = () => {
+        if (isMounted.current) {
+            setHide(false);
+        }
+    };
+
+    /**
+     * Handler function which reports a comment.
+     *
+     * - Currently, this is just a mock feature, which
+     * displays a message to the user to indicate the comment
+     * was reported.
+     */
+    const reportComment = () => {
+        if (isMounted.current) {
+            setReported(true);
+        }
+    };
+
     /** Determine flag status to display server error message */
     const interactServerError = interaction.upvote.failure ||
         interaction.downvote.failure ||
@@ -435,6 +473,7 @@ const Comment = ({
     const downvoteButtonClassName = interaction.downvote.success ?
         "highlight" : "";
 
+    /** Prepare the options Components to pass to DropdownMenu */
     const moreOptionsIconComponent =
         <Icon
             className="dark-hover"
@@ -444,16 +483,25 @@ const Comment = ({
             fill="grey-tint-neutral" />;
 
     const moreOptions =
-        <>
-            <S.DropdownChild value="Hide comment">
-                Hide comment
-            </S.DropdownChild>
+        reported ?
             <S.DropdownChild
-                bgHoverColor="red-neutral"
-                value="Report comment">
-                Report
-            </S.DropdownChild>
-        </>;
+                value={hide ? "Show comment" : "Hide comment"}
+                onClick={hide ? showComment : hideComment}>
+                {hide ? "Show" : "Hide"} comment
+            </S.DropdownChild> :
+            <>
+                <S.DropdownChild
+                    value={hide ? "Show comment" : "Hide comment"}
+                    onClick={hide ? showComment : hideComment}>
+                    {hide ? "Show" : "Hide"} comment
+                </S.DropdownChild>
+                <S.DropdownChild
+                    bgHoverColor="red-neutral"
+                    value="Report comment"
+                    onClick={reportComment}>
+                    Report
+                </S.DropdownChild>
+            </>;
 
     return (
         <S.CommentWrapper>
@@ -480,55 +528,65 @@ const Comment = ({
                 </DropdownMenu>
             </S.FlexContainer>
             <S.CommentText>
-                {data.comment}
+                {hide ? <i>This comment has been hidden.</i> : data.comment}
             </S.CommentText>
-            <S.FlexContainer
-                className="no-margin"
-                justifyContent="flex-start">
-                <S.OptionsButton
-                    className="keep-next no-bg"
-                    onClick={() => handleInteractionClick(INTERACTIONS.reply)}>
-                    Reply
-                </S.OptionsButton>
-                <S.TallyContainer>
+            {!hide &&
+                <S.FlexContainer
+                    className="no-margin"
+                    justifyContent="flex-start">
                     <S.OptionsButton
                         className="keep-next no-bg"
                         onClick={() =>
-                            handleInteractionClick(INTERACTIONS.upvote)}>
-                        <Icon
-                            className={`dark-hover ${upvoteButtonClassName}`}
-                            xlinkHref={thumbsUp}
-                            height="16px"
-                            width="16px"
-                            fill="grey-tint-neutral" />
+                            handleInteractionClick(INTERACTIONS.reply)}>
+                        Reply
                     </S.OptionsButton>
-                    <S.TallyCount>
-                        {interaction.upvote.success ?
-                            data.upvotes + 1 : data.upvotes}
-                    </S.TallyCount>
-                </S.TallyContainer>
-                <S.TallyContainer>
-                    <S.OptionsButton
-                        className="keep-next no-bg"
-                        onClick={() =>
-                            handleInteractionClick(INTERACTIONS.downvote)}>
-                        <Icon
-                            className={`dark-hover ${downvoteButtonClassName}`}
-                            xlinkHref={thumbsDown}
-                            height="16px"
-                            width="16px"
-                            fill="grey-tint-neutral" />
-                    </S.OptionsButton>
-                    <S.TallyCount>
-                        {interaction.downvote.success ?
-                            data.downvotes + 1 : data.downvotes}
-                    </S.TallyCount>
-                </S.TallyContainer>
-            </S.FlexContainer>
-            <S.ServerErrorHelper
+                    <S.TallyContainer>
+                        <S.OptionsButton
+                            className="keep-next no-bg"
+                            onClick={() =>
+                                handleInteractionClick(INTERACTIONS.upvote)}>
+                            <Icon
+                                className={"dark-hover " +
+                                    upvoteButtonClassName}
+                                xlinkHref={thumbsUp}
+                                height="16px"
+                                width="16px"
+                                fill="grey-tint-neutral" />
+                        </S.OptionsButton>
+                        <S.TallyCount>
+                            {interaction.upvote.success ?
+                                data.upvotes + 1 : data.upvotes}
+                        </S.TallyCount>
+                    </S.TallyContainer>
+                    <S.TallyContainer>
+                        <S.OptionsButton
+                            className="keep-next no-bg"
+                            onClick={() =>
+                                handleInteractionClick(INTERACTIONS.downvote)}>
+                            <Icon
+                                className={"dark-hover " +
+                                    downvoteButtonClassName}
+                                xlinkHref={thumbsDown}
+                                height="16px"
+                                width="16px"
+                                fill="grey-tint-neutral" />
+                        </S.OptionsButton>
+                        <S.TallyCount>
+                            {interaction.downvote.success ?
+                                data.downvotes + 1 : data.downvotes}
+                        </S.TallyCount>
+                    </S.TallyContainer>
+                </S.FlexContainer>
+            }
+            <S.ErrorHelper
                 className={interactServerError ? "show" : ""}>
                 Error connecting with the server at this time.
-            </S.ServerErrorHelper>
+            </S.ErrorHelper>
+            <S.ErrorHelper
+                className={reported ? "show" : ""}>
+                Report request received.
+                Thanks for contributing to a better community.
+            </S.ErrorHelper>
             {!hasReplies && isRoot &&
                 <S.HorizontalRuler
                     className="small-margin hover-color"
