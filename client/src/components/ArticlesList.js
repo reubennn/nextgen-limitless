@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { isEmpty } from "../scripts/empty";
 
 import {
     getArticlesList,
@@ -18,6 +19,7 @@ import {
 import ArticleSample from "./ArticleSample";
 import LoadingIcon from "./LoadingIcon";
 import ServerError from "../pages/ServerError";
+import SearchBox from "../components/SearchBox";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -37,30 +39,42 @@ const ArticlesList = ({
     articles,
     fetchAllArticles,
 }) => {
+    /** useRef Mount status for cleanup and avoiding memory leaks  */
+    const isMounted = useRef(true);
+
+    /** Articles list states */
     const [currentArticle, setCurrentArticle] = useState(articleToFilter);
-    const [otherArticles, setOtherArticles] = useState([]);
+    const [articlesWithFilter, setArticlesWithFilter] = useState([]);
+    const [articlesToDisplay, setArticlesToDisplay] = useState([]);
+
+    /** Article search query which will be specified by user */
+    const [searchQuery, setSearchQuery] = useState(null);
 
     const displayAsRow = viewport.size.is.greaterThan.small;
+
+    /**
+     * useEffect which performs cleanup, setting isMounted to false.
+     *
+     * - This ensures subscriptions and async tasks are cancelled
+     * while the component is unmounted.
+     */
+    useEffect(() => {
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
 
     /**
      * useEffect which will attempt to fetch the list of articles
      * if the list has not been loaded yet.
      */
     useEffect(() => {
-        let isMounted = true; // Flag which denotes mount status
         if (!loadStatus.loaded || loadStatus.failed) {
-            if (isMounted) {
+            if (isMounted.current) {
                 /** Fetch all article content */
                 fetchAllArticles();
             }
         }
-        /**
-         * useEffect clean-up:
-         * If unmounted, set mount status flag to false
-         */
-        return () => {
-            isMounted = false;
-        };
     }, []);
 
     /**
@@ -71,35 +85,78 @@ const ArticlesList = ({
      * that article, otherwise populate the entire list.
      */
     useEffect(() => {
-        let isMounted = true;
         if (typeof articles !== undefined &&
-            articles.length > 0 && isMounted) {
+            articles.length > 0 && isMounted.current) {
+            /**
+             * Function which populates the list of other articles.
+             *
+             * - If no article has been provided to filter, then
+             * we want to display the entire list.
+             * - If an article has been provided to filter, filter it
+             * out and display the remaining articles.
+             */
+            const removeFilteredArticle = () => {
+                const filteredArticles = articles.filter((article) =>
+                    article.path !== articleToFilter);
+                setArticlesWithFilter(filteredArticles);
+            };
+
             articleToFilter === null ?
-                setOtherArticles(articles) :
-                populateArticleList();
+                setArticlesWithFilter(articles) :
+                removeFilteredArticle();
         }
-        return () => {
-            isMounted = false;
-        };
     }, [loadStatus.loaded, currentArticle]);
 
     /**
-     * Function which populates the list of other articles.
+     * useEffect triggered when the search query changes, or when
+     * articlesWithFilter is updated.
      *
-     * - If not article has been provided to filter, then
-     * we want to display the entire list.
-     * - If an article has been provided to filter, filter it
-     * out and display the remaining articles.
+     * - Checks if the search query matches the article title, author name or
+     * categories it comes under.
      */
-    const populateArticleList = () => {
-        const temp = [];
-        articles.map((article) => {
-            if (article.path !== articleToFilter) {
-                temp.push(article);
-            }
-        });
-        setOtherArticles(temp);
-    };
+    useEffect(() => {
+        /**
+         * Function which gets the queried articles.
+         *
+         * - Checks if the search query matches the article title, author name
+         * or any categories it comes under.
+         *
+         * @return {Array} queried articles
+         */
+        const getQueriedArticles = () => {
+            return articlesWithFilter.filter((article) => {
+                return queryMatchesProperty(
+                    article,
+                    "title",
+                    searchQuery,
+                ) || queryMatchesProperty(
+                    article,
+                    ["author", "name"],
+                    searchQuery,
+                ) || queryMatchesCategory(
+                    article.categories,
+                    searchQuery,
+                );
+            });
+        };
+
+        /**
+         * Function which gets the queried articles, or returns the current
+         * articles list if no query is specified.
+         *
+         * @return {Array} queried articles or filtered articles if no query
+         */
+        const getArticlesToDisplay = () => {
+            return searchQuery !== null ?
+                getQueriedArticles() :
+                articlesWithFilter.slice();
+        };
+
+        if (isMounted.current) {
+            /** Set the list of articles to display */
+            setArticlesToDisplay(getArticlesToDisplay());
+        }
+    }, [articlesWithFilter, searchQuery]);
 
     /*
      * If linked clicked to navigate to another article,
@@ -108,6 +165,61 @@ const ArticlesList = ({
     const linkClicked = (articlePath) => {
         setCurrentArticle(articlePath);
     };
+
+    /**
+     * Function which checks if the specified query matches
+     * any of the article categories.
+     *
+     * @param {Array} categories list of categories
+     * @param {String} query the search query parameter
+     * @return {Boolean} true if it matches one of the categories
+     */
+    const queryMatchesCategory = (categories, query) => {
+        return !categories.every((category) => (
+            !category.toUpperCase().includes(query.toUpperCase())
+        ));
+    };
+
+    /**
+     * Function which dynamically checks if a particular query
+     * matches a particular property within the given object.
+     *
+     * - If the properties are supplied as an array, the function
+     * will get the target nested property in chronological order.
+     * - If a single string is supplied, it will be used as the
+     * property within the object.
+     *
+     * @param {Array} object the object to query
+     * @param {String|Array} properties the property or nested property to check
+     * @param {String} query the search query parameter
+     * @return {Boolean} true if the query is found within the property
+     */
+    const queryMatchesProperty = (object, properties, query) => {
+        let targetProperty = object;
+        if (typeof (properties) === "string") {
+            targetProperty = object[properties];
+        } else {
+            for (let i = 0; i < properties.length; i++) {
+                if (!targetProperty) return;
+                targetProperty = targetProperty[properties[i]];
+            }
+        }
+        return targetProperty
+            .toUpperCase()
+            .includes(query.toUpperCase());
+    };
+
+    /**
+     * Handler function which updates the state when the search query changes.
+     *
+     * @param {String} query the search query
+     */
+    const handleQueryChange = (query) => {
+        !isEmpty(query) ?
+            setSearchQuery(query) :
+            setSearchQuery(null);
+    };
+
     /*
      * Ternary operators to determine the content to render.
      *
@@ -137,7 +249,7 @@ const ArticlesList = ({
                             <S.FlexContainer
                                 className="full-width no-margin"
                                 wrapContent>
-                                {otherArticles.map((article, key) => (
+                                {articlesToDisplay.map((article, key) => (
                                     <ArticleSample
                                         key={key}
                                         article={article}
@@ -145,7 +257,7 @@ const ArticlesList = ({
                                 ))}
                             </S.FlexContainer>
                         ) :
-                        otherArticles.map((article, key) => (
+                        articlesToDisplay.map((article, key) => (
                             <ArticleSample
                                 key={key}
                                 article={article}
@@ -156,6 +268,25 @@ const ArticlesList = ({
 
     return (
         <>
+            <S.Header
+                as="h4">
+                Explore our articles below.
+            </S.Header>
+            {!loadStatus.failed &&
+                <SearchBox
+                    width="75%"
+                    onChangeHandler={handleQueryChange} />
+            }
+            {
+                articlesToDisplay.length > 0 || searchQuery !== null &&
+                <S.Header as="h5">
+                    <S.Text>
+                        Could not find any articles that match the query:
+                    </S.Text>
+                    {!displayAsRow && <br />}
+                    <S.Text> &quot;{searchQuery}&quot;.</S.Text>
+                </S.Header>
+            }
             {content}
         </>
     );

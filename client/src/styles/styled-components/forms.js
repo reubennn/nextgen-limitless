@@ -1,5 +1,5 @@
 /* eslint-disable valid-jsdoc */
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import {
     handleFormWidth,
@@ -150,5 +150,99 @@ export const InvalidInputHelper = styled.label.attrs((props) => ({
         margin-top: ${(props) => props.after ? "1.5rem" : ""};
         transition: all 0.5s ease-in-out 0s,
                     max-height 0.8s ease-in-out 0s;
+    }
+`;
+
+/**
+ * XXX
+ *
+ * @param {Boolean} after label for after the form submit button
+ */
+export const SearchBoxContainer = styled.form.attrs((props) => ({
+    width: props.width || "100%",
+}))`
+    display: flex;
+    align-content: center;
+    background-color: ${color.white};
+    outline: 0;
+    width: ${(props) => props.width};
+    border: 0.04rem solid ${color.grey.tint.lightest};
+    padding: 0.5rem 0.7rem;
+    border-radius: 1.75rem;
+    box-shadow: none;
+    transition: box-shadow linear 0.2s;
+    margin: 2.5rem auto;
+`;
+
+/**
+ * XXX
+ */
+export const SearchButton = styled.button`
+    padding: 0.25rem 0.5rem;
+    margin-left: auto;
+`;
+
+export const SearchInput = styled.input`
+    outline: 0;
+    border: none;
+    box-shadow: none;
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    color: ${color.grey.shade.dark};
+    line-height: 1.4;
+
+    &:focus {
+        outline: 0;
+    }
+
+    &::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+    }
+`;
+
+export const ClearTextCross = styled.span.attrs((props) => ({
+    shift: props.shift || false,
+}))`
+    content: '';
+    position: absolute;
+    height: 1rem;
+    border-left: solid 0.15rem ${color.grey.shade.lighter};
+    transform: ${(props) => props.shift ? "rotate(-45deg)" : "rotate(45deg)"};
+    transition: ease-in-out 0.3s;
+`;
+
+export const ClearTextContainer = styled.button.attrs((props) => ({
+    hidden: props.hidden,
+}))`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-left: solid 0.15rem ${color.white + transparency.x0};
+    transition: ease-in-out 0.4s;
+
+    ${(props) => props.hidden &&
+        css`
+        width: 0%;
+        padding: 0;
+
+        & ${ClearTextCross} {
+            width: 0%;
+            transform: rotate(0deg);
+            border-left: solid 0.1rem ${color.white + transparency.x0};
+            transition: transform 0.3s ease-in-out 0s,
+                        border-left 0.2s ease-in-out 0.1s;
+
+            &:hover {
+                border-left: solid 0.15rem ${color.grey.shade.neutral};
+                transition: ease-in-out 0.4s;
+            }
+        }
+        `}
+
+    &:hover ${ClearTextCross} {
+        border-left: solid 0.15rem ${color.grey.shade.darker};
+        transition: ease-in-out 0.4s;
     }
 `;
