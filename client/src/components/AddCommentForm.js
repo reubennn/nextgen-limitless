@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+import { isEmpty } from "../scripts/empty";
 import useSecuredApi from "../hooks/useSecuredApi";
 
 import { getViewportType } from "../selectors/viewportSelectors";
@@ -294,18 +295,6 @@ const AddCommentForm = React.forwardRef((
     };
 
     /**
-     * Function which uses Regular Expression to test if the message
-     * contains whitespace only (spaces, line-breaks or tabs) or is an
-     * empty string.
-     *
-     * @param {String} value the input value to check
-     * @return {Boolean} true if the input is empty, otherwise false
-     */
-    const checkIfInputIsEmpty = (value) => {
-        return value.trim() === "" ? true : false;
-    };
-
-    /**
      * Uses Regular Expressions to test if the input is valid,
      * depending on the input type.
      *
@@ -314,8 +303,7 @@ const AddCommentForm = React.forwardRef((
      * @return {Boolean} true if the input is valid, false otherwise
      */
     const checkInputIsValid = (value) => {
-        const isEmpty = checkIfInputIsEmpty(value);
-        return isEmpty ? false : true;
+        return isEmpty(value) ? false : true;
     };
 
     /**
@@ -332,8 +320,7 @@ const AddCommentForm = React.forwardRef((
                     return false;
                 }
                 /** Check if the input field is empty*/
-                const isEmpty = checkIfInputIsEmpty(form.input[key]);
-                if (isEmpty) {
+                if (isEmpty(form.input[key])) {
                     return false;
                 }
             }

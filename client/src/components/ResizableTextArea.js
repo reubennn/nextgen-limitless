@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { isEmpty } from "../scripts/empty";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -52,17 +53,6 @@ const ResizableTextarea = ({
         if (onChangeHandler !== undefined) {
             onChangeHandler(textarea.value);
         }
-    };
-
-    /**
-    * Uses Regular Expression to test if the input contains
-    * whitespace only (spaces, tabs or line breaks).
-    *
-    * @param {String} value the value of the textarea
-    * @return {Boolean} flag indicating if empty or not
-    */
-    const isEmpty = (value) => {
-        return !value.replace(/\s/g, "").length;
     };
 
     return (
