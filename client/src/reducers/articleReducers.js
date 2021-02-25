@@ -91,9 +91,10 @@ export const articles = (state = initialState, action) => {
             return {
                 ...state,
                 loadStatus: {
-                    ...state.loadStatus,
                     loaded: true,
                     loading: false,
+                    failed: false,
+                    code: null,
                 },
                 list: articles,
             };

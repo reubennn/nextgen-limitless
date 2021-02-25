@@ -9,8 +9,6 @@ import {
     getViewportType,
 } from "../selectors/viewportSelectors";
 
-import { getLoadStatus } from "../selectors/articleSelectors";
-
 import ArticlesList from "../components/ArticlesList";
 import Navbar from "../components/Navbar";
 
@@ -23,7 +21,7 @@ import * as S from "../styles/styled-components/styled";
  *
  * @return {Component} a page full of article lists
  */
-const Blog = ({ loadStatus, viewport }) => {
+const Blog = ({ viewport }) => {
     return (
         <>
             <S.TopHeader
@@ -53,8 +51,8 @@ const Blog = ({ loadStatus, viewport }) => {
                     // color="grey-tint-light"
                     bgColor="grey-tint-lightest-x70"
                     className={viewport.size.is.lessThan.medium &&
-                    "small-viewport"}>
-                    {!loadStatus.failed && <ArticlesList />}
+                        "small-viewport"}>
+                    <ArticlesList />
                 </S.Section>
             </S.MainPageBody>
         </>
@@ -62,10 +60,6 @@ const Blog = ({ loadStatus, viewport }) => {
 };
 
 Blog.propTypes = {
-    /**
-     * Redux load status of fetching the data
-     */
-    loadStatus: PropTypes.object,
     /**
      * Viewport Redux state.
      * - Contains information about the viewport.
@@ -80,7 +74,6 @@ Blog.propTypes = {
  * @return {*} props mapped to the Component
  */
 const mapStateToProps = (state) => ({
-    loadStatus: getLoadStatus(state),
     viewport: {
         dimensions: getViewportDimensions(state),
         size: getViewportSize(state),
