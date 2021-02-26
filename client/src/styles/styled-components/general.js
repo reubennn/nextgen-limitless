@@ -136,6 +136,22 @@ export const InlineAnchor = styled(Anchor)`
 `;
 
 /**
+ * Helper Component when putting a fullstop directly after an
+ * inline anchor, so that it can be the same color as the original
+ * text.
+ *
+ * @param {String} color the color of the fullstop
+ */
+export const FullStop = styled.span.attrs((props) => ({
+    color: props.color || color.grey.shade.dark,
+}))`
+    &::after {
+        content: ".";
+        color: ${(props) => handleColor(props.color)};
+    }
+`;
+
+/**
  * Simple Header Component with minimal styling.
  *
  * Setting props.as will convert the html tag to the appropriate
@@ -177,6 +193,10 @@ export const Header = styled.h1.attrs((props) => ({
 
     &.feature-text {
         text-shadow: 0.05rem 0.05rem 0.25rem ${color.grey.shade.light};
+    }
+
+    &.feature-text-dark {
+        text-shadow: 0.05rem 0.03rem 0.25rem ${color.grey.tint.lightest};
     }
 
     &.header-home {
@@ -315,11 +335,13 @@ export const ListItem = styled.li`
 export const Image = styled.img.attrs((props) => ({
     height: props.height || "auto",
     width: props.width || "100%",
+    circle: props.circle || false,
 }))`
     display: block;
     margin: auto;
     height: ${(props) => props.height};
     width: ${(props) => props.width};
+    border-radius: ${(props) => props.circle ? "50%" : ""};
 `;
 
 /**

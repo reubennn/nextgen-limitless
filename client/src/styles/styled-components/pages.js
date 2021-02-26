@@ -149,7 +149,19 @@ export const TopHeader = styled.header.attrs((props) => ({
             props.pos,
         );
     }}
-}`;
+    }
+
+    &.account {
+        ${(props) => {
+        return overlayBackground(
+            color.white + transparency.x5,
+            props.url,
+            props.attachment,
+            props.pos,
+        );
+    }}
+    }
+`;
 
 /**
  * Page Section Component.

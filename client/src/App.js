@@ -10,6 +10,8 @@ import {
 import { debounce } from "lodash";
 import { connect } from "react-redux";
 
+import ProtectedRoute from "./auth/ProtectedRoute";
+
 /** React Redux */
 import {
     handleViewportChange,
@@ -28,6 +30,7 @@ import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import Legal from "./pages/Legal";
 import Article from "./pages/Article";
+import Account from "./pages/Account";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
@@ -106,6 +109,9 @@ const App = ({ handleViewportChange, sidebarNav }) => {
                             <Route
                                 path="/blog/:path"
                                 component={Article} />
+                            <ProtectedRoute
+                                path="/account"
+                                component={Account} />
                             <Route render={(props) => (
                                 <NotFound {...props} item={"page"} />
                             )}
