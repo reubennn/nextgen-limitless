@@ -36,8 +36,7 @@ const Footer = ({ viewport }) => {
                 width={"50%"} />
             <S.TinyText
                 margin="0.6rem"
-                color="grey-tint-light"
-            >
+                color="grey-tint-light">
                 Connect with us:
             </S.TinyText>
             <S.FlexContainer smallMargin wrapContent>
@@ -65,7 +64,7 @@ const Footer = ({ viewport }) => {
             }
             <S.TinyText>
                 <span>© 2021 Next Gen LIMITLESS.&nbsp;</span>
-            All Rights Reserved.
+                All Rights Reserved.
             </S.TinyText>
             <S.TinyText superTiny>
                 Special thanks to
@@ -74,8 +73,7 @@ const Footer = ({ viewport }) => {
                     bgColor="grey-shade-dark"
                     href="https://www.linkedin.com/learning/"
                     target="_blank"
-                    rel="noreferrer"
-                >
+                    rel="noreferrer">
                     LinkedIn Learning
                 </S.InlineAnchor>
                 and
@@ -84,8 +82,7 @@ const Footer = ({ viewport }) => {
                     bgColor="grey-shade-dark"
                     href="https://www.linkedin.com/in/shaun-wassell/"
                     target="_blank"
-                    rel="noreferrer"
-                >
+                    rel="noreferrer">
                     Shaun Wassell
                 </S.InlineAnchor>
             for initial content and ideas.
