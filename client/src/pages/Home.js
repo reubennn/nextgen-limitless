@@ -19,7 +19,7 @@ import { featureDescriptions, otherDescriptions } from "../data/descriptions";
 import logoLarge from ".../images/logo-large.svg";
 import abstractScenery from ".../images/abstract-scenery.jpg";
 import abstractMountains from ".../images/abstract-mountains.jpg";
-import subtlePrismSVG from ".../images/subtle-prism.svg";
+import trianglifyBackground from ".../images/trianglify.svg";
 import lofotenIslands from ".../images/lofoten-islands.jpg";
 
 import * as S from "../styles/styled-components/styled";
@@ -190,7 +190,7 @@ const Home = ({ viewport }) => {
                 <S.SectionWithBackground
                     color="grey-shade-dark"
                     height="35vh"
-                    url={subtlePrismSVG}>
+                    url={trianglifyBackground}>
                     <S.FlexContainer
                         className="center-text items-margin"
                         column>

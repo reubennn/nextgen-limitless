@@ -24,7 +24,7 @@ import gardenShed from ".../images/garden-shed.png";
 import office from ".../images/office.jpg";
 import happyOffice from ".../images/office-employees-1440x948.jpg";
 import laptopCloseup from ".../images/desk-work.jpg";
-import subtlePrismSVG from ".../images/subtle-prism.svg";
+import trianglifyBackground from ".../images/trianglify3.svg";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -249,7 +249,7 @@ const About = ({ viewport }) => {
                 <S.SectionWithBackground
                     color="grey-shade-dark"
                     height="35vh"
-                    url={subtlePrismSVG}>
+                    url={trianglifyBackground}>
                     <S.FlexContainer
                         className="center-text items-margin"
                         column>
