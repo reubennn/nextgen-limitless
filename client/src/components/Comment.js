@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useAuth0 } from "@auth0/auth0-react";
 import { handleFetchWithController } from "../api/handleFetch";
 import useSecuredApi from "../hooks/useSecuredApi";
+import { getRelativeTime } from "../scripts/getTime";
 
 import Icon from "./Icon";
 import DropdownMenu from "./DropdownMenu";
@@ -36,7 +37,7 @@ const getCurrentReplies = (comment) => {
  */
 const Comment = ({
     data,
-    getRelativeTime,
+    currentTime,
     viewport,
 }) => {
     /** useRef Mount status for cleanup and avoiding memory leaks  */
@@ -518,7 +519,7 @@ const Comment = ({
                         {data.name}
                     </S.CommentUser>
                     <S.CommentTimestamp>
-                        {getRelativeTime(data.timestamp)}
+                        {getRelativeTime(data.timestamp, currentTime)}
                     </S.CommentTimestamp>
                 </S.FlexContainer>
                 <DropdownMenu
@@ -601,7 +602,7 @@ const Comment = ({
                             <Comment
                                 key={reply._id}
                                 data={reply}
-                                getRelativeTime={getRelativeTime}
+                                currentTime={currentTime}
                                 viewport={viewport} />
                         )) :
                         <S.RepliesWrapper>
@@ -609,7 +610,7 @@ const Comment = ({
                                 <Comment
                                     key={reply._id}
                                     data={reply}
-                                    getRelativeTime={getRelativeTime}
+                                    currentTime={currentTime}
                                     viewport={viewport} />
                             ))}
                         </S.RepliesWrapper>
@@ -632,10 +633,10 @@ Comment.propTypes = {
      */
     data: PropTypes.object,
     /**
-     * Function which gets the relative time the comment
-     * was posted, based on a given timestamp.
+     * The current time, used to determine the relative time
+     * a comment was posted.
      */
-    getRelativeTime: PropTypes.func,
+    currentTime: PropTypes.object,
     /**
      * Viewport Redux state.
      *
