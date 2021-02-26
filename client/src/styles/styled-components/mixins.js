@@ -102,7 +102,7 @@ export const overlayBackground = (
         ${color}
     ),
     url(${url});
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     background-size: cover;
     background-attachment: ${attachment};
     background-position: ${pos};
