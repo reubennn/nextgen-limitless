@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { debounce } from "lodash";
+import { throttle } from "lodash";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 
@@ -76,17 +76,17 @@ const Navbar = ({
         };
 
         /**
-         * Add the event listener and attach lodash debounce delay,
+         * Add the event listener and attach lodash throttle delay,
          * so that the function is not continuously called during
          * window scrolling.
          */
-        window.addEventListener("scroll", debounce(handleNav, 150));
+        window.addEventListener("scroll", throttle(handleNav, 300));
 
         /**
          * Clean-up to remove the event listener.
          */
         return () => {
-            window.removeEventListener("scroll", debounce(handleNav, 150));
+            window.removeEventListener("scroll", throttle(handleNav, 300));
             isMounted = false;
         };
     }, []);

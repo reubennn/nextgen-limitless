@@ -11,6 +11,11 @@ import {
     handleNavbarPadding,
 } from "./responsive";
 
+const time = {
+    lower: 0.3,
+    upper: 0.45,
+};
+
 /**
 * Navbar Link Component.
 *
@@ -39,11 +44,11 @@ export const NavbarLink = styled(NavLink).attrs((props) => ({
 
     ${(props) => props.$atTop ?
         css`
-            transition: all 0.3s ease-in-out;
+            transition: all ${time.lower}s ease-in-out;
         ` :
         css`
-            transition: all 0.3s ease-in-out,
-                        color 0.3s ease-in-out 0.45s;
+            transition: all ${time.lower}s ease-in-out,
+                        color ${time.lower}s ease-in-out ${time.upper}s;
         `}
 
     &:hover {
@@ -69,18 +74,18 @@ export const NavbarLink = styled(NavLink).attrs((props) => ({
         /** Dynamic transitioning */
         ${(props) => props.$atTop ?
         css`
-            transition: background-color 0.3s ease-in-out 0s,
-                        color 0.3s ease-in-out 0s,
-                        padding 0.3s ease-in-out 0s,
-                        margin 0.3s ease-in-out 0s,
-                        opacity 0.3s ease-in-out 0s;
+            transition: background-color ${time.lower}s ease-in-out 0s,
+                        color ${time.lower}s ease-in-out 0s,
+                        padding ${time.lower}s ease-in-out 0s,
+                        margin ${time.lower}s ease-in-out 0s,
+                        opacity ${time.lower}s ease-in-out 0s;
         ` :
         css`
-            transition: background-color 0.45s ease-in-out 0.45s,
-                        color 0.45s ease-in-out 0.45s,
-                        padding 0.3s ease-in-out 0s,
-                        margin 0.3s ease-in-out 0s,
-                        opacity 0.3s ease-in-out 0s;
+            transition: background-color ${time.upper}s ease-in-out ${time.upper}s,
+                        color ${time.upper}s ease-in-out ${time.upper}s,
+                        padding ${time.lower}s ease-in-out 0s,
+                        margin ${time.lower}s ease-in-out 0s,
+                        opacity ${time.lower}s ease-in-out 0s;
         `}
 
         &:hover {
@@ -142,7 +147,7 @@ export const Navbar = styled.nav.attrs((props) => ({
     top: ${(props) => props.scrolledUp ? 0 : "-6rem"};
     /* Push to the right when sidenav is active */
     left: ${(props) => props.sidenav ? "100vw" : 0};
-    transition: top 0.3s ease-in-out 0.3s,
+    transition: top ${time.lower}s ease-in-out ${time.lower}s,
                 left 0.5s;
 
     /** Responsive Design Styling */
@@ -155,15 +160,15 @@ export const Navbar = styled.nav.attrs((props) => ({
     /** Dynamic transitioning */
     ${(props) => props.$atTop ?
         css`
-        transition: top 0.3s ease-in-out 0.3s,
-                    background-color 0.2s ease-in-out 0s,
-                    color 0.2s ease-in-out 0s,
+        transition: top ${time.lower}s ease-in-out 0s,
+                    background-color ${time.upper}s ease-in-out 0s,
+                    color ${time.upper}s ease-in-out 0s,
                     left 0.5s;
     ` :
         css`
-        transition: top 0.3s ease-in-out 0.1s,
-                    background-color 0.45s ease-in-out 0.45s,
-                    color 0.45s ease-in-out 0.45s,
+        transition: top ${time.lower}s ease-in-out 0s,
+                    background-color ${time.upper}s ease-in-out ${time.upper}s,
+                    color ${time.upper}s ease-in-out ${time.upper}s,
                     left 0.5s;
     `}
 
@@ -210,22 +215,22 @@ export const NavIcon = styled(Icon).attrs((props) => ({
         props.$atTop ? color.grey.shade.dark : color.grey.tint.light};
     ${(props) => props.$atTop ?
         css`
-            transition: all 0.3s ease-in-out;
+            transition: all ${time.lower}s ease-in-out;
         ` :
         css`
-            transition: all 0.3s ease-in-out,
-                        fill 0.3s ease-in-out 0.45s;
+            transition: all ${time.lower}s ease-in-out,
+                        fill ${time.lower}s ease-in-out ${time.upper}s;
         `}
 
     &:hover {
         fill: ${(props) => props.$atTop ? color.black : color.white};
         ${(props) => props.$atTop ?
         css`
-            transition: all 0.3s ease-in-out;
+            transition: all ${time.lower}s ease-in-out;
         ` :
         css`
-            transition: all 0.3s ease-in-out,
-                        fill 0.3s ease-in-out 0.45s;
+            transition: all ${time.lower}s ease-in-out,
+                        fill ${time.lower}s ease-in-out ${time.upper}s;
         `}
     }
 
