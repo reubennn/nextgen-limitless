@@ -11,8 +11,9 @@ import {
 
 import ArticlesList from "../components/ArticlesList";
 import Navbar from "../components/Navbar";
+import ResponsiveImage from "../components/ResponsiveImage";
 
-import blogDeskImage from ".../images/blog-desk.jpg";
+import { blogLaptopPhone } from "../responsive/imageSrcSets";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -24,11 +25,14 @@ import * as S from "../styles/styled-components/styled";
 const Blog = ({ viewport }) => {
     return (
         <>
-            <S.TopHeader
-                className="blog"
-                url={blogDeskImage}
-                height="100vh">
-                <Navbar className="dark-background" />
+            <Navbar className="dark-background" />
+            <S.TopHeader>
+                <ResponsiveImage
+                    className="blog"
+                    srcset={blogLaptopPhone}
+                    background
+                    gradient
+                    opacity={0.7} />
                 <S.Header
                     as="h1"
                     className="feature-text uppercase"

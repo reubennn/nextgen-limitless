@@ -247,6 +247,33 @@ export const handleCommentsWidth = (viewportType) => {
 };
 
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~~~~~ Background Image ~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+/**
+ * Handles positioning of the ResponsiveImage background image.
+ *
+ * @param {String|Number} position the position of the image
+ * @return {String} the positioning of the image
+ */
+export const handleBackgroundImagePosition = (position) => {
+    switch (position) {
+        case ("center"):
+            return "50%";
+        case ("left"):
+            return "0%";
+        case ("right"):
+            return "100%";
+        case ("top"):
+            return "0%";
+        case ("bottom"):
+            return "100%";
+        default:
+            return position;
+    };
+};
+
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~ Logo ~~~~~~~~~~~~~~~~
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */

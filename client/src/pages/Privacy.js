@@ -10,9 +10,10 @@ import {
 } from "../selectors/viewportSelectors";
 
 import Navbar from "../components/Navbar";
+import ResponsiveImage from "../components/ResponsiveImage";
 
-import privacyImage from ".../images/privacy.png";
-import eyeImage from ".../images/eye.jpg";
+import { privacySecurity } from "../responsive/imageSrcSets";
+import { allSeeingSurveillance } from "../responsive/imageSrcSets";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -24,11 +25,14 @@ import * as S from "../styles/styled-components/styled";
 const Privacy = ({ viewport }) => {
     return (
         <>
-            <S.TopHeader
-                className="privacy"
-                url={privacyImage}
-                height="100vh">
-                <Navbar className="dark-background" />
+            <Navbar className="dark-background" />
+            <S.TopHeader>
+                <ResponsiveImage
+                    className="privacy"
+                    srcset={privacySecurity}
+                    background
+                    gradient
+                    opacity={0.88} />
                 <S.Header
                     as="h1"
                     className="feature-text uppercase"
@@ -83,12 +87,14 @@ const Privacy = ({ viewport }) => {
                         </li>
                     </S.CoolList>
                 </S.Section>
-                <S.SectionWithBackground
-                    className="primary-gradient"
-                    url={eyeImage}
-                    pos="center"
-                    attachment="fixed"
-                    height="60vh" />
+                <S.Section height="60vh" >
+                    <ResponsiveImage
+                        className="primary-gradient"
+                        srcset={allSeeingSurveillance}
+                        background
+                        gradient
+                        opacity={0.75} />
+                </S.Section>
                 <S.Section
                     color="grey-tint-light"
                     bgColor="grey-shade-dark"

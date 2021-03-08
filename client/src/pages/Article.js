@@ -164,11 +164,10 @@ const Article = ({ match, viewport }) => {
         ) :
         (
             <>
-                <S.TopHeader
-                    className="article"
-                    url={article.image.src}
-                    height="100vh">
-                    <Navbar className="dark-background" />
+                <Navbar className="dark-background" />
+                <S.TopHeader>
+                    <S.BackgroundImage src={article.image.src} />
+                    <S.GradientOverlay className="article" opacity={0.9} />
                     <S.ArticleTitle
                         as="h1"
                         className="on-page feature-text uppercase center-text"

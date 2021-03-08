@@ -12,15 +12,16 @@ import {
 import Navbar from "../components/Navbar";
 import LogoSlider from "../components/LogoSlider";
 import DescriptionBox from "../components/DescriptionBox";
+import ResponsiveImage from "../components/ResponsiveImage";
 
 import { logoSlider } from "../data/logos";
 import { featureDescriptions, otherDescriptions } from "../data/descriptions";
 
+import { abstractScenery } from "../responsive/imageSrcSets";
+import { scenicMountains } from "../responsive/imageSrcSets";
+import { lofotenIslands } from "../responsive/imageSrcSets";
 import logoLarge from ".../images/logo-large.svg";
-import abstractScenery from ".../images/abstract-scenery.jpg";
-import abstractMountains from ".../images/abstract-mountains.jpg";
 import trianglifyBackground from ".../images/trianglify.svg";
-import lofotenIslands from ".../images/lofoten-islands.jpg";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -50,8 +51,13 @@ const Home = ({ viewport }) => {
     const displayAsColumn = viewport.size.is.lessThan.large;
     return (
         <>
-            <S.TopHeader className="home" url={abstractScenery}>
-                <Navbar />
+            <Navbar />
+            <S.TopHeader className="home">
+                <ResponsiveImage
+                    className="home"
+                    srcset={abstractScenery}
+                    background
+                    gradient />
                 <S.FlexContainer column className="no-margin">
                     <S.LogoImage
                         className="large header-home"
@@ -105,19 +111,19 @@ const Home = ({ viewport }) => {
                             reverse={reverse} />;
                     })}
                 </S.Section>
-                <S.SectionWithBackground
-                    className="primary-gradient"
-                    url={abstractMountains}
-                    pos="top"
-                    attachment="fixed"
-                    height="70vh" >
+                <S.Section height="70vh" >
+                    <ResponsiveImage
+                        srcset={scenicMountains}
+                        background
+                        gradient
+                        opacity={0.6} />
                     <S.FeatureText
                         className="uppercase center-text"
                         type={viewport.type}
                         color="grey-tint-lightest">
                         Are you ready to embrace the power of true innovation?
                     </S.FeatureText>
-                </S.SectionWithBackground>
+                </S.Section>
                 <S.Section
                     color="grey-tint-light"
                     bgColor="grey-shade-dark"
@@ -145,19 +151,20 @@ const Home = ({ viewport }) => {
                         </S.TinyText>
                     </S.FlexContainer>
                 </S.Section>
-                <S.SectionWithBackground
-                    className="secondary-gradient"
-                    url={lofotenIslands}
-                    pos="center"
-                    attachment="fixed"
-                    height="70vh" >
+                <S.Section height="70vh" >
+                    <ResponsiveImage
+                        className="secondary-gradient"
+                        srcset={lofotenIslands}
+                        background
+                        gradient
+                        opacity={0.7} />
                     <S.FeatureText
                         className="uppercase center-text"
                         type={viewport.type}
                         color="grey-tint-lightest">
                         Don&apos;t get left behind.
                     </S.FeatureText>
-                </S.SectionWithBackground>
+                </S.Section>
                 <S.Section
                     color="grey-shade-dark"
                     bgColor="white"
@@ -191,6 +198,7 @@ const Home = ({ viewport }) => {
                     color="grey-shade-dark"
                     height="35vh"
                     url={trianglifyBackground}>
+                    <S.GradientOverlay opacity={0.05} />
                     <S.FlexContainer
                         className="center-text items-margin"
                         column>

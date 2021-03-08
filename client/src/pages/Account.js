@@ -64,11 +64,10 @@ const Account = () => {
 
     return (
         <>
-            <S.TopHeader
-                className="account"
-                url={trianglifyBackground}
-                height="100vh">
-                <Navbar />
+            <Navbar />
+            <S.TopHeader>
+                <S.BackgroundImage src={trianglifyBackground} />
+                <S.GradientOverlay className="account" opacity={0.15} />
                 <S.Header
                     as="h1"
                     className="feature-text-dark"

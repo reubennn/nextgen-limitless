@@ -10,8 +10,9 @@ import {
 } from "../selectors/viewportSelectors";
 
 import Navbar from "../components/Navbar";
+import ResponsiveImage from "../components/ResponsiveImage";
 
-import onlineShoppingImage from ".../images/online-shopping.jpg";
+import { onlineShopping } from "../responsive/imageSrcSets";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -23,11 +24,14 @@ import * as S from "../styles/styled-components/styled";
 const Store = ({ viewport }) => {
     return (
         <>
-            <S.TopHeader
-                className="blog"
-                url={onlineShoppingImage}
-                height="100vh">
-                <Navbar className="dark-background" />
+            <Navbar className="dark-background" />
+            <S.TopHeader>
+                <ResponsiveImage
+                    className="blog"
+                    srcset={onlineShopping}
+                    background
+                    gradient
+                    opacity={0.85} />
                 <S.Header
                     as="h1"
                     className="feature-text uppercase"

@@ -10,9 +10,10 @@ import {
 } from "../selectors/viewportSelectors";
 
 import Navbar from "../components/Navbar";
+import ResponsiveImage from "../components/ResponsiveImage";
 
-import legalJusticeImage from ".../images/legal.jpg";
-import lawImage from ".../images/law-book-scale-wood.jpg";
+import { gavelLawBookScale } from "../responsive/imageSrcSets";
+import { scalesOfJustice } from "../responsive/imageSrcSets";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -24,12 +25,15 @@ import * as S from "../styles/styled-components/styled";
 const Legal = ({ viewport }) => {
     return (
         <>
-            <S.TopHeader
-                className="blog"
-                url={legalJusticeImage}
-                pos="left"
-                height="100vh">
-                <Navbar className="dark-background" />
+            <Navbar className="dark-background" />
+            <S.TopHeader>
+                <ResponsiveImage
+                    className="blog"
+                    srcset={scalesOfJustice}
+                    background
+                    xPos="left"
+                    gradient
+                    opacity={0.75} />
                 <S.Header
                     as="h1"
                     className="feature-text uppercase"
@@ -58,12 +62,15 @@ const Legal = ({ viewport }) => {
                         Our Ninjas are currently working hard to write up a contractual agreement so you are able to sign your life away.
                     </S.Header>
                 </S.Section>
-                <S.SectionWithBackground
-                    className="primary-gradient"
-                    url={lawImage}
-                    pos="left"
-                    attachment="fixed"
-                    height="60vh" />
+                <S.Section height="60vh" >
+                    <ResponsiveImage
+                        className="primary-gradient"
+                        srcset={gavelLawBookScale}
+                        background
+                        xPos="left"
+                        gradient
+                        opacity={0.75} />
+                </S.Section>
                 <S.Section
                     color="grey-tint-light"
                     bgColor="grey-shade-dark">

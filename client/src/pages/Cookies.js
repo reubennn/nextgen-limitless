@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -10,8 +9,9 @@ import {
 } from "../selectors/viewportSelectors";
 
 import Navbar from "../components/Navbar";
+import ResponsiveImage from "../components/ResponsiveImage";
 
-import computerCookie from ".../images/computer-cookie-848x480.jpg";
+import { webCookies } from "../responsive/imageSrcSets";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -23,11 +23,14 @@ import * as S from "../styles/styled-components/styled";
 const Cookies = ({ viewport }) => {
     return (
         <>
-            <S.TopHeader
-                className="blog"
-                url={computerCookie}
-                height="100vh">
-                <Navbar className="dark-background" />
+            <Navbar className="dark-background" />
+            <S.TopHeader>
+                <ResponsiveImage
+                    className="blog"
+                    srcset={webCookies}
+                    background
+                    gradient
+                    opacity={0.75} />
                 <S.Header
                     as="h1"
                     className="feature-text uppercase"
@@ -40,7 +43,8 @@ const Cookies = ({ viewport }) => {
                     as="h4"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
-                    We&apos;re talking HTTP cookies, web cookies, Internet cookies, browser cookies or whatever you call them.
+                    We&apos;re talking HTTP cookies, web cookies,
+                    Internet cookies, browser cookies or whatever you call them.
                 </S.Header>
             </S.TopHeader>
             <S.MainPageBody>
@@ -51,7 +55,8 @@ const Cookies = ({ viewport }) => {
                         This page is under maintenance.
                     </S.Header>
                     <S.Header as="h3">
-                        Our ninjas are currently working hard in the kitchen to bake all those cookies!
+                        Our ninjas are currently working hard in the kitchen
+                        to bake all those cookies!
                     </S.Header>
                 </S.Section>
                 <S.Section

@@ -4,6 +4,9 @@
 # Temporary files
 temp/
 
+# Responsive image files
+responsive-images/
+
 # Secret config files
 secrets.env
 

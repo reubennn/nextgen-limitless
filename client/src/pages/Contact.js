@@ -11,8 +11,9 @@ import {
 
 import Navbar from "../components/Navbar";
 import ContactForm from "../components/ContactForm";
+import ResponsiveImage from "../components/ResponsiveImage";
 
-import typingOnLaptop from ".../images/typing-on-laptop.jpg";
+import { typingOnLaptop } from "../responsive/imageSrcSets";
 
 import * as S from "../styles/styled-components/styled";
 
@@ -25,11 +26,14 @@ const Contact = ({ viewport }) => {
     const displayAsColumn = viewport.size.is.greaterThan.medium;
     return (
         <>
-            <S.TopHeader
-                className="blog"
-                url={typingOnLaptop}
-                height="100vh">
-                <Navbar className="dark-background" />
+            <Navbar className="dark-background" />
+            <S.TopHeader>
+                <ResponsiveImage
+                    className="primary-gradient"
+                    srcset={typingOnLaptop}
+                    background
+                    gradient
+                    opacity={0.75} />
                 <S.Header
                     as="h1"
                     className="feature-text uppercase"

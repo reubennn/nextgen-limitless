@@ -74,7 +74,35 @@ export const linearGradientBackground = (
             colors.length === index + 1 ? `${color}` : `${color},`);
     }}),
     url(${url});
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: ${attachment};
+    background-position: ${pos};
+    background-color: ${colors[0]};
+`;
+
+/**
+ * CSS to create a linear gradient overlay for a background image.
+ *
+ * @param {String} direction direction of the linear gradient
+ * @param {Array} colors colors to use in the gradient
+ * @param {String} attachment background image attachment
+ * @param {String} pos background image position
+ * @return {String} CSS styling for background with linear gradient
+ */
+export const linearGradientOverlay = (
+    direction = "to bottom",
+    colors,
+    attachment = "fixed",
+    pos = "center",
+) => css`
+    background: linear-gradient(
+    ${direction},
+    ${() => {
+        return colors.map((color, index) =>
+            colors.length === index + 1 ? `${color}` : `${color},`);
+    }});
+    background-repeat: no-repeat;
     background-size: cover;
     background-attachment: ${attachment};
     background-position: ${pos};

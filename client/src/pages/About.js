@@ -14,16 +14,17 @@ import Navbar from "../components/Navbar";
 import DescriptionBox from "../components/DescriptionBox";
 import Carousel from "../components/Carousel";
 import Testimonial from "../components/Testimonial";
+import ResponsiveImage from "../components/ResponsiveImage";
 
 import { aboutFeatureDescriptions } from "../data/descriptions";
 import { testimonials } from "../data/testimonials";
 
 
-import rockMountainNight from ".../images/rock-mountain-night.jpg";
-import gardenShed from ".../images/garden-shed.png";
-import office from ".../images/office.jpg";
-import happyOffice from ".../images/office-employees-1440x948.jpg";
-import laptopCloseup from ".../images/desk-work.jpg";
+import { acadiaNationalParkNightSky } from "../responsive/imageSrcSets";
+import { selfContainedUnit } from "../responsive/imageSrcSets";
+import { creativeEmployees } from "../responsive/imageSrcSets";
+import { techEmployees } from "../responsive/imageSrcSets";
+import { developerAtWork } from "../responsive/imageSrcSets";
 import trianglifyBackground from ".../images/trianglify3.svg";
 
 import * as S from "../styles/styled-components/styled";
@@ -40,11 +41,14 @@ const About = ({ viewport }) => {
     const shuffledTestimonials = shuffle(testimonials);
     return (
         <>
-            <S.TopHeader
-                className="about"
-                url={rockMountainNight}
-                height={topHeaderHeight}>
-                <Navbar className="dark-background" />
+            <Navbar className="dark-background" />
+            <S.TopHeader height={topHeaderHeight}>
+                <ResponsiveImage
+                    className="about"
+                    srcset={acadiaNationalParkNightSky}
+                    background
+                    gradient
+                    opacity={0.7} />
                 <S.Header
                     as="h1"
                     className="feature-text uppercase"
@@ -83,19 +87,14 @@ const About = ({ viewport }) => {
                         Our philosophy here is that we are a customer centric company; if our customers aren&apos;t successful, then neither are we. We are very good at understanding the needs and visions that our clients possess. Through our positive working environments and thriving employees, our teams are able to deliver undeniable value through our range of services to help partnerships grow whilst delivering on our promises. Through changing landscapes with COVID-19 at bay, we have quickly adapted to unfamiliar markets so that we can assist our partners in asserting dominance in their specialty areas.
                     </p>
                 </S.Section>
-                <S.SectionWithBackground
-                    className="primary-gradient"
-                    url={happyOffice}
-                    pos="center"
-                    attachment="fixed"
-                    height="60vh" >
-                    {/* <S.FeatureText
-                    className="uppercase center-text"
-                    type={viewport.type}
-                    color="grey-tint-lightest">
-                    Don&apos;t get left behind.
-                </S.FeatureText> */}
-                </S.SectionWithBackground>
+                <S.Section height="60vh" >
+                    <ResponsiveImage
+                        className="primary-gradient"
+                        srcset={creativeEmployees}
+                        background
+                        gradient
+                        opacity={0.5} />
+                </S.Section>
                 <S.Section
                     className="center-text"
                     color="grey-tint-lighter"
@@ -116,19 +115,14 @@ const About = ({ viewport }) => {
                         Fast-track to now, the company has global presence, with over 79,000 employees across 90+ countries. It&apos;s no question that we are good at what we do. In fact, big name companies like Google, Apple and Facebook have all partnered with us at some point in time.
                     </p>
                 </S.Section>
-                <S.SectionWithBackground
-                    className="primary-gradient"
-                    url={gardenShed}
-                    pos="center"
-                    attachment="fixed"
-                    height="60vh" >
-                    {/* <S.FeatureText
-                    className="uppercase center-text"
-                    type={viewport.type}
-                    color="grey-tint-lightest">
-                    Don&apos;t get left behind.
-                </S.FeatureText> */}
-                </S.SectionWithBackground>
+                <S.Section height="60vh" >
+                    <ResponsiveImage
+                        className="primary-gradient"
+                        srcset={selfContainedUnit}
+                        background
+                        gradient
+                        opacity={0.5} />
+                </S.Section>
                 <S.Section
                     className="center-text"
                     color="grey-tint-lighter"
@@ -150,7 +144,7 @@ const About = ({ viewport }) => {
                     </p>
                     <p>
                         <S.InlineAnchor
-                            color="grey-tint-lightest"
+                            color="blue-neutral"
                             bgColor="grey-shade-dark"
                             href="/contact"
                             rel="noreferrer" >
@@ -159,19 +153,14 @@ const About = ({ viewport }) => {
                         today so we can discuss you&apos;re options.
                     </p>
                 </S.Section>
-                <S.SectionWithBackground
-                    className="primary-gradient"
-                    url={office}
-                    pos="center"
-                    attachment="fixed"
-                    height="60vh" >
-                    {/* <S.FeatureText
-                    className="uppercase center-text"
-                    type={viewport.type}
-                    color="grey-tint-lightest">
-                    Don&apos;t get left behind.
-                </S.FeatureText> */}
-                </S.SectionWithBackground>
+                <S.Section height="60vh" >
+                    <ResponsiveImage
+                        className="primary-gradient"
+                        srcset={techEmployees}
+                        background
+                        gradient
+                        opacity={0.5} />
+                </S.Section>
                 <S.Section
                     className="center-text"
                     color="grey-tint-lighter"
@@ -186,19 +175,14 @@ const About = ({ viewport }) => {
                         With over 15 years of service and an ever-growing number of partnerships with quality customers, we can safely say that we are here to stay. Have peace of mind, knowing that if you put your trust in us, we&apos;ll be there with you through it all. We&apos;re in this for the long haul.
                     </p>
                 </S.Section>
-                <S.SectionWithBackground
-                    className="primary-gradient"
-                    url={laptopCloseup}
-                    pos="center"
-                    attachment="fixed"
-                    height="60vh" >
-                    {/* <S.FeatureText
-                    className="uppercase center-text"
-                    type={viewport.type}
-                    color="grey-tint-lightest">
-                    Don&apos;t get left behind.
-                </S.FeatureText> */}
-                </S.SectionWithBackground>
+                <S.Section height="60vh" >
+                    <ResponsiveImage
+                        className="primary-gradient"
+                        srcset={developerAtWork}
+                        background
+                        gradient
+                        opacity={0.5} />
+                </S.Section>
                 <S.Section
                     className="center-text"
                     color="grey-tint-lighter"
@@ -250,6 +234,7 @@ const About = ({ viewport }) => {
                     color="grey-shade-dark"
                     height="35vh"
                     url={trianglifyBackground}>
+                    <S.GradientOverlay opacity={0.05} />
                     <S.FlexContainer
                         className="center-text items-margin"
                         column>
