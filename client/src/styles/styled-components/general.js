@@ -220,6 +220,10 @@ export const Header = styled.h1.attrs((props) => ({
         color: ${color.white};
         background-color: ${color.grey.shade.dark};
     }
+
+    &.error {
+        font-size: 4.5rem;
+    }
 `;
 
 /**

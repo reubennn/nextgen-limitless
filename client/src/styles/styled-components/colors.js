@@ -7,6 +7,7 @@
 export const color = {
     white: "#ffffff",
     black: "#000000",
+    smoke: "#f1f1f1",
     grey: {
         /** Mixture with white */
         tint: {

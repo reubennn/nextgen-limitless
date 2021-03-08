@@ -32,13 +32,7 @@ const ServerError = ({ errorCode }) => (
                     width="128px"
                     fill="grey-shade-dark" />
                 <S.Header
-                    as="h3"
-                    className="uppercase">
-                    Oops...
-                </S.Header>
-                <S.Header
-                    as="h4"
-                    className="uppercase">
+                    as="h4">
                     It&apos;s not you, it&apos;s us!
                 </S.Header>
                 <p className="center-text">
@@ -48,6 +42,7 @@ const ServerError = ({ errorCode }) => (
                 <p className="center-text">
                     Please try again later.
                 </p>
+                <br />
                 {errorCode &&
                     <p className="center-text">
                         <b>Error code: {errorCode}</b>
