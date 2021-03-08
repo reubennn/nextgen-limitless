@@ -268,14 +268,26 @@ const ArticlesList = ({
 
     return (
         <>
-            <S.Header
-                as="h4">
-                Explore our articles below.
-            </S.Header>
-            {!loadStatus.failed &&
-                <SearchBox
-                    width="75%"
-                    onChangeHandler={handleQueryChange} />
+            {!loadStatus.failed ?
+                (
+                    <>
+                        <S.Header
+                            as="h4">
+                            Explore our articles below.
+                        </S.Header>
+                        <SearchBox
+                            width="75%"
+                            onChangeHandler={handleQueryChange} />
+                    </>
+                ) :
+                (
+                    <S.Header
+                        as="h4">
+                        Sorry, we weren&apos;t able to load any
+                        articles at the moment.
+                    </S.Header>
+                )
+
             }
             {
                 articlesToDisplay.length > 0 || searchQuery !== null &&
