@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node dist/server.js",
     "server": "set NODE_ENV=production&& nodemon --exec babel-node src/server.js",
     "server:dev": "set NODE_ENV=development&& nodemon --exec babel-node src/server.js",
     "server-chrome": "open-cli http://localhost:9000 -- chrome && nodemon --exec babel-node src/server.js",
@@ -12,7 +12,10 @@
     "db-setup:articles": "babel-node db-setup/addArticlesToDB.js",
     "db-setup:comments": "babel-node db-setup/addCommentsToDB.js",
     "customize:login": "babel-node src/auth/customizeLogin.js",
-    "customize:signup": "babel-node src/auth/customizeSignup.js"
+    "customize:signup": "babel-node src/auth/customizeSignup.js",
+    "build:src": "npm run clean && babel ./src --out-dir dist --ignore **/temp/*.js,**/dist/*.js",
+    "build:config": "cp -r ./config ./temp && babel ./config --out-dir config",
+    "clean": "rm -rf ./dist && mkdir dist"
   },
   "author": "Reuben Smith",
   "license": "ISC",
@@ -33,9 +36,10 @@
     "querystring": "^0.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.13",
-    "@babel/node": "^7.12.13",
-    "@babel/preset-env": "^7.12.13",
+    "@babel/cli": "^7.13.10",
+    "@babel/core": "^7.13.10",
+    "@babel/node": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
     "eslint": "^7.19.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^7.2.0",

@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  nextgen:
+    container_name: next-gen-limitless-server
+    build:
+      context: "."
+    ports:
+      - 9000:9000
+    env_file:
+      - .env
+    environment:
+      MONGO_URI: ${MONGO_URI}
+      DB_NAME: ${DB_NAME}
+      ARTICLES: ${ARTICLES}
+      AUTHORS: ${AUTHORS}
+      USERS: ${USERS}
+      COMMENTS: ${COMMENTS}
+      PORT: ${PORT}
+      AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
+      JWT_SIGNATURE_ALGORITHM: ${JWT_SIGNATURE_ALGORITHM}

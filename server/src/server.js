@@ -42,7 +42,7 @@ const apiLimiter = rateLimit({
 app.use("/api", apiLimiter);
 
 /** Serve static files on Express server using middleware */
-app.use(express.static(path.join(__dirname, "/dist")));
+app.use(express.static(path.join(__dirname, "/public")));
 
 /**
  * Parse JSON objects included in requests.
@@ -61,7 +61,7 @@ app.use("/api", commentRouter);
  * URLs correctly.
  */
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/dist/index.html"));
+    res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 /** Bind Express app and listen for connections */
