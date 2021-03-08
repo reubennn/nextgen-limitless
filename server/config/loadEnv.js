@@ -8,4 +8,8 @@
  * in this separate file.
  */
 import dotenv from "dotenv";
-dotenv.config({ path: __dirname + "/secrets.env" });
+
+/** Only import the secrets environment variable  when not in production */
+if (process.env.NODE_ENV !== "production") {
+    dotenv.config({ path: __dirname + "/secrets.env" });
+}
