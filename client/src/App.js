@@ -7,7 +7,7 @@ import {
     Route,
     Switch,
 } from "react-router-dom";
-import { debounce } from "lodash";
+import { throttle } from "lodash";
 import { connect } from "react-redux";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
@@ -69,11 +69,11 @@ const App = ({ handleViewportChange, sidebarNav }) => {
 
         if (isMounted) {
             /**
-             * Add the event listener and attach lodash debounce delay,
+             * Add the event listener and attach lodash throttle delay,
              * so that the function is not continuously called during
              * a window resize.
              */
-            window.addEventListener("resize", debounce(handleResize, 200));
+            window.addEventListener("resize", throttle(handleResize, 500));
 
             /**
              * Call Handler immediately to update the initial window size
@@ -86,7 +86,7 @@ const App = ({ handleViewportChange, sidebarNav }) => {
          * Clean-up to remove the event listener.
          */
         return () => {
-            window.removeEventListener("resize", debounce(handleResize, 200));
+            window.removeEventListener("resize", throttle(handleResize, 500));
             isMounted = false;
         };
     }, []);
