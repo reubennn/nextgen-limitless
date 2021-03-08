@@ -2,7 +2,6 @@
 import "../config/loadEnv";
 
 import express from "express";
-import bodyParser from "body-parser";
 import path from "path";
 /** Express Server security */
 import helmet from "helmet";
@@ -49,7 +48,7 @@ app.use(express.static(path.join(__dirname, "/dist")));
  * Parse JSON objects included in requests.
  * - Adds body property to the req parameter to the matching route.
  */
-app.use(bodyParser.json());
+app.use(express.json());
 
 /** Use API router as middleware with endpoint "/api" */
 app.use("/api", articleRouter);
