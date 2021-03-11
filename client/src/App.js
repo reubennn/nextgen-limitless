@@ -165,4 +165,6 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(handleViewportChange(viewport)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(hot(module)(App));
+export default process.env.NODE_ENV !== "production" ?
+    connect(mapStateToProps, mapDispatchToProps)(hot(module)(App)) :
+    connect(mapStateToProps, mapDispatchToProps)(App);
