@@ -41,14 +41,14 @@ const apiLimiter = rateLimit({
 /** Apply the Express Rate Limiter to the /api endpoint. */
 app.use("/api", apiLimiter);
 
-/** Serve static files on Express server using middleware */
-app.use(express.static(path.join(__dirname, "/public")));
-
 /**
  * Parse JSON objects included in requests.
  * - Adds body property to the req parameter to the matching route.
  */
 app.use(express.json());
+
+/** Serve static files on Express server using middleware */
+app.use(express.static(path.join(__dirname, "../public")));
 
 /** Use API router as middleware with endpoint "/api" */
 app.use("/api", articleRouter);

@@ -18,7 +18,14 @@ module.exports = {
         "eslint:recommended",
         "prettier",
         "google",
+        "prettier/react",
+        "plugin:react/recommended",
     ],
+    settings: {
+        react: {
+            version: "detect",
+        },
+    },
     rules: {
         /** Prettier function formatting */
         "space-before-function-paren": ["off"],

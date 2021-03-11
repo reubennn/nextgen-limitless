@@ -12,13 +12,12 @@ COPY package*.json .babelrc ./
 # Install npm package dependencies.
 RUN npm install
 
-COPY ./src ./src
-COPY ./config ./config
-COPY ./public ./public
+COPY . .
 
 # npm script to transpile code with Babel and create production build.
 RUN npm run build:src
 RUN npm run build:config
+RUN npm run build:react-app
 
 # Remove all development dependencies.
 RUN npm prune --production

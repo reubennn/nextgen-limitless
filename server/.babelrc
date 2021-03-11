@@ -1,9 +1,18 @@
 {
-  "presets": [
-    ["@babel/preset-env", {
-      "targets": {
-        "node": "current"
-      }
-    }]
-  ]
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"targets": {
+					"node": "current"
+				}
+			}
+		],
+		"@babel/preset-react"
+	],
+	"plugins": [
+		"@babel/plugin-transform-runtime",
+		["babel-plugin-styled-components", { "displayName": true }],
+		"@babel/plugin-proposal-class-properties"
+	]
 }
