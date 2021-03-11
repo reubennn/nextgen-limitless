@@ -14,9 +14,10 @@ module.exports = merge(common, {
     },
     plugins: [
         /**
-         * NOT SAFE - COMMENT OUT FOR FINAL PRODUCTION BUILD
-         * Copy process.env config secrets
-         *  - Used to test serving static files on server
+         * Copy .env config to the production build.
+         * - We are not storing any sensitive information that should not
+         * be shared with the client for our React Application.
+         * - If we were, then this would not be safe.
          */
         new webpack.DefinePlugin({
             "process.env": JSON.stringify(dotenv.config({
@@ -27,8 +28,10 @@ module.exports = merge(common, {
         new CopyWebpackPlugin({
             patterns: [{
                 from: path.join(__dirname, "public/"),
-                to: path.join(__dirname, "../server/src/dist/"),
+                to: path.join(__dirname, "./src/dist/"),
             }],
         }),
+        /** Ignore the react-hot-loader dependency */
+        new webpack.IgnorePlugin(/react-hot-loader/),
     ],
 });
