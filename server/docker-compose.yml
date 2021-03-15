@@ -3,6 +3,7 @@ version: "3.9"
 services:
   nextgen:
     container_name: next-gen-limitless-server
+    restart: always
     build:
       context: "."
     ports:
