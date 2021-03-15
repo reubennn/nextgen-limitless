@@ -1,9 +1,6 @@
 # Temporary files
 temp/
 
-# Secret environment file
-secrets.env
-
 # Logs
 logs
 *.log
@@ -126,6 +123,7 @@ server/*.gitignore
 
 # Confidential data
 secrets.env
+secrets.prod.env
 
 # Docker
 Dockerfile

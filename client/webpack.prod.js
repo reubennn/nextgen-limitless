@@ -8,7 +8,7 @@ const dotenv = require("dotenv");
 module.exports = merge(common, {
     mode: "production",
     output: {
-        path: path.resolve(__dirname, "../server/src/dist/"),
+        path: path.resolve(__dirname, "./dist/"),
         publicPath: "/dist/",
         filename: "bundle.js",
     },
@@ -21,7 +21,7 @@ module.exports = merge(common, {
          */
         new webpack.DefinePlugin({
             "process.env": JSON.stringify(dotenv.config({
-                path: __dirname + "/config/secrets.env",
+                path: __dirname + "/config/secrets.prod.env",
             }).parsed),
         }),
         /** Copy files from public directory to dist directory */

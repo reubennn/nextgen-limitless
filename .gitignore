@@ -9,6 +9,7 @@ responsive-images/
 
 # Secret config files
 secrets.env
+secrets.prod.env
 
 # Logs
 logs

@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --config webpack.dev.js --open chrome",
     "server": "cd ../server && npx nodemon --exec babel-node src/server.js",
-    "build": "webpack --config webpack.prod.js --watch",
-    "build:once": "webpack --config webpack.prod.js --env config/secrets.env",
+    "build": "webpack --config webpack.prod.js --watch --env config/secrets.prod.env",
+    "build:once": "webpack --config webpack.prod.js --env config/secrets.prod.env",
     "test": "mocha \"src/**/*.test.js\" --require @babel/register --recursive"
   },
   "repository": {
