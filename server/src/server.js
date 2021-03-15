@@ -14,6 +14,8 @@ import articleRouter from "./api/article.routes";
 import commentRouter from "./api/comment.routes";
 
 const PORT = process.env.PORT || 9000;
+const PUBLIC_PATH = process.env.NODE_ENV === "development" ?
+    "../public" : "./public";
 
 /** Set up the Express.js app */
 const app = express();
@@ -48,7 +50,7 @@ app.use("/api", apiLimiter);
 app.use(express.json());
 
 /** Serve static files on Express server using middleware */
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, PUBLIC_PATH)));
 
 /** Use API router as middleware with endpoint "/api" */
 app.use("/api", articleRouter);
@@ -61,7 +63,7 @@ app.use("/api", commentRouter);
  * URLs correctly.
  */
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
+    res.sendFile(path.join(__dirname, `${PUBLIC_PATH}/index.html`));
 });
 
 /** Bind Express app and listen for connections */

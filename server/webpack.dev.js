@@ -7,11 +7,12 @@ const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
     mode: "development",
+    entry: "./src/index.js",
     /** Fix DevTools SourceMapping load failures */
     devtool: "eval-source-map",
     output: {
         /** webpack-dev-server bundles the file in-memory */
-        path: path.resolve(__dirname, "dist/"),
+        path: path.resolve(__dirname, "public/"),
         publicPath: "/",
         filename: "bundle.js",
     },
@@ -29,4 +30,15 @@ module.exports = merge(common, {
             path: path.join(__dirname, "config/secrets.env"),
         }),
     ],
+    resolve: {
+        extensions: [
+            "*",
+            ".js",
+            ".jsx",
+        ],
+        alias: {
+            /** Replace react-dom with @hot-loader/react-dom */
+            "react-dom": "@hot-loader/react-dom",
+        },
+    },
 });

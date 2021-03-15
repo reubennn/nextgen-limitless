@@ -2,8 +2,6 @@ import React from "react";
 
 import Emoji from "./Emoji";
 
-import logoSmall from ".../images/logo-small.svg";
-
 import * as S from "../styles/styled-components/styled";
 
 /**
@@ -24,7 +22,7 @@ const Homepage = () => (
                 rel="noreferrer">
                 <S.LogoImage
                     className="homepage-top"
-                    src={logoSmall}
+                    src="assets/images/logo-small.svg"
                     height="3rem"
                     alt="Spaceship Logo Nav Home Icon" />
             </S.Anchor>

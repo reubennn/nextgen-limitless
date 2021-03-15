@@ -15,9 +15,7 @@ RUN npm install
 COPY . .
 
 # npm script to transpile code with Babel and create production build.
-RUN npm run build:src
-RUN npm run build:config
-RUN npm run build:react-app
+RUN npm run build:docker
 
 # Remove all development dependencies.
 RUN npm prune --production
@@ -29,7 +27,6 @@ FROM base AS release
 COPY --from=builder /nextgenlimitless/node_modules ./node_modules
 COPY --from=builder /nextgenlimitless/dist ./dist
 COPY --from=builder /nextgenlimitless/config ./config
-COPY --from=builder /nextgenlimitless/public ./public
 
 # Run the Docker container as less-privileged `node` user.
 USER node
