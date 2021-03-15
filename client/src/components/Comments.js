@@ -52,10 +52,13 @@ const Comments = ({
      *      - @property {Object} body the data sent from the server
      */
     const fetchComments = async (controller) => {
+        const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
         const result = await handleFetchWithController(
             controller,
             async (controller) => {
-                const result = await fetch(`/api/comments/${articlePath}`,
+                const result = await fetch(
+                    `${SERVER_URL}/api/comments/${articlePath}`,
                     { signal: controller.signal },
                 );
                 const body = await result.json();

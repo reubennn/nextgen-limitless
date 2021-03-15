@@ -71,7 +71,10 @@ const AddCommentForm = React.forwardRef((
         comment: "comment",
     };
 
-    const addCommentRequestUrl = `/api/comments/${articlePath}/add-comment`;
+    const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
+    const addCommentRequestUrl =
+        `${SERVER_URL}/api/comments/${articlePath}/add-comment`;
 
     /** Use custom React Hook for sending HTTP request to secure API endpoint */
     const {
@@ -127,9 +130,11 @@ const AddCommentForm = React.forwardRef((
             }
         } else if (addCommentRequest.error !== null) {
             if (addCommentRequest.error.error === "login_required") {
-                console.log("Not logged in!");
+                process.env.NODE_ENV !== "production" &&
+                    console.log("Not logged in!");
             } else if (addCommentRequest.error.error === "consent_required") {
-                console.log("Do not have the required consent");
+                process.env.NODE_ENV !== "production" &&
+                    console.log("Do not have the required consent");
             } else {
                 console.error(addCommentRequest.error);
             }

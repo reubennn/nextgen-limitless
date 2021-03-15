@@ -86,11 +86,13 @@ const Comment = ({
     /** Check if user is authenticated with Auth0 authentication */
     const { isAuthenticated, loginWithRedirect } = useAuth0();
 
+    const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
     /** URL and options for useSecuredApi Hook */
     const upvoteRequestUrl =
-        `/api/comments/${data.path}/${data._id}/upvote`;
+        `${SERVER_URL}/api/comments/${data.path}/${data._id}/upvote`;
     const downvoteRequestUrl =
-        `/api/comments/${data.path}/${data._id}/downvote`;
+        `${SERVER_URL}/api/comments/${data.path}/${data._id}/downvote`;
     const interactionRequestOptions = { method: "POST" };
 
     /** Hooks to handle upvote/downvote API HTTP requests */
@@ -113,11 +115,13 @@ const Comment = ({
      * @return {*} the replies array or null if empty or aborted
      */
     const fetchReplies = async (controller, _id, path) => {
+        const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
         const result = await handleFetchWithController(
             controller,
             async (controller) => {
                 const result = await fetch(
-                    `/api/comments/${path}/${_id}`,
+                    `${SERVER_URL}/api/comments/${path}/${_id}`,
                     { signal: controller.signal },
                 );
                 const body = await result.json();

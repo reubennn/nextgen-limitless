@@ -19,8 +19,12 @@ const UpvoteSection = ({ articlePath, upvotes, setArticle }) => {
     /** Check if user is authenticated with Auth0 authentication */
     const { isAuthenticated, loginWithRedirect } = useAuth0();
 
-    const upvoteRequestUrl = `/api/articles/${articlePath}/upvote`;
-    const downvoteRequestUrl = `/api/articles/${articlePath}/downvote`;
+    const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
+    const upvoteRequestUrl =
+        `${SERVER_URL}/api/articles/${articlePath}/upvote`;
+    const downvoteRequestUrl =
+        `${SERVER_URL}/api/articles/${articlePath}/downvote`;
     const requestOptions = { method: "POST" };
 
     /** Custom React Hooks for sending HTTP request to secure API endpoints */

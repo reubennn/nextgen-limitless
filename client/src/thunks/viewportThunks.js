@@ -64,7 +64,9 @@ export const handleViewportChange = (viewport) => (
          * than medium breakpoint.
          */
         if (viewportWidth >= media.breakpoints.superLarge) {
-            console.log("Super Large viewport 1920px (horizontal) or greater");
+            process.env.NODE_ENV !== "production" &&
+                console.log(
+                    "Super Large viewport 1920px (horizontal) or greater");
             dispatch(setSidebarNavStatus(false));
             dispatch(setViewportType("super-large"));
             dispatch(setViewportSize({
@@ -81,7 +83,9 @@ export const handleViewportChange = (viewport) => (
                 },
             }));
         } else if (viewportWidth >= media.breakpoints.extraLarge) {
-            console.log("Extra Large viewport 1366px (horizontal) or greater");
+            process.env.NODE_ENV !== "production" &&
+                console.log(
+                    "Extra Large viewport 1366px (horizontal) or greater");
             dispatch(setSidebarNavStatus(false));
             dispatch(setViewportType("extra-large"));
             dispatch(setViewportSize({
@@ -100,7 +104,8 @@ export const handleViewportChange = (viewport) => (
                 },
             }));
         } else if (viewportWidth >= media.breakpoints.large) {
-            console.log("Large viewport 1024px (horizontal) or greater");
+            process.env.NODE_ENV !== "production" &&
+                console.log("Large viewport 1024px (horizontal) or greater");
             dispatch(setSidebarNavStatus(false));
             dispatch(setViewportType("large"));
             dispatch(setViewportSize({
@@ -121,7 +126,8 @@ export const handleViewportChange = (viewport) => (
                 },
             }));
         } else if (viewportWidth >= media.breakpoints.medium) {
-            console.log("Medium viewport 768px (horizontal) or greater");
+            process.env.NODE_ENV !== "production" &&
+                console.log("Medium viewport 768px (horizontal) or greater");
             dispatch(setSidebarNavStatus(false));
             dispatch(setViewportType("medium"));
             dispatch(setViewportSize({
@@ -143,7 +149,8 @@ export const handleViewportChange = (viewport) => (
                 },
             }));
         } else if (viewportWidth >= media.breakpoints.small) {
-            console.log("Small viewport 480px (horizontal) or greater");
+            process.env.NODE_ENV !== "production" &&
+                console.log("Small viewport 480px (horizontal) or greater");
             dispatch(setViewportType("small"));
             dispatch(setViewportSize({
                 is: {
@@ -163,7 +170,9 @@ export const handleViewportChange = (viewport) => (
                 },
             }));
         } else if (viewportWidth >= media.breakpoints.extraSmall) {
-            console.log("Extra Small viewport 360px (horizontal) or greater");
+            process.env.NODE_ENV !== "production" &&
+                console.log(
+                    "Extra Small viewport 360px (horizontal) or greater");
             dispatch(setViewportType("extra-small"));
             dispatch(setViewportSize({
                 is: {
@@ -181,7 +190,9 @@ export const handleViewportChange = (viewport) => (
                 },
             }));
         } else {
-            console.log("Super Small viewport less than 360px (horizontal)");
+            process.env.NODE_ENV !== "production" &&
+                console.log(
+                    "Super Small viewport less than 360px (horizontal)");
             dispatch(setViewportType("super-small"));
             dispatch(setViewportSize({
                 is: {

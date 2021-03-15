@@ -79,9 +79,14 @@ const Article = ({ match, viewport }) => {
      *      - @property {Object} body the data sent from the server
      */
     const fetchArticleData = async (controller) => {
+        const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
         const result = handleFetchWithController(controller, async () => {
-            const result = await fetch(`/api/articles/${path}`,
-                { signal: controller.signal },
+            const result = await fetch(
+                `${SERVER_URL}/api/articles/${path}`,
+                {
+                    signal: controller.signal,
+                },
             );
             const body = await result.json();
             return {

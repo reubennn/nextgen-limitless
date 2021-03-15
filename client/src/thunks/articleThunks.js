@@ -22,11 +22,13 @@ import {
  */
 export const fetchAllArticles = () => async (dispatch, getState) => {
     try {
+        const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
         /**
          * Dispatch Redux Action to modify loading state progress
          */
         dispatch(loadArticlesInProgress());
-        const response = await fetch("/api/articles");
+        const response = await fetch(`${SERVER_URL}/api/articles`);
 
         /**
          * If response is 200 OK, dispatch Redux Action for fetch success,
