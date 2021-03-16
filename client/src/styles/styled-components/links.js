@@ -44,6 +44,29 @@ export const RouterLinkButton = styled(RouterLink)`
 `;
 
 /**
+ * Router Link Button  Component.
+ *
+ * Inherits Router Link Component so it has React Router Link functionality.
+ */
+export const LinkButton = styled.a`
+    color: ${(props) => handleColor(props.color)};
+    margin: auto;
+    font-size: 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.25rem 0.1rem;
+    border-radius: 0.25rem;
+    transition: ease-in-out 0.25s;
+
+    &:hover {
+        color: ${color.grey.shade.dark};
+        background-color: ${(props) => handleColor(props.color)};
+        padding: 0.25rem 0.75rem;
+        border-bottom: none;
+    }
+`;
+
+/**
  * Tiny Router Link Component.
  *
  * Like the RouterLink component, but small.

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RouterLink from "./RouterLink";
 import { connect } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
     getViewportDimensions,
@@ -9,6 +10,7 @@ import {
     getViewportType,
 } from "../selectors/viewportSelectors";
 
+import Emoji from "./Emoji";
 import SocialMediaButton from "./SocialMediaButton";
 import socialMediaIcons from "../data/socialMediaIcons";
 
@@ -20,6 +22,9 @@ import * as S from "../styles/styled-components/styled";
  * @return {Component} the website footer
  */
 const Footer = ({ viewport }) => {
+    /** Check if Auth0 user is authenticated */
+    const { isAuthenticated } = useAuth0();
+
     return (
         <S.Footer>
             <S.FlexContainer column className="footer-nav">
@@ -28,6 +33,21 @@ const Footer = ({ viewport }) => {
                 <RouterLink url="/blog" label="Blog" />
                 <RouterLink url="/store" label="Store" />
                 <RouterLink url="/contact" label="Contact" />
+                {
+                    isAuthenticated &&
+                        <RouterLink url="/account" label="Account" />
+                }
+                <S.ListItem>
+                    <S.LinkButton
+                        className="link-button"
+                        color="grey-tint-neutral"
+                        bgColor="grey-shade-dark"
+                        href={`${process.env.REACT_APP_SERVER_URL}`}
+                        target="_blank"
+                        rel="noreferrer">
+                        Server API
+                    </S.LinkButton>
+                </S.ListItem>
             </S.FlexContainer>
             <S.HorizontalRuler
                 thin
@@ -57,7 +77,8 @@ const Footer = ({ viewport }) => {
                         width="22%" />
                 }
             </S.FlexContainer>
-            {viewport.size.is.lessThan.small &&
+            {
+                viewport.size.is.lessThan.small &&
                 <S.HorizontalRuler
                     className="footer-hr"
                     width="50%" />
@@ -67,32 +88,23 @@ const Footer = ({ viewport }) => {
                 All Rights Reserved.
             </S.TinyText>
             <S.TinyText superTiny>
-                Special thanks to
+                Made with <Emoji emoji="❤️" /> by
                 <S.InlineAnchor
-                    color="grey-tint-light"
+                    color="grey-tint-neutral"
                     bgColor="grey-shade-dark"
-                    href="https://www.linkedin.com/learning/"
+                    href="https://github.com/reubennn/"
                     target="_blank"
                     rel="noreferrer">
-                    LinkedIn Learning
+                    @reubennn
+                    <S.FullStop color="grey-tint-neutral" />
                 </S.InlineAnchor>
-                and
-                <S.InlineAnchor
-                    color="grey-tint-light"
-                    bgColor="grey-shade-dark"
-                    href="https://www.linkedin.com/in/shaun-wassell/"
-                    target="_blank"
-                    rel="noreferrer">
-                    Shaun Wassell
-                </S.InlineAnchor>
-            for initial content and ideas.
             </S.TinyText>
             <S.FlexContainer smallMargin wrapContent>
                 <RouterLink tiny url="/privacy" label="Privacy" />
                 <RouterLink tiny url="/cookies" label="Cookies" />
                 <RouterLink tiny url="/legal" label="Legal" />
             </S.FlexContainer>
-        </S.Footer>
+        </S.Footer >
     );
 };
 

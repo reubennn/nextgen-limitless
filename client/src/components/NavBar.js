@@ -20,6 +20,7 @@ import {
 
 import menuIcon from ".../icons/menu.svg";
 import searchIcon from ".../icons/magnifying-glass.svg";
+import apiIcon from ".../icons/api.svg";
 import userIcon from ".../icons/user.svg";
 import dropdownIcon from ".../icons/dropdown-arrow-shifted.svg";
 import logoSmall from ".../images/logo-small.svg";
@@ -229,6 +230,23 @@ const Navbar = ({
                         {authOptions}
                     </DropdownMenu>
                 </S.ListItem>
+                {
+                    viewport.size.is.greaterThan.medium &&
+                    <S.ListItem className="nav-icon">
+                        <a href={`${process.env.REACT_APP_SERVER_URL}`}
+                            target="_blank"
+                            rel="noreferrer">
+                            <Icon
+                                navbar
+                                $atTop={atTop}
+                                xlinkHref={apiIcon}
+                                width="30px"
+                                height="30px"
+                                alt="GitHub Repo"
+                                className={`${className} ${iconClass}`} />
+                        </a>
+                    </S.ListItem>
+                }
                 <S.ListItem className="nav-icon">
                     <a href="https://github.com/reubennn/fullstack-react"
                         target="_blank"
