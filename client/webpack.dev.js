@@ -4,6 +4,7 @@ const path = require("path");
 const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = merge(common, {
     mode: "development",
@@ -13,7 +14,7 @@ module.exports = merge(common, {
         /** webpack-dev-server bundles the file in-memory */
         path: path.resolve(__dirname, "dist/"),
         publicPath: "/",
-        filename: "bundle.js",
+        filename: "main.bundle.js",
     },
     devServer: {
         contentBase: path.join(__dirname, "public/"),
@@ -37,5 +38,22 @@ module.exports = merge(common, {
         new Dotenv({
             path: path.join(__dirname, "config/secrets.env"),
         }),
+        /** Generate a dynamic index.html for the dev server */
+        new HtmlWebpackPlugin({
+            filename: "index.html",
+            template: path.join(__dirname, "./public/index.html"),
+            inject: true,
+        }),
     ],
+    resolve: {
+        extensions: [
+            "*",
+            ".js",
+            ".jsx",
+        ],
+        alias: {
+            /** Replace react-dom with @hot-loader/react-dom */
+            "react-dom": "react-dom",
+        },
+    },
 });

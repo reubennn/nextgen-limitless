@@ -1,5 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
+const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: "./src/index.js",
@@ -18,6 +20,7 @@ module.exports = {
                             { displayName: true },
                         ],
                         "@babel/plugin-proposal-class-properties",
+                        "lodash",
                     ],
                 },
             },
@@ -37,6 +40,7 @@ module.exports = {
                 /** Load & Transpile CSS */
                 test: /\.css$/i,
                 use: [
+                    MiniCssExtractPlugin.loader,
                     "style-loader",
                     "css-loader",
                 ],
@@ -58,9 +62,7 @@ module.exports = {
             ".js",
             ".jsx",
         ],
-        /** Replace react-dom with @hot-loader/react-dom */
         alias: {
-            "react-dom": "@hot-loader/react-dom",
             /** Directory alias to shorten import directories */
             ".../assets": path.resolve(__dirname, "./public/assets"),
             ".../logos": path.resolve(__dirname, "./public/assets/logos"),
@@ -69,4 +71,8 @@ module.exports = {
             ".../avatars": path.resolve(__dirname, "./public/assets/avatars"),
         },
     },
+    plugins: [
+        new LodashModuleReplacementPlugin,
+        new MiniCssExtractPlugin(),
+    ],
 };

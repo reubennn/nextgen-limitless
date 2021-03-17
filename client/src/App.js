@@ -1,5 +1,5 @@
 import { hot } from "react-hot-loader";
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense, lazy } from "react";
 import Auth0ProviderWithHistory from "./auth/auth0ProviderWithHistory";
 import PropTypes from "prop-types";
 import {
@@ -21,22 +21,25 @@ import {
 } from "./selectors/viewportSelectors";
 
 /** React Components */
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Blog from "./pages/Blog";
-import Store from "./pages/Store";
-import Privacy from "./pages/Privacy";
-import Cookies from "./pages/Cookies";
-import Legal from "./pages/Legal";
-import Article from "./pages/Article";
-import Account from "./pages/Account";
 import Footer from "./components/Footer";
-import NotFound from "./pages/NotFound";
+import Loading from "./pages/Loading";
 import ScrollToTop from "./components/ScrollToTop";
 import SidebarNav from "./components/SidebarNav";
 
 import * as S from "./styles/styled-components/styled";
+
+/** React lazy loading for code-splitting */
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Blog = lazy(() => import("./pages/Blog"));
+const Store = lazy(() => import("./pages/Store"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Cookies = lazy(() => import("./pages/Cookies"));
+const Legal = lazy(() => import("./pages/Legal"));
+const Article = lazy(() => import("./pages/Article"));
+const Account = lazy(() => import("./pages/Account"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 /**
  * The main React App; parent of all other Components.
@@ -97,26 +100,28 @@ const App = ({ handleViewportChange, sidebarNav }) => {
                 <ScrollToTop>
                     <S.Container sidenav={sidebarNav.isActive}>
                         <SidebarNav />
-                        <Switch>
-                            <Route path="/" component={Home} exact />
-                            <Route path="/about" component={About} />
-                            <Route path="/contact" component={Contact} />
-                            <Route path="/blog" component={Blog} exact />
-                            <Route path="/store" component={Store} />
-                            <Route path="/privacy" component={Privacy} />
-                            <Route path="/cookies" component={Cookies} />
-                            <Route path="/legal" component={Legal} />
-                            <Route
-                                path="/blog/:path"
-                                component={Article} />
-                            <ProtectedRoute
-                                path="/account"
-                                component={Account} />
-                            <Route render={(props) => (
-                                <NotFound {...props} item={"page"} />
-                            )}
-                            />
-                        </Switch>
+                        <Suspense fallback={<Loading />}>
+                            <Switch>
+                                <Route path="/" component={Home} exact />
+                                <Route path="/about" component={About} />
+                                <Route path="/contact" component={Contact} />
+                                <Route path="/blog" component={Blog} exact />
+                                <Route path="/store" component={Store} />
+                                <Route path="/privacy" component={Privacy} />
+                                <Route path="/cookies" component={Cookies} />
+                                <Route path="/legal" component={Legal} />
+                                <Route
+                                    path="/blog/:path"
+                                    component={Article} />
+                                <ProtectedRoute
+                                    path="/account"
+                                    component={Account} />
+                                <Route render={(props) => (
+                                    <NotFound {...props} item={"page"} />
+                                )}
+                                />
+                            </Switch>
+                        </Suspense>
                         <Footer />
                     </S.Container >
                 </ScrollToTop>

@@ -33,7 +33,12 @@ ProtectedRoute.propTypes = {
     /**
      * The React Component to be passed to the protected route.
      */
-    component: PropTypes.func,
+    component:
+        PropTypes.oneOfType([
+            PropTypes.func,
+            /** For React Lazy Loading */
+            PropTypes.object,
+        ]),
     /**
      * Any additional arguments for the component.
      */
