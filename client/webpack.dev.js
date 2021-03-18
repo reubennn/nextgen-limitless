@@ -53,7 +53,7 @@ module.exports = merge(common, {
         ],
         alias: {
             /** Replace react-dom with @hot-loader/react-dom */
-            "react-dom": "react-dom",
+            "react-dom": "@hot-loader/react-dom",
         },
     },
 });
