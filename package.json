@@ -1,21 +1,22 @@
 {
-  "name": "fullstack-react",
+  "name": "next-gen-limitless",
   "version": "1.0.0",
   "description": "A complete web application integrating the MERN stack: [MongoDB](https://www.mongodb.com/), [Express.js](https://expressjs.com/), [React.js](https://reactjs.org/), [Node.js](https://nodejs.org/en/).",
   "main": "index.js",
   "scripts": {
     "client": "cd client/ && npm run dev",
-    "server": "cd server/ && npm run server",
-    "server:dev": "cd server/ && npm run server:dev"
+    "server": "cd server/ && npm run server:dev",
+    "build:client": "cd client/ && npm run build:once",
+    "build:server": "cd server/ && npm run build:prod"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reubennn/fullstack-react.git"
+    "url": "git+https://github.com/reubennn/nextgen-limitless.git"
   },
   "author": "Reuben Smith",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/reubennn/fullstack-react/issues"
+    "url": "https://github.com/reubennn/nextgen-limitless/issues"
   },
-  "homepage": "https://github.com/reubennn/fullstack-react#readme"
+  "homepage": "https://github.com/reubennn/nextgen-limitless#readme"
 }
