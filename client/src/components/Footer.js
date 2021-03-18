@@ -28,26 +28,28 @@ const Footer = ({ viewport }) => {
     return (
         <S.Footer>
             <S.FlexContainer column className="footer-nav">
-                <RouterLink url="/" label="Home" />
-                <RouterLink url="/about" label="About" />
-                <RouterLink url="/blog" label="Blog" />
-                <RouterLink url="/store" label="Store" />
-                <RouterLink url="/contact" label="Contact" />
-                {
-                    isAuthenticated &&
+                <S.UnorderedList>
+                    <RouterLink url="/" label="Home" />
+                    <RouterLink url="/about" label="About" />
+                    <RouterLink url="/blog" label="Blog" />
+                    <RouterLink url="/store" label="Store" />
+                    <RouterLink url="/contact" label="Contact" />
+                    {
+                        isAuthenticated &&
                         <RouterLink url="/account" label="Account" />
-                }
-                <S.ListItem>
-                    <S.LinkButton
-                        className="link-button"
-                        color="grey-tint-neutral"
-                        bgColor="grey-shade-dark"
-                        href={`${process.env.REACT_APP_SERVER_URL}`}
-                        target="_blank"
-                        rel="noreferrer">
-                        Server API
-                    </S.LinkButton>
-                </S.ListItem>
+                    }
+                    <S.ListItem>
+                        <S.LinkButton
+                            className="link-button"
+                            color="grey-tint-neutral"
+                            bgColor="grey-shade-dark"
+                            href={`${process.env.REACT_APP_SERVER_URL}`}
+                            target="_blank"
+                            rel="noreferrer">
+                            Server API
+                        </S.LinkButton>
+                    </S.ListItem>
+                </S.UnorderedList>
             </S.FlexContainer>
             <S.HorizontalRuler
                 thin
@@ -65,12 +67,15 @@ const Footer = ({ viewport }) => {
                         className="footer-hr"
                         width="22%" />
                 }
-                {socialMediaIcons.map((icon, key) => (
-                    <SocialMediaButton
-                        className="footer-icon"
-                        key={key}
-                        icon={icon} />
-                ))}
+                <S.FlexList className="no-margin">
+                    {socialMediaIcons.map((icon, key) => (
+                        <li key={key}>
+                            <SocialMediaButton
+                                className="footer-icon"
+                                icon={icon} />
+                        </li>
+                    ))}
+                </S.FlexList>
                 {viewport.size.is.greaterThan.extraSmall &&
                     <S.HorizontalRuler
                         className="footer-hr"
@@ -83,11 +88,11 @@ const Footer = ({ viewport }) => {
                     className="footer-hr"
                     width="50%" />
             }
-            <S.TinyText>
+            <S.TinyText color="grey-tint-dark">
                 <span>© 2021 Next Gen LIMITLESS.&nbsp;</span>
                 All Rights Reserved.
             </S.TinyText>
-            <S.TinyText superTiny>
+            <S.TinyText color="grey-tint-dark" superTiny>
                 Made with <Emoji emoji="❤️" /> by
                 <S.InlineAnchor
                     color="grey-tint-neutral"
@@ -99,11 +104,11 @@ const Footer = ({ viewport }) => {
                     <S.FullStop color="grey-tint-neutral" />
                 </S.InlineAnchor>
             </S.TinyText>
-            <S.FlexContainer smallMargin wrapContent>
+            <S.FlexList smallMargin wrapContent>
                 <RouterLink tiny url="/privacy" label="Privacy" />
                 <RouterLink tiny url="/cookies" label="Cookies" />
                 <RouterLink tiny url="/legal" label="Legal" />
-            </S.FlexContainer>
+            </S.FlexList>
         </S.Footer >
     );
 };

@@ -56,6 +56,8 @@ const Home = ({ viewport }) => {
                 <ResponsiveImage
                     className="home"
                     srcset={abstractScenery}
+                    alt="Abstract peaceful scenery car driving
+                    on long road with trees and hills in background"
                     background
                     gradient />
                 <S.FlexContainer column className="no-margin">
@@ -114,13 +116,15 @@ const Home = ({ viewport }) => {
                 <S.Section height="70vh" >
                     <ResponsiveImage
                         srcset={scenicMountains}
+                        alt="Beautiful bright blue lake with mountains
+                        spanning on either side"
                         background
                         gradient
-                        opacity={0.6} />
+                        opacity={0.8} />
                     <S.FeatureText
                         className="uppercase center-text"
                         type={viewport.type}
-                        color="grey-tint-lightest">
+                        color="white">
                         Are you ready to embrace the power of true innovation?
                     </S.FeatureText>
                 </S.Section>
@@ -145,7 +149,7 @@ const Home = ({ viewport }) => {
                         <S.TinyText
                             className="center-text"
                             superTiny
-                            color="grey-shade-lightest">
+                            color="grey-tint-dark">
                             *These companies may or may not have actually
                             partnered with us.
                         </S.TinyText>
@@ -155,13 +159,15 @@ const Home = ({ viewport }) => {
                     <ResponsiveImage
                         className="secondary-gradient"
                         srcset={lofotenIslands}
+                        alt="Birds eye view of the Lofoten Islands
+                        with clear skies, the sea and mountains"
                         background
                         gradient
-                        opacity={0.7} />
+                        opacity={0.75} />
                     <S.FeatureText
                         className="uppercase center-text"
                         type={viewport.type}
-                        color="grey-tint-lightest">
+                        color="white">
                         Don&apos;t get left behind.
                     </S.FeatureText>
                 </S.Section>
@@ -202,7 +208,7 @@ const Home = ({ viewport }) => {
                     <S.FlexContainer
                         className="center-text items-margin"
                         column>
-                        <S.Header as="h1">
+                        <S.Header as="h2">
                             What are you waiting for?
                         </S.Header>
                         <S.Header as="h3">

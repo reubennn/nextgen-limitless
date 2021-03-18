@@ -30,7 +30,8 @@ const ServerError = ({ errorCode }) => (
                     xlinkHref={chromeDinosaur}
                     height="128px"
                     width="128px"
-                    fill="grey-shade-dark" />
+                    fill="grey-shade-dark"
+                    alt="Server Error Chrome Dinosaur" />
                 <S.Header
                     as="h4">
                     It&apos;s not you, it&apos;s us!

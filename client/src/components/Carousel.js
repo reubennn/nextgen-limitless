@@ -210,6 +210,7 @@ const Carousel = ({
             <S.CarouselContainer>
                 <S.CarouselToggleLeft
                     type={viewport.type}
+                    aria-label="Toggle Left"
                     onClick={() =>
                         dispatch(moveToPrev())}>
                     <Icon
@@ -217,7 +218,8 @@ const Carousel = ({
                         height="30px"
                         width="30px"
                         fill="grey-tint-light"
-                        bgColor="black-x20" />
+                        bgColor="black-x20"
+                        alt="Carousel Left Arrow" />
                 </S.CarouselToggleLeft>
                 <S.CarouselSlider
                     $offset={style.offset}
@@ -231,6 +233,7 @@ const Carousel = ({
                 </S.CarouselSlider>
                 <S.CarouselToggleRight
                     type={viewport.type}
+                    aria-label="Toggle Right"
                     onClick={() =>
                         dispatch(moveToNext())}>
                     <Icon
@@ -238,7 +241,8 @@ const Carousel = ({
                         height="30px"
                         width="30px"
                         fill="grey-tint-light"
-                        bgColor="black-x20" />
+                        bgColor="black-x20"
+                        alt="Carousel Right Arrow" />
                 </S.CarouselToggleRight>
             </S.CarouselContainer >
             <S.CarouselNav>

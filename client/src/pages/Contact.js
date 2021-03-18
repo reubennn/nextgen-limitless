@@ -31,6 +31,8 @@ const Contact = ({ viewport }) => {
                 <ResponsiveImage
                     className="primary-gradient"
                     srcset={typingOnLaptop}
+                    alt="Close up of person's hands typing
+                    on laptop"
                     background
                     gradient
                     opacity={0.75} />
@@ -41,7 +43,7 @@ const Contact = ({ viewport }) => {
                     Get in Touch with us.
                 </S.Header>
                 <S.Header
-                    as="h4"
+                    as="h2"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     We&apos;d love to hear from you.

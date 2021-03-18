@@ -29,6 +29,8 @@ const Store = ({ viewport }) => {
                 <ResponsiveImage
                     className="blog"
                     srcset={onlineShopping}
+                    alt="Person on laptop with credit card purchasing
+                    an item from an online eCommerce store"
                     background
                     gradient
                     opacity={0.85} />
@@ -43,7 +45,7 @@ const Store = ({ viewport }) => {
                     <S.Text > Store.</S.Text>
                 </S.Header>
                 <S.Header
-                    as="h4"
+                    as="h2"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     Fresh merchandise to suit all your needs.
@@ -53,7 +55,7 @@ const Store = ({ viewport }) => {
                 <S.Section
                     color="grey-tint-light"
                     bgColor="grey-shade-dark">
-                    <S.Header>
+                    <S.Header as="h2">
                         This page is under maintenance.
                     </S.Header>
                     <S.Header as="h3">
@@ -62,7 +64,7 @@ const Store = ({ viewport }) => {
                 </S.Section>
                 <S.Section
                     color="grey-shade-dark">
-                    <S.Header as="h5">
+                    <S.Header as="h4" fontSize="1rem">
                         Please come back later.
                     </S.Header>
                 </S.Section>

@@ -272,7 +272,8 @@ const ArticlesList = ({
                 (
                     <>
                         <S.Header
-                            as="h4">
+                            as="h3"
+                            fontSize="1.2rem">
                             Explore our articles below.
                         </S.Header>
                         <SearchBox

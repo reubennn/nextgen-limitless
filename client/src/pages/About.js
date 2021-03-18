@@ -46,6 +46,9 @@ const About = ({ viewport }) => {
                 <ResponsiveImage
                     className="about"
                     srcset={acadiaNationalParkNightSky}
+                    alt="Beautiful cliff-edge from the Acadia National Park
+                    during the night with mesmerizing stars and galaxies in
+                    the sky"
                     background
                     gradient
                     opacity={0.7} />
@@ -60,7 +63,7 @@ const About = ({ viewport }) => {
                     <S.Text > Story.</S.Text>
                 </S.Header>
                 <S.Header
-                    as="h4"
+                    as="h2"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     <span>We are <em>transparent</em>.</span>
@@ -84,13 +87,28 @@ const About = ({ viewport }) => {
                         <S.Text >.</S.Text>
                     </S.Header>
                     <p>
-                        Our philosophy here is that we are a customer centric company; if our customers aren&apos;t successful, then neither are we. We are very good at understanding the needs and visions that our clients possess. Through our positive working environments and thriving employees, our teams are able to deliver undeniable value through our range of services to help partnerships grow whilst delivering on our promises. Through changing landscapes with COVID-19 at bay, we have quickly adapted to unfamiliar markets so that we can assist our partners in asserting dominance in their specialty areas.
+                        Our philosophy here is that we are a customer
+                        centric company; if our customers aren&apos;t
+                        successful, then neither are we. We are very
+                        good at understanding the needs and visions
+                        that our clients possess. Through our positive
+                        working environments and thriving employees,
+                        our teams are able to deliver undeniable value
+                        through our range of services to help partnerships
+                        grow whilst delivering on our promises. Through
+                        changing landscapes with COVID-19 at bay, we have
+                        quickly adapted to unfamiliar markets so that we
+                        can assist our partners in asserting dominance in
+                        their specialty areas.
                     </p>
                 </S.Section>
                 <S.Section height="60vh" >
                     <ResponsiveImage
                         className="primary-gradient"
                         srcset={creativeEmployees}
+                        alt="Creative employees sitting at a desk
+                        working in office with focus on a smiling woman
+                        in the front on her phone"
                         background
                         gradient
                         opacity={0.5} />
@@ -106,19 +124,46 @@ const About = ({ viewport }) => {
                         Origins.
                     </S.Header>
                     <p>
-                        We come from humble beginnings. <b>Next Gen LIMITLESS</b> first launched within a garage in a small city called Adelaide; similarly to how big name companies like Amazon, Google, Apple and Microsoft started. The company was initially focused in software services like website design, app development and database development, but has since branched off into a wider range of services.
+                        We come from humble beginnings.
+                        <b>Next Gen LIMITLESS</b> first launched within
+                        a garage in a small city called Adelaide; similarly
+                        to how big name companies like Amazon, Google,
+                        Apple and Microsoft started. The company was
+                        initially focused in software services like website
+                        design, app development and database development,
+                        but has since branched off into a wider range of
+                        services.
                     </p>
                     <p>
-                        Founder and CEO, Reuben Smith developed a strong passion for programming which first began at Flinders University. After several years of experience in a professional role, he decided to master new technologies and frameworks outside working hours, with late nights the new normal. With a broad range of experiences and expert skillset, word soon got out that he had started a company in his free time. It wasn&apos;t long until clients were coming to him for his impressive services; encompassing the entire development process. Once his customer base had grown significantly, it was then that he decided to make <b>Next Gen LIMITLESS</b> a full-time career.
+                        Founder and CEO, Reuben Smith developed a strong
+                        passion for programming which first began at Flinders
+                        University. After several years of experience in a
+                        professional role, he decided to master new technologies
+                        and frameworks outside working hours, with late nights
+                        the new normal. With a broad range of experiences and
+                        expert skillset, word soon got out that he had started
+                        a company in his free time. It wasn&apos;t long until
+                        clients were coming to him for his impressive services;
+                        encompassing the entire development process. Once his
+                        customer base had grown significantly, it was then that
+                        he decided to make <b>Next Gen LIMITLESS</b> a full-time
+                        career.
                     </p>
                     <p>
-                        Fast-track to now, the company has global presence, with over 79,000 employees across 90+ countries. It&apos;s no question that we are good at what we do. In fact, big name companies like Google, Apple and Facebook have all partnered with us at some point in time.
+                        Fast-track to now, the company has global presence,
+                        with over 79,000 employees across 90+ countries.
+                        It&apos;s no question that we are good at what we do.
+                        In fact, big name companies like Google, Apple and
+                        Facebook have all partnered with us at some point in
+                        time.
                     </p>
                 </S.Section>
                 <S.Section height="60vh" >
                     <ResponsiveImage
                         className="primary-gradient"
                         srcset={selfContainedUnit}
+                        alt="Cosy self contained wooden unit house/garage
+                        situated in a backyard"
                         background
                         gradient
                         opacity={0.5} />
@@ -134,17 +179,29 @@ const About = ({ viewport }) => {
                         Services.
                     </S.Header>
                     <p>
-                        <b>Next Gen LIMITLESS</b> offers a range of services, covering a broad spectrum of the development cycle. We can follow through all or just part of the process, from idea conception, implementation, integration or delivery. We will be by your side every step of the way <i>- if you&apos;d like us to be!</i>
+                        <b>Next Gen LIMITLESS</b> offers a range of services,
+                        covering a broad spectrum of the development cycle.
+                        We can follow through all or just part of the process,
+                        from idea conception, implementation, integration or
+                        delivery. We will be by your side every step of the way
+                        <i>- if you&apos;d like us to be!</i>
                     </p>
                     <p>
-                        We have a solid grounding in anything technology related, with an abundance of highly skilled employees; software engineers, developers, computer systems engineers, database and system administrators, security specialists, systems and business analysts, quality assurance engineers, UX and UI design engineers, and SEO/SEM specialists. We also specialise in marketing and business digital transformation.
+                        We have a solid grounding in anything technology
+                        related, with an abundance of highly skilled employees;
+                        software engineers, developers, computer systems
+                        engineers, database and system administrators, security
+                        specialists, systems and business analysts, quality
+                        assurance engineers, UX and UI design engineers, and
+                        SEO/SEM specialists. We also specialise in marketing
+                        and business digital transformation.
                     </p>
                     <p>
                         Have something else in mind? We have you covered.
                     </p>
                     <p>
                         <S.InlineAnchor
-                            color="blue-neutral"
+                            color="blue-light"
                             bgColor="grey-shade-dark"
                             href="/contact"
                             rel="noreferrer" >
@@ -157,6 +214,7 @@ const About = ({ viewport }) => {
                     <ResponsiveImage
                         className="primary-gradient"
                         srcset={techEmployees}
+                        alt="Tech employees working hard at desks"
                         background
                         gradient
                         opacity={0.5} />
@@ -172,13 +230,20 @@ const About = ({ viewport }) => {
                         Here to stay.
                     </S.Header>
                     <p>
-                        With over 15 years of service and an ever-growing number of partnerships with quality customers, we can safely say that we are here to stay. Have peace of mind, knowing that if you put your trust in us, we&apos;ll be there with you through it all. We&apos;re in this for the long haul.
+                        With over 15 years of service and an ever-growing number
+                         of partnerships with quality customers, we can safely
+                         say that we are here to stay. Have peace of mind,
+                         knowing that if you put your trust in us, we&apos;ll
+                         be there with you through it all. We&apos;re in this
+                         for the long haul.
                     </p>
                 </S.Section>
                 <S.Section height="60vh" >
                     <ResponsiveImage
                         className="primary-gradient"
                         srcset={developerAtWork}
+                        alt="Software developer working on multiple
+                        screens while coding"
                         background
                         gradient
                         opacity={0.5} />
@@ -241,7 +306,7 @@ const About = ({ viewport }) => {
                         <S.Header as="h1">
                             Launch into a partnership with us today.
                         </S.Header>
-                        <S.Header as="h3">
+                        <S.Header as="h2" fontSize="1.5rem">
                             It will be out of this world.
                         </S.Header>
                         <Link to="contact">

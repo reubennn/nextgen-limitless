@@ -66,7 +66,9 @@ const Account = () => {
         <>
             <Navbar />
             <S.TopHeader>
-                <S.BackgroundImage src={trianglifyBackground} />
+                <S.BackgroundImage
+                    src={trianglifyBackground}
+                    alt="Aesthetic abstract random triangle background" />
                 <S.GradientOverlay className="account" opacity={0.15} />
                 <S.Header
                     as="h1"
@@ -75,7 +77,7 @@ const Account = () => {
                     Hi, {nickname}! <Emoji emoji="👋" />
                 </S.Header>
                 <S.Header
-                    as="h4"
+                    as="h2"
                     className="feature-text-dark header-secondary"
                     color="grey-shade-dark" >
                     View your account information here.
@@ -93,7 +95,8 @@ const Account = () => {
                             width="50px"
                             circle />
                         <S.Header
-                            as="h5"
+                            as="h3"
+                            fontSize="1rem"
                             className="feature-text-dark justify-left-1rem"
                             color="grey-shade-dark" >
                             {nickname}

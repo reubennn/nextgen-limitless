@@ -26,7 +26,7 @@ const ResponsiveImage = ({
     srcset,
     alt = "Image",
     type = "image/jpg",
-    lazy = false,
+    lazy = true,
     gradient = false,
     opacity = 0.5,
     /** Background Image specific */

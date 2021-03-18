@@ -161,12 +161,14 @@ export const FullStop = styled.span.attrs((props) => ({
  * @param {String} color text color
  * @param {String} bgColor background color
  * @param {String} textAlign text align style
+ * @param {String} fontSize the font-size of the text
  */
 export const Header = styled.h1.attrs((props) => ({
     as: props.as || "h1",
     color: props.color || "inherit",
     bgColor: props.bgColor || "transparent",
     textAlign: props.textAlign || "center",
+    fontSize: props.fontSize || undefined,
 }))`
     color: ${(props) => handleColor(props.color)};
     background-color: ${(props) => handleColor(props.bgColor)};
@@ -176,14 +178,18 @@ export const Header = styled.h1.attrs((props) => ({
     font-weight: 500;
     line-height: 1.2;
     font-size: ${(props) => {
-        switch (props.as) {
-            case ("h1"): return "2.25rem";
-            case ("h2"): return "1.8rem";
-            case ("h3"): return "1.5rem";
-            case ("h4"): return "1.2rem";
-            case ("h5"): return "1rem";
-            case ("h6"): return "0.8rem";
-            default: return "2.25rem";
+        if (props.fontSize !== undefined) {
+            return props.fontSize;
+        } else {
+            switch (props.as) {
+                case ("h1"): return "2.25rem";
+                case ("h2"): return "1.8rem";
+                case ("h3"): return "1.5rem";
+                case ("h4"): return "1.2rem";
+                case ("h5"): return "1rem";
+                case ("h6"): return "0.8rem";
+                default: return "2.25rem";
+            }
         }
     }};
     padding: ${(props) =>
@@ -204,6 +210,7 @@ export const Header = styled.h1.attrs((props) => ({
     }
 
     &.header-secondary {
+        font-size: 1.2rem;
         margin-top: 0;
         margin-bottom: 0;
     }
@@ -310,10 +317,13 @@ export const ListItem = styled.li`
     }
 
     &.sidebar-nav {
-        margin: 5vh auto;
+        padding: 5vh 0;
+        text-align: center;
+        margin: 0;
+        border-top: 0.09rem solid ${color.grey.shade.light};
 
         &.super-small {
-            margin: 3.5vh auto;
+            padding: 3.5vh 0;
         }
     }
 
@@ -322,11 +332,11 @@ export const ListItem = styled.li`
     }
 
     &.login {
-        margin-right: 1rem;
+        margin: 5vh 1rem 5vh auto;
     }
 
     &.signup {
-        margin-left: 1rem;
+        margin: 5vh auto 5vh 1rem;
     }
 `;
 
@@ -751,8 +761,18 @@ export const TextArea = styled.textarea`
     }
 `;
 
+export const FlexList = styled(FlexContainer).attrs((props) => ({
+    as: props.as || "ul",
+}))`
+    /** Use this for converting the FlexContainer into an unordered list */
+    & li {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+`;
+
 /**
- * Text Area Component.
+ * Cool list component for a "cool" styled list.
  */
 export const CoolList = styled.ul`
     text-align: center;
@@ -763,6 +783,24 @@ export const CoolList = styled.ul`
 
         & ::marker {
             color: ${color.blue.lighter};
+        }
+    }
+`;
+
+/**
+ * Unordered list with no styling.
+ */
+export const UnorderedList = styled.ul`
+    text-align: center;
+
+    & li {
+        list-style: none;
+    }
+
+    &.nav {
+        & li {
+            margin-top: auto;
+            margin-bottom: auto;
         }
     }
 `;

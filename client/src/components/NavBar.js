@@ -127,7 +127,7 @@ const Navbar = ({
                 xlinkHref={userIcon}
                 width="32px"
                 height="32px"
-                alt="User Account"
+                alt="User Account Icon Nav Button"
                 className={`${className} ${iconClass}`} />
             <Icon
                 navbar
@@ -135,7 +135,7 @@ const Navbar = ({
                 xlinkHref={dropdownIcon}
                 width="16px"
                 height="16px"
-                alt="Dropdown Arrow"
+                alt="Dropdown Arrow Icon Nav Button"
                 className={`${className} ${iconClass}`} />
         </S.FlexContainer>;
 
@@ -162,7 +162,8 @@ const Navbar = ({
                 <RouterLink
                     url="/"
                     className="justify-left nav-item"
-                    isImage={true} >
+                    isImage={true}
+                    ariaLabel="Home" >
                     <S.LogoImage
                         className="small"
                         src={logoSmall}
@@ -210,14 +211,16 @@ const Navbar = ({
                 {
                     viewport.size.is.greaterThan.small &&
                     <S.ListItem className="nav-icon">
-                        <button onClick={() => null}>
+                        <button
+                            onClick={() => null}
+                            aria-label="Search">
                             <Icon
                                 navbar
                                 $atTop={atTop}
                                 xlinkHref={searchIcon}
                                 width="22px"
                                 height="22px"
-                                alt="Search Icon"
+                                alt="Search Icon Nav Button"
                                 className={`${className} ${iconClass}`} />
                         </button>
                     </S.ListItem>
@@ -226,7 +229,8 @@ const Navbar = ({
                     <DropdownMenu
                         imageComponent={accountImageComponent}
                         options={authOptions}
-                        hide={!scrolledUp} >
+                        hide={!scrolledUp}
+                        ariaLabel="Account" >
                         {authOptions}
                     </DropdownMenu>
                 </S.ListItem>
@@ -235,14 +239,15 @@ const Navbar = ({
                     <S.ListItem className="nav-icon">
                         <a href={`${process.env.REACT_APP_SERVER_URL}`}
                             target="_blank"
-                            rel="noreferrer">
+                            rel="noreferrer"
+                            aria-label="Server API">
                             <Icon
                                 navbar
                                 $atTop={atTop}
                                 xlinkHref={apiIcon}
                                 width="30px"
                                 height="30px"
-                                alt="GitHub Repo"
+                                alt="Server API Nav Button"
                                 className={`${className} ${iconClass}`} />
                         </a>
                     </S.ListItem>
@@ -250,14 +255,15 @@ const Navbar = ({
                 <S.ListItem className="nav-icon">
                     <a href="https://github.com/reubennn/fullstack-react"
                         target="_blank"
-                        rel="noreferrer">
+                        rel="noreferrer"
+                        aria-label="Github Repo">
                         <Icon
                             navbar
                             $atTop={atTop}
                             xlinkHref={gitHubIcon}
                             width="28px"
                             height="28px"
-                            alt="GitHub Repo"
+                            alt="GitHub Repo Icon Nav Button"
                             className={`${className} ${iconClass}`} />
                     </a>
                 </S.ListItem>
@@ -265,48 +271,58 @@ const Navbar = ({
         ) :
         (
             <>
-                <button
-                    className="justify-left"
-                    onClick={() => setSidebarNavStatus(true)}>
-                    <Icon
-                        navbar
-                        $atTop={atTop}
-                        xlinkHref={menuIcon}
-                        width="36px"
-                        height="36px"
-                        className={`${className} ${iconClass}`} />
-                </button>
-                <S.AbsoluteElement justifyCenter>
-                    <Link
-                        to="/">
-                        <S.ListItem className="nav-icon">
+                <li className="justify-left">
+                    <button
+                        onClick={() => setSidebarNavStatus(true)}
+                        aria-label="Menu">
+                        <Icon
+                            navbar
+                            $atTop={atTop}
+                            xlinkHref={menuIcon}
+                            width="36px"
+                            height="36px"
+                            alt="Menu Icon Nav Button"
+                            className={`${className} ${iconClass}`} />
+                    </button>
+                </li>
+                <li className="no-margin">
+                    <S.AbsoluteElement justifyCenter>
+                        <Link
+                            to="/"
+                            aria-label="Home">
                             <S.LogoImage
                                 className="small no-margin"
                                 src={logoSmall}
                                 type={viewport.type}
                                 height="3rem"
                                 alt="Spaceship Logo Nav Home Icon" />
-                        </S.ListItem>
-                    </Link>
-                </S.AbsoluteElement>
-                <S.FlexContainer className="no-margin">
-                    {viewport.size.is.greaterThan.extraSmall &&
-                        <button onClick={() => null}>
-                            <Icon
-                                navbar
-                                $atTop={atTop}
-                                xlinkHref={searchIcon}
-                                width="28px"
-                                height="28px"
-                                alt="Search"
-                                className={`nav ${className} ${iconClass}`} />
-                        </button>}
-                    <DropdownMenu
-                        imageComponent={accountImageComponent}
-                        hide={!scrolledUp} >
-                        {authOptions}
-                    </DropdownMenu>
-                </S.FlexContainer>
+                        </Link>
+                    </S.AbsoluteElement>
+                </li>
+                <li>
+                    <S.FlexContainer className="no-margin">
+                        {viewport.size.is.greaterThan.extraSmall &&
+                            <button
+                                onClick={() => null}
+                                aria-label="Seach">
+                                <Icon
+                                    navbar
+                                    $atTop={atTop}
+                                    xlinkHref={searchIcon}
+                                    width="28px"
+                                    height="28px"
+                                    alt="Search Icon Nav Button"
+                                    className={"nav " + className +
+                                        " " + iconClass} />
+                            </button>}
+                        <DropdownMenu
+                            imageComponent={accountImageComponent}
+                            hide={!scrolledUp}
+                            ariaLabel="Account">
+                            {authOptions}
+                        </DropdownMenu>
+                    </S.FlexContainer>
+                </li>
             </>
         );
     return (
@@ -316,9 +332,11 @@ const Navbar = ({
             $atTop={atTop}
             type={viewport.type}
             sidenav={sidebarNav.isActive}>
-            <S.FlexContainer className="no-margin" justifyContent="flex-end">
+            <S.FlexList
+                className="no-margin"
+                justifyContent="flex-end">
                 {content}
-            </S.FlexContainer>
+            </S.FlexList>
         </S.Navbar>
     );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { getAltFromPath } from "../scripts/altHelpers";
 
 import Icon from "./Icon";
 import * as S from "../styles/styled-components/styled";
@@ -33,7 +34,7 @@ const Testimonial = ({ item, bgColor= "grey-shade-dark" }) => (
             noMargin />
         {
             item.role &&
-            <S.TestimonialRole as="h5">
+            <S.TestimonialRole as="h4">
                 {item.role}
             </S.TestimonialRole>
         }
@@ -43,6 +44,7 @@ const Testimonial = ({ item, bgColor= "grey-shade-dark" }) => (
             width="150px"
             id="main"
             className="testimonial"
+            alt={`${getAltFromPath(item.logo)} SVG Icon`}
             bgColor={bgColor} />
     </S.TestimonialContainer>
 );

@@ -30,6 +30,7 @@ const DropdownMenu = ({
     displayArrow = false,
     hide = false,
     onSelection = undefined,
+    ariaLabel = "",
 }) => {
     const componentChildren = getComponentChildren(children)[0];
 
@@ -188,7 +189,8 @@ const DropdownMenu = ({
             onMouseLeave={handleMouseLeave}>
             <S.DropdownButtonContainer
                 imageSupplied={imageSupplied}
-                onClick={handleButtonClick}>
+                onClick={handleButtonClick}
+                aria-label={ariaLabel}>
                 {
                     displaySelectedValue &&
                     <S.DropdownSelectedValue>
@@ -207,7 +209,7 @@ const DropdownMenu = ({
                         xlinkHref={dropdownIcon}
                         width="16px"
                         height="16px"
-                        alt="Dropdown Icon" />
+                        alt="Dropdown Menu Icon" />
                 }
             </S.DropdownButtonContainer>
             <S.DropdownOptionsContainer>
@@ -274,6 +276,11 @@ DropdownMenu.propTypes = {
      * Handler function to perform actions when an option is selected.
      */
     onSelection: PropTypes.func,
+    /**
+     * Aria label to show/read out text for accessible devices
+     * such as screen readers.
+     */
+    ariaLabel: PropTypes.string,
 };
 
 export default DropdownMenu;

@@ -39,7 +39,8 @@ const DescriptionBox = ({
                 width="100%"
                 id="main"
                 fill={`${textColor}-x70`}
-                bgColor="grey-shade-dark" />
+                bgColor="grey-shade-dark"
+                alt={`Description ${description.title} image`} />
         </S.DescriptionBoxImage>;
 
     /** DescriptionTitle content */
@@ -63,7 +64,8 @@ const DescriptionBox = ({
                 {description.url === undefined ?
                     imageBox :
                     <Link
-                        to={description.url} >
+                        to={description.url}
+                        aria-label={`Link to ${description.title}`} >
                         {imageBox}
                     </Link>
                 }
@@ -71,7 +73,8 @@ const DescriptionBox = ({
                     {description.url === undefined ?
                         titleBox :
                         <Link
-                            to={description.url} >
+                            to={description.url}
+                            aria-label={`Link to ${description.title}`} >
                             {titleBox}
                         </Link>
                     }

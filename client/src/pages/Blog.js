@@ -30,6 +30,8 @@ const Blog = ({ viewport }) => {
                 <ResponsiveImage
                     className="blog"
                     srcset={blogLaptopPhone}
+                    alt="Vibrant laptop and coffee on table while user
+                    checks phone displaying a happy face"
                     background
                     gradient
                     opacity={0.7} />
@@ -44,7 +46,7 @@ const Blog = ({ viewport }) => {
                     <S.Text > Blog.</S.Text>
                 </S.Header>
                 <S.Header
-                    as="h4"
+                    as="h2"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     Find quality articles written on a range of topics here.

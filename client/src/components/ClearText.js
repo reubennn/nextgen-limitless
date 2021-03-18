@@ -15,7 +15,8 @@ const ClearText = ({ hidden = false, onClick }) => {
     return (
         <S.ClearTextContainer
             hidden={hidden}
-            onClick={onClick}>
+            onClick={onClick}
+            aria-label="Clear Text">
             <S.ClearTextCross />
             <S.ClearTextCross shift />
         </S.ClearTextContainer>

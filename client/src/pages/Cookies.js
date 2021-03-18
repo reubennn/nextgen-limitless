@@ -28,6 +28,7 @@ const Cookies = ({ viewport }) => {
                 <ResponsiveImage
                     className="blog"
                     srcset={webCookies}
+                    alt="Chocolate chip cookie on laptop keyboard"
                     background
                     gradient
                     opacity={0.75} />
@@ -40,7 +41,7 @@ const Cookies = ({ viewport }) => {
                     <S.TextSized><b>Cookies</b></S.TextSized>
                 </S.Header>
                 <S.Header
-                    as="h4"
+                    as="h2"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     We&apos;re talking HTTP cookies, web cookies,
@@ -51,10 +52,10 @@ const Cookies = ({ viewport }) => {
                 <S.Section
                     color="grey-tint-light"
                     bgColor="grey-shade-dark">
-                    <S.Header color="white">
+                    <S.Header color="white" as="h3">
                         This page is under maintenance.
                     </S.Header>
-                    <S.Header as="h3">
+                    <S.Header as="h4">
                         Our ninjas are currently working hard in the kitchen
                         to bake all those cookies!
                     </S.Header>

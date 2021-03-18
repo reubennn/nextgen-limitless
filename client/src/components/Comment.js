@@ -485,7 +485,8 @@ const Comment = ({
             xlinkHref={moreOptionsIcon}
             height="16px"
             width="16px"
-            fill="grey-tint-neutral" />;
+            fill="grey-tint-neutral"
+            alt="More Options Button" />;
 
     const moreOptions =
         reported ?
@@ -556,7 +557,8 @@ const Comment = ({
                                 xlinkHref={thumbsUp}
                                 height="16px"
                                 width="16px"
-                                fill="grey-tint-neutral" />
+                                fill="grey-tint-neutral"
+                                alt="Thumbs Up Button - Like this comment" />
                         </S.OptionsButton>
                         <S.TallyCount>
                             {interaction.upvote.success ?
@@ -574,7 +576,9 @@ const Comment = ({
                                 xlinkHref={thumbsDown}
                                 height="16px"
                                 width="16px"
-                                fill="grey-tint-neutral" />
+                                fill="grey-tint-neutral"
+                                alt="Thumbs Down Button -
+                                Dislike this comment" />
                         </S.OptionsButton>
                         <S.TallyCount>
                             {interaction.downvote.success ?

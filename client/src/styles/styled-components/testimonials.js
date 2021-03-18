@@ -38,6 +38,7 @@ export const TestimonialAuthor = styled(Header)`
     margin-top: 1rem;
     margin-bottom: 0.75rem;
     text-transform: uppercase;
+    font-size: 1.2rem;
 `;
 
 /**
@@ -49,6 +50,7 @@ export const TestimonialAuthor = styled(Header)`
 export const TestimonialRole = styled(Header)`
     margin-bottom: 0.5rem;
     margin-top: 1rem;
+    font-size: 1rem;
 `;
 
 /**

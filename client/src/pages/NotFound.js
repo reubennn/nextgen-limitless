@@ -41,7 +41,7 @@ const NotFound = ({ item, viewport }) => {
                         404
                     </S.Header>
                     <S.Header
-                        as="h4"
+                        as="h2"
                         className="no-margin">
                         Oops... We couldn&apos;t seem to find that {item}!
                     </S.Header>
@@ -54,11 +54,11 @@ const NotFound = ({ item, viewport }) => {
                 <S.Section
                     className="remove-top remove-bottom"
                     height={largerScreen ? "120vh" : "80vh"}
-                    bgColor="#f1f1f1" >
+                    bgColor="smoke" >
                     <ResponsiveImage
                         srcset={pageNotFoundRobot}
                         background
-                        alt="Page not found robot" />
+                        alt="Page not found broken robot holding lightbulb" />
                 </S.Section>
             </S.MainPageBody>
         </>

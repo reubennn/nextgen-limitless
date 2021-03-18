@@ -17,6 +17,7 @@ const RouterLink = ({
     url,
     tiny = false,
     isImage = false,
+    ariaLabel = "",
     children,
 }) => {
     const content = isImage ?
@@ -29,14 +30,16 @@ const RouterLink = ({
             (
                 <S.TinyRouterLink
                     to={url}
-                    color="grey-tint-neutral">
+                    color="grey-tint-neutral"
+                    aria-label={ariaLabel}>
                     { label}
                 </S.TinyRouterLink >
             ) :
             (
                 <S.RouterLinkButton
                     to={url}
-                    color="grey-tint-neutral">
+                    color="grey-tint-neutral"
+                    aria-label={ariaLabel}>
                     { label}
                 </S.RouterLinkButton >
             ));
@@ -73,6 +76,11 @@ RouterLink.propTypes = {
      * Flag to indicate if Router Link is an image/svg
      */
     isImage: PropTypes.bool,
+    /**
+     * Aria label to show/read out text for accessible devices
+     * such as screen readers.
+     */
+    ariaLabel: PropTypes.string,
     /**
      * The children of the Component.
      */

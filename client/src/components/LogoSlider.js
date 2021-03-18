@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { getAltFromPath } from "../scripts/altHelpers";
 
 import Icon from "./Icon";
 
@@ -36,7 +37,8 @@ const LogoSlider = ({
                         width="150px"
                         id="main"
                         className="logo-slider"
-                        bgColor={bgColor} />,
+                        bgColor={bgColor}
+                        alt={`${getAltFromPath(logo)} SVG Icon`} />,
                 )}
             </S.LogoSlider>,
         );

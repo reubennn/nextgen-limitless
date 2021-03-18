@@ -30,6 +30,8 @@ const Privacy = ({ viewport }) => {
                 <ResponsiveImage
                     className="privacy"
                     srcset={privacySecurity}
+                    alt="Privacy shield with hidden password,
+                    a tick and a lock next to it"
                     background
                     gradient
                     opacity={0.88} />
@@ -44,7 +46,7 @@ const Privacy = ({ viewport }) => {
                     <S.Text > - in the safest hands.</S.Text>
                 </S.Header>
                 <S.Header
-                    as="h4"
+                    as="h2"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     Want to know what we do with your data? You&apos;ve come to the right place.
@@ -55,7 +57,7 @@ const Privacy = ({ viewport }) => {
                     color="grey-tint-light"
                     bgColor="grey-shade-dark">
                     <S.Header
-                        as="h2"
+                        as="h3"
                         className="uppercase section-top"
                         color="grey-tint-lightest" >
                         Personal Information.
@@ -91,6 +93,8 @@ const Privacy = ({ viewport }) => {
                     <ResponsiveImage
                         className="primary-gradient"
                         srcset={allSeeingSurveillance}
+                        alt="Close up of an eye looking deeply into
+                        the camera"
                         background
                         gradient
                         opacity={0.75} />
@@ -100,12 +104,12 @@ const Privacy = ({ viewport }) => {
                     bgColor="grey-shade-dark"
                     height="50vh">
                     <S.Header
-                        as="h2"
+                        as="h3"
                         className="uppercase section-top"
                         color="grey-tint-lightest" >
                         Privacy.
                     </S.Header>
-                    <S.Header as="h5">
+                    <S.Header as="h4" fontSize="1rem">
                         Just remember what Mark Zuckerberg once said:
                     </S.Header>
                     <S.Header as="h5" color="blue-lightest">

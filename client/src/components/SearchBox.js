@@ -82,13 +82,16 @@ const SearchBox = ({
                 value={text}
                 onChange={(e) => handleQueryOnChange(e)}
                 ref={searchInputRef} />
-            <S.SearchButton onClick={handleSearchButtonClick}>
+            <S.SearchButton
+                onClick={handleSearchButtonClick}
+                aria-label="Search">
                 <Icon
                     className="no-color-change"
                     xlinkHref={searchIcon}
                     height="30px"
                     width="30px"
-                    fill="grey-tint-light" />
+                    fill="grey-tint-light"
+                    alt="Search Box Search Icon Button" />
             </S.SearchButton>
         </S.SearchBoxContainer>
     );

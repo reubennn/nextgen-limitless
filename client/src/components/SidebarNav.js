@@ -7,6 +7,7 @@ import { enableScroll, disableScroll } from "../scripts/disableScroll";
 import {
     getSidebarNavState,
     getViewportSize,
+    getViewportDimensions,
 } from "../selectors/viewportSelectors";
 
 import { setSidebarNavStatus } from "../actions/viewportActions";
@@ -61,45 +62,55 @@ const SidebarNav = ({
 
     return (
         <S.Sidenav className={sidebarNav.isActive ? "active" : ""}>
-            <S.FlexContainer className="no-margin" justifyContent="flex-end">
-                <button
-                    className="justify-left"
-                    onClick={() => setSidebarNavStatus(false)}>
-                    <Icon
-                        navbar
-                        xlinkHref={closeIcon}
-                        width="36px"
-                        height="36px"
-                        className={"justify-left close-icon " +
-                            className} />
-                </button>
+            <S.FlexList
+                className="no-margin"
+                justifyContent="flex-end">
+                <li>
+                    <button
+                        className="justify-left"
+                        onClick={() => setSidebarNavStatus(false)}
+                        aria-label="Close">
+                        <Icon
+                            navbar
+                            xlinkHref={closeIcon}
+                            width="36px"
+                            height="36px"
+                            alt="Close Sidebar Nav Icon Button"
+                            className={"justify-left close-icon " +
+                                className} />
+                    </button>
+                </li>
                 <RouterLink
                     url="/"
                     className="nav-item justify-center"
-                    isImage={true}>
+                    isImage={true}
+                    ariaLabel="Home">
                     <S.LogoImage
                         className="small"
                         src={logoSmall}
                         height="3rem"
                         alt="Spaceship Logo Nav Home Icon" />
                 </RouterLink>
-                <button
-                    className="justify-right"
-                    onClick={() => setSidebarNavStatus(true)}>
-                    <Icon
-                        navbar
-                        xlinkHref={searchIcon}
-                        width="28px"
-                        height="28px"
-                        className={`${className}`} />
-                </button>
-            </S.FlexContainer>
+                <li>
+                    <button
+                        className="justify-right"
+                        onClick={() => setSidebarNavStatus(true)}
+                        aria-label="Search">
+                        <Icon
+                            navbar
+                            xlinkHref={searchIcon}
+                            width="28px"
+                            height="28px"
+                            alt="Search Sidebar Nav Icon Button"
+                            className={`${className}`} />
+                    </button>
+                </li>
+            </S.FlexList>
             <br></br>
-            <S.FlexContainer
+            <S.FlexList
                 className="no-margin"
                 column
                 justifyContent="flex-end">
-                <S.HorizontalRuler className="sidebar-nav" />
                 <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
@@ -111,7 +122,6 @@ const SidebarNav = ({
                         </S.NavbarLink>
                     </button>
                 </S.ListItem>
-                <S.HorizontalRuler className="sidebar-nav" />
                 <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
@@ -122,7 +132,6 @@ const SidebarNav = ({
                         </S.NavbarLink>
                     </button>
                 </S.ListItem>
-                <S.HorizontalRuler className="sidebar-nav" />
                 <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
@@ -134,7 +143,6 @@ const SidebarNav = ({
                         </S.NavbarLink>
                     </button>
                 </S.ListItem>
-                <S.HorizontalRuler className="sidebar-nav" />
                 <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
@@ -145,7 +153,6 @@ const SidebarNav = ({
                         </S.NavbarLink>
                     </button>
                 </S.ListItem>
-                <S.HorizontalRuler className="sidebar-nav" />
                 <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
@@ -156,7 +163,6 @@ const SidebarNav = ({
                         </S.NavbarLink>
                     </button>
                 </S.ListItem>
-                <S.HorizontalRuler className="sidebar-nav" />
                 <S.ListItem className={listItemClassName}>
                     <button onClick={() => setSidebarNavStatus(false)}>
                         <S.NavbarLink
@@ -167,25 +173,25 @@ const SidebarNav = ({
                         </S.NavbarLink>
                     </button>
                 </S.ListItem>
-                {viewport.size.is.greaterThan.extraSmall &&
+                {viewport.dimensions.height > 750 &&
                     !isAuthenticated &&
-                        <>
-                            <S.HorizontalRuler className="sidebar-nav" />
-                            <S.AbsoluteElement bottom justifyCenter>
-                                <S.FlexContainer>
-                                    <S.ListItem
-                                        className="nav-item sidebar-nav login">
-                                        <LoginButton />
-                                    </S.ListItem>
-                                    <S.ListItem
-                                        className="nav-item sidebar-nav signup">
-                                        <SignupButton />
-                                    </S.ListItem>
-                                </S.FlexContainer>
-                            </S.AbsoluteElement>
-                        </>
+                    <S.ListItem>
+                        <S.HorizontalRuler className="sidebar-nav" />
+                        <S.AbsoluteElement bottom justifyCenter>
+                            <S.FlexList className="no-margin">
+                                <S.ListItem
+                                    className="nav-item login">
+                                    <LoginButton />
+                                </S.ListItem>
+                                <S.ListItem
+                                    className="nav-item signup">
+                                    <SignupButton />
+                                </S.ListItem>
+                            </S.FlexList>
+                        </S.AbsoluteElement>
+                    </S.ListItem>
                 }
-            </S.FlexContainer>
+            </S.FlexList>
         </S.Sidenav>
     );
 };
@@ -224,6 +230,7 @@ const mapStateToProps = (state) => ({
     sidebarNav: getSidebarNavState(state),
     viewport: {
         size: getViewportSize(state),
+        dimensions: getViewportDimensions(state),
     },
 });
 

@@ -26,7 +26,8 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                 <S.ArticleImageContainer>
                     <Link
                         to={`/blog/${article.path}`}
-                        onClick={() => linkClicked(article.path)}>
+                        onClick={() => linkClicked(article.path)}
+                        aria-label={article.title}>
                         <S.ArticleSampleImage
                             className={smallerViewport &&
                                 "full-width"}
@@ -38,7 +39,8 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                 <S.ArticleSampleTitlebox>
                     <Link
                         to={`/blog/${article.path}`}
-                        onClick={() => linkClicked(article.path)}>
+                        onClick={() => linkClicked(article.path)}
+                        aria-label={article.title}>
                         <S.ArticleTitle as="h3">
                             {article.title}
                         </S.ArticleTitle>
@@ -50,8 +52,9 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                             src={article.author.avatar}
                             alt={article.author.name} />
                         <S.ArticleTitle
-                            as="h5"
-                            className="author">
+                            as="h4"
+                            className="author"
+                            fontSize="1rem">
                             By
                             <S.InlineAnchor
                                 className="no-underline"
@@ -70,7 +73,8 @@ const ArticleSample = ({ article, linkClicked, viewport }) => {
                 {article.content[0].substring(0, 200)}...
             </S.ArticleSampleText>
             <Link
-                to={`/blog/${article.path}`}>
+                to={`/blog/${article.path}`}
+                aria-label={article.title}>
                 <S.ArticleSampleButton
                     className="uppercase"
                     onClick={() => linkClicked(article.path)}>

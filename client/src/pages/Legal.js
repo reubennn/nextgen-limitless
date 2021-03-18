@@ -30,6 +30,8 @@ const Legal = ({ viewport }) => {
                 <ResponsiveImage
                     className="blog"
                     srcset={scalesOfJustice}
+                    alt="Blindfolded statue of a medieval woman holding sword in
+                    one hand, and scales in the other"
                     background
                     xPos="left"
                     gradient
@@ -45,7 +47,7 @@ const Legal = ({ viewport }) => {
                     <S.Text > Stuff.</S.Text>
                 </S.Header>
                 <S.Header
-                    as="h4"
+                    as="h2"
                     className="feature-text header-secondary"
                     color="grey-tint-lightest" >
                     Boring, but necessary.
@@ -55,10 +57,10 @@ const Legal = ({ viewport }) => {
                 <S.Section
                     color="grey-tint-light"
                     bgColor="grey-shade-dark">
-                    <S.Header color="white">
+                    <S.Header color="white" as="h3">
                         This page is under maintenance.
                     </S.Header>
-                    <S.Header as="h3">
+                    <S.Header as="h4">
                         Our Ninjas are currently working hard to write up a contractual agreement so you are able to sign your life away.
                     </S.Header>
                 </S.Section>
@@ -66,6 +68,8 @@ const Legal = ({ viewport }) => {
                     <ResponsiveImage
                         className="primary-gradient"
                         srcset={gavelLawBookScale}
+                        alt="Gavel, law book and scales sitting on
+                        a wooden table"
                         background
                         xPos="left"
                         gradient
@@ -78,7 +82,7 @@ const Legal = ({ viewport }) => {
                         Oh, and for legal purposes, we are obligated to mention that some of the icons used on this website were made by
                         <S.InlineAnchor
                             title="Good Ware"
-                            color="blue-dark"
+                            color="blue-light"
                             bgColor="grey-shade-darkest-x90"
                             href="https://www.flaticon.com/authors/good-ware"
                             rel="noreferrer"
@@ -88,7 +92,7 @@ const Legal = ({ viewport }) => {
                         ,
                         <S.InlineAnchor
                             title="Good Ware"
-                            color="blue-dark"
+                            color="blue-light"
                             bgColor="grey-shade-darkest-x90"
                             href="https://www.flaticon.com/authors/pixel-perfect"
                             rel="noreferrer"
@@ -98,7 +102,7 @@ const Legal = ({ viewport }) => {
                         and
                         <S.InlineAnchor
                             title="Smashicons"
-                            color="blue-dark"
+                            color="blue-light"
                             bgColor="grey-shade-darkest-x90"
                             href="https://www.flaticon.com/authors/smashicons"
                             rel="noreferrer"
@@ -108,7 +112,7 @@ const Legal = ({ viewport }) => {
                         from
                         <S.InlineAnchor
                             title="Flaticon"
-                            color="blue-dark"
+                            color="blue-light"
                             bgColor="grey-shade-darkest-x90"
                             href="https://www.flaticon.com/"
                             rel="noreferrer"
