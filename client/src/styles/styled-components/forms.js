@@ -154,6 +154,15 @@ export const InvalidInputHelper = styled.label.attrs((props) => ({
 `;
 
 /**
+ * Error message helper which displays red text
+ * under the interaction buttons to indicate there was
+ * a problem (e.g. with the server) when trying to reply, upvote or downvote.
+ */
+export const ErrorHelper = styled(InvalidInputHelper)`
+    margin-top: 0.4rem;
+`;
+
+/**
  * XXX
  *
  * @param {Boolean} after label for after the form submit button

@@ -603,6 +603,10 @@ export const Button = styled.button.attrs((props) => ({
     &.comments-section {
         padding: 0.5rem 0.75rem;
     }
+
+    &.space-above {
+        margin-top: 2rem;
+    }
 `;
 
 /**

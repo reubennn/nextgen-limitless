@@ -12,6 +12,7 @@ import rateLimit from "express-rate-limit";
 
 import articleRouter from "./api/article.routes";
 import commentRouter from "./api/comment.routes";
+import emailRouter from "./api/email.routes";
 
 const PORT = process.env.PORT || 9000;
 const PUBLIC_PATH = process.env.NODE_ENV === "development" ?
@@ -55,6 +56,7 @@ app.use(express.static(path.join(__dirname, PUBLIC_PATH)));
 /** Use API router as middleware with endpoint "/api" */
 app.use("/api", articleRouter);
 app.use("/api", commentRouter);
+app.use("/api", emailRouter);
 
 /**
  * All requests which are not caught by the other API routes should be

@@ -13,12 +13,13 @@ import * as S from "../styles/styled-components/styled";
  */
 const ResizableTextarea = ({
     required = true,
+    value = "",
     placeholder = "Enter your comment here...",
     onChangeHandler = undefined,
     errorMessage = "Please complete the field.",
 }) => {
     /** React Hook for storing and setting the input text */
-    const [text, setText] = useState("");
+    const [text, setText] = useState(value);
     /** Flag to indicate if the input is valid */
     const [isValid, setIsValid] = useState(true);
 
@@ -73,6 +74,7 @@ const ResizableTextarea = ({
 };
 
 ResizableTextarea.propTypes = {
+    value: PropTypes.string,
     /**
      * Flag indicating if it is a required input field.
      *

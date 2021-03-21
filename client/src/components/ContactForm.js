@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import useApi from "../hooks/useApi";
 import { isEmpty } from "../scripts/empty";
 
 import {
@@ -13,18 +14,25 @@ import * as S from "../styles/styled-components/styled";
 
 /**
  * React Component for the Contact Form to send a message to the company
- * to get in contact.
+ * to get in contact. This is achieved by sending the message parameters
+ * to the Server API, which processes the message and performs the email
+ * sending operations.
  *
  * - Displays an invalid helper tip if an input field was entered
  * incorrectly.
  * - Gracefully collapses once submitted.
  * - Displays thank you message on submit.
  * - Displays warning message if user tries to submit an incomplete form.
+ * - Sends an API request to server with the message parameters.
+ *      - If failure, an error message is displayed to the user.
  *
  * @return {Component} contact form for the contact page
  *
  */
 const ContactForm = ({ viewport }) => {
+    /** useRef Mount status for cleanup and avoiding memory leaks  */
+    const isMounted = useRef(true);
+
     const [form, setForm] = useState({
         /** Input field values */
         input: {
@@ -50,6 +58,10 @@ const ContactForm = ({ viewport }) => {
         showError: false,
         /** Flag indicating if the submit button was clicked */
         buttonClicked: false,
+        /** Flag indicating API call was successful */
+        success: false,
+        /** Flag indicating API call failed */
+        failure: false,
     });
 
     /**
@@ -62,6 +74,31 @@ const ContactForm = ({ viewport }) => {
         message: "message",
     };
 
+    const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
+    /** URL and options for useApi Hook */
+    const emailRequestUrl =
+        `${SERVER_URL}/api/email/send/contact`;
+    const emailRequestOptions = { method: "POST" };
+
+    /** Hooks to handle upvote/downvote API HTTP requests */
+    const {
+        state: apiRequestState,
+        apiRequestWithOptions,
+    } = useApi(emailRequestUrl, emailRequestOptions);
+
+    /**
+    * useEffect which performs cleanup, setting isMounted to false.
+    *
+    * - This ensures subscriptions and async tasks are cancelled
+    * while the component is unmounted.
+    */
+    useEffect(() => {
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
+
     /**
      * useEffect which is called when any input field valid status changes.
      *
@@ -71,8 +108,7 @@ const ContactForm = ({ viewport }) => {
      * be hidden immediately regardless of the timeout to hide it.
      */
     useEffect(() => {
-        let isMounted = true;
-        if (isMounted) {
+        if (isMounted.current) {
             if (formHasValidInput()) {
                 setForm((prevState) => {
                     return {
@@ -90,9 +126,6 @@ const ContactForm = ({ viewport }) => {
                 });
             }
         }
-        return () => {
-            isMounted = false;
-        };
     }, [form.isValid]);
 
     /**
@@ -115,15 +148,13 @@ const ContactForm = ({ viewport }) => {
      * has been re-rendered.
      */
     useEffect(() => {
-        let isMounted = true;
         let timeout;
-        if (isMounted && form.submitted) {
+        if (isMounted.current && form.submitted) {
             timeout = setTimeout(() =>
                 collapseFormDelay(), 100);
         }
         return () => {
             clearTimeout(timeout);
-            isMounted = false;
         };
     }, [form.submitted]);
 
@@ -146,9 +177,8 @@ const ContactForm = ({ viewport }) => {
      * so the message will hide after the specified time from the last click.
      */
     useEffect(() => {
-        let isMounted = true;
         let timeout;
-        if (isMounted) {
+        if (isMounted.current) {
             setForm((prevState) => {
                 return {
                     ...prevState,
@@ -159,9 +189,48 @@ const ContactForm = ({ viewport }) => {
         }
         return () => {
             clearTimeout(timeout);
-            isMounted = false;
         };
     }, [form.buttonClicked]);
+
+    /**
+     * useEffect which is triggered when the apiRequestState has changed,
+     * either if we receive a response from the server,
+     * or an error has occurred.
+     */
+    useEffect(() => {
+        if (apiRequestState.data !== null) {
+            const { response } = apiRequestState.data;
+            if (response.status !== 200 && isMounted.current) {
+                // console.log(`Error code: ${response.status}`);
+                setForm((prevState) => {
+                    return {
+                        ...prevState,
+                        buttonClicked: false,
+                        failure: true,
+                    };
+                });
+            } else if (isMounted.current) {
+                setForm((prevState) => {
+                    return {
+                        ...prevState,
+                        buttonClicked: false,
+                        submitted: true,
+                        failure: false,
+                    };
+                });
+            }
+        } else if (apiRequestState.error !== null) {
+            if (isMounted.current) {
+                setForm((prevState) => {
+                    return {
+                        ...prevState,
+                        buttonClicked: false,
+                        failure: true,
+                    };
+                });
+            }
+        }
+    }, [apiRequestState]);
 
     /**
      * Handler function for the onChange event of the resizable text area.
@@ -179,22 +248,54 @@ const ContactForm = ({ viewport }) => {
     /**
      * Handler function for the onChange event of the email input field.
      *
-     * - Email field is generally updated using onBlur.
-     * - This is required so the user is not immediately told their email is
-     * incorrect on the first character.
-     * - However, we need to use the onChange event for some edge cases:
-     *      1. When we know the email is invalid, keep updating/checking it
-     *      until it is correct so the user has immediate feedback.
-     *      2. When a form is auto-filled, the onBlur event is not called,
-     *      so we should use onChange to update it when the input is empty.
+     * - For the email, we only want to update the state value.
+     * - We do not check if the input is valid here.
      *
      * @param {String} value input of the email field
      */
     const emailInputHandleOnChange = (value) => {
-        if (!form.isValid.email || form.input.email === "") {
-            updateFormState(value, PROPERTY.email);
-        }
+        /** First, update the value */
+        setForm((prevState) => {
+            return {
+                ...prevState,
+                input: {
+                    ...prevState.input,
+                    email: value,
+                },
+            };
+        });
     };
+
+    /**
+     * useEffect triggered when form email input is changed.
+     *
+     * - This is required so the user is not immediately told their email is
+     * incorrect when the form loads.
+     * - When the email is invalid, keep updating/checking it until it is
+     * correct so the user has immediate feedback.
+     */
+    useEffect(() => {
+        if (isMounted.current) {
+            /** Only check if the input was valid after user types */
+            if (form.input.email !== "") {
+                /** Check if the input was valid */
+                const valid = checkInputIsValid(
+                    form.input.email,
+                    PROPERTY.email,
+                );
+
+                setForm((prevState) => {
+                    return {
+                        ...prevState,
+                        isValid: {
+                            ...prevState.isValid,
+                            [PROPERTY.email]: valid,
+                        },
+                    };
+                });
+            }
+        }
+    }, [form.input.email]);
 
     /**
      * Function which is called to update the form state
@@ -325,7 +426,8 @@ const ContactForm = ({ viewport }) => {
      * - If the form is complete, set the submitted flag to true,
      * which triggers the form thank you message to display and the
      * form to collapse.
-     * - It is here that we would use the information to send to the database.
+     * - It is here that we perform an API call to the server with the
+     * message parameters to be processed.
      */
     const handleCompleteSubmit = () => {
         setForm((prevState) => {
@@ -334,7 +436,39 @@ const ContactForm = ({ viewport }) => {
                 submitted: true,
             };
         });
-        /** Now send the information + message to database */
+
+        const options = {
+            method: "POST",
+            headers: {
+                /** Tell the server we are passing JSON */
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                firstName: form.input.firstName,
+                lastName: form.input.lastName,
+                email: form.input.email,
+                message: form.input.message,
+            }),
+        };
+        /** Now send the message request to the server API */
+        apiRequestWithOptions(options);
+    };
+
+    /**
+     * Handler which prevents the default event from occurring when
+     * submitting the form.
+     *
+     * @param {Event} event event object
+     */
+    const handleRetry = () => {
+        setForm((prevState) => {
+            return {
+                ...prevState,
+                failure: false,
+                submitted: false,
+                success: false,
+            };
+        });
     };
 
     /**
@@ -374,10 +508,10 @@ const ContactForm = ({ viewport }) => {
                 <S.Input
                     className={form.isValid.firstName ? "" : "invalid"}
                     type="text"
-                    placeholder="Jonathon"
+                    placeholder="Gibson"
+                    value={form.input.firstName}
                     onChange={(e) =>
-                        updateFormState(e.target.value, PROPERTY.firstName)}
-                />
+                        updateFormState(e.target.value, PROPERTY.firstName)} />
                 <S.InvalidInputHelper
                     className={!form.isValid.firstName ? "show" : ""}>
                     Please enter a name with letters and symbols.
@@ -388,10 +522,10 @@ const ContactForm = ({ viewport }) => {
                 <S.Input
                     className={form.isValid.lastName ? "" : "invalid"}
                     type="text"
-                    placeholder="Doerty"
+                    placeholder="Montgomery-Qux"
+                    value={form.input.lastName}
                     onChange={(e) =>
-                        updateFormState(e.target.value, PROPERTY.lastName)}
-                />
+                        updateFormState(e.target.value, PROPERTY.lastName)} />
                 <S.InvalidInputHelper
                     className={!form.isValid.lastName ? "show" : ""}>
                     Please enter a name with letters and symbols.
@@ -403,10 +537,9 @@ const ContactForm = ({ viewport }) => {
                     className={form.isValid.email ? "" : "invalid"}
                     type="email"
                     placeholder="turtlez-rock45@xyz.com"
-                    onBlur={(e) =>
-                        updateFormState(e.target.value, PROPERTY.email)}
-                    onChange={(e) => emailInputHandleOnChange(e.target.value)}
-                />
+                    value={form.input.email}
+                    onChange={(e) =>
+                        emailInputHandleOnChange(e.target.value)} />
                 <S.InvalidInputHelper
                     className={!form.isValid.email ? "show" : ""}>
                     Please enter a valid email address.
@@ -418,7 +551,8 @@ const ContactForm = ({ viewport }) => {
                     placeholder="Let's have a conversation about..."
                     onChangeHandler={textAreaHandleOnChange}
                     errorMessage="Please let us know why you'd
-                    like to get in contact." />
+                    like to get in contact."
+                    value={form.input.message} />
                 <br />
                 <S.Button
                     className="full gradient uppercase"
@@ -426,10 +560,10 @@ const ContactForm = ({ viewport }) => {
                     $radius="0.4rem">
                     Send message
                 </S.Button>
-                <S.InvalidInputHelper
+                <S.ErrorHelper
                     className={form.showError ? "show" : ""}>
                     Please complete the form before sending the message.
-                </S.InvalidInputHelper>
+                </S.ErrorHelper>
             </>
         ) :
         (
@@ -437,10 +571,24 @@ const ContactForm = ({ viewport }) => {
                 <S.Header as="h4">
                     Thanks for getting in contact with us!
                 </S.Header>
-                <S.Header as="h5">
-                    Our Ninjas will do their best to get back to you
-                    as soon as possible.
-                </S.Header>
+                <S.ErrorHelper
+                    className={`center-text ${form.failure ? "show" : ""}`}>
+                    Oops... We ran into an error while trying to send
+                    your message. Please try again later.
+                </S.ErrorHelper>
+                {
+                    !form.failure ?
+                        <S.Header as="h5">
+                            Our Ninjas will do their best to get back to you
+                            as soon as possible.
+                        </S.Header> :
+                        <S.Button
+                            className="full gradient uppercase space-above"
+                            onClick={() => handleRetry()}
+                            $radius="0.4rem">
+                            Try again
+                        </S.Button>
+                }
             </>
         );
 
