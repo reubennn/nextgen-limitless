@@ -58,6 +58,7 @@ const NotFound = ({ item, viewport }) => {
                     <ResponsiveImage
                         srcset={pageNotFoundRobot}
                         background
+                        scrollWithPage
                         alt="Page not found broken robot holding lightbulb" />
                 </S.Section>
             </S.MainPageBody>
