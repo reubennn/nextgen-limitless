@@ -1,8 +1,8 @@
 # DO NOT REMOVE THIS LINE AND THE LINES BELLOW SSL_REDIRECT:nextgenlimitless.xyz
 RewriteEngine on
 RewriteCond %{HTTPS} off
-RewriteCond %{HTTP_HOST} (www\.)?nextgenlimitless.xyz
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 # Rules to correctly serve gzip compressed CSS and JS files.
 # Requires both mod_rewrite and mod_headers to be enabled.
