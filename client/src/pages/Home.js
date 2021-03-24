@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { shuffle } from "../scripts/shuffleArray";
 
 import {
     getViewportDimensions,
@@ -13,9 +14,12 @@ import Navbar from "../components/Navbar";
 import LogoSlider from "../components/LogoSlider";
 import DescriptionBox from "../components/DescriptionBox";
 import ResponsiveImage from "../components/ResponsiveImage";
+import Carousel from "../components/Carousel";
+import Testimonial from "../components/Testimonial";
 
 import { logoSlider } from "../data/logos";
 import { featureDescriptions, otherDescriptions } from "../data/descriptions";
+import { testimonials } from "../data/testimonials";
 
 import { abstractScenery } from "../responsive/imageSrcSets";
 import { scenicMountains } from "../responsive/imageSrcSets";
@@ -48,6 +52,8 @@ const Home = ({ viewport }) => {
         });
     };
 
+    const shuffledTestimonials = shuffle(testimonials);
+
     const displayAsColumn = viewport.size.is.lessThan.large;
     return (
         <>
@@ -67,6 +73,7 @@ const Home = ({ viewport }) => {
                         type={viewport.type}
                         alt="Spaceship Logo Icon" />
                     <S.FeatureText
+                        as="h1"
                         className="header-home"
                         color="grey-tint-lightest"
                         type={viewport.type}>
@@ -80,7 +87,8 @@ const Home = ({ viewport }) => {
                     <S.Header
                         className="feature-text header-home"
                         color="grey-tint-lightest"
-                        as="h4">
+                        as="h2"
+                        fontSize="1.2rem">
                         It&apos;s time to take off during these
                         unprecedented times.
                     </S.Header>
@@ -122,7 +130,7 @@ const Home = ({ viewport }) => {
                         gradient
                         opacity={0.8} />
                     <S.FeatureText
-                        className="uppercase center-text"
+                        className="center-text"
                         type={viewport.type}
                         color="white">
                         Are you ready to embrace the power of true innovation?
@@ -133,7 +141,9 @@ const Home = ({ viewport }) => {
                     bgColor="grey-shade-dark"
                     height="50vh">
                     <S.FlexContainer column>
-                        <S.Header as="h4">
+                        <S.Header
+                            as="h4"
+                            color="grey-tint-lighter">
                             Some of our past &amp; present partners...*
                         </S.Header>
                         <br />
@@ -165,11 +175,25 @@ const Home = ({ viewport }) => {
                         gradient
                         opacity={0.75} />
                     <S.FeatureText
-                        className="uppercase center-text"
+                        className="center-text"
                         type={viewport.type}
                         color="white">
                         Don&apos;t get left behind.
                     </S.FeatureText>
+                </S.Section>
+                <S.Section
+                    className="center-text"
+                    color="grey-tint-lightest"
+                    bgColor="grey-shade-dark"
+                    height="60vh">
+                    <S.Header
+                        as="h3"
+                        color="grey-tint-lighter" >
+                        What our partners are saying about us...
+                    </S.Header>
+                    <Carousel initialData={shuffledTestimonials} interval={60}>
+                        <Testimonial />
+                    </Carousel>
                 </S.Section>
                 <S.Section
                     color="grey-shade-dark"
