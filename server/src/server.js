@@ -32,7 +32,10 @@ app.use(hpp());
 
 /** Enable CORS from client origins */
 app.use(cors({
-    origin: process.env.CLIENT_ORIGIN_URL,
+    origin: [
+        process.env.CLIENT_ORIGIN_URL,
+        process.env.CLIENT_ORIGIN_URL_WWW,
+    ],
 }));
 
 /** Set up the Express Rate Limiter for the API */
